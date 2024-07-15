@@ -26,7 +26,6 @@ typedef struct s_pipex
 {
 	pid_t	*pid;
 	int		**pip;
-	//int		temp[2];
 	char	**av;
 	int		c;
 	int		x;
@@ -54,7 +53,6 @@ void	close_pipes(t_pipex *p);
 void	close_file(int file);
 void	err_free(t_pipex *p, int exit_status);
 void	free_double(char **str);
-//void	check_file(int i, char **av, t_pipex *p);//
 int		check_filein(char **av, t_pipex *p);
 int		check_fileout(char **av, t_pipex *p);
 
@@ -62,6 +60,7 @@ int		check_fileout(char **av, t_pipex *p);
 void	create_pipes(t_pipex *p);
 
 /*PIX*/
+void close_all(t_pipex *p)
 void	do_child(t_pipex *p, char **envp);
 void	decide(t_pipex *p);
 void	processes(t_pipex *p, char **envp);
