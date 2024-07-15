@@ -25,9 +25,6 @@ void    close_all(t_pipex *p)
 void	do_child(t_pipex *p, char **envp)
 {
 	decide(p);
-	close_file(p->filein);
-	close_file(p->fileout);
-	close_pipe(p->pip[p->c]);
 	printf("cmd_nbr: %d\n", p->x);
 	exec_cmd(p->av, p->x, p, envp);
 	err_free(p, 1);
