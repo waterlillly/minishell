@@ -60,7 +60,7 @@ int		check_fileout(char **av, t_pipex *p);
 void	create_pipes(t_pipex *p);
 
 /*PIX*/
-void close_all(t_pipex *p)
+void close_all(t_pipex *p);
 void	do_child(t_pipex *p, char **envp);
 void	decide(t_pipex *p);
 void	processes(t_pipex *p, char **envp);
