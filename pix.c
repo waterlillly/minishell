@@ -12,6 +12,16 @@
 
 #include "pipex.h"
 
+void    close_all(t_pipex *p)
+{
+	if (p->filein)
+		close_file(p->filein);
+	if (p->fileout)
+		close_file(p->fileout);
+	if (p->pid)
+		close_pid(p);
+}
+
 void	do_child(t_pipex *p, char **envp)
 {
 	decide(p);
@@ -59,6 +69,7 @@ void	processes(t_pipex *p, char **envp)
 			err_free(p, 1);
 		if (p->pid[p->c] == 0)
 			do_child(p, envp);
+		close_all(p);
 		printf("process: %d\n", p->c);
 		p->c++;
 	}
