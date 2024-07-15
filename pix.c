@@ -18,8 +18,8 @@ void    close_all(t_pipex *p)
 		close_file(p->filein);
 	if (p->fileout)
 		close_file(p->fileout);
-	if (p->pid)
-		close_pid(p);
+	if (p->pip)
+		close_pipes(p);
 }
 
 void	do_child(t_pipex *p, char **envp)
