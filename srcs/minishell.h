@@ -5,36 +5,30 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef enum e_token
+{
+	PIPE = 1,
+	BIGGER,
+	BIGGERBIGGER,
+	SMALLER,
+	HEREDOC
+}	t_token;
+
 typedef struct s_minishell_l
 {
-	char	**input;
-	int		*markers:
+	char					*input;
+	t_token					token;
+	struct s_minishell_l	*next;
+	struct s_minishell_l	*prev;
 }	t_minishell_l;
 
 typedef struct s_minishell_p
 {
-	t_minishell_l	*lexed;
-	t_cmd			*table;
+	char					**str;
+	int						redir;
+	t_minishell_l			*redirect;
+	struct s_minishell_p	*next;
+	struct s_minishell_p	*prev;
 }	t_minishell_p;
-
-typedef struct s_redirect
-{
-	int		type;
-	char	*filename;
-}	t_redirect;
-
-typedef struct s_pipecmd
-{
-	char				*cmd;
-	char				*arg;
-	char				*option;
-	struct	s_pipecmp	*next;
-}	t_pipecmd;
-
-typedef struct s_cmd
-{
-	t_pipecmd	*pipecmd;
-	t_redirect	*redirect;
-}	t_cmd;
 
 #endif
