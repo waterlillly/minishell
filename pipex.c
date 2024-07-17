@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/15 19:17:53 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/17 18:06:14 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	exec_cmd(char **av, int x, t_pipex *p, char **envp)
 	if (!p->args)
 		err_free(p, 1);
 	p->cmd = p->args[0];
-	printf("cmd: %s\n", p->cmd);
 	find_path(p, envp);
 	execve(p->path, p->args, envp);
 	perror("Execve");

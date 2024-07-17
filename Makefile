@@ -6,7 +6,7 @@
 #    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/13 06:42:03 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/07/15 18:53:13 by lbaumeis         ###   ########.fr        #
+#    Updated: 2024/07/17 18:09:09 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Werror -Wextra -g
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
 
-CFILES = main.c pipex.c check_free_close.c pix.c processes.c
+CFILES = main.c pipex.c error.c init.c processes.c
 OFILES = $(CFILES:.c=.o)
 P_NAME = pipex
 
