@@ -3,58 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   pix.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 14:39:11 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/15 19:17:47 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:00:26 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void    close_all(t_pipex *p)
-{
-	if (p->filein)
-		close_file(p->filein);
-	if (p->fileout)
-		close_file(p->fileout);
-	if (p->pip)
-		close_pipes(p);
-}
-
-void	do_child(t_pipex *p, char **envp)
-{
-	decide(p);
-	printf("cmd_nbr: %d\n", p->x);
-	exec_cmd(p->av, p->x, p, envp);
-	err_free(p, 1);
-}
-
-void	decide(t_pipex *p)
+void	do_child(t_pipex *p, char ** envp)
 {
 	if (p->c == 0)
-	{
-		if (dup2(p->filein, STDIN_FILENO) == -1)
-			err_free(p, 1);
-		if (dup2(p->pip[p->c][1], STDOUT_FILENO) == -1)
-			err_free(p, 1);
-	}
+		first(p, envp);
 	else if (p->c == p->cmd_count - 1)
-	{
-		if (dup2(p->pip[p->c - 1][0], STDIN_FILENO) == -1)
-			err_free(p, 1);
-		if (dup2(p->fileout, STDOUT_FILENO) == -1)
-			err_free(p, 1);
-		p->x++;
-	}
+		last(p, envp);
 	else//middle p->c < p->cmd_count + 2
-	{
-		if (dup2(p->pip[p->c - 1][0], STDIN_FILENO) == -1)
-			err_free(p, 1);
-		if (dup2(p->pip[p->c][1], STDOUT_FILENO) == -1)
-			err_free(p, 1);
-		p->x++;
-	}
+		middle(p, envp);
 }
 
 void	processes(t_pipex *p, char **envp)
@@ -65,11 +30,14 @@ void	processes(t_pipex *p, char **envp)
 		if (p->pid[p->c] == -1)
 			err_free(p, 1);
 		if (p->pid[p->c] == 0)
+		{
 			do_child(p, envp);
-		close_all(p);
-		printf("process: %d\n", p->c);
+			printf("process: %d\n", p->c);
+		}
 		p->c++;
+		p->x++;
 	}
+	printf("PROCESSES DONE\n");
 }
 
 /*

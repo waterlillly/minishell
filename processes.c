@@ -3,21 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:51 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/15 19:17:55 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/17 12:54:20 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	first(t_pipex *p, char **envp)
+{
+	printf("CHILD: first\n");
+	if (dup2(p->filein, STDIN_FILENO) == -1)
+		err_free(p, 1);
+	if (dup2(p->pip[p->c][1], STDOUT_FILENO) == -1)
+		err_free(p, 1);
+	close_pipe(p->pip[p->c]);
+	exec_cmd(p->av, p->x, p, envp);
+	err_free(p, 1);
+}
+
+void	middle(t_pipex *p, char **envp)
+{
+	printf("CHILD: middle\n");
+	if (dup2(p->pip[p->c - 1][0], STDIN_FILENO) == -1)
+		err_free(p, 1);
+	if (dup2(p->pip[p->c][1], STDOUT_FILENO) == -1)
+		err_free(p, 1);
+	close_pipe(p->pip[p->c - 1]);
+	close_pipe(p->pip[p->c]);
+	exec_cmd(p->av, p->x, p, envp);
+	err_free(p, 1);
+}
+
+void	last(t_pipex *p, char **envp)
+{
+	printf("CHILD: last\n");
+	if (dup2(p->pip[p->c - 1][0], STDIN_FILENO) == -1)
+		err_free(p, 1);
+	if (dup2(p->fileout, STDOUT_FILENO) == -1)
+		err_free(p, 1);
+	close_pipe(p->pip[p->c - 1]);
+	exec_cmd(p->av, p->x, p, envp);
+	err_free(p, 1);
+}
+
+void	wait_for_processes(t_pipex *p)
+{
+	int	i;
+
+	i = 0;
+	while (i < p->cmd_count)
+	{
+		if (waitpid(p->pid[i], &p->status, 0) == -1)
+			err_free(p, 1);
+		if (WIFEXITED(p->status))
+			p->status = WEXITSTATUS(p->status);
+		i++;
+	}
+}
 
 void	create_pipes(t_pipex *p)
 {
 	int	i;
 
 	i = 0;
-	while (i < p->cmd_count)
+	while (i < p->cmd_count - 1)
 	{
 		if (pipe(p->pip[i]) == -1)
 			err_free(p, 1);

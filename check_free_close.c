@@ -3,55 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_free_close.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/15 19:17:57 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:09:16 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	wait_for_processes(t_pipex *p)
-{
-	int	i;
-
-	i = 0;
-	while (i < p->cmd_count)
-	{
-		if (waitpid(p->pid[i], &p->status, 0) == -1)
-			err_free(p, 1);
-		if (WIFEXITED(p->status))
-			p->status = WEXITSTATUS(p->status);
-		i++;
-	}
-}
-
-void	init_p(t_pipex *p, int ac, char **av)
-{
-	int	i;
-
-	i = 0;
-	p->av = av;
-	p->filein = check_filein(av, p);
-	p->fileout = check_fileout(av, p);
-	p->cmd_count = ac - 3;
-	p->c = 0;
-	p->x = 2;
-	p->pid = malloc(sizeof(pid_t) * p->cmd_count);
-	if (!p->pid)
-		err_free(p, 1);
-	p->pip = malloc(sizeof(int *) * p->cmd_count);
-	if (!p->pip[2])
-		err_free(p, 1);
-	while (i < p->cmd_count)
-	{
-		p->pip[i] = malloc(sizeof(int) * 2);
-		if (!p->pip[i])
-			err_free(p, 1);
-		i++;
-	}
-}
 
 void	close_pipe(int *pipe)
 {
@@ -73,10 +32,134 @@ void	close_pipes(t_pipex *p)
 	}
 }
 
-void	close_file(int file)
+void	close_all(t_pipex *p)
 {
-	if (file && file != STDIN_FILENO && file != STDOUT_FILENO && file != -1)
-		close(file);
+	if (p->filein && p->filein != STDIN_FILENO && p->filein != -1)
+		close(p->filein);
+	if (p->fileout && p->fileout != STDOUT_FILENO && p->fileout != -1)
+		close(p->fileout);
+	if (p->pip)
+		close_pipes(p);
+}
+
+void init_pipes(t_pipex *p)
+{
+	int i;
+
+	i = 0;
+    p->pip = malloc(p->cmd_count * sizeof(int *));
+	if (!p->pip)
+		err_free(p, 1);
+    while (i < p->cmd_count)
+	{
+        p->pip[i] = malloc(2 * sizeof(int));
+        if (pipe(p->pip[i]) == -1)
+		{
+            perror("pipe");
+            exit(EXIT_FAILURE);
+        }
+		i++;
+    }
+}
+
+void	init_p(t_pipex *p, int ac, char **av)
+{
+	p->av = av;
+	p->cmd_count = ac - 3;
+	p->c = 0;
+	p->x = 2;
+	p->filein = check_filein(p);
+	p->fileout = check_fileout(p);
+	p->pid = malloc(sizeof(pid_t) * p->cmd_count);
+	if (!p->pid)
+		err_free(p, 1);
+	init_pipes(p);
+}
+
+void	free_double(char **str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return ;
+	while (str[i])
+	{
+		free(str[i]);
+		str[i] = NULL;
+		i++;
+	}
+	free(str);
+	str = NULL;
+}
+
+void	free_double_int(int **str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return ;
+	while (str[i])
+	{
+		free(str[i]);
+		str[i] = 0;
+		i++;
+	}
+	free(str);
+	str = 0;
+}
+
+void	err_free(t_pipex *p, int exit_status)
+{
+	close_all(p);
+	if (p->pid)
+		free(p->pid);
+	if (p->pip)
+		free_double_int(p->pip);
+	if (p->args)
+		free_double(p->args);
+	if (p->paths)
+		free_double(p->paths);
+	if (p->path)
+		free(p->path);
+	if (p->executable)
+		free(p->executable);
+	if (p->part)
+		free(p->part);
+	exit(exit_status);
+}
+
+int	check_filein(t_pipex *p)
+{
+	p->filein = open(p->av[1], O_RDONLY);
+	if (p->filein == -1)
+	{
+		perror(p->av[1]);
+		err_free(p, 1);
+	}
+	if (access(p->av[1], F_OK) == -1)
+	{
+		perror(p->av[1]);
+		err_free(p, 1);
+	}
+	return (p->filein);
+}
+
+int	check_fileout(t_pipex *p)
+{
+	p->fileout = open(p->av[p->cmd_count + 2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (p->fileout == -1)
+	{
+		perror(p->av[p->cmd_count + 2]);
+		err_free(p, 1);
+	}
+	if (access(p->av[p->cmd_count + 2], W_OK) == -1)
+	{
+		perror(p->av[p->cmd_count + 2]);
+		err_free(p, 1);
+	}
+	return (p->fileout);
 }
 
 /*
@@ -99,98 +182,3 @@ void	close_fds(t_pipex *p)
 		close(p->fileout);
 }
 */
-void	free_double(char **str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return ;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-	str = NULL;
-}
-
-void	err_free(t_pipex *p, int exit_status)
-{
-	if (p->pid)
-		close_pipes(p);
-	if (p->pid)
-		free(p->pid);
-	if (p->filein && p->filein != STDIN_FILENO && p->filein != -1)
-		close(p->filein);
-	if (p->fileout && p->fileout != STDOUT_FILENO && p->fileout != -1)
-		close(p->fileout);
-	if (p->args)
-		free_double(p->args);
-	if (p->paths)
-		free_double(p->paths);
-	if (p->path)
-		free(p->path);
-	if (p->executable)
-		free(p->executable);
-	if (p->part)
-		free(p->part);
-	exit(exit_status);
-}
-/*
-void	check_file(int i, char **av, t_pipex *p)
-{
-	if (i == p->cmd_count + 2)
-		p->file = open(av[i], O_RDWR | O_CREAT | O_TRUNC, 0644);
-	else
-		p->file = open(av[i], O_RDONLY);
-	if (p->file == -1)
-	{
-		perror(av[i]);
-		err_free(p, 1);
-	}
-	if (i == p->cmd_count + 2 && (access(av[i], W_OK) == -1)
-		&& (access(av[i], R_OK) == -1))
-	{
-		perror(av[i]);
-		err_free(p, 1);
-	}
-	else if (i != p->cmd_count + 2 && (access(av[i], F_OK) == -1))
-	{
-		perror(av[i]);
-		err_free(p, 1);
-	}
-	close(p->file);
-}
-*/
-int	check_filein(char **av, t_pipex *p)
-{
-	p->filein = open(av[1], O_RDONLY);
-	if (p->filein == -1)
-	{
-		perror(av[1]);
-		err_free(p, 1);
-	}
-	if (access(av[1], F_OK) == -1)
-	{
-		perror(av[1]);
-		err_free(p, 1);
-	}
-	return (p->filein);
-}
-
-int	check_fileout(char **av, t_pipex *p)
-{
-	p->fileout = open(av[p->cmd_count + 3], O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	if (p->fileout == -1)
-	{
-		perror(av[p->cmd_count + 3]);//
-		err_free(p, 1);
-	}
-	if (access(av[p->cmd_count + 3], W_OK) == -1)
-	{
-		perror(av[p->cmd_count + 3]);
-		err_free(p, 1);
-	}
-	return (p->fileout);
-}
