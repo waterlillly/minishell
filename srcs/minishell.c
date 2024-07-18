@@ -150,20 +150,44 @@ char	*ft_strcat(char *dst, char *src)
 		ft_strlcat(dst, tmp, len_a + 1);
 	ft_strlcat(dst, src, len_b + len_a + 1);
 	free(tmp);
-	free(src);
 	return (dst);
+}
+
+char	**big_split()
+
+char	**shel_split(char *input)
+{
+	  char	**out;
+
+	  out = big_split(input);
+}
+
+t_minishell_l	*lex(char *input)
+{
+	t_minishell_l	*out;
+	char			**tmp;
+
+	tmp = shell_split(input);
 }
 
 int	main(void)
 {
+	t_minishell_l	*lexed;
 	static char		*line[2];
 	char			*input;
 	input = NULL;
+	while (1)
+	{
 		ft_putstr_fd("this is a legit minishell $>", 1);
-		while (open_line(input))
-		{
-			get_next_line(0, line);
-			input = ft_strcat(input, line[0]);
-		}
+		get_next_line(0, line);
+		input = ft_strcat(input, line[0]);
+		free(line[0]);
+		if (open_line(input))
+			return (0);
+		lexed = lex(input);
+		if (!ft_strncmp(input, "done", 4))
+			return (0);
 		ft_putendl_fd(input, 1);
+		free(input);
+	}
 }
