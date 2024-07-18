@@ -14,6 +14,7 @@ typedef enum e_token
 	HEREDOC
 }	t_token;
 
+
 typedef struct s_minishell_l
 {
 	char					*input;
