@@ -6,15 +6,15 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/17 18:07:22 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:25:00 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	check_filein(t_pipex *p)
+void	check_filein(t_pipex *p)
 {
-	p->filein = open(p->av[1], O_RDONLY);
+	p->filein = open(p->av[1], O_RDONLY, 0644);
 	if (p->filein == -1)
 	{
 		perror(p->av[1]);
@@ -25,10 +25,9 @@ int	check_filein(t_pipex *p)
 		perror(p->av[1]);
 		err_free(p, 1);
 	}
-	return (p->filein);
 }
 
-int	check_fileout(t_pipex *p)
+void	check_fileout(t_pipex *p)
 {
 	p->fileout = open(p->av[p->cmd_count + 2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (p->fileout == -1)
@@ -41,7 +40,6 @@ int	check_fileout(t_pipex *p)
 		perror(p->av[p->cmd_count + 2]);
 		err_free(p, 1);
 	}
-	return (p->fileout);
 }
 
 void init_pipes(t_pipex *p)
@@ -77,14 +75,15 @@ void	create_pipes(t_pipex *p)
 	}
 }
 
-void	init_p(t_pipex *p, int ac, char **av)
+void	init_p(t_pipex *p, int ac, char **av, char **envp)
 {
 	p->av = av;
-	p->cmd_count = ac - 3;
+	p->filein = -1;
+	p->hd = -1;
+	p->fileout = -1;
 	p->c = 0;
-	p->x = 2;
-	p->filein = check_filein(p);
-	p->fileout = check_fileout(p);
+	here_or_not(ac, av, p, envp);
+	check_fileout(p);
 	p->status = 0;
 	p->pid = NULL;
 	p->args = NULL;

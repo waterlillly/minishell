@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:42:08 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/17 18:07:36 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:25:03 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ int	main(int ac, char **av, char **envp)
 {
 	t_pipex	p;
 
-	if (ac < 5)
-		exit(EXIT_FAILURE);//msg
-	init_p(&p, ac, av);
+	check_args(ac, av, envp);
+	init_p(&p, ac, av, envp);
 	create_pipes(&p);
 	while (p.c < p.cmd_count)
 	{
