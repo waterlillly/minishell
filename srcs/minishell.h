@@ -27,6 +27,8 @@ typedef struct s_minishell_p
 {
 	char					**str;
 	int						redir;
+	char					*infile;
+	bool					outfile;
 	t_minishell_l			*redirect;
 	struct s_minishell_p	*next;
 	struct s_minishell_p	*prev;
