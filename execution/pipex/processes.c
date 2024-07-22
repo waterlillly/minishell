@@ -82,6 +82,7 @@ void	last(t_pipex *p, int *c)
 	{
 		if (dup2(STDOUT_FILENO, p->copy_stdout) == -1)
 			err_free(p, 1);
+		close(p->copy_stdout);
 	}
 	//else
 	//{
