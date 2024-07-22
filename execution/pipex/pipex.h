@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/21 18:07:11 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:42:33 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,13 @@
 #  define BUFFER_SIZE 1
 # endif
 
+# include <features.h>
+# include <signal.h>
+# include <sys/signal.h>
+# include <term.h>
+# include <dirent.h>
+# include <sys/ioctl.h>
 # include "../../libft/libft.h"
-# include "../../parsing/minishell.h"
 # include <sys/wait.h>
 # include <stdlib.h>
 # include <stddef.h>
@@ -29,18 +34,25 @@
 # include <errno.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <complex.h>
 # include <stdbool.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include "../../parsing/minishell.h"
 
 typedef struct s_pipex
 {
 	pid_t	*pid;
 	int		**pip;
 	char	**av;
-	int		c;
-	int		x;
-	int		hd;
+	char	**envp;
+	int		ac;
+	int		x;//first cmd
+	int		temp;
 	int		filein;
 	int		fileout;
+	bool	in;
+	bool	out;
 	int		status;
 	int		cmd_count;
 	char	*delimiter;
@@ -54,9 +66,9 @@ typedef struct s_pipex
 }			t_pipex;
 
 /*PIPEX*/
-void	find_path(t_pipex *p, char **envp);
+void	find_path(t_pipex *p);
 char	*is_exec(t_pipex *p);
-void	exec_cmd(char **av, int x, t_pipex *p, char **envp);
+void	exec_cmd(t_pipex *p);
 
 /*ERROR*/
 void	close_pipes(t_pipex *p);
@@ -66,36 +78,28 @@ void	err_free_two(t_pipex *p);
 void	err_free(t_pipex *p, int exit_status);
 
 /*INIT*/
+//void	temp_file(t_pipex *p);
 void	check_filein(t_pipex *p);
 void	check_fileout(t_pipex *p);
 void 	init_pipes(t_pipex *p);
 void	create_pipes(t_pipex *p);
-void	init_p(t_pipex *p, int ac, char **av, char **envp);
+void	init_p(t_pipex *p);
 //void	check_in(t_pipex *p);
 //void	check_out(t_pipex *p);
 
 /*PROCESSES*/
-void	first(t_pipex *p, char **envp);
-void	middle(t_pipex *p, char **envp);
-void	last(t_pipex *p, char **envp);
-void	do_child(t_pipex *p, char **envp);
+//void	output_temp(t_pipex *p);
+void	first(t_pipex *p, int *c);
+void	middle(t_pipex *p, int *c);
+void	last(t_pipex *p, int *c);
+void	do_child(t_pipex *p, int *c);
 
 /*CHECK*/
-void	ft_count_args(t_pipex *p, int ac, char **av);
 int		check_empty(char **av);
-void	check_args(int ac, char **av, char **envp);
+void	check_args(t_pipex *p, int ac, char **av, char **envp);
 
 /*HERE_DOC*/
-void	create_hd(t_pipex *p);
-int		ft_str_search(const char *big_one, const char *lil_one);
-char	*ft_duplicate(char *str, int n);
-void	first_heredoc(t_pipex *p, char **envp);
-void	here_or_not(int ac, char **av, t_pipex *p, char **envp);
-
-/*GET_NEXT_LINE*/
-char	*get_next_line(int fd);
-char	*ft_buf(char *buf, int *x);
-char	*ft_next(char *buf, int fd);
-char	*ft_rest(int x, char *buf);
+void	first_heredoc(t_pipex *p);
+void	here_or_not(t_pipex *p);
 
 #endif

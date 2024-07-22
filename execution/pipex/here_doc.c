@@ -6,116 +6,115 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:55:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/21 18:07:18 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:42:29 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	create_hd(t_pipex *p)
+// signal_reset
+// {
+// 	if (g_sig = SIGINT)
+// 		errno_code = 130;
+// 	if (g_sig = SIgQUIT)
+// 		errno_code = 131;
+// 	g_sig = 0;	
+// }
+
+// int heredoc(t_pipex *p)
+// {
+// 	if (g_sig != 0)
+// 	{
+// 		reset_signal(mini, g_sig)
+// 	}
+// 	while (1)
+// 	{
+// 		if (first_heredoc(p) == 1)
+// 			break;
+// 	}
+// }
+
+/*
+int	read_heredoc(char *lim)
 {
-	p->hd = open("hd", O_CREAT, O_RDWR, O_TRUNC, 0644);
-	if (p->hd == -1)
+	char	*line;
+	int		hd;
+	
+	line = NULL;
+	hd = -1;
+	hd = open("hd", O_CREAT, O_RDWR, O_APPEND, 0777);
+	if (hd == -1)
 	{
-		perror("open");
-		err_free(p, 1);
+		perror("hd");
+		exit(EXIT_FAILURE);
 	}
+	line = readline("> ");
+	while (line && !ft_strcmp(line, lim))
+	{
+		ft_putstr_fd(line, hd);
+		free(line);
+		line = NULL;
+		line = readline("> ");
+	}
+	close(hd);
+	return (hd);
 }
 
-int	ft_str_search(const char *big_one, const char *lil_one)
+int	heredoc(int ac, char **av)
 {
-	char	*big;
-	char	*lil;
 	int		x;
-	int		y;
+	int		hd;
+	char	*lim;
 
-	big = (char *)big_one;
-	lil = (char *)lil_one;
-	x = 0;
-	while (big[x])
+	x = 1;//dont check av[0] 
+	hd = -1;
+	lim = NULL;
+	while (av[x] && x < ac)
 	{
-		y = 0;
-		if (big[x] && big[x] == lil[0])
+		if (ft_strcmp(av[x], "here_doc"))
 		{
-			y = 0;
-			while (big[x] && lil[y] && big[x] == lil[y])
-			{
-				x++;
-				y++;
-			}
-			if (lil[y] == '\0')
-				return (x - y - 1);
+			lim = av[x + 1];
+			hd = read_heredoc(lim);
+			return (hd);
 		}
 		x++;
 	}
 	return (-1);
 }
-
-char	*ft_duplicate(char *str, int n)
-{
-	int		x;
-	char	*s;
-	char	*new;
-
-	x = 0;
-	s = (char *)str;
-	new = malloc(sizeof(char) * (n + 1));
-	if (!new)
-		return (NULL);
-	while (s[x] && x <= n)
-	{
-		new[x] = s[x];
-		x++;
-	}
-	new[x] = '\0';
-	free(str);
-	str = NULL;
-	return (new);
-}
-
-void	first_heredoc(t_pipex *p, char **envp)//////////////
+*/
+void	first_heredoc(t_pipex *p)
 {
 	char	*line;
-	char	*last;
-	int		x;
 	
 	line = NULL;
-	last = NULL;
-	create_hd(p);
-	line = get_next_line(STDIN_FILENO);
-	x = ft_str_search(line, p->delimiter);
-	while (x < 0)
+	check_filein(p);
+	line = readline("> ");
+	while (line && !ft_strcmp(line, p->delimiter))
 	{
-		ft_putstr_fd(line, p->hd);
+		ft_putstr_fd(line, p->filein);
 		free(line);
 		line = NULL;
-		line = get_next_line(STDIN_FILENO);
-		x = ft_str_search(line, p->delimiter);
+		line = readline("> ");
 	}
-	last = ft_duplicate(line, x);
-	ft_putstr_fd(last, p->hd);
-	free(last);
-	last = NULL;
-	p->filein = p->hd;
-	close(p->hd);
-	first(p, envp);
+	free(line);
+	line = NULL;
 }
 
-void	here_or_not(int ac, char **av, t_pipex *p, char **envp)
+void	here_or_not(t_pipex *p)
 {
-	if (!ft_strcmp(av[1], "here_doc"))
+	if (!ft_strcmp(p->av[1], "here_doc"))
 	{
 		p->x = 2;
-		p->cmd_count = ac - 3;
-		//check_in(p);
-		check_filein(p);
+		p->cmd_count = p->ac - 3;
 		p->delimiter = NULL;
+		if (p->in == true)
+			check_filein(p);
 	}
 	else
 	{
 		p->x = 3;
-		p->delimiter = av[2];
-		p->cmd_count = ac - 4;
-		first_heredoc(p, envp);
+		p->delimiter = p->av[2];
+		p->cmd_count = p->ac - 4;
+		first_heredoc(p);
 	}
 }

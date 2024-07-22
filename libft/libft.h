@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:41:15 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/06/25 14:58:03 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:20:35 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
+ #ifndef BUFFER_SIZE
+ # define BUFFER_SIZE 1
+ #endif
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -46,6 +50,7 @@ void	*ft_memchr(const void *s, int c, size_t n);
 void	*ft_calloc(size_t xnmemb, size_t size);
 char	*ft_substr(const char *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin_free(char *s1, char *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 void	ft_putchar_fd(char c, int fd);
@@ -67,6 +72,12 @@ double	ft_atof(char *s);
 int		ft_isalpha_extend(int n);
 int		ft_isprint_extend(int n);
 int		ft_isascii_extend(int n);
+
+/*GET_NEXT_LINE*/
+char	*get_next_line(int fd);
+char	*ft_buf(char *buf, int *x);
+char	*ft_next(char *buf, int fd);
+char	*ft_rest(int x, char *buf);
 
 #endif
 

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:42:08 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/21 18:07:23 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:42:35 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,21 @@ void	minishell(int ac, char **av, t_minishell_p *m)
 */
 int	main(int ac, char **av, char **envp)
 {
-	t_pipex			p;
-	//t_minishell_p	*m;
+	t_pipex	p;
+	int		c;
 
-	//m = NULL;
-	//minishell(ac, av, m);
-	check_args(ac, av, envp);
-	//p.m = m;
-	init_p(&p, ac, av, envp);
+	c = 0;
+	check_args(&p, ac, av, envp);
+	init_p(&p);
 	create_pipes(&p);
-	while (p.c < p.cmd_count)
+	while (c < p.cmd_count)
 	{
-		p.pid[p.c] = fork();
-		if (p.pid[p.c] == -1)
+		p.pid[c] = fork();
+		if (p.pid[c] == -1)
 			err_free(&p, 1);
-		if (p.pid[p.c] == 0)
-			do_child(&p, envp);
-		p.c++;
+		if (p.pid[c] == 0)
+			do_child(&p, &c);
+		c++;
 		p.x++;
 	}
 	if (wait(NULL) != -1)
@@ -50,6 +48,7 @@ int	main(int ac, char **av, char **envp)
 		if (WIFEXITED(p.status))
 			p.status = WEXITSTATUS(p.status);
 	}
+	//output_temp(&p);
 	err_free(&p, p.status);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/21 18:06:24 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:05:04 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,27 @@ char	*is_exec(t_pipex *p)
 	return (0);
 }
 
-void	find_path(t_pipex *p, char **envp)
+void	find_path(t_pipex *p)
 {
 	int		i;
 
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH", 4) == 0)
+	while (ft_strnstr(p->envp[i], "PATH", 4) == 0)
 		i++;
-	p->paths = ft_split(envp[i] + 5, ':');
+	p->paths = ft_split(p->envp[i] + 5, ':');
 	if (!p->paths)
 		err_free(p, 1);
 	p->path = is_exec(p);
 }
 
-void	exec_cmd(char **av, int x, t_pipex *p, char **envp)
+void	exec_cmd(t_pipex *p)
 {
-	p->args = ft_split(av[x], ' ');
+	p->args = ft_split(p->av[p->x], ' ');
 	if (!p->args)
 		err_free(p, 1);
 	p->cmd = p->args[0];
-	find_path(p, envp);
-	execve(p->path, p->args, envp);
+	find_path(p);
+	execve(p->path, p->args, p->envp);
 	perror("Execve");
 	err_free(p, 1);
 }

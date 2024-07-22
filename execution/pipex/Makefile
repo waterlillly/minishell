@@ -6,7 +6,7 @@
 #    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/13 06:42:03 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/07/21 13:36:01 by lbaumeis         ###   ########.fr        #
+#    Updated: 2024/07/22 17:56:00 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,24 +16,25 @@ CFLAGS = -Wall -Werror -Wextra -g
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
 
-CFILES = main.c pipex.c error.c init.c processes.c check.c
-CFILES += here_doc.c gnl_bonus.c
+CFILES = main.c pipex.c error.c init.c processes.c check.c here_doc.c
 OFILES = $(CFILES:.c=.o)
 P_NAME = pipex
 
 all: $(P_NAME)
 
 $(P_NAME): $(OFILES)
-	($(MAKE) -C ./libft)
-	$(CC) $(CFLAGS) -o $@ $^ ./libft/libft.a
+	($(MAKE) -C ../../libft)
+	$(CC) $(CFLAGS) -o $@ $^ ../../libft/libft.a -lreadline
 
 clean:
-	($(MAKE) -C ./libft clean)
+	($(MAKE) -C ../../libft clean)
 	rm -f $(OFILES)
 
 fclean: clean
-	($(MAKE) -C ./libft fclean)
+	($(MAKE) -C ../../libft fclean)
 	rm -f $(P_NAME)
+	rm -f out
+	rm -f hd
 
 re: fclean all
 

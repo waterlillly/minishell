@@ -6,38 +6,57 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/21 18:07:20 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:42:31 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	check_filein(t_pipex *p)
+/*
+void	temp_file(t_pipex *p)
 {
-	p->filein = open(p->av[1], O_RDONLY, 0644);
-	if (p->filein == -1)
+	p->temp = open("temp", O_RDWR, 0644);
+	if (p->temp == -1 || access("temp", F_OK) == -1)
 	{
-		perror(p->av[1]);
+		perror("temp");
 		err_free(p, 1);
 	}
-	if (access(p->av[1], F_OK) == -1)
+}
+*/
+void	check_filein(t_pipex *p)
+{
+	char	*str;
+
+	str = NULL;
+	if (p->delimiter)
 	{
-		perror(p->av[1]);
+		p->filein = open("hd", O_CREAT | O_RDWR, 0644);
+		str = ft_strdup("hd");
+	}
+	else
+	{
+		p->filein = open(p->av[1], O_RDONLY, 0644);
+		str = p->av[1];
+	}
+	if (p->filein == -1 || access(str, F_OK) == -1)
+	{
+		perror(str);
 		err_free(p, 1);
 	}
 }
 
 void	check_fileout(t_pipex *p)
 {
-	p->fileout = open(p->av[p->cmd_count + 2], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (p->fileout == -1)
+	int	x;
+
+	x = 0;
+	if (p->delimiter)
+		x = p->cmd_count + 3;
+	else
+		x = p->cmd_count + 2;
+	p->fileout = open(p->av[x], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (p->fileout == -1 || access(p->av[x], W_OK) == -1)
 	{
-		perror(p->av[p->cmd_count + 2]);
-		err_free(p, 1);
-	}
-	if (access(p->av[p->cmd_count + 2], W_OK) == -1)
-	{
-		perror(p->av[p->cmd_count + 2]);
+		perror(p->av[x]);
 		err_free(p, 1);
 	}
 }
@@ -111,17 +130,18 @@ void	check_out(t_pipex *p)
 	}
 }
 */
-void	init_p(t_pipex *p, int ac, char **av, char **envp)
+void	init_p(t_pipex *p)
 {
-	//p->av = p->m->str;
-	p->av = av;
 	p->filein = -1;
-	p->hd = -1;
 	p->fileout = -1;
-	p->c = 0;
-	here_or_not(ac, av, p, envp);
+	//p->temp = -1;
+	//add check for in and out
+	p->in = true;
+	p->out = true;
+	here_or_not(p);
+	if (p->out == true)
 	//check_out(p);
-	check_fileout(p);
+		check_fileout(p);
 	p->status = 0;
 	p->pid = NULL;
 	p->args = NULL;
