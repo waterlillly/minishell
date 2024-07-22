@@ -78,6 +78,11 @@ void	last(t_pipex *p, int *c)
 		if (dup2(p->fileout, STDOUT_FILENO) == -1)
 			err_free(p, 1);
 	}
+	else
+	{
+		if (dup2(STDOUT_FILENO, p->copy_stdout) == -1)
+			err_free(p, 1);
+	}
 	//else
 	//{
 	//	temp_file(p);
