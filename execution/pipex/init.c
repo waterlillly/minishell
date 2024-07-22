@@ -134,9 +134,7 @@ void	init_p(t_pipex *p)
 {
 	p->filein = -1;
 	p->fileout = -1;
-	p->copy_stdout = -1;
-	if (dup(p->copy_stdout, STDOUT_FILENO) == -1)
-		err_free(p, 1);
+	p->copy_stdout = dup(STDOUT_FILENO);
 	//p->temp = -1;
 	//add check for in and out
 	p->in = true;
