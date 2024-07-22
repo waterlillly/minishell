@@ -48,7 +48,7 @@ typedef struct s_pipex
 	char	**envp;
 	int		ac;
 	int		x;//first cmd
-	int		temp;
+	int		copy_stdout;
 	int		filein;
 	int		fileout;
 	bool	in;
