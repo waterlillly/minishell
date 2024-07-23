@@ -6,11 +6,12 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:51 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/22 18:42:36 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:22:34 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
 /*
 void	output_temp(t_pipex *p)
 {
@@ -84,12 +85,6 @@ void	last(t_pipex *p, int *c)
 			err_free(p, 1);
 		close(p->copy_stdout);
 	}
-	//else
-	//{
-	//	temp_file(p);
-	//	if (dup2(p->temp, STDOUT_FILENO) == -1)
-	//		err_free(p, 1);
-	//}
 	close_pipes(p);
 	exec_cmd(p);
 	err_free(p, 1);
@@ -114,7 +109,12 @@ void	last(t_pipex *p)
 void	do_child(t_pipex *p, int *c)
 {
 	if (*c == 0)
-		first(p, c);
+	{
+		if (p->cwd)
+			no_infile_exec(p, c);
+		else
+			first(p, c);
+	}
 	else if (*c == p->cmd_count - 1)
 		last(p, c);
 	else

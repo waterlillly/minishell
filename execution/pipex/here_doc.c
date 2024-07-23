@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:55:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/22 18:42:29 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:20:09 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,60 +34,17 @@
 // 	}
 // }
 
-/*
-int	read_heredoc(char *lim)
-{
-	char	*line;
-	int		hd;
-	
-	line = NULL;
-	hd = -1;
-	hd = open("hd", O_CREAT, O_RDWR, O_APPEND, 0777);
-	if (hd == -1)
-	{
-		perror("hd");
-		exit(EXIT_FAILURE);
-	}
-	line = readline("> ");
-	while (line && !ft_strcmp(line, lim))
-	{
-		ft_putstr_fd(line, hd);
-		free(line);
-		line = NULL;
-		line = readline("> ");
-	}
-	close(hd);
-	return (hd);
-}
-
-int	heredoc(int ac, char **av)
-{
-	int		x;
-	int		hd;
-	char	*lim;
-
-	x = 1;//dont check av[0] 
-	hd = -1;
-	lim = NULL;
-	while (av[x] && x < ac)
-	{
-		if (ft_strcmp(av[x], "here_doc"))
-		{
-			lim = av[x + 1];
-			hd = read_heredoc(lim);
-			return (hd);
-		}
-		x++;
-	}
-	return (-1);
-}
-*/
 void	first_heredoc(t_pipex *p)
 {
 	char	*line;
 	
 	line = NULL;
-	check_filein(p);
+	p->filein = open("hd", O_CREAT | O_RDWR | O_TRUNC, 0666);
+	if (p->filein == -1 || access("hd", R_OK) == -1 || access("hd", W_OK) == -1)
+	{
+		perror("hd");
+		err_free(p, 1);
+	}
 	line = readline("> ");
 	while (line && !ft_strcmp(line, p->delimiter))
 	{
@@ -100,21 +57,55 @@ void	first_heredoc(t_pipex *p)
 	line = NULL;
 }
 
+void	adjust_struct(t_pipex *p)
+{
+	if (p->in == true)
+	{
+		p->x = 2;
+		if (p->out == true)
+			p->cmd_count = p->ac - 3;
+		else
+			p->cmd_count = p->ac - 2;
+	}
+	else if (p->in == false)
+	{
+		read_cwd(p);
+		p->x = 1;
+		if (p->out == true)
+			p->cmd_count = p->ac - 2;
+		else
+			p->cmd_count = p->ac - 1;
+	}
+}
+
+void	adjust_struct_here(t_pipex *p)
+{
+	if (p->in == false)
+	{
+		p->x = 3;
+		if (p->out == true)
+			p->cmd_count = p->ac - 4;
+		else
+			p->cmd_count = p->ac - 3;
+	}
+	else
+		err_free(p, 1);
+}
+
 void	here_or_not(t_pipex *p)
 {
 	if (!ft_strcmp(p->av[1], "here_doc"))
 	{
-		p->x = 2;
-		p->cmd_count = p->ac - 3;
 		p->delimiter = NULL;
-		if (p->in == true)
-			check_filein(p);
+		p->here = false;
+		adjust_struct(p);
+		check_filein(p);
 	}
 	else
 	{
-		p->x = 3;
 		p->delimiter = p->av[2];
-		p->cmd_count = p->ac - 4;
+		p->here = true;
+		adjust_struct_here(p);
 		first_heredoc(p);
 	}
 }

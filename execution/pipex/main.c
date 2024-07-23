@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:42:08 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/22 18:42:35 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:39:18 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	main(int ac, char **av, char **envp)
 	c = 0;
 	check_args(&p, ac, av, envp);
 	init_p(&p);
-	create_pipes(&p);
 	while (c < p.cmd_count)
 	{
 		p.pid[c] = fork();
@@ -48,7 +47,6 @@ int	main(int ac, char **av, char **envp)
 		if (WIFEXITED(p.status))
 			p.status = WEXITSTATUS(p.status);
 	}
-	//output_temp(&p);
 	err_free(&p, p.status);
 	return (0);
 }

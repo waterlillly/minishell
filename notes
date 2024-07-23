@@ -5,7 +5,7 @@ NOTES
 ->no infile, get current location and execute it without an infile
 
 ->check for each command if there is an input, as well as a file to write it to
--->if last command and no outfile is given-> stdout, else: run cmd but do not store it
+-->if last command and no outfile is given-> stdout, else: run cmd but do not store it DONE
 
 ->execute a single command, without pipes or redirections
 

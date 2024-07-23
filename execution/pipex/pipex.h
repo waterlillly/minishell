@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/22 18:42:33 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:30:20 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <dirent.h>
 # include "../../parsing/minishell.h"
 
 typedef struct s_pipex
@@ -46,6 +47,7 @@ typedef struct s_pipex
 	int		**pip;
 	char	**av;
 	char	**envp;
+	char	*cwd;
 	int		ac;
 	int		x;//first cmd
 	int		copy_stdout;
@@ -53,6 +55,7 @@ typedef struct s_pipex
 	int		fileout;
 	bool	in;
 	bool	out;
+	bool	here;
 	int		status;
 	int		cmd_count;
 	char	*delimiter;
@@ -82,7 +85,6 @@ void	err_free(t_pipex *p, int exit_status);
 void	check_filein(t_pipex *p);
 void	check_fileout(t_pipex *p);
 void 	init_pipes(t_pipex *p);
-void	create_pipes(t_pipex *p);
 void	init_p(t_pipex *p);
 //void	check_in(t_pipex *p);
 //void	check_out(t_pipex *p);
@@ -100,6 +102,13 @@ void	check_args(t_pipex *p, int ac, char **av, char **envp);
 
 /*HERE_DOC*/
 void	first_heredoc(t_pipex *p);
+void	adjust_struct(t_pipex *p);
+void	adjust_struct_here(t_pipex *p);
 void	here_or_not(t_pipex *p);
+
+/*NO_INFILE*/
+void	no_infile_exec(t_pipex *p, int *c);
+void	get_cur_cwd(t_pipex *p);
+void	read_cwd(t_pipex *p);
 
 #endif

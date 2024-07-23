@@ -6,7 +6,7 @@
 #    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/13 06:42:03 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/07/22 17:56:00 by lbaumeis         ###   ########.fr        #
+#    Updated: 2024/07/23 15:43:50 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Werror -Wextra -g
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
 
-CFILES = main.c pipex.c error.c init.c processes.c check.c here_doc.c
+CFILES = main.c pipex.c error.c init.c processes.c check.c here_doc.c no_infile.c
 OFILES = $(CFILES:.c=.o)
 P_NAME = pipex
 
@@ -35,6 +35,7 @@ fclean: clean
 	rm -f $(P_NAME)
 	rm -f out
 	rm -f hd
+	rm -f cur_dir_cont
 
 re: fclean all
 
