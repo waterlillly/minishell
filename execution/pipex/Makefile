@@ -6,7 +6,7 @@
 #    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/13 06:42:03 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/07/23 15:43:50 by lbaumeis         ###   ########.fr        #
+#    Updated: 2024/07/24 16:48:25 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,17 +25,20 @@ all: $(P_NAME)
 $(P_NAME): $(OFILES)
 	($(MAKE) -C ../../libft)
 	$(CC) $(CFLAGS) -o $@ $^ ../../libft/libft.a -lreadline
+	rm -f out
+	rm -f hd
 
 clean:
 	($(MAKE) -C ../../libft clean)
 	rm -f $(OFILES)
+	rm -f out
+	rm -f hd
 
 fclean: clean
 	($(MAKE) -C ../../libft fclean)
 	rm -f $(P_NAME)
 	rm -f out
 	rm -f hd
-	rm -f cur_dir_cont
 
 re: fclean all
 

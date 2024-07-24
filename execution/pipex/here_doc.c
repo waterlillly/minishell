@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:55:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/23 19:20:09 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:48:20 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,24 @@ void	first_heredoc(t_pipex *p)
 	char	*line;
 	
 	line = NULL;
-	p->filein = open("hd", O_CREAT | O_RDWR | O_TRUNC, 0666);
+	p->filein = open("hd", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (p->filein == -1 || access("hd", R_OK) == -1 || access("hd", W_OK) == -1)
 	{
 		perror("hd");
 		err_free(p, 1);
 	}
-	line = readline("> ");
+	line = readline("heredoc> ");
 	while (line && !ft_strcmp(line, p->delimiter))
 	{
 		ft_putstr_fd(line, p->filein);
+		ft_putchar_fd('\n', p->filein);
 		free(line);
 		line = NULL;
 		line = readline("> ");
 	}
 	free(line);
 	line = NULL;
+	close(p->filein);
 }
 
 void	adjust_struct(t_pipex *p)
@@ -69,7 +71,7 @@ void	adjust_struct(t_pipex *p)
 	}
 	else if (p->in == false)
 	{
-		read_cwd(p);
+		get_cur_cwd(p);
 		p->x = 1;
 		if (p->out == true)
 			p->cmd_count = p->ac - 2;

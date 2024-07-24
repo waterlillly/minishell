@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:04:36 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/23 18:03:02 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:48:16 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,9 @@ void	err_free(t_pipex *p, int exit_status)
 		free(p->part);
 		p->part = NULL;
 	}
-	if (p->copy_stdout)
+	if (p->copy_stdout && p->copy_stdout != -1)
 		close(p->copy_stdout);
+	if (p->here)
+		unlink("hd");
 	exit(exit_status);
 }

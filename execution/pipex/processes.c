@@ -6,35 +6,48 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:51 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/23 18:22:34 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:48:11 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-/*
-void	output_temp(t_pipex *p)
+void	single_exec(t_pipex *p)
 {
-	char	*line;
-	
-	line = NULL;
-	if (p->temp)
+	if (!p->cwd)
 	{
-		line = get_next_line(p->temp);
-		while (line)
+		if (p->here == true)
 		{
-			ft_printf("%s", line);
-			free(line);
-			line = NULL;
-			line = get_next_line(p->temp);
+			p->filein = open("hd", O_RDONLY);
+			if (p->filein == -1 || access("hd", R_OK) == -1)
+				err_free(p, 1);
 		}
-		close(p->temp);
+		if (dup2(p->filein, STDIN_FILENO) == -1)
+			err_free(p, 1);
 	}
+	if (p->out == true)
+	{
+		if (dup2(p->fileout, STDOUT_FILENO) == -1)
+			err_free(p, 1);
+	}
+	if (p->here)
+		unlink("hd");
+	if (p->filein)
+		close(p->filein);
+	if (p->fileout)
+		close(p->fileout);
+	exec_cmd(p);
+	err_free(p, 1);
 }
-*/
 
 void	first(t_pipex *p, int *c)
 {
+	if (p->here == true)
+	{
+		p->filein = open("hd", O_RDONLY);
+		if (p->filein == -1 || access("hd", R_OK) == -1)
+			err_free(p, 1);
+	}
 	if (dup2(p->filein, STDIN_FILENO) == -1)
 		err_free(p, 1);
 	if (dup2(p->pip[*c][1], STDOUT_FILENO) == -1)

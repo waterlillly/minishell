@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/23 13:35:08 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:29:54 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*is_exec(t_pipex *p)
 	int	i;
 
 	i = 0;
+	if (access(p->cmd, X_OK) == 0)
+		return (p->cmd);
 	while (p->paths[i])
 	{
 		p->executable = ft_strjoin(p->paths[i], "/");
@@ -57,10 +59,7 @@ void	exec_cmd(t_pipex *p)
 	if (!p->args)
 		err_free(p, 1);
 	p->cmd = p->args[0];
-	if (!p->cwd)
-		find_path(p);
-	else
-		p->path = p->cwd;
+	find_path(p);
 	execve(p->path, p->args, p->envp);
 	perror("Execve");
 	err_free(p, 1);

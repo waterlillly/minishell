@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:42:08 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/23 18:39:18 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:48:18 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	minishell(int ac, char **av, t_minishell_p *m)
 	m->redirect = NULL;
 }
 */
+
 int	main(int ac, char **av, char **envp)
 {
 	t_pipex	p;
@@ -32,7 +33,9 @@ int	main(int ac, char **av, char **envp)
 	c = 0;
 	check_args(&p, ac, av, envp);
 	init_p(&p);
-	while (c < p.cmd_count)
+	if (p.cmd_count == 1)
+		single_exec(&p);
+	while (c < p.cmd_count && p.cmd_count > 1)
 	{
 		p.pid[c] = fork();
 		if (p.pid[c] == -1)
@@ -42,7 +45,7 @@ int	main(int ac, char **av, char **envp)
 		c++;
 		p.x++;
 	}
-	if (wait(NULL) != -1)
+	if (wait(NULL) != -1 && p.cmd_count > 1)
 	{
 		if (WIFEXITED(p.status))
 			p.status = WEXITSTATUS(p.status);

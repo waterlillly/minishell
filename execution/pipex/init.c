@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/23 19:11:15 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:48:22 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,14 @@ void	check_filein(t_pipex *p)
 	if (!p->delimiter && !p->cwd)
 	{
 		p->filein = open(p->av[1], O_RDONLY, 0644);
-		str = p->av[1];
+		{
+			if (p->filein == -1 || access(p->av[1], R_OK) == -1)
+			{
+				perror(p->av[1]);
+				err_free(p, 1);
+			}
+		}
 	}
-	else if (!p->delimiter && p->cwd)
-		str = ft_strdup("cur_dir_cont");
-	if (p->filein == -1 || access(str, R_OK) == -1)
-	{
-		perror(str);
-		err_free(p, 1);
-	}
-
 }
 
 void	check_fileout(t_pipex *p)
@@ -53,7 +51,7 @@ void init_pipes(t_pipex *p)
     p->pip = malloc(p->cmd_count * sizeof(int *));
 	if (!p->pip)
 		err_free(p, 1);
-    while (i < p->cmd_count)
+    while (i < p->cmd_count && p->cmd_count != 1)
 	{
         p->pip[i] = malloc(sizeof(int) * 2);
 		if (!p->pip[i])
@@ -111,6 +109,8 @@ void	init_p(t_pipex *p)
 	p->fileout = -1;
 	p->cwd = NULL;
 	p->copy_stdout = dup(STDOUT_FILENO);
+	if (p->copy_stdout == -1)
+		err_free(p, 1);
 	//add check for in and out
 	p->in = false;
 	p->out = false;

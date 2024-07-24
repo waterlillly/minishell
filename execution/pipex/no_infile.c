@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 14:12:19 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/23 18:38:49 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:48:14 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,7 @@ int closedir(DIR *dirp); (success: 0, err: -1)
 
 void	no_infile_exec(t_pipex *p, int *c)
 {
-	if (dup2(p->filein, STDIN_FILENO) == -1)
-		err_free(p, 1);
 	if (dup2(p->pip[*c][1], STDOUT_FILENO) == -1)
-		err_free(p, 1);
-	if (p->filein == -1)
 		err_free(p, 1);
 	close_pipes(p);
 	exec_cmd(p);
@@ -41,21 +37,24 @@ void	no_infile_exec(t_pipex *p, int *c)
 
 void	get_cur_cwd(t_pipex *p)
 {
-	p->cwd = getcwd(p->cwd, 0);
+	p->cwd = getcwd(NULL, 0);
 	if (p->cwd == NULL)
 		err_free(p, 1);
 	if (access(p->cwd, R_OK) == -1)
 		err_free(p, 1);
 }
-
+/*
 void	read_cwd(t_pipex *p)
 {
 	DIR				*dir;
 	struct dirent	*dir_content;
 
 	get_cur_cwd(p);
-	p->filein = open("cur_dir_cont", O_CREAT, O_RDONLY, 0644);
-	if (p->filein == -1)
+	if (access(p->cwd, R_OK) == -1)
+		err_free(p, 1);
+	p->filein = open("cur_dir_cont", O_CREAT | O_RDWR | O_TRUNC, 0666);
+	if (p->filein == -1 || access("cur_dir_cont", W_OK) == -1
+		|| access("cur_dir_cont", R_OK) == -1)
 		err_free(p, 1);
 	dir = opendir(p->cwd);
 	if (dir == NULL)
@@ -64,9 +63,10 @@ void	read_cwd(t_pipex *p)
 	while (dir_content)
 	{
 		ft_putstr_fd(dir_content->d_name, p->filein);
-		dir_content = NULL;
+		ft_putchar_fd('\n', p->filein);
 		dir_content = readdir(dir);
 	}
 	if (closedir(dir) == -1)
 		err_free(p, 1);
 }
+*/

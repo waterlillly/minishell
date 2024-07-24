@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/23 18:30:20 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:48:23 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	err_free_two(t_pipex *p);
 void	err_free(t_pipex *p, int exit_status);
 
 /*INIT*/
-//void	temp_file(t_pipex *p);
 void	check_filein(t_pipex *p);
 void	check_fileout(t_pipex *p);
 void 	init_pipes(t_pipex *p);
@@ -90,7 +89,7 @@ void	init_p(t_pipex *p);
 //void	check_out(t_pipex *p);
 
 /*PROCESSES*/
-//void	output_temp(t_pipex *p);
+void	single_exec(t_pipex *p);
 void	first(t_pipex *p, int *c);
 void	middle(t_pipex *p, int *c);
 void	last(t_pipex *p, int *c);
@@ -109,6 +108,7 @@ void	here_or_not(t_pipex *p);
 /*NO_INFILE*/
 void	no_infile_exec(t_pipex *p, int *c);
 void	get_cur_cwd(t_pipex *p);
-void	read_cwd(t_pipex *p);
+//void	read_cwd(t_pipex *p);
+
 
 #endif
