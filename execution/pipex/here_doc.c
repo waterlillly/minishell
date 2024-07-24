@@ -52,7 +52,7 @@ void	first_heredoc(t_pipex *p)
 		ft_putchar_fd('\n', p->filein);
 		free(line);
 		line = NULL;
-		line = readline("> ");
+		line = readline("heredoc> ");
 	}
 	free(line);
 	line = NULL;
