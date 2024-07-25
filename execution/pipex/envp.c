@@ -1,39 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check.c                                            :+:      :+:    :+:   */
+/*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/18 14:34:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/25 16:28:29 by lbaumeis         ###   ########.fr       */
+/*   Created: 2024/07/25 15:48:38 by lbaumeis          #+#    #+#             */
+/*   Updated: 2024/07/25 16:27:39 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	check_empty(char **av)
+void	get_envp(t_pipex *p)
 {
-	int	x;
+	char	*temp_env;
 
-	x = 1;
-	while (av[x])
+	p->envp = NULL;
+	temp_env = NULL;
+	temp_env = getenv("PATH");
+	if (!temp_env)
 	{
-		if (ft_strlen(av[x]) == 0)
-			return (1);
-		x++;
+		perror("envp");
+		exit(EXIT_FAILURE);
 	}
-	return (0);
-}
-
-void	check_args(t_pipex *p, int ac, char **av)
-{
-	//if (ac < 2 || check_empty(av))
-	//{
-	//	ft_putstr_fd("Invalid arguments.\n", 2);
-	//	exit(EXIT_FAILURE);
-	//}
-	p->ac = ac;
-	p->av = av;
-	get_envp(p);
+	p->envp = ft_split(temp_env, ':');
+	if (!p->envp)
+	{
+		free(temp_env);
+		temp_env = NULL;
+		perror("envp");
+		exit(EXIT_FAILURE);
+	}
+	while (*p->envp)
+	{
+		printf("%s\n", *p->envp);
+		p->envp++;
+	}
 }

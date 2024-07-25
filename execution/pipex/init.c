@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/24 16:48:22 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:47:38 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void init_pipes(t_pipex *p)
     p->pip = malloc(p->cmd_count * sizeof(int *));
 	if (!p->pip)
 		err_free(p, 1);
-    while (i < p->cmd_count && p->cmd_count != 1)
+    while (i < p->cmd_count && p->cmd_count > 1)
 	{
         p->pip[i] = malloc(sizeof(int) * 2);
 		if (!p->pip[i])

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:41:15 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/22 15:20:35 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/25 13:25:44 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	*ft_memchr(const void *s, int c, size_t n);
 void	*ft_calloc(size_t xnmemb, size_t size);
 char	*ft_substr(const char *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strjoin_free(char *s1, char *s2);
+char	*ft_strjoin_free_both(char *s1, char *s2);
+char	*ft_strjoin_free_one(char *s1, const char *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 void	ft_putchar_fd(char c, int fd);

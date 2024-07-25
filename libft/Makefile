@@ -6,9 +6,9 @@ CFILES += ft_atoi.c ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c
 CFILES += ft_strtrim.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c
 CFILES += ft_putendl_fd.c ft_putnbr_fd.c ft_split.c ft_itoa.c ft_strmapi.c
 CFILES += ft_printf.c ft_printchar.c ft_printstr.c ft_printnbr.c ft_printptr.c
-CFILES += ft_decideformat.c ft_strcmp.c ft_white.c ft_atof.c ft_strjoin_free.c
+CFILES += ft_decideformat.c ft_strcmp.c ft_white.c ft_atof.c 
 CFILES += ft_isalpha_extend.c ft_isprint_extend.c ft_isascii_extend.c
-CFILES += get_next_line_bonus.c
+CFILES += get_next_line_bonus.c ft_strjoin_free_both.c ft_strjoin_free_one.c
 
 OFILES = $(CFILES:.c=.o)
 

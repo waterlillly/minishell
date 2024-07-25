@@ -6,39 +6,11 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:51 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/24 16:48:11 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/25 13:03:19 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	single_exec(t_pipex *p)
-{
-	if (!p->cwd)
-	{
-		if (p->here == true)
-		{
-			p->filein = open("hd", O_RDONLY);
-			if (p->filein == -1 || access("hd", R_OK) == -1)
-				err_free(p, 1);
-		}
-		if (dup2(p->filein, STDIN_FILENO) == -1)
-			err_free(p, 1);
-	}
-	if (p->out == true)
-	{
-		if (dup2(p->fileout, STDOUT_FILENO) == -1)
-			err_free(p, 1);
-	}
-	if (p->here)
-		unlink("hd");
-	if (p->filein)
-		close(p->filein);
-	if (p->fileout)
-		close(p->fileout);
-	exec_cmd(p);
-	err_free(p, 1);
-}
 
 void	first(t_pipex *p, int *c)
 {

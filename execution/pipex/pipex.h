@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/24 16:48:23 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:59:30 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	init_p(t_pipex *p);
 //void	check_out(t_pipex *p);
 
 /*PROCESSES*/
-void	single_exec(t_pipex *p);
 void	first(t_pipex *p, int *c);
 void	middle(t_pipex *p, int *c);
 void	last(t_pipex *p, int *c);
@@ -97,18 +96,21 @@ void	do_child(t_pipex *p, int *c);
 
 /*CHECK*/
 int		check_empty(char **av);
-void	check_args(t_pipex *p, int ac, char **av, char **envp);
+void	check_args(t_pipex *p, int ac, char **av);
 
 /*HERE_DOC*/
+void	get_cur_cwd(t_pipex *p);
 void	first_heredoc(t_pipex *p);
 void	adjust_struct(t_pipex *p);
 void	adjust_struct_here(t_pipex *p);
 void	here_or_not(t_pipex *p);
 
-/*NO_INFILE*/
+/*EXTRA_CASES*/
+void	single_exec(t_pipex *p);
 void	no_infile_exec(t_pipex *p, int *c);
-void	get_cur_cwd(t_pipex *p);
 //void	read_cwd(t_pipex *p);
 
+/*ENVP*/
+void	get_envp(t_pipex *p);
 
 #endif

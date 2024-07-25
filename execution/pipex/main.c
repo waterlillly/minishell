@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:42:08 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/24 16:48:18 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:24:26 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ void	minishell(int ac, char **av, t_minishell_p *m)
 }
 */
 
-int	main(int ac, char **av, char **envp)
+int	main(int ac, char **av)
 {
 	t_pipex	p;
 	int		c;
 
 	c = 0;
-	check_args(&p, ac, av, envp);
+	check_args(&p, ac, av);
 	init_p(&p);
 	if (p.cmd_count == 1)
 		single_exec(&p);

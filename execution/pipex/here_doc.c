@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:55:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/24 16:48:20 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/25 15:25:31 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,15 @@
 // 	}
 // }
 
+void	get_cur_cwd(t_pipex *p)
+{
+	p->cwd = getcwd(NULL, 0);
+	if (p->cwd == NULL)
+		err_free(p, 1);
+	if (access(p->cwd, R_OK) == -1)
+		err_free(p, 1);
+}
+
 void	first_heredoc(t_pipex *p)
 {
 	char	*line;
@@ -45,14 +54,14 @@ void	first_heredoc(t_pipex *p)
 		perror("hd");
 		err_free(p, 1);
 	}
-	line = readline("heredoc> ");
+	line = readline("> ");
 	while (line && !ft_strcmp(line, p->delimiter))
 	{
 		ft_putstr_fd(line, p->filein);
 		ft_putchar_fd('\n', p->filein);
 		free(line);
 		line = NULL;
-		line = readline("heredoc> ");
+		line = readline("> ");
 	}
 	free(line);
 	line = NULL;
@@ -85,7 +94,7 @@ void	adjust_struct_here(t_pipex *p)
 	if (p->in == false)
 	{
 		p->x = 3;
-		if (p->out == true)
+		if (p->out == true && p->ac > 3)
 			p->cmd_count = p->ac - 4;
 		else
 			p->cmd_count = p->ac - 3;

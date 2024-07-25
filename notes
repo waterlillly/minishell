@@ -9,4 +9,14 @@ NOTES
 
 ->execute a single command, without pipes or redirections DONE
 
-->single and multiple heredocs
+->single heredocs DONE
+
+->multiple infiles
+
+->multiple outfiles
+
+->multiple heredocs
+
+->getenv DONE
+
+->store copy of getenv somewhere (prob in minishell)
