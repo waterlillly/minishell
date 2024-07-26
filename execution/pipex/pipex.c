@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/25 16:32:27 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/26 13:16:43 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ void	exec_cmd(t_pipex *p)
 	if (!p->args)
 		err_free(p, 1);
 	p->cmd = p->args[0];
-	p->paths = p->envp;
-	p->path = is_exec(p);
-	//find_path(p);
+	//p->paths = p->envp;
+	//p->path = is_exec(p);
+	find_path(p);
 	execve(p->path, p->args, p->envp);
 	perror("Execve");
 	err_free(p, 1);

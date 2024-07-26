@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:34:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/25 16:28:29 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/26 13:10:23 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,15 @@ int	check_empty(char **av)
 	return (0);
 }
 
-void	check_args(t_pipex *p, int ac, char **av)
+void	check_args(t_pipex *p, int ac, char **av, char **envp)
 {
-	//if (ac < 2 || check_empty(av))
-	//{
-	//	ft_putstr_fd("Invalid arguments.\n", 2);
-	//	exit(EXIT_FAILURE);
-	//}
+	if (ac < 2 || check_empty(av))
+	{
+		ft_putstr_fd("Invalid arguments.\n", 2);
+		exit(EXIT_FAILURE);
+	}
 	p->ac = ac;
 	p->av = av;
-	get_envp(p);
+	p->envp = envp;
+	//get_envp(p);
 }

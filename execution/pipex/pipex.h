@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/25 15:59:30 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/26 13:10:58 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	do_child(t_pipex *p, int *c);
 
 /*CHECK*/
 int		check_empty(char **av);
-void	check_args(t_pipex *p, int ac, char **av);
+void	check_args(t_pipex *p, int ac, char **av, char **envp);
 
 /*HERE_DOC*/
 void	get_cur_cwd(t_pipex *p);
@@ -111,6 +111,6 @@ void	no_infile_exec(t_pipex *p, int *c);
 //void	read_cwd(t_pipex *p);
 
 /*ENVP*/
-void	get_envp(t_pipex *p);
+//void	get_envp(t_pipex *p);
 
 #endif
