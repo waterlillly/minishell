@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:41:15 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/25 13:25:44 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:13:45 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,12 @@ int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_tolower(int c);
+char	*ft_str_lower(char *s);
 int		ft_toupper(int c);
+char	*ft_str_upper(char *s);
 int		ft_atoi(const char *nptr);
 size_t	ft_strlen(const char *s);
+int		ft_arrlen(char **s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 char	*ft_strchr(const char *s, int c);
@@ -73,6 +76,7 @@ double	ft_atof(char *s);
 int		ft_isalpha_extend(int n);
 int		ft_isprint_extend(int n);
 int		ft_isascii_extend(int n);
+void	ft_free_double(char **smth);
 
 /*GET_NEXT_LINE*/
 char	*get_next_line(int fd);
