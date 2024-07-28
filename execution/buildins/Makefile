@@ -6,7 +6,7 @@
 #    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/27 14:21:08 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/07/27 17:36:33 by lbaumeis         ###   ########.fr        #
+#    Updated: 2024/07/28 14:06:09 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Werror -Wextra -g
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
 
-CFILES = buildins_init.c err_or.c home.c menvp.c pwd.c menv.c
+CFILES = buildins_init.c err_or.c home.c menvp.c pwd.c menv.c cdpath.c
 OFILES = $(CFILES:.c=.o)
 P_NAME = buildins
 

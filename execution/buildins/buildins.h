@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:49:02 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/27 18:13:34 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:13:15 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,30 @@ typedef struct s_buildins
 }			t_buildins;
 
 void	err_or(char *s);
+
 void	buildins_init(t_buildins *vars);
+int		find_arg(char **s, char *a);
+
 void	get_pwd(t_buildins *vars);
 void	get_oldpwd(t_buildins *vars);
 void	join_oldpwd(t_buildins *vars, char **temp, char *oldpwd);
+
 void	get_menvp(t_buildins *vars);
+
 void	get_home(t_buildins *vars);
+
 void	get_menv(t_buildins *vars);
+
+void	get_cdpath(t_buildins *vars);
+void	set_cdpath(t_buildins *vars, char **token);
+int		cd_home(t_buildins *vars);
+int		cd_path(t_buildins *vars, char *path);
+char	*add_to_path(t_buildins *vars, char *t);
+char	*go_back(t_buildins *vars, char *temp);
+char	*go_slash(t_buildins *vars, char **token, int x, char *temp);
+char	*go_full_path(t_buildins *vars, char **token, int x, char *temp);
+char	*fill_path(t_buildins *vars, char **token, int x);
+int		cd(t_buildins *vars, char **token);
 
 #endif
 
