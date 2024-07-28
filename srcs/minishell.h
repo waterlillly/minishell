@@ -20,8 +20,8 @@ typedef struct s_raw_in
 {
 	char	*input;
 	char	*line[2];
-	char	**del_s;
-	char	**del_str;
+	char	*del_s[1000];
+	char	*del_str[1000];
 	char	**out;
 	int		n_chd;
 	int		n_hd;

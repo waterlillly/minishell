@@ -155,12 +155,8 @@ int	open_line(char *input)
 	static int i = 0;
 	if (!input || !*input)
 		return (1);
-	// if (is_heredoc(input))
-	// 	return (-1);
 	if (open_quotes(input))
 		return (1);
-	// if (only_redir(input))
-	// 	return (1);
 	return (0);
 }
 
@@ -375,7 +371,7 @@ void	set_hd(t_raw_in *in, char *line)
 	int	k;
 
 	i = in->n_chd - 1;
-	in->del_s = ft_calloc((in->n_hd + 1), sizeof(char *));  // needs to be fixed for realloc
+	//in->del_s = ft_calloc((in->n_hd + 1), sizeof(char *));  // needs to be fixed for realloc
 	while (i < in->n_hd - 1&& *line && *(line + 1))
 	{
 		k = 2;
@@ -540,7 +536,7 @@ int	ft_strcmp(char *s1, char *s2)
 
 void	get_hd(t_raw_in *in)
 {
-	in->del_str = ft_calloc((in->n_hd + 1), sizeof(char *));
+	//in->del_str = ft_calloc((in->n_hd + 1), sizeof(char *));
 	if (in->n_hd)
 	{
 		while (in->n_chd < in->n_hd)
@@ -567,7 +563,6 @@ void	get_pipe(t_raw_in *in)
 		get_next_line(0, in->line);
 		if (!check_syntax(in->line[0]))
 			return ((void)error("idk", 1));
-		exit(0);
 		in->input = ft_strcat(in->input, in->line[0]);
 		set_first(in, in->line[0]);
 	}
@@ -595,8 +590,8 @@ int	get_line_cnc(t_raw_in *in)
 
 void	init_raw(t_raw_in *in)
 {
-	in->del_s = NULL;
-	in->del_str = NULL;
+	//in->del_s = NULL;
+	//in->del_str = NULL;
 	in->input = NULL;
 	in->n_hd = 0;
 	in->n_pipe = 0;
