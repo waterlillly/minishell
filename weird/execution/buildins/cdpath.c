@@ -93,8 +93,11 @@ int	cd_home(t_buildins *vars)
 		get_home(vars);
 	if (ft_strcmp(vars->home, vars->pwd))
 		return (0);
-	reset_old_pwd(vars, vars->home);
-	return (chdir("~"));
+	if (access(vars->home, F_OK) == 0 && chdir(vars->home) == 0)
+		reset_old_pwd(vars, vars->home);
+	else
+		return (1);
+	return (0);
 }
 
 /*
@@ -113,18 +116,18 @@ int	cd_path(t_buildins *vars, char *path)
 	{
 		if (ft_strcmp(path, vars->pwd))
 			return (0);
-		if (access(path, F_OK) && chdir(path) == 0)
+		if (access(path, F_OK) == 0 && chdir(path) == 0)
 		{
 			reset_old_pwd(vars, path);
 			return (0);
 		}
-		else if (access(path, F_OK) == -1 || chdir(path) != 0)
+		else
 		{
 			perror(path);
 			return (1);
 		}
 	}
-	return (1);
+	return (0);
 }
 char	*add_to_path(t_buildins *vars, char *t)
 {
