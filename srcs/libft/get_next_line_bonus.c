@@ -6,31 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 11:24:17 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/23 14:37:14 by codespace        ###   ########.fr       */
+/*   Updated: 2024/07/29 17:31:36 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	size_t	x;
-	size_t	len_s1;
-	size_t	len_s2;
-
-	x = 0;
-	if (!s1 || !s2)
-		return (0);
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
-	if (len_s1 != len_s2)
-		return (0);
-	while (s1[x] && s2[x] && s1[x] == s2[x])
-		x++;
-	if (x == len_s1)
-		return (1);
-	return (0);
-}
 
 char	*ft_rest(int x, char *buf)
 {

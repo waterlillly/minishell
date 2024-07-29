@@ -7,6 +7,12 @@
 # include <stdbool.h>
 # include <stddef.h>
 
+
+# define BUFF_SIZE 8
+# define MAX_FD 1024 + 1
+# define RET_VALUE(ret)	ret > 0 ? 1 : ret
+
+
 typedef enum e_token
 {
 	PIPE = 1,
@@ -50,5 +56,7 @@ typedef struct s_minishell_p
 	struct s_minishell_p	*next;
 	struct s_minishell_p	*prev;
 }	t_minishell_p;
+
+int		get_next_line(int const fd, char **line);
 
 #endif

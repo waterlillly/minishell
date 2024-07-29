@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 16:49:33 by mgardesh          #+#    #+#             */
-/*   Updated: 2024/07/23 14:38:09 by codespace        ###   ########.fr       */
+/*   Updated: 2024/07/29 17:26:46 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*get_next_line_bonus(int fd);
+int		ft_strcmp(char *s1, char *s2);
 
 
 #endif

@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "get_next_line.h"
 #include "./libft/libft.h"
 #include "minishell.h"
 /*
@@ -64,7 +63,7 @@ int error(char *str, int code)
 	return 1;
 }
 
-char	*remove_q(t_raw_in *in)
+void	remove_q(t_raw_in *in)
 {
 	int		i;
 	char	*tmp;
@@ -139,7 +138,6 @@ int	single_count(char *input)
 
 int open_quotes(char *input)
 {
-	char	*tmp;
 	int	single_q;
 	int	double_q;
 
@@ -152,7 +150,6 @@ int open_quotes(char *input)
 
 int	open_line(char *input)
 {
-	static int i = 0;
 	if (!input || !*input)
 		return (1);
 	if (open_quotes(input))
@@ -290,9 +287,7 @@ char	**ft_split_shell(char *str, char *charset)
 	out[i] = NULL;
 	return (out);
 }
-
-
-
+/*
 t_minishell_l	*lex(char *input)
 {
 	t_minishell_l	*out;
@@ -304,7 +299,7 @@ t_minishell_l	*lex(char *input)
 		ft_putendl_fd(*tmp, 1);
 		tmp++;
 	}
-}
+} */
 
 int	count_hd(char *str)
 {
@@ -335,11 +330,12 @@ char	*skip_q(char *str)
 	}
 	return (str);
 }
-
+/*
 void	count_words(t_raw_in *in, char	*line)
 {
 
 }
+*/
 
 char	*ft_strnstr_q(const char *big, const char *little, size_t len)
 {
@@ -519,19 +515,9 @@ int	check_pipe(char *str)
 
 int	check_syntax(char *input)
 {
-	if ((!open_quotes(input) || !check_red(input) || !check_pipe(input)) && 0) // add start with pipe
+	if (!open_quotes(input) || !check_red(input) || !check_pipe(input))
 		return (0);
 	return (1);
-}
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
-		i++;
-	return (s1[i] - s2[i]);
 }
 
 void	get_hd(t_raw_in *in)
@@ -541,7 +527,7 @@ void	get_hd(t_raw_in *in)
 	{
 		while (in->n_chd < in->n_hd)
 		{
-			ft_putstr_fd(">", 1);
+			ft_putstr_fd("heredoc>", 1);
 			get_next_line(0, in->line);
 			if (!ft_strcmp(in->del_s[in->n_chd], in->line[0]))
 			{
@@ -559,7 +545,7 @@ void	get_pipe(t_raw_in *in)
 {
 	if (in->open_pipe)
 	{
-		ft_putstr_fd(">", 1);
+		ft_putstr_fd("command>", 1);
 		get_next_line(0, in->line);
 		if (!check_syntax(in->line[0]))
 			return ((void)error("idk", 1));
@@ -570,9 +556,6 @@ void	get_pipe(t_raw_in *in)
 
 int	get_line_cnc(t_raw_in *in)
 {
-	int	i;
-
-	i = 0;
 	ft_putstr_fd("this is a legit minishell $>", 1);
 	get_next_line(0, in->line);
 	if (!check_syntax(in->line[0]))
@@ -604,10 +587,9 @@ void	init_raw(t_raw_in *in)
 
 int	main(void)
 {
-	t_minishell_l	*lexed;
+	//t_minishell_l	*lexed;
 	t_raw_in		input;
 	int				i;
-	int				len;
 
 	while (1)
 	{
@@ -615,7 +597,6 @@ int	main(void)
 		init_raw(&input);
 		if (!get_line_cnc(&input))
 			return (error("syntax error", 0));
-		len = ft_strlen(input.line[0]);
 		printf("hd:%d\nred:%d\npipe:%d\n", input.n_hd, input.n_red, input.n_pipe);
 		while (++i < input.n_hd)
 			printf("%d.%s\n%s", i + 1,  input.del_s[i], input.del_str[i]);
