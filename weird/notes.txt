@@ -1,0 +1,369 @@
+NOTES
+
+->full path for command is given DONE
+
+->no infile, get current location and execute it without an infile DONE
+
+->check for each command if there is an input, as well as a file to write it to
+-->if last command and no outfile is given-> stdout, else: run cmd but do not store it DONE
+
+->execute a single command, without pipes or redirections DONE
+
+->single heredocs DONE
+
+->multiple infiles
+
+->multiple outfiles
+
+->multiple heredocs
+
+->getenv (DONE)
+
+->store copy of getenv somewhere (prob in minishell)
+
+
+--BUILDINS--
+
+echo (with option -n)
+	echo [-n] [args..]
+	Output the args, separated by spaces, terminated with a newline. The return status is 0 unless a write error occurs.
+	If -n is specified, the trailing newline is suppressed.
+	echo interprets the following escape sequences:
+		\a -> alert (bell) 
+		\b -> backspace 
+		\c -> suppress further output 
+		\e or \E -> escape 
+		\f -> form feed 
+		\n -> new line 
+		\r -> carriage return 
+		\t -> horizontal tab 
+		\v -> vertical tab 
+		\\ -> backslash 
+		\0nnn -> the eight-bit character whose value is the octal value nnn (zero to three octal digits) 
+		\xHH -> the eight-bit character whose value is the hexadecimal value HH (one or two hex digits) 
+		\uHHHH -> the Unicode (ISO/IEC 10646) character whose value is the hexadecimal value HHHH (one to four hex digits) 
+		\UHHHHHHHH -> the Unicode (ISO/IEC 10646) character whose value is the hexadecimal value HHHHHHHH (one to eight hex digits) 
+
+cd (with only a relative or absolute path)
+	cd [rel/abs path]
+	Change the current working directory to directory. If directory is not supplied, the value of the HOME shell variable is used.
+	If the shell variable CDPATH exists, it is used as a search path: each directory name in CDPATH is searched for directory,
+	with alternative directory names in CDPATH separated by a colon (‘:’). If directory begins with a slash, CDPATH is not used. 
+	If the directory change is successful, cd sets the value of the PWD environment variable to the new directory name,
+	and sets the OLDPWD environment variable to the value of the current working directory before the change.
+	The return status is zero if the directory is successfully changed, non-zero otherwise. 
+	When the cd builtin cannot change a directory because the length of the pathname constructed from $PWD and the directory
+	name supplied as an argument exceeds PATH_MAX when all symbolic links are expanded, cd will fail instead of attempting to use
+	only the supplied directory name. 
+
+pwd (no options)
+	The current working directory as set by the cd builtin. 
+	print working directory (minishell/execution/pipex/no_infile.c -> get_cur_cwd (getcwd(buf, NULL)))
+	The pwd builtin verifies that the value it prints is the same as the current directory,
+	even if it is not asked to check the file system with the -P option. 
+	The return status is zero unless an error is encountered while determining the name of the current directory
+	or an invalid option is supplied. 
+
+export (no options)
+	export [name[=value]]
+	The export builtin command displays its output in the format required by POSIX.
+	Mark each name to be passed to child processes in the environment. The names refer to shell variables.
+	If no names are supplied a list of names of all exported variables is displayed.
+	If a variable name is followed by =value, the value of the variable is set to value.
+	The return status is zero unless an invalid option is supplied or one of the names is not a valid shell variable name.
+
+unset (no option)
+	unset [name]
+	Remove each variable or function name.
+	If no options are supplied, each name refers to a variable; if there is no variable by that name, a function with that name,
+	if any, is unset. Readonly variables and functions may not be unset. Some shell variables lose their special behavior if they are unset;
+	such behavior is noted in the description of the individual variables. The return status is zero unless a name is readonly or may not be unset. 
+
+env (no options, no args)
+	When a program is invoked it is given an array of strings called the environment.
+	This is a list of name-value pairs, of the form name=value.
+	Bash provides several ways to manipulate the environment. On invocation, the shell scans its own environment and creates
+	a parameter for each name found, automatically marking it for export to child processes. Executed commands inherit the environment.
+	The export and ‘declare -x’ commands allow parameters and functions to be added to and deleted from the environment.
+	If the value of a parameter in the environment is modified, the new value becomes part of the environment, replacing the old.
+	The environment inherited by any executed command consists of the shell’s initial environment,
+	whose values may be modified in the shell, less any pairs removed by the unset and ‘export -n’ commands,
+	plus any additions via the export and ‘declare -x’ commands.
+	The environment for any simple command or function may be augmented temporarily by prefixing it with parameter assignments,
+	as described in Shell Parameters. These assignment statements affect only the environment seen by that command.
+	If the -k option is set (see The Set Builtin), then all parameter assignments are placed in the environment for a command,
+	not just those that precede the command name.
+	When Bash invokes an external command, the variable ‘$_’ is set to the full pathname of the command and passed to that command
+	in its environment. 
+
+exit (no options)
+	Exit the shell, returning a status of n to the shell’s parent.
+
+
+--MINILIB OF FUNCTIONS FOR MINISHELL--
+
+readline
+	readline(char *prompt):
+	Reads a line from the terminal, with editing capabilities.
+	Syntax: char *readline(const char *prompt);.
+
+rl_clear_history
+	rl_clear_history():
+	Clears the history list.
+	Syntax: void rl_clear_history(void);.
+
+rl_on_new_line
+	rl_on_new_line():
+	Tells the readline library that the cursor has moved to a new line.
+	Syntax: int rl_on_new_line(void);.
+
+rl_replace_line
+	rl_replace_line(const char *text, int clear_undo):
+	Changes the current line buffer.
+	Syntax: void rl_replace_line(const char *text, int clear_undo);.
+
+rl_redisplay
+	rl_redisplay():
+	Redraws the current line.
+	Syntax: void rl_redisplay(void);.
+
+add_history
+	add_history(char *line):
+	Adds a line to the history list.
+	Syntax: void add_history(char *line);.
+
+printf
+	printf(const char *format, ...):
+	Writes formatted output to stdout.
+	Syntax: int printf(const char *format, ...);.
+
+malloc
+	malloc(size_t size):
+	Allocates memory dynamically. Returns a pointer to the allocated memory, or NULL if the request fails.
+	Syntax: void* malloc(size_t size);.
+
+free
+	free(void* ptr):
+	Deallocates memory previously allocated by malloc, calloc, or realloc.
+	Syntax: void free(void* ptr);.
+
+write
+	write(int fd, const void *buf, size_t count):
+	Writes up to count bytes from the buffer pointed to by buf to the file referred to by the file descriptor fd.
+	Syntax: ssize_t write(int fd, const void *buf, size_t count);.
+
+access
+	access(const char *pathname, int mode):
+	Checks whether the calling program has access to the file given by pathname.
+	Syntax: int access(const char *pathname, int mode);.
+
+open
+	open(const char *pathname, int flags):
+	Opens a file and returns a file descriptor.
+	Syntax: int open(const char *pathname, int flags);.
+
+read
+	read(int fd, void *buf, size_t count):
+	Reads up to count bytes from the file descriptor fd into the buffer starting at buf.
+	Syntax: ssize_t read(int fd, void *buf, size_t count);.
+
+close
+	close(int fd):
+	Closes the file descriptor fd.
+	Syntax: int close(int fd);.
+
+fork
+	fork():
+	Creates a new process by duplicating the existing process.
+	The new process, called the child, is an exact copy of the calling process, called the parent,
+	except for a few values changed such as the PID.
+	Syntax: int fork(void);.
+
+wait
+	wait(int *status):
+	Waits until a child process stops or terminates.
+	Syntax: pid_t wait(int *status);.
+
+waitpid
+	waitpid(pid_t pid, int *status, int options):
+	Waits until a child process specified by pid stops or terminates.
+	Syntax: pid_t waitpid(pid_t pid, int *status, int options);.
+
+wait3
+	wait3(int *status, int options, struct rusage *rusage):
+	Similar to waitpid(), but also fills in rusage with resource usage statistics.
+	Syntax: pid_t wait3(int *status, int options, struct rusage *rusage);.
+
+wait4
+	wait4(pid_t pid, int *status, int options, struct rusage *rusage):
+	Similar to waitpid(), but also fills in rusage.
+	Syntax: pid_t wait4(pid_t pid, int *status, int options, struct rusage *rusage);.
+
+signal
+	signal(int signum, void (*handler)(int)):
+	Changes the action taken by a process on receipt of a specific signal.
+	Syntax: void (*signal(int signum, void (*handler)(int)))(int);.
+
+sigaction
+	sigaction(int signum, const struct sigaction *act, struct sigaction *oldact):
+	Examines and changes a signal action.
+	Syntax: int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);.
+
+sigemptyset
+	sigemptyset(sigset_t *set):
+	Initializes the signal set given by set to empty, with all signals excluded from the set.
+	Syntax: int sigemptyset(sigset_t *set);.
+
+sigaddset
+	sigaddset(sigset_t *set, int signum):
+	Adds the signal specified by signum to the set pointed to by set.
+	Syntax: int sigaddset(sigset_t *set, int signum);.
+
+kill
+	kill(pid_t pid, int sig):
+	Sends a signal to a process or a group of processes.
+	Syntax: int kill(pid_t pid, int sig);.
+
+exit
+	exit(int status):
+	Causes normal program termination and the value of status & 0377 is returned to the parent (see wait()).
+	Syntax: void exit(int status);.
+
+getcwd
+	getcwd(char *buf, size_t size):
+	Gets the current working directory of the calling process and places it in buf.
+	Syntax: char *getcwd(char *buf, size_t size);.
+
+chdir
+	chdir(const char *path):
+	Changes the current working directory of the calling process to the directory specified in path.
+	Syntax: int chdir(const char *path);.
+
+stat
+	stat(const char *pathname, struct stat *statbuf):
+	Gets information about the file pointed to by pathname and fills in statbuf.
+	Syntax: int stat(const char *pathname, struct stat *statbuf);.
+
+lstat
+	lstat(const char *pathname, struct stat *statbuf):
+	Similar to stat(), but does not follow symbolic links.
+	Syntax: int lstat(const char *pathname, struct stat *statbuf);.
+
+fstat
+	fstat(int fd, struct stat *statbuf):
+	Gets information about an open file referred to by the file descriptor fd.
+	Syntax: int fstat(int fd, struct stat *statbuf);.
+
+unlink
+	unlink(const char *pathname):
+	Deletes a name and possibly the file it refers to.
+	Syntax: int unlink(const char *pathname);.
+
+execve
+	execve():
+	Replaces the current process image with a new process image. It does not return unless an error occurs.
+	Syntax: int execve(const char *filename, char *const argv[], char *const envp[]);.
+
+dup
+	dup(int oldfd):
+	Creates a copy of the file descriptor oldfd.
+	Syntax: int dup(int oldfd);.
+
+dup2
+	dup2(int oldfd, int newfd):
+	Duplicates the file descriptor oldfd to newfd.
+	Syntax: int dup2(int oldfd, int newfd);.
+
+pipe
+	pipe(int pipefd[2]):
+	Creates a pipe, which is an unidirectional data channel that can be used for interprocess communication.
+	Syntax: int pipe(int pipefd[2]);.
+
+opendir
+	opendir(const char *name):
+	Opens a directory stream corresponding to the directory name, and returns a pointer to the directory stream.
+	Syntax: DIR *opendir(const char *name);.
+
+readdir
+	readdir(DIR *dirp):
+	Returns a pointer to a dirent structure representing the next directory entry in the directory stream pointed to by dirp.
+	Syntax: struct dirent *readdir(DIR *dirp);.
+
+closedir
+	closedir(DIR *dirp):
+	Closes the directory stream referred to by dirp.
+	Syntax: int closedir(DIR *dirp);.
+
+strerror
+	strerror(int errnum):
+	Returns a pointer to a string describing the error code passed in the argument errnum.
+	Syntax: char *strerror(int errnum);.
+
+perror
+	perror(const char *s):
+	Prints a descriptive error message to stderr, based on the current errno value. No return value.
+
+isatty
+	isatty(int fd):
+	Checks if the file descriptor fd refers to a terminal.
+	Syntax: int isatty(int fd);.
+
+ttyname
+	ttyname(int fd):
+	Returns a pointer to a string containing the name of the terminal associated with the file descriptor fd.
+	Syntax: char *ttyname(int fd);.
+
+ttyslot
+	ttyslot():
+	Returns the index of the terminal slot associated with the process group leader of the calling process.
+	Syntax: int ttyslot(void);.
+
+ioctl
+	ioctl(int fd, unsigned long request, ...):
+	Controls device-specific features of special files.
+	Syntax varies widely depending on the device and request.
+
+getenv
+	getenv(const char *name):
+	Retrieves the value of the environment variable name.
+	Syntax: char* getenv(const char *name);.
+
+tcsetattr
+	tcsetattr(int fd, int optional_actions, const struct termios *termios_p):
+	Sets the terminal attributes associated with the open file description referenced by fd.
+	Syntax: int tcsetattr(int fd, int optional_actions, const struct termios *termios_p);.
+
+tcgetattr
+	tcgetattr(int fd, struct termios *termios_p):
+	Gets the terminal attributes associated with the open file description referenced by fd.
+	Syntax: int tcgetattr(int fd, struct termios *termios_p);.
+
+tgetent
+	tgetent(char *bp, const char *name):
+	Retrieves termcap entry for terminal type name.
+	Syntax: int tgetent(char *bp, const char *name);.
+
+tgetflag
+	tgetflag(const char *id):
+	Returns the boolean capability corresponding to id.
+	Syntax: int tgetflag(const char *id);.
+
+tgetnum
+	tgetnum(const char *id):
+	Returns the numeric capability corresponding to id.
+	Syntax: int tgetnum(const char *id);.
+
+tgetstr
+	tgetstr(const char *id, char **area):
+	Returns the string capability corresponding to id.
+	Syntax: char *tgetstr(const char *id, char **area);.
+
+tgoto
+	tgoto(const char *cm, int hor, int ver):
+	Generates a cursor addressing string.
+	Syntax: char *tgoto(const char *cm, int hor, int ver);.
+
+tputs
+	tputs(const char *str, int affcnt, int (*putc)(int)):
+	Outputs the string str using the putc-style routine specified.
+	Syntax: int tputs(const char *str, int affcnt, int (*putc)(int));.
