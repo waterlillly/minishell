@@ -6,34 +6,43 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:47:48 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/28 12:24:08 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/30 12:59:15 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "buildins.h"
 
-void	get_pwd(t_buildins *vars)
+void	reset_old_pwd(t_buildins *vars, char *path)
 {
-	if (vars->pwd != NULL)
+	char	*temp;
+
+	temp = NULL;
+	temp = ft_strdup(vars->oldpwd);
+	if (!temp)
+		err_or("strdup or no vars->oldpwd");
+	free(vars->oldpwd);
+	vars->oldpwd = NULL;
+	vars->oldpwd = ft_strdup(vars->pwd);
+	if (!vars->oldpwd)
+		err_or(vars->oldpwd);
+	if (access(path, F_OK) == 0)
 	{
-		vars->oldpwd = ft_strdup(vars->pwd);
-		if (!vars->oldpwd)
-		{
-			perror(vars->oldpwd);
-			exit(EXIT_FAILURE);
-		}
+		free(vars->pwd);
+		vars->pwd = NULL;
+		vars->pwd = ft_strdup(path);
+		if (!vars->pwd)
+			err_or("strdup");
 	}
-	vars->pwd = getcwd(vars->pwd, 0);
-	if (!vars->pwd || access(vars->pwd, F_OK) == -1)
+	else
 	{
-		perror(vars->pwd);
-		exit(EXIT_FAILURE);
+		vars->oldpwd = ft_strdup(temp);
+		err_or("access");
 	}
 }
 
 void	join_oldpwd(t_buildins *vars, char **temp, char *oldpwd)
 {
-	int		x;
+	int	x;
 
 	x = 0;
 	while (temp[x])
@@ -58,7 +67,7 @@ void	join_oldpwd(t_buildins *vars, char **temp, char *oldpwd)
 	temp = NULL;
 }
 
-void	get_oldpwd(t_buildins *vars)
+void	go_up_oldpwd(t_buildins *vars)
 {
 	char	**temp;
 	char	*oldpwd;

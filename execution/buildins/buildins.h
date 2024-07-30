@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:49:02 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/28 18:13:15 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/07/30 16:15:17 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,37 +42,44 @@ typedef struct s_buildins
 	char	**envp;
 	char	*cdpath;
 	char	**menv;
-	char	*menvp;
+	char	*mpath;
 	char	**export;
 	char	*home;
 	char	*oldpwd;
 	char	*pwd;
 }			t_buildins;
 
+/*UTILS*/
+bool	is_access(char *dir);
 void	err_or(char *s);
-
-void	buildins_init(t_buildins *vars);
 int		find_arg(char **s, char *a);
+void	buildins_init(t_buildins *vars);
 
-void	get_pwd(t_buildins *vars);
+/*PWD*/
+void	reset_old_pwd(t_buildins *vars, char *path);
 void	get_oldpwd(t_buildins *vars);
 void	join_oldpwd(t_buildins *vars, char **temp, char *oldpwd);
+void	go_up_oldpwd(t_buildins *vars);
 
-void	get_menvp(t_buildins *vars);
-
-void	get_home(t_buildins *vars);
-
+/*ENV*/
+void	get_pwd(t_buildins *vars);
+char	*get_env(t_buildins *vars, char *str);
 void	get_menv(t_buildins *vars);
 
+/*CDPATH*/
 void	get_cdpath(t_buildins *vars);
 void	set_cdpath(t_buildins *vars, char **token);
+
+/*CD_FIND_PATH*/
+int		add_to_path(t_buildins *vars, char *t);
+int		go_back(t_buildins *vars, int print);
+char	*check_slash(char *tok, char *temp);
+int		go_slash(t_buildins *vars, char **token, int x);
+int		go_full_path(t_buildins *vars, char **token, int x);
+
+/*CD*/
 int		cd_home(t_buildins *vars);
-int		cd_path(t_buildins *vars, char *path);
-char	*add_to_path(t_buildins *vars, char *t);
-char	*go_back(t_buildins *vars, char *temp);
-char	*go_slash(t_buildins *vars, char **token, int x, char *temp);
-char	*go_full_path(t_buildins *vars, char **token, int x, char *temp);
-char	*fill_path(t_buildins *vars, char **token, int x);
+int		fill_path(t_buildins *vars, char **token, int x);
 int		cd(t_buildins *vars, char **token);
 
 #endif

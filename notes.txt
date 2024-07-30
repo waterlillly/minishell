@@ -44,7 +44,7 @@ echo (with option -n)
 		\uHHHH -> the Unicode (ISO/IEC 10646) character whose value is the hexadecimal value HHHH (one to four hex digits) 
 		\UHHHHHHHH -> the Unicode (ISO/IEC 10646) character whose value is the hexadecimal value HHHHHHHH (one to eight hex digits) 
 
-cd (with only a relative or absolute path)
+cd (with only a relative or absolute path) =>IMPLEMENT CHECKER FOR DELETED DIRS (DELETED DURING THE PROCESS)
 	cd [rel/abs path]
 	Change the current working directory to directory. If directory is not supplied, the value of the HOME shell variable is used.
 	If the shell variable CDPATH exists, it is used as a search path: each directory name in CDPATH is searched for directory,
