@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:58:31 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/01 19:14:00 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/01 18:54:05 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	main(int ac, char **av, char **envp)
 		{
 			printf("\n--->ECHO:\n");
 			echo(&vars, av);
+			printf("--->END:\n");
 		}
 		x++;
 	}

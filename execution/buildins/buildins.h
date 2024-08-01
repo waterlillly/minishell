@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:49:02 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/01 19:13:58 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/01 19:43:03 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,8 @@ int		fill_path(t_buildins *vars, char **token, int x);
 int		cd(t_buildins *vars, char **token);
 
 /*ECHO*/
-int		find_dollars(char **token);
-int		find_dollar(char **token, int x);
 char	*expand(t_buildins *vars, char **token, int x);
-int		fill_and_expand(t_buildins *vars, char **token, char **new_token, int y);
-char	*check_expand(char **new_token);
-char	*token_expand(t_buildins *vars, char **tok);
-char	**cleanup(char **token, int x, char **tok);
 void	echo(t_buildins *vars, char **token);
-
-/*STRJOIN_SPACE_FREE*/
-char	*ft_strjoin_space_free(char *s1, const char *s2);
 
 #endif
 

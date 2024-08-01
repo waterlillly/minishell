@@ -9,7 +9,7 @@ CFILES += ft_printf.c ft_printchar.c ft_printstr.c ft_printnbr.c ft_printptr.c
 CFILES += ft_decideformat.c ft_strcmp.c ft_white.c ft_atof.c ft_str_upper.c
 CFILES += ft_isalpha_extend.c ft_isprint_extend.c ft_isascii_extend.c
 CFILES += get_next_line_bonus.c ft_strjoin_free_both.c ft_strjoin_free_one.c
-CFILES += ft_str_lower.c ft_arrlen.c ft_free_double.c
+CFILES += ft_str_lower.c ft_arrlen.c ft_free_double.c ft_print_array.c
 
 OFILES = $(CFILES:.c=.o)
 
