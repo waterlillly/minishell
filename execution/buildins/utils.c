@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:48:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/30 16:28:17 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/01 19:09:50 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "buildins.h"
+
+int	how_many(char **s, char *o)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (s[x])
+	{
+		if (ft_strcmp(s[x], o))
+			y++;
+		x++;
+	}
+	return (y);
+}
 
 bool	is_access(char *dir)
 {

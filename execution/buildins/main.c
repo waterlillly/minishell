@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:58:31 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/30 14:37:53 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/01 19:14:00 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ int	main(int ac, char **av, char **envp)
 				printf("FUCK\n");
 			printf("\nafter--->PWD: %s", vars.pwd);
 			printf("\nafter--->OLDPWD: %s\n\n", vars.oldpwd);
+		}
+		if (ft_strcmp(av[x], "echo"))
+		{
+			printf("\n--->ECHO:\n");
+			echo(&vars, av);
 		}
 		x++;
 	}

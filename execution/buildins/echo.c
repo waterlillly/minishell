@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 13:00:22 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/01 15:51:57 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/01 19:13:52 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ char	*expand(t_buildins *vars, char **token, int x)
 	return (s);
 }
 
-int	fill_and_expand(t_buildins *vars, char **token, int x, char **new_token, int y)
+int	fill_and_expand(t_buildins *vars, char **token, char **new_token, int y)
 {
 	char	*exs;
 	int		x;
 
 	exs = NULL;
-	x = find_dollar(token, x + 1);
+	x = find_dollar(token, y);
 	if (x < 0)
 		return (y);
 	while (token[y] && y < x)
@@ -81,18 +81,43 @@ int	fill_and_expand(t_buildins *vars, char **token, int x, char **new_token, int
 	exs = NULL;
 	if (!new_token[y])
 		err_or("strdup");
-	y++;
-	return (y);
+	return (y + 1);
 }
 
-char	**check_expand(t_buildins *vars, char **token)
+char	*check_expand(char **new_token)
+{
+	int		x;
+	int		y;
+	char	*tok;
+
+	x = 0;
+	tok = NULL;
+	y = how_many(new_token, "\n");
+	if (y == ft_arrlen(new_token) - 1)
+		tok = ft_strdup("\n");
+	else
+	{
+		while (new_token[x])
+		{
+			if (!ft_strcmp(new_token[x], "\n"))
+			{
+				tok = ft_strjoin_space_free(tok, new_token[x]);
+				if (!tok)
+					err_or("strjoin");
+			}
+			x++;
+		}
+	}
+	ft_free_double(new_token);
+	return (tok);
+}
+
+char	*token_expand(t_buildins *vars, char **tok)
 {
 	int		dollars;
-	int		x;
 	int		y;
 	char	**new_token;
 
-	x = 0;
 	y = 0;
 	dollars = 0;
 	new_token = NULL;
@@ -100,19 +125,9 @@ char	**check_expand(t_buildins *vars, char **token)
 	if (!new_token)
 		err_or("malloc");
 	dollars = find_dollars(token);
-	if (dollars < 1)
-		return (token);
-	x = find_dollar(token, 0);
-	while (token[y] && y < x)
-	{
-		new_token[y] = ft_strdup(token[y]);
-		if (!new_token[y])
-			err_or("strdup");
-		y++;
-	}
 	while (dollars > 0)
 	{
-		y = fill_and_expand(vars, x, token, new_token, y);
+		y = fill_and_expand(vars, token, new_token, y);
 		dollars--;
 	}
 	while (token[y])
@@ -123,49 +138,48 @@ char	**check_expand(t_buildins *vars, char **token)
 		y++;
 	}
 	new_token[y] = NULL;
-	return (new_token);
+	return (check_expand(new_token));
+}
+
+char	**cleanup(char **token, int x, char **tok)
+{
+	tok = malloc(sizeof(char *) * (ft_arrlen(token) - x));
+	if (!tok)
+		err_or("malloc");
+	x++;
+	while (token[x])
+	{
+		*tok = ft_strdup(token[x]);
+		if (!*tok)
+			err_or("strdup");
+		x++;
+		tok++;
+	}
+	*tok = NULL;
+	return (tok);
 }
 
 void	echo(t_buildins *vars, char **token)
 {
 	int		x;
-	int		y;
+	char	**tok;
 	char	*s;
-	char	*temp;
 
 	x = 0;
-	y = 0;
+	tok = NULL;
 	s = NULL;
-	temp = NULL;
 	x = find_arg(token, "echo");
 	if (x >= 0)
 	{
-		x++;
-		validate_dollars(vars, token);
-		while (token[x])
-		{
-			if (token[x][0] == '$')
-			{
-				temp = expand(vars, token, x, temp);
-				if (!temp)
-					err_or("expand");
-				if (ft_strcmp(temp, "\n") && find_dollars(token) > 1)
-					validate_dollars(vars, token);///
-				else
-					s = ft_strjoin_free_both(s, temp);
-				if (!s)
-					err_or("strjoin failed");
-			}
-			else
-			{
-				s = ft_strjoin_free_one(s, token[x]);
-				if (!s)
-					err_or("strjoin failed");
-			}
-			x++;
-		}
-		ft_putendl_fd(s, 1);
-		free(s);
-		s = NULL;
+		tok = cleanup(token, x, tok);
+		if (!tok)
+			err_or("cleanup");
 	}
+	s = token_expand(vars, tok) ;
+	ft_free_double(tok);
+	if (!s)
+		err_or("check_expand");
+	ft_putendl_fd(s, 1);
+	free(s);
+	s = NULL;
 }
