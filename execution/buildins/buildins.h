@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:49:02 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/30 16:15:17 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:50:38 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,13 @@ int		go_full_path(t_buildins *vars, char **token, int x);
 int		cd_home(t_buildins *vars);
 int		fill_path(t_buildins *vars, char **token, int x);
 int		cd(t_buildins *vars, char **token);
+
+/*ECHO*/
+void	echo(t_buildins *vars, char **token);
+
+
+/*STRJOIN_SPACE_FREE*/
+char	*ft_strjoin_space_free(char *s1, char *s2);
 
 #endif
 

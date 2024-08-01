@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/30 13:18:36 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:14:46 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ char	*get_env(t_buildins *vars, char *str)
 			len = ft_strlen(vars->menv[x]) - ft_strlen(str);
 			result = malloc(sizeof(char) * len);
 			if (!result)
-				return (NULL);
+				return ("\n");
 			result = ft_substr(vars->menv[x], ft_strlen(str) + 1, len - 1);
 			if (!result)
-				return (NULL);
+				return ("\n");
 			return (result);
 		}
 		x++;
 	}
-	return (NULL);
+	return ("\n");
 }
 
 void	get_menv(t_buildins *vars)
