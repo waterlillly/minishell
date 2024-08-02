@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:41:15 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/01 19:42:26 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/02 15:07:44 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int		ft_isprint_extend(int n);
 int		ft_isascii_extend(int n);
 void	ft_free_double(char **smth);
 void	ft_print_array(char **arr);
+int		ft_strcmp_org(const char *s1, const char *s2, int c);
 
 /*GET_NEXT_LINE*/
 char	*get_next_line(int fd);

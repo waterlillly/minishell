@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:49:02 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/01 19:43:03 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/02 16:31:59 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,16 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <dirent.h>
-# include "../../parsing/minishell.h"
+
+typedef struct s_list t_list;
+
+typedef struct s_list
+{
+	char	*data;
+	int		index;
+	t_list	*next;
+	t_list	*prev;
+}			t_list;
 
 typedef struct s_buildins
 {
@@ -58,7 +67,6 @@ void	buildins_init(t_buildins *vars);
 
 /*PWD*/
 void	reset_old_pwd(t_buildins *vars, char *path);
-void	get_oldpwd(t_buildins *vars);
 void	join_oldpwd(t_buildins *vars, char **temp, char *oldpwd);
 void	go_up_oldpwd(t_buildins *vars);
 
@@ -84,8 +92,18 @@ int		fill_path(t_buildins *vars, char **token, int x);
 int		cd(t_buildins *vars, char **token);
 
 /*ECHO*/
-char	*expand(t_buildins *vars, char **token, int x);
+void	do_echo(t_buildins *vars, char **token, int x, char *temp);
 void	echo(t_buildins *vars, char **token);
+
+/*EXPAND*/
+char	*expand(t_buildins *vars, char **token, int x);
+
+/*EXPORT*/
+void	new_node(t_buildins *vars, t_list **ex, int x);
+void	linked_list(t_buildins *vars, t_list **ex);
+bool	is_sorted(t_list **ex);
+void	swap(t_list **e);
+void	sort_env(t_buildins *vars);
 
 #endif
 

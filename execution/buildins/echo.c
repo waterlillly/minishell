@@ -3,50 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/01 19:32:42 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/02 12:40:43 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "buildins.h"
 
-char	*expand(t_buildins *vars, char **token, int x)
+void	do_echo(t_buildins *vars, char **token, int x, char *temp)
 {
-	char	*temp;
-
-	temp = NULL;
-	temp = get_env(vars, ft_substr(token[x], 1, ft_strlen(token[x] - 1)));
-	if (!temp)
-		err_or("substr");
-	return (temp);
+	if (token[x][0] == '$' && token[x][1] != '$' && token[x][1] != '\0')
+	{
+		temp = expand(vars, token, x);
+		if (!temp)
+			err_or("strjoin space");
+		ft_putstr_fd(temp, 1);
+		free(temp);
+		temp = NULL;
+	}
+	else
+		ft_putstr_fd(token[x], 1);
+	
 }
 
 void	echo(t_buildins *vars, char **token)
 {
 	char	*temp;
+	bool	n;
 	int		x;
 
 	x = 0;
+	n = false;
 	temp = NULL;
 	x = find_arg(token, "echo") + 1;
+	if (ft_strcmp(token[x], "-n"))
+	{
+		n = true;
+		x++;
+	}
 	while (token[x])
 	{
-		if (token[x][0] == '$')
-		{
-			temp = expand(vars, token, x);
-			if (!temp)
-				err_or("strjoin space1");
-			printf("%s", temp);
-			free(temp);
-			temp = NULL;
-		}
-		else
-			printf("%s", token[x]);
+		do_echo(vars, token, x, temp);
 		x++;
 		if (token[x] != NULL)
-			printf(" ");
+			ft_putstr_fd(" ", 1);
 	}
-	printf("\n");
+	if (n == false)
+		ft_putstr_fd("\n", 1);
 }

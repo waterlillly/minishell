@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:48:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/28 15:36:48 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/02 16:25:34 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	buildins_init(t_buildins *vars)
 	get_menv(vars);
 	get_home(vars);
 	get_cdpath(vars);
-	get_menvp(vars);
 	get_pwd(vars);
 	get_oldpwd(vars);
 	//export
@@ -56,9 +55,9 @@ int	main(int ac, char **av, char **envp)
 	else
 		printf("\n---NO CDPATH---\n\n");
 	
-	if (vars.menv && find_arg(av, "menv") >= 0)
+	if (vars.menv && find_arg(av, "env") >= 0)
 	{
-		printf("\n--->MENV:\n");
+		printf("\n--->ENV:\n");
 		while (*vars.menv)
 		{
 			printf("%s\n", *vars.menv);
@@ -66,11 +65,7 @@ int	main(int ac, char **av, char **envp)
 		}
 	}
 	else
-		printf("\n---NO MENV---\n\n");
-	if (vars.menvp && find_arg(av, "menvp") >= 0)
-		printf("\n--->MENVP: %s\n\n", vars.menvp);
-	else
-		printf("\n---NO MENVP---\n\n");
+		printf("\n---NO ENV---\n\n");
 	if (vars.export && find_arg(av, "export") >= 0)
 	{
 		printf("\n--->EXPORT:\n\n");

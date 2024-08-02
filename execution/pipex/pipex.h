@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/26 13:10:58 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/02 14:22:39 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <dirent.h>
-# include "../../parsing/minishell.h"
 
 typedef struct s_pipex
 {
@@ -65,7 +64,6 @@ typedef struct s_pipex
 	char	*executable;
 	char	*part;
 	char	*cmd;
-	t_minishell_p	*m;
 }			t_pipex;
 
 /*PIPEX*/

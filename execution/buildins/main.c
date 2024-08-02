@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:58:31 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/01 18:54:05 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/02 16:26:17 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@ int	main(int ac, char **av, char **envp)
 	t_buildins	vars;
 
 	x = 1;
-	if (ac < 2)
+	if (ac < 1)
 		err_or("not enough args");
 	ft_bzero(&vars, sizeof(t_buildins));
 	vars.envp = envp;
 	buildins_init(&vars);
+	sort_env(&vars);
 	while (av[x])
 	{
 		if (ft_strcmp(av[x], "cdpath"))
 			printf("--->CDPATH: %s\n\n", vars.cdpath);
-		if (ft_strcmp(av[x], "menv"))
+		if (ft_strcmp(av[x], "env"))
 		{
 			printf("\n--->MENV:\n");
 			while (*vars.menv)
@@ -36,7 +37,7 @@ int	main(int ac, char **av, char **envp)
 				vars.menv++;
 			}
 		}
-		if (ft_strcmp(av[x], "mpath"))
+		if (ft_strcmp(av[x], "path"))
 			printf("\n--->MENVP: %s\n\n", vars.mpath);
 		if (ft_strcmp(av[x], "export"))
 		{
@@ -67,7 +68,6 @@ int	main(int ac, char **av, char **envp)
 		{
 			printf("\n--->ECHO:\n");
 			echo(&vars, av);
-			printf("--->END:\n");
 		}
 		x++;
 	}
