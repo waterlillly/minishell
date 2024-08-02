@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp_org.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:55:27 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/02 15:06:52 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:57:26 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 	else if return == 0: they are the same
 */
 
-int	ft_strcmp_org(const char *s1, const char *s2, int c)
+int	ft_strcmp_org(const char *s1, const char *s2)
 {
 	int	x;
 	int	len_s1;
@@ -29,7 +29,7 @@ int	ft_strcmp_org(const char *s1, const char *s2, int c)
 		return (0);
 	len_s1 = ft_strlen(s1);
 	len_s2 = ft_strlen(s2);
-	while (s1[x] && s2[x] && s1[x] == s2[x] && s1[x] != c && s2[x] != c)
+	while (s1[x] && s2[x] && s1[x] == s2[x])
 		x++;
 	if (x == len_s1 && len_s1 == len_s2)
 		return (0);

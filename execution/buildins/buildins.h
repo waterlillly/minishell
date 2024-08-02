@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:49:02 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/02 16:31:59 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/02 18:13:43 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_list t_list;
 typedef struct s_list
 {
 	char	*data;
-	int		index;
 	t_list	*next;
 	t_list	*prev;
 }			t_list;
@@ -53,6 +52,7 @@ typedef struct s_buildins
 	char	**menv;
 	char	*mpath;
 	char	**export;
+	t_list	*ex;
 	char	*home;
 	char	*oldpwd;
 	char	*pwd;
@@ -99,9 +99,12 @@ void	echo(t_buildins *vars, char **token);
 char	*expand(t_buildins *vars, char **token, int x);
 
 /*EXPORT*/
-void	new_node(t_buildins *vars, t_list **ex, int x);
-void	linked_list(t_buildins *vars, t_list **ex);
-bool	is_sorted(t_list **ex);
+//void	new_node(char *part, t_list **ex);
+//void	linked_list(t_buildins *vars);
+void	add(t_list **head, char *data);
+char	*strcpy_until(char *v_part);
+void	fill(t_buildins *vars);
+bool	is_sorted(t_list *e);
 void	swap(t_list **e);
 void	sort_env(t_buildins *vars);
 
