@@ -25,7 +25,6 @@ void	do_echo(t_buildins *vars, char **token, int x, char *temp)
 	}
 	else
 		ft_putstr_fd(token[x], 1);
-	
 }
 
 void	echo(t_buildins *vars, char **token)
