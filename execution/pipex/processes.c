@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:51 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/25 13:03:19 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/03 13:05:07 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	last(t_pipex *p, int *c)
 	{
 		if (dup2(STDOUT_FILENO, p->copy_stdout) == -1)
 			err_free(p, 1);
-		close(p->copy_stdout);
 	}
 	close_pipes(p);
 	exec_cmd(p);

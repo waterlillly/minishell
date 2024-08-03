@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:49:02 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/02 21:04:55 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/03 12:23:15 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,13 @@ void	swap(char **arr, int x);
 char	**sort_arr(t_buildins *vars);
 char	*exp_whole(t_buildins *vars, char **arr, int y);
 void	combine_export(t_buildins *vars);
+
+/*SET_EXPORT*/
+void	set_export(t_buildins *vars, char **token);
+
+/*VALID_EXPORT*/
+int		find_env(t_buildins *vars, char *tok);
+bool	valid_env(t_buildins *vars, char *tok);
 
 #endif
 

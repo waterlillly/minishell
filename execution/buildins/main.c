@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:58:31 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/02 21:42:15 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/03 15:57:32 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,15 @@ int	main(int ac, char **av, char **envp)
 		}
 		if (ft_strcmp(av[x], "path"))
 			printf("\n--->MENVP: %s\n\n", vars.mpath);
-		if (ft_strcmp(av[x], "export"))
+		if (ft_strcmp(av[x], "export") && av[x + 1] == NULL)
 		{
 			printf("\n--->EXPORT:\n\n");
 			ft_print_array(vars.export);
+		}
+		if (ft_strcmp(av[x], "export") && av[x + 1] != NULL)
+		{
+			printf("\n--->EXPORT:\n\n");
+			set_export(&vars, av);
 		}
 		if (ft_strcmp(av[x], "home"))
 			printf("\n--->HOME: %s\n\n", vars.home);

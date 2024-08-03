@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:55:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/25 15:25:31 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/03 14:52:50 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,16 @@
 // }
 
 void	get_cur_cwd(t_pipex *p)
-{
-	p->cwd = getcwd(NULL, 0);
-	if (p->cwd == NULL)
+{	
+	p->cwd = getenv("PWD");
+	if (!p->cwd)
 		err_free(p, 1);
 	if (access(p->cwd, R_OK) == -1)
+	{
+		free(p->cwd);
+		p->cwd = NULL;
 		err_free(p, 1);
+	}
 }
 
 void	first_heredoc(t_pipex *p)
@@ -48,6 +52,8 @@ void	first_heredoc(t_pipex *p)
 	char	*line;
 	
 	line = NULL;
+	p->filein = -1;
+	p->fileout = -1;
 	p->filein = open("hd", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (p->filein == -1 || access("hd", R_OK) == -1 || access("hd", W_OK) == -1)
 	{
@@ -63,9 +69,7 @@ void	first_heredoc(t_pipex *p)
 		line = NULL;
 		line = readline("> ");
 	}
-	free(line);
-	line = NULL;
-	close(p->filein);
+	close_all(p);
 }
 
 void	adjust_struct(t_pipex *p)
@@ -81,6 +85,8 @@ void	adjust_struct(t_pipex *p)
 	else if (p->in == false)
 	{
 		get_cur_cwd(p);
+		if (!p->cwd)
+			err_free(p, 1);
 		p->x = 1;
 		if (p->out == true)
 			p->cmd_count = p->ac - 2;
@@ -105,6 +111,7 @@ void	adjust_struct_here(t_pipex *p)
 
 void	here_or_not(t_pipex *p)
 {
+	//p->alot = false;
 	if (!ft_strcmp(p->av[1], "here_doc"))
 	{
 		p->delimiter = NULL;
@@ -119,4 +126,6 @@ void	here_or_not(t_pipex *p)
 		adjust_struct_here(p);
 		first_heredoc(p);
 	}
+	//if (p->cmd_count > 512)
+		//p->alot = true;
 }

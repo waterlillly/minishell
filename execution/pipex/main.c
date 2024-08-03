@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:42:08 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/26 13:09:39 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/03 14:53:02 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	main(int ac, char **av, char **envp)
 	c = 0;
 	check_args(&p, ac, av, envp);
 	init_p(&p);
+	//if (p.alot == true)
+	//	shittonofcmds(&p);
 	if (p.cmd_count == 1)
 		single_exec(&p);
 	while (c < p.cmd_count && p.cmd_count > 1)

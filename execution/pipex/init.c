@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/25 15:47:38 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/03 15:02:48 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,14 @@ void	check_filein(t_pipex *p)
 	char	*str;
 
 	str = NULL;
+	p->filein = -1;
 	if (!p->delimiter && !p->cwd)
 	{
 		p->filein = open(p->av[1], O_RDONLY, 0644);
+		if (p->filein == -1 || access(p->av[1], R_OK) == -1)
 		{
-			if (p->filein == -1 || access(p->av[1], R_OK) == -1)
-			{
-				perror(p->av[1]);
-				err_free(p, 1);
-			}
+			perror(p->av[1]);
+			err_free(p, 1);
 		}
 	}
 }
@@ -105,16 +104,14 @@ void	check_out(t_pipex *p)
 
 void	init_p(t_pipex *p)
 {
-	p->filein = -1;
-	p->fileout = -1;
 	p->cwd = NULL;
 	p->copy_stdout = dup(STDOUT_FILENO);
 	if (p->copy_stdout == -1)
 		err_free(p, 1);
-	//add check for in and out
 	p->in = false;
-	p->out = false;
+	p->out = true;
 	here_or_not(p);
+	p->fileout = -1;
 	if (p->out == true)
 		check_fileout(p);
 	p->status = 0;

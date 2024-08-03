@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:04:36 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/24 16:48:16 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/03 14:11:31 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,19 @@ void	close_pipes(t_pipex *p)
 {
 	int	i;
 
-	i = 0;
-	while (i < p->cmd_count)
+	i = p->cmd_count - 1;
+	while (i >= 0)
 	{
-		if (p->pip[i][0] && p->pip[i][0] != -1)
+		if (p->pip[i][0] && p->pip[i][0] != -1 && p->pip[i][0] != STDIN_FILENO)
 			close(p->pip[i][0]);
-		if (p->pip[i][1] && p->pip[i][1] != -1)
+		if (p->pip[i][1] && p->pip[i][1] != -1 && p->pip[i][0] != STDOUT_FILENO)
 			close(p->pip[i][1]);
-		i++;
+		free(p->pip[i]);
+		p->pip[i] = NULL;
+		i--;
 	}
+	free(p->pip);
+	p->pip = NULL;
 }
 
 void	close_all(t_pipex *p)
@@ -33,8 +37,9 @@ void	close_all(t_pipex *p)
 		close(p->filein);
 	if (p->fileout && p->fileout != STDOUT_FILENO && p->fileout != -1)
 		close(p->fileout);
-	if (p->pip)
-		close_pipes(p);
+	if (p->copy_stdout && p->copy_stdout != STDOUT_FILENO && p->copy_stdout != -1)
+		close(p->copy_stdout);
+	close_pipes(p);
 }
 
 void	free_double(char **str)
@@ -61,12 +66,8 @@ void	err_free_two(t_pipex *p)
 		free(p->pid);
 		p->pid = NULL;
 	}
-	if (p->pip)
-	{
+	if (p->pip || p->copy_stdout)
 		close_all(p);
-		free(p->pip);
-		p->pip = 0;
-	}
 	if (p->args)
 	{
 		free_double(p->args);
@@ -97,8 +98,6 @@ void	err_free(t_pipex *p, int exit_status)
 		free(p->part);
 		p->part = NULL;
 	}
-	if (p->copy_stdout && p->copy_stdout != -1)
-		close(p->copy_stdout);
 	if (p->here)
 		unlink("hd");
 	exit(exit_status);

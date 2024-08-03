@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 14:12:19 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/25 15:06:55 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/03 13:52:47 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int closedir(DIR *dirp); (success: 0, err: -1)
 
 void	single_exec(t_pipex *p)
 {
+	p->filein = -1;
+	p->fileout = -1;
 	if (!p->cwd)
 	{
 		if (p->here == true)
@@ -46,9 +48,9 @@ void	single_exec(t_pipex *p)
 	}
 	if (p->here)
 		unlink("hd");
-	if (p->filein)
+	if (p->filein && p->filein != STDIN_FILENO && p->filein != -1)
 		close(p->filein);
-	if (p->fileout)
+	if (p->fileout && p->fileout != STDOUT_FILENO && p->fileout != -1)
 		close(p->fileout);
 	exec_cmd(p);
 	err_free(p, 1);

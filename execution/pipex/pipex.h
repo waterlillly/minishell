@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/02 14:22:39 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/03 14:52:54 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_pipex
 	char	*executable;
 	char	*part;
 	char	*cmd;
+	//bool	alot;
 }			t_pipex;
 
 /*PIPEX*/
