@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:23:55 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/04 13:27:18 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/04 20:06:07 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,37 @@ int	find_str_part(char **str, char *tok)
 	return (-1);
 }
 
-char	*strcpy_until(char *v_part)
+char	*strcpy_from(char *v_part)
 {
-	int		eq;
 	char	*ret;
 	int		c;
 	int		x;
 
-	eq = '=';
 	ret = NULL;
 	c = 0;
 	x = 0;
-	while (v_part[c] != eq)
+	while (v_part[c] != '=')
+		c++;
+	ret = malloc(sizeof(char) * (ft_strlen(v_part) - c + 1));
+	if (!ret)
+		err_or("malloc");
+	c++;
+	while (v_part[c])
+		ret[x++] = v_part[c++];
+	ret[x] = '\0';
+	return (ret);
+}
+
+char	*strcpy_until(char *v_part)
+{
+	char	*ret;
+	int		c;
+	int		x;
+
+	ret = NULL;
+	c = 0;
+	x = 0;
+	while (v_part[c] != '=')
 		c++;
 	ret = malloc(sizeof(char) * (c + 1));
 	if (!ret)
@@ -78,11 +97,9 @@ bool	check_quotes(char *token)
 {
 	int		x;
 	bool	q1;
-	bool	q2;
 
 	x = 0;
 	q1 = false;
-	q2 = false;
 	while (token[x] && token[x] != '=')
 		x++;
 	x++;
@@ -110,9 +127,9 @@ bool	valid_env(t_buildins *vars, char *tok)
 		y = 0;
 		while (tok[y] == vars->menv[x][y])
 		{
-			y++;
-			if (tok[y] == '=' && vars->menv[x][y] == '=')
+			if ((tok[y] == '=' || tok[y] == '\0') && vars->menv[x][y] == '=')
 				return (true);
+			y++;
 		}
 		x++;
 	}

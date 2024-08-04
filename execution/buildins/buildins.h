@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:49:02 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/04 13:28:38 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/04 20:05:51 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 typedef struct s_buildins
 {
 	char	**envp;
-	char	*cdpath;
+	//char	*cdpath;
 	char	**menv;
 	char	*mpath;
 	char	**export;
@@ -57,6 +57,7 @@ void	buildins_init(t_buildins *vars);
 
 /*UTILS2*/
 int		find_str_part(char **str, char *tok);
+char	*strcpy_from(char *v_part);
 char	*strcpy_until(char *v_part);
 char	**copy_arr_env(t_buildins *vars);
 bool	check_quotes(char *token);
@@ -89,7 +90,8 @@ int		fill_path(t_buildins *vars, char **token, int x);
 int		cd(t_buildins *vars, char **token);
 
 /*ECHO*/
-void	do_echo(t_buildins *vars, char **token, int x, char *temp);
+void	do_echo(t_buildins *vars, char **token, int x);
+bool	check_n(char *token);
 void	echo(t_buildins *vars, char **token);
 
 /*EXPAND*/
@@ -98,7 +100,7 @@ char	*expand(t_buildins *vars, char **token, int x);
 /*EXPORT*/
 bool	sorted(char **arr);
 void	swap(char **arr, int x);
-char	**sort_arr(t_buildins *vars);
+char	**sort_arr(char **arr);
 char	*exp_whole(t_buildins *vars, char **arr, int y);
 void	combine_export(t_buildins *vars);
 
@@ -109,6 +111,7 @@ char	*modify_quotes(char *token);
 void	update_export(t_buildins *vars, char *tok, char *token);
 void	set_export(t_buildins *vars, char **token);
 
+void	copy_arr(t_buildins *vars, char *temp);
 
 #endif
 

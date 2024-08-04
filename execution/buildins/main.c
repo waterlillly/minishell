@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:58:31 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/04 13:14:04 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/04 20:05:48 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	main(int ac, char **av, char **envp)
 	buildins_init(&vars);
 	while (av[x])
 	{
-		if (ft_strcmp(av[x], "cdpath"))
-			printf("--->CDPATH: %s\n\n", vars.cdpath);
+		//if (ft_strcmp(av[x], "cdpath"))
+		//	printf("--->CDPATH: %s\n\n", vars.cdpath);
 		if (ft_strcmp(av[x], "env"))
 		{
 			printf("\n--->ENV:\n");

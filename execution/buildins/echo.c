@@ -3,48 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/04 16:24:30 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/04 20:06:05 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "buildins.h"
 
-void	do_echo(t_buildins *vars, char **token, int x, char *temp)
+void	do_echo(t_buildins *vars, char **token, int x)
 {
 	if (token[x][0] == '$' && token[x][1] != '$' && token[x][1] != '\0')
-	{
-		temp = expand(vars, token, x);
-		if (!temp)
-			err_or("strjoin space");
-		ft_putstr_fd(temp, 1);
-		free(temp);
-		temp = NULL;
-	}
+		ft_putstr_fd(expand(vars, token, x), 1);
 	else
 		ft_putstr_fd(token[x], 1);
 }
 
+bool	check_n(char *token)
+{
+	int	x;
+
+	x = 2;
+	if (token[0] == '-' && token[1] == 'n')
+	{
+		if (token[x] == '\0')
+			return (true);
+		while (token[x] == 'n')
+			x++;
+		if (token[x] == '\0')
+			return (true);
+	}
+	return (false);
+}
+
 void	echo(t_buildins *vars, char **token)
 {
-	char	*temp;
 	bool	n;
 	int		x;
 
 	x = 0;
 	n = false;
-	temp = NULL;
 	x = find_arg(token, "echo") + 1;
-	if (ft_strcmp(token[x], "-n"))
+	if (check_n(token[x]) == true)
 	{
 		n = true;
 		x++;
 	}
 	while (token[x])
 	{
-		do_echo(vars, token, x, temp);
+		do_echo(vars, token, x);
 		x++;
 		if (token[x] != NULL)
 			ft_putstr_fd(" ", 1);

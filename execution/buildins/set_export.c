@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/04 13:26:25 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/04 20:05:41 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,36 @@ void	update_export(t_buildins *vars, char *tok, char *token)
 		err_or("strjoin_free_both");
 }
 
-void	set_export(t_buildins *vars, char **token)
+void	copy_arr(t_buildins *vars, char *temp)
 {
 	int		x;
+	char	**arr;
+	char	*add;
+	char	*add1;
+
+	x = 0;
+	arr = NULL;
+	add = NULL;
+	arr = malloc(sizeof(char *) * (ft_arrlen(vars->export) + 2));
+	if (!arr)
+		err_or("malloc");
+	while (vars->export[x])
+	{
+		arr[x] = vars->export[x];
+		x++;
+	}
+	add = ft_strjoin("declare -x ", strcpy_until(temp));
+	add1 = ft_strjoin_free_one(add, "=\"");
+	add = ft_strjoin_free_one(add1, strcpy_from(temp));
+	arr[x] = ft_strjoin_free_one(add, "\"");
+	arr[x + 1] = NULL;
+	vars->export = sort_arr(arr);
+}
+
+void	set_export(t_buildins *vars, char **token)
+{
 	char	*temp;
+	int		x;
 
 	temp = NULL;
 	x = find_arg(token, "export") + 1;
@@ -117,13 +143,15 @@ void	set_export(t_buildins *vars, char **token)
 		if (!temp)
 			err_or("copy_until");
 		if (find_str_part(vars->menv, temp) == -1)
-			err_or("couldnt find env");
+			err_or("couldnt find arg");
 		else
 		{
 			vars->menv[find_str_part(vars->menv, temp)] = ft_strdup(token[x]);
 			if (!vars->menv[find_str_part(vars->menv, temp)])
 				err_or("strdup");
-			update_export(vars, temp, token[x]);
+			update_export(vars, temp, token[x]);//adapt to take in new lines if argument is not present!!
 		}
 	}
+	else
+		copy_arr(vars, token[x]);//only updates export, not menv!!
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_find_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:26:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/30 16:32:47 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/04 20:06:01 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int	add_to_path(t_buildins *vars, char *t)
 	if (!temp)
 		err_or(temp);
 	new = ft_strjoin_free_one(temp, t);
-	if (!new)
-		err_or(temp);
-	if (access(new, X_OK) == 0)
-		return (err_or("access"), 1);
-	else if (new && is_access(new))
+	//if (!new)
+	//	err_or(temp);
+	//if (access(new, X_OK) == 0)
+	//	return (err_or("access"), 1);
+	if (new && is_access(new))
 	{
 		reset_old_pwd(vars, new);
 		return (chdir(new));
@@ -63,7 +63,7 @@ char	*check_slash(char *tok, char *temp)
 		if (tok[x] == '/')
 			x++;
 		else
-			return (err_or(tok), NULL);
+			return (err_or("no such file or directory"), NULL);
 	}
 	if (x > 2)
 	{
@@ -99,7 +99,7 @@ int	go_slash(t_buildins *vars, char **token, int x)
 
 int	go_full_path(t_buildins *vars, char **token, int x)
 {
-	if (is_access(token[x + 1]))
+	if (is_access(token[x + 1]) == true)
 	{
 		reset_old_pwd(vars, token[x + 1]);
 		return (chdir(token[x + 1]));

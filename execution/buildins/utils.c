@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:48:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/02 21:30:30 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/04 20:06:03 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	buildins_init(t_buildins *vars)
 	vars->mpath = get_env(vars, "PATH");
 	if (!vars->home)
 		err_or("get_env failed");
-	get_cdpath(vars);
+	//get_cdpath(vars);
 	combine_export(vars);
 	//export
 	//modify cdpath->if smth inside:
