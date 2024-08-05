@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/04 20:06:05 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:30:15 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	do_echo(t_buildins *vars, char **token, int x)
 {
-	if (token[x][0] == '$' && token[x][1] != '$' && token[x][1] != '\0')
+	if (token[x][0] == '\'')
+		ft_putstr_fd(token[x], 1);
+	else if (token[x][0] == '$' && token[x][1] != '$' && token[x][1] != '\0')
 		ft_putstr_fd(expand(vars, token, x), 1);
 	else
 		ft_putstr_fd(token[x], 1);

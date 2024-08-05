@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:23:55 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/04 20:06:07 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/05 17:01:19 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	find_str_part(char **str, char *tok)
 	}
 	return (-1);
 }
-
+/*
 char	*strcpy_from(char *v_part)
 {
 	char	*ret;
@@ -50,7 +50,7 @@ char	*strcpy_from(char *v_part)
 	ret[x] = '\0';
 	return (ret);
 }
-
+*/
 char	*strcpy_until(char *v_part)
 {
 	char	*ret;
@@ -127,7 +127,7 @@ bool	valid_env(t_buildins *vars, char *tok)
 		y = 0;
 		while (tok[y] == vars->menv[x][y])
 		{
-			if ((tok[y] == '=' || tok[y] == '\0') && vars->menv[x][y] == '=')
+			if (tok[y] == '=' && vars->menv[x][y] == '=')
 				return (true);
 			y++;
 		}

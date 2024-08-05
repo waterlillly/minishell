@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+         #
+#    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/27 14:21:08 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/08/04 20:05:57 by lbaumeis         ###   ########.fr        #
+#    Updated: 2024/08/05 16:41:47 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ CFLAGS = -Wall -Werror -Wextra -g
 	$(CC) $(CFLAGS) -c $< -o $@
 
 CFILES += main.c utils.c cd.c cd_find_path.c pwd.c env.c echo.c
-CFILES += expand.c export.c set_export.c utils2.c
+CFILES += expand.c export.c set_export.c utils2.c add_export.c unset.c
+CFILES += ft_strnstr_bool.c
 OFILES = $(CFILES:.c=.o)
 P_NAME = buildins
 

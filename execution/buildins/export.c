@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 16:29:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/04 20:05:53 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/05 12:24:13 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void	swap(char **arr, int x)
 	arr[x + 1] = temp;
 }
 
-char	**sort_arr(char **arr)
+char	**sort_arr(t_buildins *vars)
 {
-	//char	**arr;
+	char	**arr;
 	int		x;
 
-	//arr = copy_arr_env(vars);
+	arr = copy_arr_env(vars);
 	while (!sorted(arr))
 	{
 		x = 0;
@@ -62,17 +62,17 @@ char	*exp_whole(t_buildins *vars, char **arr, int y)
 
 	temp = NULL;
 	temp1 = NULL;
-	temp = ft_strjoin(arr[y], "=\"");
+	temp = ft_strjoin(arr[y], "=");
 	if (!temp)
 		return (NULL);
-	//temp1 = ft_strjoin_free_one(temp, "");
-	//if (!temp1)
-	//	return (NULL);
-	temp1 = ft_strjoin_free_one(temp, get_env(vars, arr[y]));
+	temp1 = ft_strjoin_free_one(temp, "\"");
 	if (!temp1)
 		return (NULL);
-	temp = ft_strjoin_free_one(temp1, "\"");
+	temp = ft_strjoin_free_one(temp1, get_env(vars, arr[y]));
 	if (!temp)
+		return (NULL);
+	temp1 = ft_strjoin_free_one(temp, "\"");
+	if (!temp1)
 		return (NULL);
 	return (temp1);
 }
@@ -82,9 +82,9 @@ void	combine_export(t_buildins *vars)
 	char	**arr;
 	int		y;
 	
-	arr = NULL;
-	arr = sort_arr(copy_arr_env(vars));
 	y = 0;
+	arr = NULL;
+	arr = sort_arr(vars);
 	vars->export = malloc(sizeof(char *) * (ft_arrlen(arr) + 1));
 	if (!vars->export)
 		err_or("malloc");

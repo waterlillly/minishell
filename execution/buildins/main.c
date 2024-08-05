@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:58:31 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/04 20:05:48 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:17:24 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@ int	main(int ac, char **av, char **envp)
 	{
 		//if (ft_strcmp(av[x], "cdpath"))
 		//	printf("--->CDPATH: %s\n\n", vars.cdpath);
+		if (ft_strcmp(av[x], "unset"))
+		{
+			unset(&vars, av);
+			printf("\n--->ENV:\n");
+			ft_print_array(vars.menv);
+			printf("\n--->EXPORT:\n\n");
+			ft_print_array(vars.export);
+		}
 		if (ft_strcmp(av[x], "env"))
 		{
 			printf("\n--->ENV:\n");
@@ -34,15 +42,15 @@ int	main(int ac, char **av, char **envp)
 		}
 		if (ft_strcmp(av[x], "path"))
 			printf("\n--->MENVP: %s\n\n", vars.mpath);
-		if (ft_strcmp(av[x], "export") && av[x + 1] == NULL)
-		{
-			printf("\n--->EXPORT:\n\n");
-			ft_print_array(vars.export);
-		}
 		if (ft_strcmp(av[x], "export") && av[x + 1] != NULL)
 		{
 			printf("\n--->EXPORT:\n\n");
 			set_export(&vars, av);
+			ft_print_array(vars.export);
+		}
+		if (ft_strcmp(av[x], "export") && av[x + 1] == NULL)
+		{
+			printf("\n--->EXPORT:\n\n");
 			ft_print_array(vars.export);
 		}
 		if (ft_strcmp(av[x], "home"))

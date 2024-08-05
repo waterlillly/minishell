@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/04 20:05:41 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/05 15:21:59 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,11 @@ char	*has_quotes(char *token, int x, int y)
 	while (token[x])
 	{
 		if (y == 1 || x == (int)ft_strlen(token) - 1)
-		{
 			temp[y] = '\"';
-			y++;
-			x++;
-		}
 		else
-			temp[y++] = token[x++];
+			temp[y] = token[x];
+		x++;
+		y++;
 	}
 	temp[y] = '\0';
 	return (temp);
@@ -100,32 +98,6 @@ void	update_export(t_buildins *vars, char *tok, char *token)
 		err_or("strjoin_free_both");
 }
 
-void	copy_arr(t_buildins *vars, char *temp)
-{
-	int		x;
-	char	**arr;
-	char	*add;
-	char	*add1;
-
-	x = 0;
-	arr = NULL;
-	add = NULL;
-	arr = malloc(sizeof(char *) * (ft_arrlen(vars->export) + 2));
-	if (!arr)
-		err_or("malloc");
-	while (vars->export[x])
-	{
-		arr[x] = vars->export[x];
-		x++;
-	}
-	add = ft_strjoin("declare -x ", strcpy_until(temp));
-	add1 = ft_strjoin_free_one(add, "=\"");
-	add = ft_strjoin_free_one(add1, strcpy_from(temp));
-	arr[x] = ft_strjoin_free_one(add, "\"");
-	arr[x + 1] = NULL;
-	vars->export = sort_arr(arr);
-}
-
 void	set_export(t_buildins *vars, char **token)
 {
 	char	*temp;
@@ -135,8 +107,8 @@ void	set_export(t_buildins *vars, char **token)
 	x = find_arg(token, "export") + 1;
 	if (x == 0)
 		err_or("couldnt find arg");
-	if (token[x][0] == '$')
-		err_or("not a valid identifier");
+	//if (token[x][0] == '$')
+	//	err_or("not a valid identifier");//not true
 	if (valid_env(vars, token[x]) == true)
 	{
 		temp = strcpy_until(token[x]);
@@ -149,9 +121,9 @@ void	set_export(t_buildins *vars, char **token)
 			vars->menv[find_str_part(vars->menv, temp)] = ft_strdup(token[x]);
 			if (!vars->menv[find_str_part(vars->menv, temp)])
 				err_or("strdup");
-			update_export(vars, temp, token[x]);//adapt to take in new lines if argument is not present!!
+			update_export(vars, temp, token[x]);
 		}
 	}
 	else
-		copy_arr(vars, token[x]);//only updates export, not menv!!
+		add_to_export(vars, token[x]);
 }

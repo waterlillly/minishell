@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:49:02 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/04 20:05:51 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/05 16:39:51 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	buildins_init(t_buildins *vars);
 
 /*UTILS2*/
 int		find_str_part(char **str, char *tok);
-char	*strcpy_from(char *v_part);
+//char	*strcpy_from(char *v_part);
 char	*strcpy_until(char *v_part);
 char	**copy_arr_env(t_buildins *vars);
 bool	check_quotes(char *token);
@@ -74,8 +74,8 @@ char	*get_env(t_buildins *vars, char *str);
 void	get_menv(t_buildins *vars);
 
 /*CDPATH*/
-void	get_cdpath(t_buildins *vars);
-void	set_cdpath(t_buildins *vars, char **token);
+//void	get_cdpath(t_buildins *vars);
+//void	set_cdpath(t_buildins *vars, char **token);
 
 /*CD_FIND_PATH*/
 int		add_to_path(t_buildins *vars, char *t);
@@ -100,7 +100,7 @@ char	*expand(t_buildins *vars, char **token, int x);
 /*EXPORT*/
 bool	sorted(char **arr);
 void	swap(char **arr, int x);
-char	**sort_arr(char **arr);
+char	**sort_arr(t_buildins *vars);
 char	*exp_whole(t_buildins *vars, char **arr, int y);
 void	combine_export(t_buildins *vars);
 
@@ -111,7 +111,21 @@ char	*modify_quotes(char *token);
 void	update_export(t_buildins *vars, char *tok, char *token);
 void	set_export(t_buildins *vars, char **token);
 
-void	copy_arr(t_buildins *vars, char *temp);
+/*ADD_EXPORT*/
+int		ft_strcmp_until(const char *s1, const char *s2);
+char	*create_add_export(char *token);
+bool	resorted(char **arr);
+char	**resort_arr(char **arr);
+void	add_to_env(t_buildins *vars, char *add);
+void	add_to_export(t_buildins *vars, char *token);
+
+/*FT_STRNSTR_BOOL*/
+bool	ft_strnstr_bool(const char *big, const char *lil, int start, int len);
+
+/*UNSET*/
+void	update_unset(t_buildins *vars, char *tok);
+void	update_unset_exp(t_buildins *vars, char *tok);
+void	unset(t_buildins *vars, char **token);
 
 #endif
 
