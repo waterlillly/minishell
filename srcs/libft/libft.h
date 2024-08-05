@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/04 16:49:33 by mgardesh          #+#    #+#             */
-/*   Updated: 2024/07/29 17:26:46 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/05 13:13:55 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,10 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*get_next_line_bonus(int fd);
 int		ft_strcmp(char *s1, char *s2);
-
+char	*ft_strcat(char *dst, char *src);
+size_t	ft_strlen_2d(char **in);
+char	**ft_realloc_2d(char **in, int add);
+void	ft_free_2d(char **in);
+char	*ft_strncpy(char *dest, char *src, int n);
 
 #endif

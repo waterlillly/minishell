@@ -6,6 +6,9 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <stddef.h>
+# include "../srcs/libft/libft.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
 
 # define BUFF_SIZE 8
@@ -25,9 +28,9 @@ typedef enum e_token
 typedef struct s_raw_in
 {
 	char	*input;
-	char	*line[2];
-	char	*del_s[1000];
-	char	*del_str[1000];
+	char	*line;
+	char	**del_s;
+	char	**del_str;
 	char	**out;
 	int		n_chd;
 	int		n_hd;
@@ -40,6 +43,7 @@ typedef struct s_raw_in
 typedef struct s_minishell_l
 {
 	char					*input;
+	char					*str;
 	t_token					token;
 	struct s_minishell_l	*next;
 	struct s_minishell_l	*prev;
@@ -57,6 +61,12 @@ typedef struct s_minishell_p
 	struct s_minishell_p	*prev;
 }	t_minishell_p;
 
-int		get_next_line(int const fd, char **line);
+int 	error(char *str, int code);
+void	remove_q(t_raw_in *in);
+int		double_count(char *input);
+int		single_count(char *input);
+int 	open_quotes(char *input);
+
+
 
 #endif

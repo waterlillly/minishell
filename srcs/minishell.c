@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "./libft/libft.h"
-#include "minishell.h"
+#include "../includes/minishell.h"
 /*
 int	word(char *input)
 {
@@ -56,29 +56,9 @@ void	lexer(t_minishell_l	*lex, char *input)
 	lex = create_nodes_lex(input, n);
 }*/
 
-int error(char *str, int code)
-{
-	ft_putendl_fd(str, 1);
-	exit (code);
-	return 1;
-}
 
-void	remove_q(t_raw_in *in)
-{
-	int		i;
-	char	*tmp;
 
-	i = -1;
-	while (++i < in->n_hd)
-	{
-		if (*in->del_s[i] == '\'' || *in->del_s[i] == '\"')
-		{
-			tmp = ft_substr(in->del_s[i], 1, ft_strlen(in->del_s[i]) - 2);
-			free(in->del_s[i]);
-			in->del_s[i] = tmp;
-		}
-	}
-}
+
 
 /*int	is_heredoc(char *input)
 {
@@ -100,54 +80,6 @@ void	remove_q(t_raw_in *in)
 	return (0);
 } */
 
-int	double_count(char *input)
-{
-	int	i;
-	int	single_q;
-
-	i = 0;
-	single_q = 0;
-	while (*input)
-	{
-		if (*input == '\'' && i % 2 == 0)
-			single_q++;
-		if (*input == '\"' && single_q % 2 == 0)
-			i++;
-		input++;
-	}
-	return (i);
-}
-
-int	single_count(char *input)
-{
-	int	i;
-	int	double_q;
-
-	i = 0;
-	double_q = 0;
-	while (*input)
-	{
-		if (*input == '\"' && i % 2 == 0)
-			double_q++;
-		if (*input == '\'' && double_q % 2 == 0)
-			i++;
-		input++;
-	}
-	return (i);
-}
-
-int open_quotes(char *input)
-{
-	int	single_q;
-	int	double_q;
-
-	single_q = single_count(input);
-	double_q = double_count(input);
-	if (single_q % 2 || double_q % 2)
-		return (0);
-	return (1);
-}
-
 int	open_line(char *input)
 {
 	if (!input || !*input)
@@ -155,26 +87,6 @@ int	open_line(char *input)
 	if (open_quotes(input))
 		return (1);
 	return (0);
-}
-
-char	*ft_strcat(char *dst, char *src)
-{
-	int	len_a;
-	int	len_b;
-	char	*tmp;
-
-	if (!dst)
-		len_a = 0;
-	else
-		len_a = ft_strlen(dst);
-	len_b = ft_strlen(src);
-	tmp = dst;
-	dst = ft_calloc(len_a + len_b + 1, 1);
-	if (tmp)
-		ft_strlcat(dst, tmp, len_a + 1);
-	ft_strlcat(dst, src, len_b + len_a + 1);
-	free(tmp);
-	return (dst);
 }
 
 int	is_sep(char *charset, char c)
@@ -187,7 +99,8 @@ int	is_sep(char *charset, char c)
 	}
 	return (0);
 }
-
+/*
+///////////////////////////////////////////////////////////////////////////////////////////////////
 int	count(char *str, char *charset)
 {
 	int		len_sub;
@@ -234,6 +147,8 @@ char	*skip(char *str, char *charset, int *len)
 	double_q = 0;
 	while (is_sep(charset, *str) && *str)
 		str++;
+	if (is_sep("><|", *str))
+		return (red_ig(str, len));
 	while ((!is_sep(charset, str[i]) && str[i]) || (single_q % 2 == 1 || double_q % 2 == 1))
 	{
 		if (str[i] == '\"' && single_q % 2 == 0)
@@ -246,47 +161,25 @@ char	*skip(char *str, char *charset, int *len)
 	return (str);
 }
 
-char	*ft_strncpy(char *dest, char *src, int n)
+char	**ft_split_shell(t_raw_in *in)
 {
 	int	i;
+	int	sum;
+	int	j;
 
-	i = 0;
-	while (src[i] != '\0' && i < n)
+	i = -1;
+	in->n_words = count(in->input, " \t<>|");
+	sum = in->n_words + in->n_hd + in->n_pipe + in->n_red;
+	in->out = (char **)ft_calloc(sum + 1, sizeof(char *));
+	if (!out)
+		return(NULL);
+	while (++i < sum)
 	{
-		dest[i] = src[i];
-		i++;
+
 	}
-	dest[i] = '\0';
-	return (dest);
 }
-
-char	**ft_split_shell(char *str, char *charset)
-{
-	int		len;
-	char	**out;
-	int		i;
-	char	*str_temp;
-
-	str_temp = str;
-	len = 0;
-	i = 0;
-	if (str == NULL)
-	{
-		out = (char **)malloc(1 * sizeof(char *));
-		out[0] = NULL;
-		return (out);
-	}
-	out = (char **)malloc((count(str_temp, charset) + 1) * sizeof(char *));
-	while (i < count(str_temp, charset))
-	{
-		str = skip(&str[len], charset, &len);
-		out[i] = (char *)malloc((len + 1) * sizeof(char));
-		ft_strncpy(out[i], str, len);
-		i++;
-	}
-	out[i] = NULL;
-	return (out);
-}
+*/
+// rewrite this whole split this wont work
 /*
 t_minishell_l	*lex(char *input)
 {
@@ -367,8 +260,8 @@ void	set_hd(t_raw_in *in, char *line)
 	int	k;
 
 	i = in->n_chd - 1;
-	//in->del_s = ft_calloc((in->n_hd + 1), sizeof(char *));  // needs to be fixed for realloc
-	while (i < in->n_hd - 1&& *line && *(line + 1))
+	in->del_s = ft_realloc_2d(in->del_s, in->n_hd - in->n_chd);
+	while (i < in->n_hd - 1 && *line && *(line + 1))
 	{
 		k = 2;
 		j = 0;
@@ -409,7 +302,6 @@ void	set_op(t_raw_in *in, char *line)
 	int	len;
 
 	len = ft_strlen(line) - 1;
-
 	while (is_sep(" \t", line[len]))
 		len--;
 	if (line[len] == '|')
@@ -490,10 +382,21 @@ int	check_red(char *str)
 	return (1);
 }
 
+int	check_spipe(char *str)
+{
+	while (is_sep(" \t", *str))
+		str++;
+	if (*str == '|')
+		return (1);
+	return (0);
+}
+
 int	check_pipe(char *str)
 {
-	int i;
+	int 	i;
 
+	if (check_spipe(str))
+		return (0);
 	while (*str)
 	{
 		i = 1;
@@ -522,21 +425,20 @@ int	check_syntax(char *input)
 
 void	get_hd(t_raw_in *in)
 {
-	//in->del_str = ft_calloc((in->n_hd + 1), sizeof(char *));
+	in->del_str = ft_realloc_2d(in->del_str, in->n_hd - in->n_chd);
 	if (in->n_hd)
 	{
 		while (in->n_chd < in->n_hd)
 		{
-			ft_putstr_fd("heredoc>", 1);
-			get_next_line(0, in->line);
-			if (!ft_strcmp(in->del_s[in->n_chd], in->line[0]))
+			in->line = readline("heredoc> ");
+			if (!ft_strcmp(in->del_s[in->n_chd], in->line))
 			{
 				in->n_chd++;
 				continue;
 			}
-			in->del_str[in->n_chd] = ft_strcat(in->del_str[in->n_chd], in->line[0]);
+			in->del_str[in->n_chd] = ft_strcat(in->del_str[in->n_chd], in->line);
 			in->del_str[in->n_chd] = ft_strcat(in->del_str[in->n_chd], "\n");
-			free(in->line[0]);
+			free(in->line);
 		}
 	}
 }
@@ -545,24 +447,22 @@ void	get_pipe(t_raw_in *in)
 {
 	if (in->open_pipe)
 	{
-		ft_putstr_fd("command>", 1);
-		get_next_line(0, in->line);
-		if (!check_syntax(in->line[0]))
+		in->line = readline("command> ");
+		if (!check_syntax(in->line))
 			return ((void)error("idk", 1));
-		in->input = ft_strcat(in->input, in->line[0]);
-		set_first(in, in->line[0]);
+		in->input = ft_strcat(in->input, in->line);
+		set_first(in, in->line);
 	}
 }
 
 int	get_line_cnc(t_raw_in *in)
 {
-	ft_putstr_fd("this is a legit minishell $>", 1);
-	get_next_line(0, in->line);
-	if (!check_syntax(in->line[0]))
+	in->line = readline("this is a legit minishell> ");
+	if (!check_syntax(in->line))
 		return (0);
-	in->input = ft_strcat(in->input, in->line[0]);
-	set_first(in, in->line[0]);
-	free(in->line[0]);
+	in->input = ft_strcat(in->input, in->line);
+	set_first(in, in->line);
+	free(in->line);
 	while (in->open_pipe || in->n_chd < in->n_hd)
 	{
 		get_hd(in);
@@ -571,10 +471,22 @@ int	get_line_cnc(t_raw_in *in)
 	return (1);
 }
 
+void	free_raw(t_raw_in *in)
+{
+	if (in->del_s)
+		ft_free_2d(in->del_s);
+	if (in->del_str)
+		ft_free_2d(in->del_str);
+	if (in->input)
+		free(in->input);
+	if (in->out)
+		ft_free_2d(in->out);
+}
+
 void	init_raw(t_raw_in *in)
 {
-	//in->del_s = NULL;
-	//in->del_str = NULL;
+	in->del_s = NULL;
+	in->del_str = NULL;
 	in->input = NULL;
 	in->n_hd = 0;
 	in->n_pipe = 0;
@@ -584,6 +496,7 @@ void	init_raw(t_raw_in *in)
 	in->n_chd = 0;
 	in->open_pipe = false;
 }
+
 
 int	main(void)
 {
@@ -597,8 +510,10 @@ int	main(void)
 		init_raw(&input);
 		if (!get_line_cnc(&input))
 			return (error("syntax error", 0));
+		//lexed = lexer(&input);
 		printf("hd:%d\nred:%d\npipe:%d\n", input.n_hd, input.n_red, input.n_pipe);
 		while (++i < input.n_hd)
 			printf("%d.%s\n%s", i + 1,  input.del_s[i], input.del_str[i]);
+		free_raw(&input);
 	}
 }
