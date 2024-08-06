@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 10:58:31 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/05 16:17:24 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:36:22 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int ac, char **av, char **envp)
 			printf("\n--->ENV:\n");
 			ft_print_array(vars.menv);
 			printf("\n--->EXPORT:\n\n");
-			ft_print_array(vars.export);
+			ft_print_array(vars.xport);
 		}
 		if (ft_strcmp(av[x], "env"))
 		{
@@ -46,12 +46,12 @@ int	main(int ac, char **av, char **envp)
 		{
 			printf("\n--->EXPORT:\n\n");
 			set_export(&vars, av);
-			ft_print_array(vars.export);
+			ft_print_array(vars.xport);
 		}
 		if (ft_strcmp(av[x], "export") && av[x + 1] == NULL)
 		{
 			printf("\n--->EXPORT:\n\n");
-			ft_print_array(vars.export);
+			ft_print_array(vars.xport);
 		}
 		if (ft_strcmp(av[x], "home"))
 			printf("\n--->HOME: %s\n\n", vars.home);

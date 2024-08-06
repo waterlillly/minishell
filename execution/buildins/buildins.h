@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:49:02 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/05 16:39:51 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:37:22 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,9 @@
 typedef struct s_buildins
 {
 	char	**envp;
-	//char	*cdpath;
 	char	**menv;
 	char	*mpath;
-	char	**export;
+	char	**xport;
 	char	*home;
 	char	*oldpwd;
 	char	*pwd;
@@ -73,10 +72,6 @@ void	get_pwd(t_buildins *vars);
 char	*get_env(t_buildins *vars, char *str);
 void	get_menv(t_buildins *vars);
 
-/*CDPATH*/
-//void	get_cdpath(t_buildins *vars);
-//void	set_cdpath(t_buildins *vars, char **token);
-
 /*CD_FIND_PATH*/
 int		add_to_path(t_buildins *vars, char *t);
 int		go_back(t_buildins *vars, int print);
@@ -95,7 +90,7 @@ bool	check_n(char *token);
 void	echo(t_buildins *vars, char **token);
 
 /*EXPAND*/
-char	*expand(t_buildins *vars, char **token, int x);
+char	*xpand(t_buildins *vars, char **token, int x);
 
 /*EXPORT*/
 bool	sorted(char **arr);
@@ -119,67 +114,9 @@ char	**resort_arr(char **arr);
 void	add_to_env(t_buildins *vars, char *add);
 void	add_to_export(t_buildins *vars, char *token);
 
-/*FT_STRNSTR_BOOL*/
-bool	ft_strnstr_bool(const char *big, const char *lil, int start, int len);
-
 /*UNSET*/
 void	update_unset(t_buildins *vars, char *tok);
 void	update_unset_exp(t_buildins *vars, char *tok);
 void	unset(t_buildins *vars, char **token);
 
 #endif
-
-/*
-shell;
-session_manager;
-qt_accessibility;
-colorterm;
-xdg_config_dirs;
-ssh_agent_launcher;
-xdg_session_path;
-xdg_menu_prefix;
-gnome_desktop_session_id;
-gtk_im_module;
-language;
-ssh_auth_sock;
-xmodifiers;
-desktop_session;
-ft_hook_name;
-gtk_modules;
-dbus_starter_bus_type;
-ft_hook_pathname;
-krb5ccname;
-pwd;
-logname;
-xdg_session_desktop;
-xdg_session_type;
-gpg_agent_info;
-systemd_exec_pid;
-xauthority;
-xdg_greeter_data_dir;
-gdm_lang;
-home;
-lang;
-ls_colors;
-xdg_current_desktop;
-vte_version;
-xdg_seat_path;
-gnome_terminal_screen;
-xdg_session_class;
-term;
-libvirt_default_uri;
-user;
-gnome_terminal_service;
-display;
-shlvl;
-qt_im_module;
-dbus_starter_address;
-xdg_runtime_dir;
-docker_host;
-xdg_data_dirs;
-path;
-gdmsession;
-dbus_session_bus_address;
-oldpwd;
-x;
-*/

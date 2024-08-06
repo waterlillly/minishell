@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/05 15:21:59 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:36:22 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,19 @@ void	update_export(t_buildins *vars, char *tok, char *token)
 	temp = ft_strjoin("declare -x ", tok);
 	if (!temp)
 		err_or("strjoin");
-	x = find_str_part(vars->export, temp);
+	x = find_str_part(vars->xport, temp);
 	if (x == -1)
 		err_or("couldnt find argument");
 	free(temp);
 	temp = NULL;
-	temp = strcpy_until(vars->export[x]);
+	temp = strcpy_until(vars->xport[x]);
 	if (!temp)
 		err_or("strcpy_until");
 	temp1 = modify_quotes(token);
 	if (!temp1)
 		err_or("modify_quotes");
-	vars->export[x] = ft_strjoin_free_both(temp, temp1);
-	if (!vars->export[x])
+	vars->xport[x] = ft_strjoin_free_both(temp, temp1);
+	if (!vars->xport[x])
 		err_or("strjoin_free_both");
 }
 

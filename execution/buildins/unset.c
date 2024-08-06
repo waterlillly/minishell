@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 18:54:32 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/05 17:25:26 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:36:22 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,18 @@ void	update_unset_exp(t_buildins *vars, char *tok)
 	x = 0;
 	y = 0;
 	arr = NULL;
-	arr = malloc(sizeof(char *) * (ft_arrlen(vars->export)));
+	arr = malloc(sizeof(char *) * (ft_arrlen(vars->xport)));
 	if (!arr)
 		err_or("malloc");
-	while (vars->export[x])
+	while (vars->xport[x])
 	{
-		if (ft_strnstr_bool(vars->export[x], tok, 11, ft_strlen(tok)))
+		if (ft_strnstr_bool(vars->xport[x], tok, 11, ft_strlen(tok)))
 			x++;
-		arr[y++] = vars->export[x++];
+		arr[y++] = vars->xport[x++];
 	}
 	arr[y] = NULL;
-	ft_bzero(vars->export, sizeof(vars->export));
-	vars->export = arr;
+	ft_bzero(vars->xport, sizeof(vars->xport));
+	vars->xport = arr;
 }
 
 void	unset(t_buildins *vars, char **token)
@@ -79,7 +79,7 @@ void	unset(t_buildins *vars, char **token)
 	{
 		if (ft_strnstr_bool(vars->menv[y], token[x], 0, len) == true)
 			update_unset(vars, token[x]);
-		else if (ft_strnstr_bool(vars->export[y], token[x], 0, len) == true)
+		else if (ft_strnstr_bool(vars->xport[y], token[x], 0, len) == true)
 			update_unset_exp(vars, token[x]);
 		y++;
 	}

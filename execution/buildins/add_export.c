@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:51:23 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/05 16:10:33 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:36:22 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,12 +116,12 @@ void	add_to_export(t_buildins *vars, char *token)
 	x = 0;
 	arr = NULL;
 	add = NULL;
-	arr = malloc(sizeof(char *) * (ft_arrlen(vars->export) + 2));
+	arr = malloc(sizeof(char *) * (ft_arrlen(vars->xport) + 2));
 	if (!arr)
 		err_or("malloc");
-	while (vars->export[x])
+	while (vars->xport[x])
 	{
-		arr[x] = vars->export[x];
+		arr[x] = vars->xport[x];
 		x++;
 	}
 	add = create_add_export(token);
@@ -129,6 +129,6 @@ void	add_to_export(t_buildins *vars, char *token)
 		add_to_env(vars, ft_substr(add, 11, ft_strlen(add) - 10));
 	arr[x] = add;
 	arr[x + 1] = NULL;
-	ft_free_double(vars->export);
-	vars->export = resort_arr(arr);//maybe free before that
+	ft_free_double(vars->xport);
+	vars->xport = resort_arr(arr);//maybe free before that
 }

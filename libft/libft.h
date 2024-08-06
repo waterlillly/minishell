@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:41:15 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/02 16:45:29 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:20:03 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <string.h>
 # include <ctype.h>
 # include <stdarg.h>
+# include <stdbool.h>
 
 int		ft_isascii(int c);
 int		ft_isprint(int c);
@@ -79,6 +80,7 @@ int		ft_isascii_extend(int n);
 void	ft_free_double(char **smth);
 void	ft_print_array(char **arr);
 int		ft_strcmp_org(const char *s1, const char *s2);
+bool	ft_strnstr_bool(const char *big, const char *lil, int start, int len);
 
 /*GET_NEXT_LINE*/
 char	*get_next_line(int fd);

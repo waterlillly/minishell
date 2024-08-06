@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:23:55 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/05 17:01:19 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:39:09 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,7 @@ int	find_str_part(char **str, char *tok)
 	}
 	return (-1);
 }
-/*
-char	*strcpy_from(char *v_part)
-{
-	char	*ret;
-	int		c;
-	int		x;
 
-	ret = NULL;
-	c = 0;
-	x = 0;
-	while (v_part[c] != '=')
-		c++;
-	ret = malloc(sizeof(char) * (ft_strlen(v_part) - c + 1));
-	if (!ret)
-		err_or("malloc");
-	c++;
-	while (v_part[c])
-		ret[x++] = v_part[c++];
-	ret[x] = '\0';
-	return (ret);
-}
-*/
 char	*strcpy_until(char *v_part)
 {
 	char	*ret;
