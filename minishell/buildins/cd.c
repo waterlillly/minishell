@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/06 19:15:12 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:05:05 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,56 +87,56 @@ if cd + /"smth" -> change cur dir to that dir (if it exists)
 
 */
 
-int	cd_home(t_buildins *vars)
+int	cd_home(t_ms *ms)
 {
-	if (!vars->home)
-		get_env(vars, "HOME");
-	if (is_access(vars->home))
+	if (!ms->e->home)
+		get_env(ms, "HOME");
+	if (is_access(ms->e->home))
 	{
-		reset_old_pwd(vars, vars->home);
-		return (chdir(vars->home));
+		reset_old_pwd(ms, ms->e->home);
+		return (chdir(ms->e->home));
 	}
-	return (err_or(vars->home), 1);
+	return (error(ms, ms->e->home, 1));
 }
 
-int	fill_path(t_buildins *vars, char **token, int x)
+int	fill_path(t_ms *ms, char **token, int x)
 {
 	if (token[x + 1][0] == '-' && token[x + 1][1] == '\0')
 	{
-		if (ft_strcmp(vars->pwd, vars->oldpwd))
-			go_up_oldpwd(vars);
-		return (go_back(vars, 1));
+		if (ft_strcmp(ms->e->pwd, ms->e->oldpwd))
+			go_up_oldpwd(ms);
+		return (go_back(ms, 1));
 	}
 	else if (token[x + 1][0] == '.' && token[x + 1][1] == '.'
 		&& token[x + 1][2] == '\0')
 	{
-		go_up_oldpwd(vars);
-		return (go_back(vars, 0));
+		go_up_oldpwd(ms);
+		return (go_back(ms, 0));
 	}
 	else if (token[x + 1][0] == '.' && token[x + 1][1] == '\0')
 		return (0);
 	else if (token[x + 1][0] == '/' && token[x + 1][1] != '\0'
 		&& token[x + 1][1] != '/')
-		return (go_full_path(vars, token, x));
+		return (go_full_path(ms, token, x));
 	else if (token[x + 1][0] == '/')
-		return (go_slash(vars, token, x));
+		return (go_slash(ms, token, x));
 	else
-		return (add_to_path(vars, token[x + 1]));
-	return (err_or(token[x + 1]), 1);
+		return (add_to_path(ms, token[x + 1]));
+	return (error(ms, token[x + 1], 1));
 }
 
-int	cd(t_buildins *vars, char **token)
+int	cd(t_ms *ms, char **token)
 {
 	int		x;
 
 	x = find_arg(token, "cd");
 	if (!token || !ft_strcmp(token[x], "cd"))
-		return (err_or("command not found"), 1);
+		return (error(ms, "command not found", 1), 1);
 	else if (token[x + 1] == NULL || ft_strcmp(token[x + 1], "#")
 		|| (token[x + 1][0] == '-' && token[x + 1][1] == '-'
 		&& token[x + 1][2] == '\0'))
-		return (cd_home(vars));
+		return (cd_home(ms));
 	else if (token[x + 1] != NULL)
-		return (fill_path(vars, token, x));
-	return (err_or(token[x + 1]), 1);
+		return (fill_path(ms, token, x));
+	return (error(ms, token[x + 1], 1));
 }

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:48:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/06 19:16:03 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:25:58 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,6 @@ bool	is_access(char *dir)
 	return (false);
 }
 
-void	err_or(char *s)
-{
-	perror(s);
-	exit(EXIT_FAILURE);
-}
-
 int	find_arg(char **s, char *a)
 {
 	int	x;
@@ -57,22 +51,18 @@ int	find_arg(char **s, char *a)
 	return (-1);
 }
 
-void	buildins_init(t_buildins *vars)
+void	err_free_buildins(t_ms *ms)
 {
-	get_menv(vars);
-	get_pwd(vars);
-	go_up_oldpwd(vars);
-	vars->home = get_env(vars, "HOME");
-	if (!vars->home)
-		err_or("get_env failed");
-	vars->mpath = get_env(vars, "PATH");
-	if (!vars->home)
-		err_or("get_env failed");
-	//get_cdpath(vars);
-	combine_export(vars);
-	//export
-	//modify cdpath->if smth inside:
-	//	look there first when executing stuff
-	//	if not found go from pwd
-	//	if not found display error
+	if (ms->e->menv)
+		free_double(ms->e->menv);
+	if (ms->e->mpath)
+		free(ms->e->mpath);
+	if (ms->e->xport)
+		free_double(ms->e->xport);
+	if (ms->e->home)
+		free(ms->e->home);
+	if (ms->e->oldpwd)
+		free(ms->e->oldpwd);
+	if (ms->e->pwd)
+		free(ms->e->pwd);
 }

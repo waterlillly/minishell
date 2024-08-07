@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   xpand.c                                            :+:      :+:    :+:   */
+/*   ft_str_lower.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 14:10:28 by lbaumeis         ###   ########.fr       */
+/*   Created: 2024/07/27 16:44:57 by lbaumeis          #+#    #+#             */
+/*   Updated: 2024/08/07 14:25:19 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libftultra.h"
 
-char	*xpand(t_ms *ms, char **token, int x)
+char	*ft_str_lower(char *s)
 {
-	char	*temp;
+	char	*new;
 
-	temp = NULL;
-	temp = get_env(ms, ft_substr(token[x], 1, ft_strlen(token[x] - 1)));
-	if (!temp)
-		error(ms, "substr", 1);
-	return (temp);
+	if (!s)
+		return (NULL);
+	new = NULL;
+	new = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!new)
+		return (NULL);
+	while (*s)
+	{
+		*new = (char)(ft_tolower(*s));
+		new++;
+		s++;
+	}
+	*new = '\0';
+	free(s);
+	s = NULL;
+	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/06 19:15:48 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:08:26 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*modify_quotes(char *token)
 	return (has_quotes(token, x, y));
 }
 
-void	update_export(t_buildins *vars, char *tok, char *token)
+void	update_export(t_ms *ms, char *tok, char *token)
 {
 	int		x;
 	char	*temp;
@@ -81,24 +81,24 @@ void	update_export(t_buildins *vars, char *tok, char *token)
 	temp1 = NULL;
 	temp = ft_strjoin("declare -x ", tok);
 	if (!temp)
-		err_or("strjoin");
-	x = find_str_part(vars->xport, temp);
+		error(ms, "strjoin", 1);
+	x = find_str_part(ms->e->xport, temp);
 	if (x == -1)
-		err_or("couldnt find argument");
+		error(ms, "couldnt find argument", 1);
 	free(temp);
 	temp = NULL;
-	temp = strcpy_until(vars->xport[x]);
+	temp = strcpy_until(ms->e->xport[x]);
 	if (!temp)
-		err_or("strcpy_until");
+		error(ms, "strcpy_until", 1);
 	temp1 = modify_quotes(token);
 	if (!temp1)
-		err_or("modify_quotes");
-	vars->xport[x] = ft_strjoin_free_both(temp, temp1);
-	if (!vars->xport[x])
-		err_or("strjoin_free_both");
+		error(ms, "modify_quotes", 1);
+	ms->e->xport[x] = ft_strjoin_free_both(temp, temp1);
+	if (!ms->e->xport[x])
+		error(ms, "strjoin_free_both", 1);
 }
 
-void	set_export(t_buildins *vars, char **token)
+void	set_export(t_ms *ms, char **token)
 {
 	char	*temp;
 	int		x;
@@ -106,24 +106,24 @@ void	set_export(t_buildins *vars, char **token)
 	temp = NULL;
 	x = find_arg(token, "export") + 1;
 	if (x == 0)
-		err_or("couldnt find arg");
+		error(ms, "couldnt find arg", 1);
 	//if (token[x][0] == '$')
 	//	err_or("not a valid identifier");//not true
-	if (valid_env(vars, token[x]) == true)
+	if (valid_env(ms, token[x]) == true)
 	{
 		temp = strcpy_until(token[x]);
 		if (!temp)
-			err_or("copy_until");
-		if (find_str_part(vars->menv, temp) == -1)
-			err_or("couldnt find arg");
+			error(ms, "copy_until", 1);
+		if (find_str_part(ms->e->menv, temp) == -1)
+			error(ms, "couldnt find arg", 1);
 		else
 		{
-			vars->menv[find_str_part(vars->menv, temp)] = ft_strdup(token[x]);
-			if (!vars->menv[find_str_part(vars->menv, temp)])
-				err_or("strdup");
-			update_export(vars, temp, token[x]);
+			ms->e->menv[find_str_part(ms->e->menv, temp)] = ft_strdup(token[x]);
+			if (!ms->e->menv[find_str_part(ms->e->menv, temp)])
+				error(ms, "strdup", 1);
+			update_export(ms, temp, token[x]);
 		}
 	}
 	else
-		add_to_export(vars, token[x]);
+		add_to_export(ms, token[x]);
 }

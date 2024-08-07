@@ -6,13 +6,13 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 18:54:32 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/06 19:15:52 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:09:22 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	update_unset(t_buildins *vars, char *tok)
+void	update_unset(t_ms *ms, char *tok)
 {
 	int		x;
 	int		y;
@@ -21,22 +21,22 @@ void	update_unset(t_buildins *vars, char *tok)
 	x = 0;
 	y = 0;
 	arr = NULL;
-	arr = malloc(sizeof(char *) * (ft_arrlen(vars->menv)));
+	arr = malloc(sizeof(char *) * (ft_arrlen(ms->e->menv)));
 	if (!arr)
-		err_or("malloc");
-	while (vars->menv[x])
+		error(ms, "malloc", 1);
+	while (ms->e->menv[x])
 	{
-		if (ft_strnstr_bool(vars->menv[x], tok, 0, ft_strlen(tok)))
+		if (ft_strnstr_bool(ms->e->menv[x], tok, 0, ft_strlen(tok)))
 			x++;
-		arr[y++] = vars->menv[x++];
+		arr[y++] = ms->e->menv[x++];
 	}
 	arr[y] = NULL;
-	ft_bzero(vars->menv, sizeof(vars->menv));
-	vars->menv = arr;
-	update_unset_exp(vars, tok);
+	ft_bzero(ms->e->menv, sizeof(ms->e->menv));
+	ms->e->menv = arr;
+	update_unset_exp(ms, tok);
 }
 
-void	update_unset_exp(t_buildins *vars, char *tok)
+void	update_unset_exp(t_ms *ms, char *tok)
 {
 	int		x;
 	int		y;
@@ -45,21 +45,21 @@ void	update_unset_exp(t_buildins *vars, char *tok)
 	x = 0;
 	y = 0;
 	arr = NULL;
-	arr = malloc(sizeof(char *) * (ft_arrlen(vars->xport)));
+	arr = malloc(sizeof(char *) * (ft_arrlen(ms->e->xport)));
 	if (!arr)
-		err_or("malloc");
-	while (vars->xport[x])
+		error(ms, "malloc", 1);
+	while (ms->e->xport[x])
 	{
-		if (ft_strnstr_bool(vars->xport[x], tok, 11, ft_strlen(tok)))
+		if (ft_strnstr_bool(ms->e->xport[x], tok, 11, ft_strlen(tok)))
 			x++;
-		arr[y++] = vars->xport[x++];
+		arr[y++] = ms->e->xport[x++];
 	}
 	arr[y] = NULL;
-	ft_bzero(vars->xport, sizeof(vars->xport));
-	vars->xport = arr;
+	ft_bzero(ms->e->xport, sizeof(ms->e->xport));
+	ms->e->xport = arr;
 }
 
-void	unset(t_buildins *vars, char **token)
+void	unset(t_ms *ms, char **token)
 {
 	int		x;
 	int		y;
@@ -75,12 +75,12 @@ void	unset(t_buildins *vars, char **token)
 	if (ft_strchr(token[x], '=') != NULL || ft_strcmp(token[x], "_"))
 		return ;
 	len = ft_strlen(token[x]);
-	while (vars->menv[y])
+	while (ms->e->menv[y])
 	{
-		if (ft_strnstr_bool(vars->menv[y], token[x], 0, len) == true)
-			update_unset(vars, token[x]);
-		else if (ft_strnstr_bool(vars->xport[y], token[x], 0, len) == true)
-			update_unset_exp(vars, token[x]);
+		if (ft_strnstr_bool(ms->e->menv[y], token[x], 0, len) == true)
+			update_unset(ms, token[x]);
+		else if (ft_strnstr_bool(ms->e->xport[y], token[x], 0, len) == true)
+			update_unset_exp(ms, token[x]);
 		y++;
 	}
 }

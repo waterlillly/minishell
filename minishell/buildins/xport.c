@@ -36,12 +36,12 @@ void	swap(char **arr, int x)
 	arr[x + 1] = temp;
 }
 
-char	**sort_arr(t_buildins *vars)
+char	**sort_arr(t_ms *ms)
 {
 	char	**arr;
 	int		x;
 
-	arr = copy_arr_env(vars);
+	arr = copy_arr_env(ms);
 	while (!sorted(arr))
 	{
 		x = 0;
@@ -55,7 +55,7 @@ char	**sort_arr(t_buildins *vars)
 	return (arr);
 }
 
-char	*exp_whole(t_buildins *vars, char **arr, int y)
+char	*exp_whole(t_ms *ms, char **arr, int y)
 {
 	char	*temp;
 	char	*temp1;
@@ -68,7 +68,7 @@ char	*exp_whole(t_buildins *vars, char **arr, int y)
 	temp1 = ft_strjoin_free_one(temp, "\"");
 	if (!temp1)
 		return (NULL);
-	temp = ft_strjoin_free_one(temp1, get_env(vars, arr[y]));
+	temp = ft_strjoin_free_one(temp1, get_env(ms, arr[y]));
 	if (!temp)
 		return (NULL);
 	temp1 = ft_strjoin_free_one(temp, "\"");
@@ -77,24 +77,24 @@ char	*exp_whole(t_buildins *vars, char **arr, int y)
 	return (temp1);
 }
 
-void	combine_export(t_buildins *vars)
+void	combine_export(t_ms *ms)
 {
 	char	**arr;
 	int		y;
 	
 	y = 0;
 	arr = NULL;
-	arr = sort_arr(vars);
-	vars->xport = malloc(sizeof(char *) * (ft_arrlen(arr) + 1));
-	if (!vars->xport)
-		err_or("malloc");
+	arr = sort_arr(ms);
+	ms->e->xport = malloc(sizeof(char *) * (ft_arrlen(arr) + 1));
+	if (!ms->e->xport)
+		error(ms, "malloc", 1);
 	while (arr[y])
 	{
-		vars->xport[y] = ft_strjoin("declare -x ", exp_whole(vars, arr, y));
-		if (!vars->xport[y])
-			err_or("exp_whole");
+		ms->e->xport[y] = ft_strjoin("declare -x ", exp_whole(ms, arr, y));
+		if (!ms->e->xport[y])
+			error(ms, "exp_whole", 1);
 		y++;
 	}
-	vars->xport[y] = NULL;
+	ms->e->xport[y] = NULL;
 	ft_free_double(arr);
 }

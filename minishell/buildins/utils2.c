@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:23:55 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/06 19:16:06 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:28:57 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*strcpy_until(char *v_part)
 		c++;
 	ret = malloc(sizeof(char) * (c + 1));
 	if (!ret)
-		err_or("malloc");
+		return (NULL);
 	while (x < c)
 	{
 		ret[x] = v_part[x];
@@ -53,19 +53,19 @@ char	*strcpy_until(char *v_part)
 	return (ret);
 }
 
-char	**copy_arr_env(t_buildins *vars)
+char	**copy_arr_env(t_ms *ms)
 {
 	int		x;
 	char	**arr;
 
 	x = 0;
 	arr = NULL;
-	arr = malloc(sizeof(char *) * (ft_arrlen(vars->menv) + 1));
+	arr = malloc(sizeof(char *) * (ft_arrlen(ms->e->menv) + 1));
 	if (!arr)
 		return (NULL);
-	while (vars->menv[x])
+	while (ms->e->menv[x])
 	{
-		arr[x] = strcpy_until(vars->menv[x]);
+		arr[x] = strcpy_until(ms->e->menv[x]);
 		x++;
 	}
 	arr[x] = NULL;
@@ -95,18 +95,18 @@ bool	check_quotes(char *token)
 	return (false);
 }
 
-bool	valid_env(t_buildins *vars, char *tok)
+bool	valid_env(t_ms *ms, char *tok)
 {
 	int	x;
 	int	y;
 
 	x = 0;
-	while (vars->menv[x])
+	while (ms->e->menv[x])
 	{
 		y = 0;
-		while (tok[y] == vars->menv[x][y])
+		while (tok[y] == ms->e->menv[x][y])
 		{
-			if (tok[y] == '=' && vars->menv[x][y] == '=')
+			if (tok[y] == '=' && ms->e->menv[x][y] == '=')
 				return (true);
 			y++;
 		}

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:53:55 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/06 18:28:33 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:59:34 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ char	*ft_itoa(int n);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
 /*SAME SAME BUT DIFFERENT*/
-//size_t	ft_strlen(const char *s);
+size_t	ft_strlen(const char *s);
 //size_t	ft_strlen(const char *str);
 
-//void	ft_putnbr_fd(int c, int fd);
+void	ft_putnbr_fd(int c, int fd);
 //void	ft_putnbr_fd(int n, int fd);
 
-//int		ft_strcmp(const char *s1, const char *s2);
+int		ft_strcmp(const char *s1, const char *s2);
 //int		ft_strcmp(char *s1, char *s2);
 
 /*EXTRA LILLY*/

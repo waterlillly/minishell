@@ -6,36 +6,36 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/06 19:15:19 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:41:10 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	get_pwd(t_buildins *vars)
+void	get_pwd(t_ms *ms)
 {
 	char	*temp;
 
 	temp = NULL;
-	if (vars->pwd)
+	if (ms->e->pwd)
 	{
-		temp = ft_strdup(vars->pwd);
+		temp = ft_strdup(ms->e->pwd);
 		if (!temp)
-			err_or("strdup");
-		free(vars->pwd);
-		vars->pwd = NULL;
+			error(ms, "strdup", 1);
+		free(ms->e->pwd);
+		ms->e->pwd = NULL;
 	}
-	vars->pwd = getcwd(vars->pwd, 0);
-	if (!vars->pwd || access(vars->pwd, F_OK) == -1)
+	ms->e->pwd = getcwd(ms->e->pwd, 0);
+	if (!ms->e->pwd || access(ms->e->pwd, F_OK) == -1)
 	{
-		vars->pwd = ft_strdup(temp);
+		ms->e->pwd = ft_strdup(temp);
 		free(temp);
 		temp = NULL;
-		err_or("strdup or access");
+		error(ms, "strdup or access", 1);
 	}
 }
 
-char	*get_env(t_buildins *vars, char *str)
+char	*get_env(t_ms *ms, char *str)
 {
 	int		x;
 	size_t	len;
@@ -44,16 +44,16 @@ char	*get_env(t_buildins *vars, char *str)
 	x = 0;
 	len = 0;
 	result = NULL;
-	while (vars->menv[x])
+	while (ms->e->menv[x])
 	{
-		if (ft_strnstr(vars->menv[x], str, ft_strlen(str))
-			== &(vars->menv[x][0]))
+		if (ft_strnstr(ms->e->menv[x], str, ft_strlen(str))
+			== &(ms->e->menv[x][0]))
 		{
-			len = ft_strlen(vars->menv[x]) - ft_strlen(str);
+			len = ft_strlen(ms->e->menv[x]) - ft_strlen(str);
 			result = malloc(sizeof(char) * len);
 			if (!result)
 				return ("\n");
-			result = ft_substr(vars->menv[x], ft_strlen(str) + 1, len - 1);
+			result = ft_substr(ms->e->menv[x], ft_strlen(str) + 1, len - 1);
 			if (!result)
 				return ("\n");
 			return (result);
@@ -63,28 +63,28 @@ char	*get_env(t_buildins *vars, char *str)
 	return ("\n");
 }
 
-void	get_menv(t_buildins *vars)
+void	get_menv(t_ms *ms, char **envp)
 {
 	int	x;
 
 	x = 0;
-	vars->menv = malloc(sizeof(char *) * (ft_arrlen(vars->envp) + 1));
-	if (!vars->menv)
-		err_or("malloc");
-	while (vars->envp[x])
+	ms->e->menv = malloc(sizeof(char *) * (ft_arrlen(envp) + 1));
+	if (!ms->e->menv)
+		error(ms, "malloc", 1);
+	while (envp[x])
 	{
-		vars->menv[x] = ft_strdup(vars->envp[x]);
-		if (!vars->menv[x])
+		ms->e->menv[x] = ft_strdup(envp[x]);
+		if (!ms->e->menv[x])
 		{
-			ft_free_double(vars->menv);
-			err_or("strdup");
+			ft_free_double(ms->e->menv);
+			error(ms, "strdup", 1);
 		}
 		x++;
 	}
-	if (x != ft_arrlen(vars->envp))
+	if (x != ft_arrlen(envp))
 	{
-		ft_free_double(vars->menv);
-		err_or("menv");
+		ft_free_double(ms->e->menv);
+		error(ms, "menv", 1);
 	}
-	vars->menv[x] = NULL;
+	ms->e->menv[x] = NULL;
 }
