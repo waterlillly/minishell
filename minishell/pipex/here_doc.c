@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:55:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/06 19:18:31 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:22:58 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 // 	g_sig = 0;	
 // }
 
-// int heredoc(t_pipex *p)
+// int heredoc(t_ms *ms)
 // {
 // 	if (g_sig != 0)
 // 	{
@@ -34,98 +34,95 @@
 // 	}
 // }
 
-void	get_cur_cwd(t_pipex *p)
+void	get_cur_cwd(t_ms *ms)
 {	
-	p->cwd = getenv("PWD");
-	if (!p->cwd)
-		err_free(p, 1);
-	if (access(p->cwd, R_OK) == -1)
+	ms->e->cwd = get_env(ms, "PWD");
+	if (!ms->e->cwd)
+		error(ms, "get_env failed", 1);
+	if (access(ms->e->cwd, R_OK) == -1)
 	{
-		free(p->cwd);
-		p->cwd = NULL;
-		err_free(p, 1);
+		free(ms->e->cwd);
+		ms->e->cwd = NULL;
+		error(ms, "no access", 1);
 	}
 }
 
-void	first_heredoc(t_pipex *p)
+void	first_heredoc(t_ms *ms)
 {
 	char	*line;
 	
 	line = NULL;
-	p->filein = -1;
-	p->fileout = -1;
-	p->filein = open("hd", O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (p->filein == -1 || access("hd", R_OK) == -1 || access("hd", W_OK) == -1)
-	{
-		perror("hd");
-		err_free(p, 1);
-	}
+	ms->e->filein = -1;
+	ms->e->fileout = -1;
+	ms->e->filein = open("hd", O_CREAT | O_RDWR | O_TRUNC, 0644);
+	if (ms->e->filein == -1 || access("hd", R_OK) == -1 || access("hd", W_OK) == -1)
+		error(ms, "hd", 1);
 	line = readline("> ");
-	while (line && !ft_strcmp(line, p->delimiter))
+	while (line && !ft_strcmp(line, ms->e->delimiter))
 	{
-		ft_putstr_fd(line, p->filein);
-		ft_putchar_fd('\n', p->filein);
+		ft_putstr_fd(line, ms->e->filein);
+		ft_putchar_fd('\n', ms->e->filein);
 		free(line);
 		line = NULL;
 		line = readline("> ");
 	}
-	close_all(p);
+	close_all(ms);
 }
 
-void	adjust_struct(t_pipex *p)
+void	adjust_struct(t_ms *ms)
 {
-	if (p->in == true)
+	if (ms->e->in == true)
 	{
-		p->x = 2;
-		if (p->out == true)
-			p->cmd_count = p->ac - 3;
+		ms->e->x = 2;
+		if (ms->e->out == true)
+			ms->e->cmd_count = ms->e->ac - 3;
 		else
-			p->cmd_count = p->ac - 2;
+			ms->e->cmd_count = ms->e->ac - 2;
 	}
-	else if (p->in == false)
+	else if (ms->e->in == false)
 	{
-		get_cur_cwd(p);
-		if (!p->cwd)
-			err_free(p, 1);
-		p->x = 1;
-		if (p->out == true)
-			p->cmd_count = p->ac - 2;
+		get_cur_cwd(ms);
+		if (!ms->e->cwd)
+			error(ms, "no cwd", 1);
+		ms->e->x = 1;
+		if (ms->e->out == true)
+			ms->e->cmd_count = ms->e->ac - 2;
 		else
-			p->cmd_count = p->ac - 1;
+			ms->e->cmd_count = ms->e->ac - 1;
 	}
 }
 
-void	adjust_struct_here(t_pipex *p)
+void	adjust_struct_here(t_ms *ms)
 {
-	if (p->in == false)
+	if (ms->e->in == false)
 	{
-		p->x = 3;
-		if (p->out == true && p->ac > 3)
-			p->cmd_count = p->ac - 4;
+		ms->e->x = 3;
+		if (ms->e->out == true && ms->e->ac > 3)
+			ms->e->cmd_count = ms->e->ac - 4;
 		else
-			p->cmd_count = p->ac - 3;
+			ms->e->cmd_count = ms->e->ac - 3;
 	}
 	else
-		err_free(p, 1);
+		error(ms, NULL, 1);
 }
 
-void	here_or_not(t_pipex *p)
+void	here_or_not(t_ms *ms)
 {
-	//p->alot = false;
-	if (!ft_strcmp(p->av[1], "here_doc"))
+	//ms->e->alot = false;
+	if (!ft_strcmp(ms->e->av[1], "here_doc"))
 	{
-		p->delimiter = NULL;
-		p->here = false;
-		adjust_struct(p);
-		check_filein(p);
+		ms->e->delimiter = NULL;
+		ms->e->here = false;
+		adjust_struct(ms);
+		check_filein(ms);
 	}
 	else
 	{
-		p->delimiter = p->av[2];
-		p->here = true;
-		adjust_struct_here(p);
-		first_heredoc(p);
+		ms->e->delimiter = ms->e->av[2];
+		ms->e->here = true;
+		adjust_struct_here(ms);
+		first_heredoc(ms);
 	}
-	//if (p->cmd_count > 512)
-		//p->alot = true;
+	//if (ms->e->cmd_count > 512)
+		//ms->e->alot = true;
 }

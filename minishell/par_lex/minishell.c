@@ -430,7 +430,7 @@ void	get_hd(t_raw_in *in)
 		while (in->n_chd < in->n_hd)
 		{
 			in->line = readline("heredoc> ");
-			if (!ft_strcmp(in->del_s[in->n_chd], in->line))
+			if (!ft_strcmp_org(in->del_s[in->n_chd], in->line))
 			{
 				in->n_chd++;
 				continue;
@@ -448,7 +448,7 @@ void	get_pipe(t_raw_in *in)
 	{
 		in->line = readline("command> ");
 		if (!check_syntax(in->line))
-			return ((void)error("idk", 1));
+			return ((void)error(in, "idk", 1));
 		in->input = ft_strcat(in->input, in->line);
 		set_first(in, in->line);
 	}
@@ -481,7 +481,7 @@ void	free_raw(t_raw_in *in)
 	if (in->out)
 		ft_free_2d(in->out);
 }
-
+/*
 void	init_raw(t_raw_in *in)
 {
 	in->del_s = NULL;
@@ -496,7 +496,7 @@ void	init_raw(t_raw_in *in)
 	in->open_pipe = false;
 }
 
-/*
+
 int	main(void)
 {
 	//t_minishell_l	*lexed;
