@@ -6,24 +6,11 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:42:08 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/03 14:53:02 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:27:51 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-/*
-void	minishell(int ac, char **av, t_minishell_p *m)
-{
-	m->infile = NULL;
-	m->str = av;
-	m->out = true;
-	m->outfile = av[ac - 1];
-	m->next = NULL;
-	m->prev = NULL;
-	m->redir = 0;
-	m->redirect = NULL;
-}
-*/
 
 int	main(int ac, char **av, char **envp)
 {
@@ -35,6 +22,12 @@ int	main(int ac, char **av, char **envp)
 	init_p(&p);
 	//if (p.alot == true)
 	//	shittonofcmds(&p);
+	if (p.cmd_count > 500)
+	{
+		ft_putendl_fd("too many commands", 2);
+		err_free(&p, 1);
+		exit(EXIT_FAILURE);
+	}
 	if (p.cmd_count == 1)
 		single_exec(&p);
 	while (c < p.cmd_count && p.cmd_count > 1)

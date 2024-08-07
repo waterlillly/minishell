@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:23:55 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/06 16:39:09 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:32:21 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*strcpy_until(char *v_part)
 		c++;
 	ret = malloc(sizeof(char) * (c + 1));
 	if (!ret)
-		err_or("malloc");
+		error("malloc");
 	while (x < c)
 	{
 		ret[x] = v_part[x];

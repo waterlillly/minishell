@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:26:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/05 12:02:57 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:32:21 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@ int	add_to_path(t_buildins *vars, char *t)
 	new = NULL;
 	temp = ft_strjoin(vars->pwd, "/");
 	if (!temp)
-		err_or(temp);
+		error(temp);
 	new = ft_strjoin_free_one(temp, t);
 	if (!new)
-		err_or(temp);
+		error(temp);
 	if (access(new, X_OK) == 0)
-		return (err_or("access"), 1);
+		return (error("access"), 1);
 	if (new && is_access(new))
 	{
 		reset_old_pwd(vars, new);
 		return (chdir(new));
 	}
-	return (err_or(new), 1);
+	return (error(new), 1);
 }
 
 int	go_back(t_buildins *vars, int print)
@@ -42,7 +42,7 @@ int	go_back(t_buildins *vars, int print)
 	temp = NULL;
 	temp = ft_strdup(vars->oldpwd);
 	if (!temp)
-		err_or(temp);
+		error(temp);
 	if (is_access(temp))
 	{
 		reset_old_pwd(vars, temp);
@@ -50,7 +50,7 @@ int	go_back(t_buildins *vars, int print)
 			printf("%s\n", vars->oldpwd);
 		return (chdir(temp));
 	}
-	return (err_or(temp), 1);
+	return (error(temp), 1);
 }
 
 char	*check_slash(char *tok, char *temp)
@@ -63,13 +63,13 @@ char	*check_slash(char *tok, char *temp)
 		if (tok[x] == '/')
 			x++;
 		else
-			return (err_or("no such file or directory"), NULL);
+			return (error("no such file or directory"), NULL);
 	}
 	if (x > 2)
 	{
 		temp = ft_strdup("/");
 		if (!temp)
-			err_or(temp);
+			error(temp);
 		return (temp);
 	}
 	else
@@ -87,14 +87,14 @@ int	go_slash(t_buildins *vars, char **token, int x)
 	{
 		temp = check_slash(token[x + 1], temp);
 		if (!temp)
-			err_or(temp);
+			error(temp);
 		if (is_access(temp))
 		{
 			reset_old_pwd(vars, temp);
 			return (chdir(token[x + 1]));
 		}
 	}
-	return (err_or(token[x + 1]), 1);
+	return (error(token[x + 1]), 1);
 }
 
 int	go_full_path(t_buildins *vars, char **token, int x)
@@ -104,5 +104,5 @@ int	go_full_path(t_buildins *vars, char **token, int x)
 		reset_old_pwd(vars, token[x + 1]);
 		return (chdir(token[x + 1]));
 	}
-	return (err_or(token[x + 1]), 1);
+	return (error(token[x + 1]), 1);
 }

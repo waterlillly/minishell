@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/01 15:14:46 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:32:21 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	get_pwd(t_buildins *vars)
 	{
 		temp = ft_strdup(vars->pwd);
 		if (!temp)
-			err_or("strdup");
+			error("strdup");
 		free(vars->pwd);
 		vars->pwd = NULL;
 	}
@@ -31,7 +31,7 @@ void	get_pwd(t_buildins *vars)
 		vars->pwd = ft_strdup(temp);
 		free(temp);
 		temp = NULL;
-		err_or("strdup or access");
+		error("strdup or access");
 	}
 }
 
@@ -70,21 +70,21 @@ void	get_menv(t_buildins *vars)
 	x = 0;
 	vars->menv = malloc(sizeof(char *) * (ft_arrlen(vars->envp) + 1));
 	if (!vars->menv)
-		err_or("malloc");
+		error("malloc");
 	while (vars->envp[x])
 	{
 		vars->menv[x] = ft_strdup(vars->envp[x]);
 		if (!vars->menv[x])
 		{
 			ft_free_double(vars->menv);
-			err_or("strdup");
+			error("strdup");
 		}
 		x++;
 	}
 	if (x != ft_arrlen(vars->envp))
 	{
 		ft_free_double(vars->menv);
-		err_or("menv");
+		error("menv");
 	}
 	vars->menv[x] = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:51:23 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/06 16:36:22 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:32:21 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@ char	*create_add_export(char *token)
 	{
 		temp = ft_strjoin("declare -x ", strcpy_until(token));
 		if (!temp)
-			err_or("strjoin");
+			error("strjoin");
 		temp1 = ft_strjoin_free_one(temp, modify_quotes(token));
 		if (!temp1)
-			err_or("strjoin_free_one");
+			error("strjoin_free_one");
 	}
 	else
 	{
 		temp1 = ft_strjoin("declare -x ", token);
 		if (!temp1)
-			err_or("strjoin");
+			error("strjoin");
 	}
 	return (temp1);
 }
@@ -95,7 +95,7 @@ void	add_to_env(t_buildins *vars, char *add)
 	arr = NULL;
 	arr = malloc(sizeof(char *) * (ft_arrlen(vars->menv) + 2));
 	if (!arr)
-		err_or("malloc");
+		error("malloc");
 	while (vars->menv[x])
 	{
 		arr[x] = vars->menv[x];
@@ -118,7 +118,7 @@ void	add_to_export(t_buildins *vars, char *token)
 	add = NULL;
 	arr = malloc(sizeof(char *) * (ft_arrlen(vars->xport) + 2));
 	if (!arr)
-		err_or("malloc");
+		error("malloc");
 	while (vars->xport[x])
 	{
 		arr[x] = vars->xport[x];

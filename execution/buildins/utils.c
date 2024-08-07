@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:48:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/05 12:24:38 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:32:21 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	is_access(char *dir)
 	return (false);
 }
 
-void	err_or(char *s)
+void	error(char *s)
 {
 	perror(s);
 	exit(EXIT_FAILURE);
@@ -64,10 +64,10 @@ void	buildins_init(t_buildins *vars)
 	go_up_oldpwd(vars);
 	vars->home = get_env(vars, "HOME");
 	if (!vars->home)
-		err_or("get_env failed");
+		error("get_env failed");
 	vars->mpath = get_env(vars, "PATH");
 	if (!vars->home)
-		err_or("get_env failed");
+		error("get_env failed");
 	//get_cdpath(vars);
 	combine_export(vars);
 	//export

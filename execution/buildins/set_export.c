@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/06 16:36:22 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:32:21 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,21 +81,21 @@ void	update_export(t_buildins *vars, char *tok, char *token)
 	temp1 = NULL;
 	temp = ft_strjoin("declare -x ", tok);
 	if (!temp)
-		err_or("strjoin");
+		error("strjoin");
 	x = find_str_part(vars->xport, temp);
 	if (x == -1)
-		err_or("couldnt find argument");
+		error("couldnt find argument");
 	free(temp);
 	temp = NULL;
 	temp = strcpy_until(vars->xport[x]);
 	if (!temp)
-		err_or("strcpy_until");
+		error("strcpy_until");
 	temp1 = modify_quotes(token);
 	if (!temp1)
-		err_or("modify_quotes");
+		error("modify_quotes");
 	vars->xport[x] = ft_strjoin_free_both(temp, temp1);
 	if (!vars->xport[x])
-		err_or("strjoin_free_both");
+		error("strjoin_free_both");
 }
 
 void	set_export(t_buildins *vars, char **token)
@@ -106,21 +106,21 @@ void	set_export(t_buildins *vars, char **token)
 	temp = NULL;
 	x = find_arg(token, "export") + 1;
 	if (x == 0)
-		err_or("couldnt find arg");
+		error("couldnt find arg");
 	//if (token[x][0] == '$')
-	//	err_or("not a valid identifier");//not true
+	//	error("not a valid identifier");//not true
 	if (valid_env(vars, token[x]) == true)
 	{
 		temp = strcpy_until(token[x]);
 		if (!temp)
-			err_or("copy_until");
+			error("copy_until");
 		if (find_str_part(vars->menv, temp) == -1)
-			err_or("couldnt find arg");
+			error("couldnt find arg");
 		else
 		{
 			vars->menv[find_str_part(vars->menv, temp)] = ft_strdup(token[x]);
 			if (!vars->menv[find_str_part(vars->menv, temp)])
-				err_or("strdup");
+				error("strdup");
 			update_export(vars, temp, token[x]);
 		}
 	}

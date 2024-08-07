@@ -87,12 +87,12 @@ void	combine_export(t_buildins *vars)
 	arr = sort_arr(vars);
 	vars->xport = malloc(sizeof(char *) * (ft_arrlen(arr) + 1));
 	if (!vars->xport)
-		err_or("malloc");
+		error("malloc");
 	while (arr[y])
 	{
 		vars->xport[y] = ft_strjoin("declare -x ", exp_whole(vars, arr, y));
 		if (!vars->xport[y])
-			err_or("exp_whole");
+			error("exp_whole");
 		y++;
 	}
 	vars->xport[y] = NULL;

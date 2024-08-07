@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/04 20:05:59 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:32:21 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	cd_home(t_buildins *vars)
 		reset_old_pwd(vars, vars->home);
 		return (chdir(vars->home));
 	}
-	return (err_or(vars->home), 1);
+	return (error(vars->home), 1);
 }
 
 int	fill_path(t_buildins *vars, char **token, int x)
@@ -122,7 +122,7 @@ int	fill_path(t_buildins *vars, char **token, int x)
 		return (go_slash(vars, token, x));
 	else
 		return (add_to_path(vars, token[x + 1]));
-	return (err_or(token[x + 1]), 1);
+	return (error(token[x + 1]), 1);
 }
 
 int	cd(t_buildins *vars, char **token)
@@ -131,12 +131,12 @@ int	cd(t_buildins *vars, char **token)
 
 	x = find_arg(token, "cd");
 	if (!token || !ft_strcmp(token[x], "cd"))
-		return (err_or("command not found"), 1);
+		return (error("command not found"), 1);
 	else if (token[x + 1] == NULL || ft_strcmp(token[x + 1], "#")
 		|| (token[x + 1][0] == '-' && token[x + 1][1] == '-'
 		&& token[x + 1][2] == '\0'))
 		return (cd_home(vars));
 	else if (token[x + 1] != NULL)
 		return (fill_path(vars, token, x));
-	return (err_or(token[x + 1]), 1);
+	return (error(token[x + 1]), 1);
 }

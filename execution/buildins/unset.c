@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 18:54:32 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/06 16:36:22 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:32:21 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	update_unset(t_buildins *vars, char *tok)
 	arr = NULL;
 	arr = malloc(sizeof(char *) * (ft_arrlen(vars->menv)));
 	if (!arr)
-		err_or("malloc");
+		error("malloc");
 	while (vars->menv[x])
 	{
 		if (ft_strnstr_bool(vars->menv[x], tok, 0, ft_strlen(tok)))
@@ -47,7 +47,7 @@ void	update_unset_exp(t_buildins *vars, char *tok)
 	arr = NULL;
 	arr = malloc(sizeof(char *) * (ft_arrlen(vars->xport)));
 	if (!arr)
-		err_or("malloc");
+		error("malloc");
 	while (vars->xport[x])
 	{
 		if (ft_strnstr_bool(vars->xport[x], tok, 11, ft_strlen(tok)))
@@ -70,7 +70,7 @@ void	unset(t_buildins *vars, char **token)
 	if (x == 0)
 		return ;
 	//if (token[x][0] == '$')
-	//	err_or("not a valid identifier");
+	//	error("not a valid identifier");
 	printf("token after unset: %s\n", token[x]);
 	if (ft_strchr(token[x], '=') != NULL || ft_strcmp(token[x], "_"))
 		return ;

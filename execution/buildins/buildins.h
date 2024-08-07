@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:49:02 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/06 16:37:22 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/07 11:32:21 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_buildins
 /*UTILS*/
 int		how_many(char **s, char *o);
 bool	is_access(char *dir);
-void	err_or(char *s);
+void	error(char *s);
 int		find_arg(char **s, char *a);
 void	buildins_init(t_buildins *vars);
 
