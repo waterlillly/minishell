@@ -6,7 +6,7 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/29 17:21:13 by codespace         #+#    #+#              #
-#    Updated: 2024/08/05 11:53:31 by codespace        ###   ########.fr        #
+#    Updated: 2024/08/08 11:20:38 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,13 @@ SRC		=	minishell.c \
 			error.c \
 			remove_q.c \
 			quote_count.c \
-			open_quotes.c
+			open_quotes.c \
+			split_shell.c \
+			lexer.c \
+			get_line_cnc.c \
+			check_syntax.c \
+			set.c \
+			skip_q.c
 SRCS	=	${addprefix ${PRE}, ${SRC}}
 OBJS	=	${SRCS:.c=.o}
 PRE		=	./srcs/

@@ -38,6 +38,7 @@ typedef struct s_raw_in
 	int		n_pipe;
 	int		n_red;
 	int		n_words;
+	int		n_ds;
 }	t_raw_in;
 
 typedef struct s_minishell_l
@@ -61,11 +62,21 @@ typedef struct s_minishell_p
 	struct s_minishell_p	*prev;
 }	t_minishell_p;
 
-int 	error(char *str, int code);
-void	remove_q(t_raw_in *in);
-int		double_count(char *input);
-int		single_count(char *input);
-int 	open_quotes(char *input);
+int 			error(char *str, int code);
+void			remove_q(t_raw_in *in);
+int				double_count(char *input);
+int				single_count(char *input);
+int 			open_quotes(char *input);
+int				get_line_cnc(t_raw_in *in);
+void			ft_split_shell(t_raw_in *in);
+int				is_sep(char *charset, char c);
+t_minishell_l	*lexer(t_raw_in *in);
+int				check_syntax(char *input);
+void			set_first(t_raw_in *in, char *line);
+char			*skip_q(char *str);
+
+
+
 
 
 

@@ -1,6 +1,11 @@
 {
 	"C_Cpp.errorSquiggles": "disabled",
 	"files.associations": {
-		"minishell.h": "c"
+		"minishell.h": "c",
+		"bit": "c",
+		"algorithm": "c",
+		"istream": "c",
+		"limits": "c",
+		"streambuf": "c"
 	}
 }
