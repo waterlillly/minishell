@@ -38,7 +38,7 @@ typedef struct s_raw_in
 	int		n_pipe;
 	int		n_red;
 	int		n_words;
-	int		n_ds;
+	int		n_lessalloc;
 }	t_raw_in;
 
 typedef struct s_minishell_l

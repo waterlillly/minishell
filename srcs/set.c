@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 11:14:34 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/08 13:15:56 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/09 10:47:07 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,15 @@ void	set_hd(t_raw_in *in, char *line)
 
 void	set_first(t_raw_in *in, char *line)
 {
-	char *tmp;
+	char *tmp[2];
 
-	tmp = line;
+	tmp[0] = line;
 	while (*line)
 	{
+		tmp[1] = line;
 		line = skip_q(line);
+		if (tmp[1] != line && *(line + 1) == '$')
+			in->n_lessalloc--;
 		if (*line == '>')
 		{
 			in->n_red++;
@@ -95,10 +98,8 @@ void	set_first(t_raw_in *in, char *line)
 		}
 		if (*line == '|')
 			in->n_pipe++;
-		if (*line == '$')
-			in->n_ds++;
 		line++;
 	}
-	set_hd(in, tmp);
-	set_op(in, tmp);
+	set_hd(in, tmp[0]);
+	set_op(in, tmp[0]);
 }

@@ -19,7 +19,6 @@ t_minishell_l	*ft_lstnew_lex(char *content, int type)
 	out->prev = NULL;
 	return (out);
 }
-
 */
 
 int	open_line(char *input)
@@ -31,53 +30,6 @@ int	open_line(char *input)
 	return (0);
 }
 
-
-
-///////////////////////////////////////////////////////////
-
-
-/*char	**ft_split_s(char *str, char *charset)
-{
-	int		len;
-	char	**out;
-	int		i;
-	char	*str_temp;
-
-	str_temp = str;
-	len = 0;
-	i = 0;
-	if (str == NULL)
-	{
-		out = (char **)malloc(1 * sizeof(char *));
-		out[0] = NULL;
-		return (out);
-	}
-	out = (char **)malloc((count(str_temp, charset) + 1) * sizeof(char *));
-	while (i < count(str_temp, charset))
-	{
-		str = skip(&str[len], charset, &len);
-		out[i] = (char *)malloc((len + 1) * sizeof(char));
-		ft_strncpy(out[i], str, len);
-		i++;
-	}
-	out[i] = NULL;
-	return (out);
-}*/
-
-// rewrite this whole split this wont work
-/*
-t_minishell_l	*lex(char *input)
-{
-	t_minishell_l	*out;
-	char			**tmp;
-
-	tmp = ft_split_shell(input, " \t");
-	while (*tmp)
-	{
-		ft_putendl_fd(*tmp, 1);
-		tmp++;
-	}
-} */
 
 int	count_hd(char *str)
 {
@@ -91,12 +43,6 @@ int	count_hd(char *str)
 	}
 	return (i);
 }
-/*
-void	count_words(t_raw_in *in, char	*line)
-{
-
-}
-*/
 
 char	*ft_strnstr_q(const char *big, const char *little, size_t len)
 {
@@ -145,7 +91,7 @@ void	init_raw(t_raw_in *in)
 	in->out = NULL;
 	in->n_chd = 0;
 	in->open_pipe = false;
-	in->n_ds = 0;
+	in->n_lessalloc = 0;
 }
 
 

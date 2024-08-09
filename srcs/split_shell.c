@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 10:51:09 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/08 14:28:50 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/09 10:42:46 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,26 @@ char	*red_if(char *str, int *len)
 	return (*len = 1, str);
 }
 
-char	*ds_skip(char *str, int *len)
+char	*ds_skip(char *str, int *len, int i)
 {
 	int dq;
 	int	sq;
-	
+
+	dq = 0;
+	sq = 0;
+	while (str[++i] && (!is_sep(" \t", str[i]) || (sq % 2 == 1 || dq % 2 == 1)))
+	{
+		if (str[i] == '\'' && dq == 0)
+			sq++;
+		if (str[i] == '\"' && sq == 0)
+			dq++;
+		*len = *len + 1;
+		if (sq == 2 || dq == 2)
+			break;
+	}
+	if (str[i] && !is_sep(" \t", str[i]) && str[++i] && str[i] == '$')
+		return (ds_skip(str, len, i - 1));
+	return (str);
 }
 
 char	*skip_shell(char *str, char *charset, int *len)
@@ -52,7 +67,7 @@ char	*skip_shell(char *str, char *charset, int *len)
 	if (is_sep("><|", *str))
 		return (red_if(str, len));
 	if (*str == '$')
-		return (ds_skip(str, len));
+		return (ds_skip(str, len, -1));
 	while ((!is_sep(charset, str[i]) && str[i]) || (sq % 2 == 1 || dq % 2 == 1))
 	{
 		if (str[i] == '\"' && sq % 2 == 0)
@@ -64,8 +79,10 @@ char	*skip_shell(char *str, char *charset, int *len)
 			break;
 		*len = *len + 1;
 		i++;
-		if (sq == 2 || dq == 2)
+		if ((sq == 2 || dq == 2) && str[i] != '$')
 			break;
+		else if ((sq == 2 || dq == 2) && str[i] == '$')
+		 	return (ds_skip(str, len, i - 1));
 	}
 	return (str);
 }
@@ -117,8 +134,8 @@ void	ft_split_shell(t_raw_in *in)
 	tmp = in->input;
 	i = -1;
 	in->n_words = count(in->input, " \t<>|");
-	sum = in->n_words + in->n_hd + in->n_pipe + in->n_red + in->n_ds;
-	printf ("%d,%d , %d, %d, %d\n", in->n_words , in->n_hd , in->n_pipe , in->n_red , in->n_ds);
+	sum = in->n_words + in->n_hd + in->n_pipe + in->n_red + in->n_lessalloc;
+	printf ("%d,%d , %d, %d, %d\n", in->n_words , in->n_hd , in->n_pipe , in->n_red , in->n_lessalloc);
 	in->out = (char **)ft_calloc(sum + 1, sizeof(char *));
 	if (!in->out)
 		return ;//fix
