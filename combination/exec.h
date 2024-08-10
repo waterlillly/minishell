@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 22:10:22 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 20:45:00 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <dirent.h>
-
+/*
 typedef struct s_args
 {
 	char	*arg;
@@ -48,7 +48,7 @@ typedef struct s_args
 	bool	appd;
 	bool	cmd;//execve or buildin
 }	t_args;
-
+*/
 typedef struct s_pipex
 {
 	char	**menv;
@@ -57,21 +57,27 @@ typedef struct s_pipex
 	char	*home;
 	char	*oldpwd;
 	char	*pwd;
+	
 	pid_t	*pid;
 	int		**pip;
-	char	**av;
-	char	*cwd;
-	int		ac;
-	int		x;//first cmd
+	int		status;
 	int		copy_stdout;
+	
+	//not needed:
+	char	**av;
+	int		ac;
+	char	*cwd;
+	int		x;//first cmd
 	int		filein;
 	int		fileout;
 	bool	in;
 	bool	out;
+	bool	appd;
 	bool	here;
-	int		status;
-	int		cmd_count;
 	char	*delimiter;
+	int		cmd_count;
+	
+	//rewrite:
 	char	**args;
 	char	**paths;
 	char	*path;
@@ -88,7 +94,7 @@ void	do_this(t_pipex *p);
 /*PIPEX*/
 void	find_path(t_pipex *p);
 char	*is_exec(t_pipex *p);
-void	exec_cmd(t_pipex *p);
+int		exec_cmd(t_pipex *p);
 
 /*ERROR*/
 void	close_pipes(t_pipex *p);
@@ -101,9 +107,8 @@ void	err_free(t_pipex *p);
 void	check_filein(t_pipex *p);
 void	check_fileout(t_pipex *p);
 void 	init_pipes(t_pipex *p);
-void	init_p(t_pipex *p, char **envp);
-//void	check_in(t_pipex *p);
-//void	check_out(t_pipex *p);
+void	init_p(t_pipex *p);
+void	first_init(t_pipex *p, char **envp);
 
 /*PROCESSES*/
 void	first(t_pipex *p, int *c);
@@ -112,8 +117,8 @@ void	last(t_pipex *p, int *c);
 void	do_child(t_pipex *p, int *c);
 
 /*CHECK*/
-int		check_empty(char **av);
-void	check_args(t_pipex *p, int ac, char **av);
+//int		check_empty(char **av);
+//void	check_args(t_pipex *p, int ac, char **av);
 
 /*HERE_DOC*/
 void	get_cur_cwd(t_pipex *p);
@@ -132,6 +137,7 @@ int		how_many(char **s, char *o);
 bool	is_access(char *dir);
 int		find_arg(char **s, char *a);
 void	buildins_init(t_pipex *p, char **envp);
+char	*remove_quotes(char *s);
 
 /*UTILS2*/
 int		find_str_part(char **str, char *tok);
@@ -164,7 +170,7 @@ int		fill_path(t_pipex *p, char **token, int x);
 int		cd(t_pipex *p, char **token);
 
 /*ECHO*/
-void	do_echo(t_pipex *p, char **token, int x);
+int		do_echo(t_pipex *p, char **token, int x);
 bool	check_n(char *token);
 void	echo(t_pipex *p, char **token);
 

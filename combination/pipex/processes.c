@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:51 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 18:05:48 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 17:03:48 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,9 @@ void	first(t_pipex *p, int *c)
 	if (dup2(p->pip[*c][1], STDOUT_FILENO) == -1)
 		error(p, "dup2 failed", p->status);
 	close_pipes(p);
-	exec_cmd(p);
-	error(p, "exec_cmd failed", p->status);
+	if (exec_cmd(p) < 0)
+		error(p, "exec_cmd failed", p->status);
 }
-/*
-void	first(t_pipex *p)
-{
-	if (p->m->infile)
-	{
-		if (dup2(p->filein, STDIN_FILENO) == -1)
-			error(p, "error", p->status);
-	}
-	if (dup2(p->pip[p->c][1], STDOUT_FILENO) == -1)
-		error(p, "error", p->status);
-	close_pipes(p);
-	exec_cmd(p);
-	error(p, "error", p->status);
-}
-*/
 
 void	middle(t_pipex *p, int *c)
 {
@@ -51,8 +36,8 @@ void	middle(t_pipex *p, int *c)
 	if (dup2(p->pip[*c][1], STDOUT_FILENO) == -1)
 		error(p, "dup2 failed", p->status);
 	close_pipes(p);
-	exec_cmd(p);
-	error(p, "exec_cmd failed", p->status);
+	if (exec_cmd(p) < 0)
+		error(p, "exec_cmd failed", p->status);
 }
 
 void	last(t_pipex *p, int *c)
@@ -70,25 +55,9 @@ void	last(t_pipex *p, int *c)
 			error(p, "dup2 failed", p->status);
 	}
 	close_pipes(p);
-	exec_cmd(p);
-	error(p, "exec_cmd failed", p->status);
+	if (exec_cmd(p) < 0)
+		error(p, "exec_cmd failed", p->status);
 }
-
-/*
-void	last(t_pipex *p)
-{
-	if (dup2(p->pip[p->c - 1][0], STDIN_FILENO) == -1)
-		error(p, "error", p->status);
-	if (p->m->std_out == false)
-	{
-		if (dup2(p->fileout, STDOUT_FILENO) == -1)
-			error(p, "error", p->status);
-	}
-	close_pipes(p);
-	exec_cmd(p);
-	error(p, "error", p->status);
-}
-*/
 
 void	do_child(t_pipex *p, int *c)
 {

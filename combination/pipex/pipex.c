@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 22:10:14 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 17:04:20 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,28 @@ void	find_path(t_pipex *p)
 	i = 0;
 	while (ft_strnstr(p->menv[i], "PATH", 4) == 0)
 		i++;
-	p->paths = ft_split(p->menv[i] + 5, ':');
+	p->paths = ft_split(p->mpath, ':');
 	if (!p->paths)
 		error(p, "ft_split failed", p->status);
 	p->path = is_exec(p);
 }
 
-void	exec_cmd(t_pipex *p)
+int	exec_cmd(t_pipex *p)
 {
 	p->args = ft_split(p->av[p->x], ' ');
 	if (!p->args)
 		error(p, "ft_split failed", p->status);
 	p->cmd = p->args[0];
 	if (is_buildin(p->cmd))
+	{
 		do_this(p);
+		return (p->status);
+	}
 	else
 	{
 		find_path(p);
 		execve(p->path, p->args, p->menv);
 		error(p, "execve failed", p->status);
 	}
+	return (p->status);
 }

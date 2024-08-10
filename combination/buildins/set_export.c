@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 19:00:26 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 18:26:42 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ void	set_export(t_pipex *p, char **token)
 	x = find_arg(token, "export") + 1;
 	if (x == 0)
 		error(p, "couldnt find arg", p->status);
-	//if (token[x][0] == '$')
-	//	error(p, "not a valid identifier");//not true
+	if (token[x][0] == '$')
+		error(p, "not a valid identifier", p->status);//not true
 	if (valid_env(p, token[x]) == true)
 	{
 		temp = strcpy_until(token[x]);

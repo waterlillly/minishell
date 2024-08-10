@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 14:12:19 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 22:10:26 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 15:15:40 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int closedir(DIR *dirp); (success: 0, err: -1)
 
 void	single_exec(t_pipex *p)
 {
-	p->filein = -1;
-	p->fileout = -1;
 	if (!p->cwd)
 	{
 		if (p->here == true)
@@ -52,8 +50,8 @@ void	single_exec(t_pipex *p)
 		close(p->filein);
 	if (p->fileout && p->fileout != STDOUT_FILENO && p->fileout != -1)
 		close(p->fileout);
-	exec_cmd(p);
-	error(p, "exec_cmd failed", p->status);
+	if (exec_cmd(p) < 0)
+		error(p, "exec_cmd failed", p->status);
 }
 
 void	no_infile_exec(t_pipex *p, int *c)
@@ -61,8 +59,8 @@ void	no_infile_exec(t_pipex *p, int *c)
 	if (dup2(p->pip[*c][1], STDOUT_FILENO) == -1)
 		error(p, "dup2 failed", p->status);
 	close_pipes(p);
-	exec_cmd(p);
-	error(p, "exec_cmd failed", p->status);
+	if (exec_cmd(p) < 0)
+		error(p, "exec_cmd failed", p->status);
 }
 
 /*

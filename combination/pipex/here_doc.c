@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:55:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 17:29:45 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 18:07:41 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@
 // }
 
 void	get_cur_cwd(t_pipex *p)
-{	
+{
 	p->cwd = get_env(p, "PWD");
 	if (!p->cwd)
 		error(p, "get_env failed", p->status);
-	if (access(p->cwd, R_OK) == -1)
+	if (access(p->cwd, F_OK) == -1)
 	{
 		free(p->cwd);
 		p->cwd = NULL;
@@ -73,22 +73,20 @@ void	adjust_struct(t_pipex *p)
 {
 	if (p->in == true)
 	{
-		p->x = 2;
+		p->x = 1;//2
 		if (p->out == true)
-			p->cmd_count = p->ac - 3;
+			p->cmd_count = p->ac - 2;//3
 		else
-			p->cmd_count = p->ac - 2;
+			p->cmd_count = p->ac - 1;//2
 	}
 	else if (p->in == false)
 	{
 		get_cur_cwd(p);
-		if (!p->cwd)
-			error(p, "get_cur_cwd failed", p->status);
-		p->x = 1;
+		p->x = 0;//1
 		if (p->out == true)
-			p->cmd_count = p->ac - 2;
+			p->cmd_count = p->ac - 1;//2
 		else
-			p->cmd_count = p->ac - 1;
+			p->cmd_count = p->ac;//- 1
 	}
 }
 
@@ -96,11 +94,11 @@ void	adjust_struct_here(t_pipex *p)
 {
 	if (p->in == false)
 	{
-		p->x = 3;
-		if (p->out == true && p->ac > 3)
-			p->cmd_count = p->ac - 4;
+		p->x = 2;//3
+		if (p->out == true && p->ac > 2)//3
+			p->cmd_count = p->ac - 3;//4
 		else
-			p->cmd_count = p->ac - 3;
+			p->cmd_count = p->ac - 2;//3
 	}
 	else
 		error(p, "error", p->status);
@@ -109,7 +107,7 @@ void	adjust_struct_here(t_pipex *p)
 void	here_or_not(t_pipex *p)
 {
 	//p->alot = false;
-	if (!ft_strcmp(p->av[1], "here_doc"))
+	if (!ft_strcmp(p->av[0], "here_doc"))//1
 	{
 		p->delimiter = NULL;
 		p->here = false;
@@ -118,7 +116,7 @@ void	here_or_not(t_pipex *p)
 	}
 	else
 	{
-		p->delimiter = p->av[2];
+		p->delimiter = p->av[1];//
 		p->here = true;
 		adjust_struct_here(p);
 		first_heredoc(p);

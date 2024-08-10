@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 18:57:00 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 19:47:03 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	get_pwd(t_pipex *p)
 		temp = ft_strdup(p->pwd);
 		if (!temp)
 			error(p, "strdup", p->status);
+		free(p->pwd);
 		p->pwd = NULL;
 	}
 	p->pwd = getcwd(p->pwd, 0);
@@ -51,10 +52,10 @@ char	*get_env(t_pipex *p, char *str)
 			len = ft_strlen(p->menv[x]) - ft_strlen(str);
 			result = malloc(sizeof(char) * len);
 			if (!result)
-				return ("\n");
+				return (NULL);
 			result = ft_substr(p->menv[x], ft_strlen(str) + 1, len - 1);
 			if (!result)
-				return ("\n");
+				return (NULL);
 			return (result);
 		}
 		x++;
@@ -75,14 +76,14 @@ void	get_menv(t_pipex *p, char **envp)
 		p->menv[x] = ft_strdup(envp[x]);
 		if (!p->menv[x])
 		{
-			//ft_free_double(p->menv);
+			ft_free_double(p->menv);
 			error(p, "strdup", p->status);
 		}
 		x++;
 	}
 	if (x != ft_arrlen(envp))
 	{
-		//ft_free_double(p->menv);
+		ft_free_double(p->menv);
 		error(p, "menv", p->status);
 	}
 	p->menv[x] = NULL;

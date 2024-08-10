@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:51:23 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 18:55:28 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 18:44:21 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,30 @@ int	ft_strcmp_until(const char *s1, const char *s2)
 
 char	*create_add_export(t_pipex *p, char *token)
 {
-	int		x;
 	char	*temp;
 	char	*temp1;
+	char	*temp2;
 
-	x = 0;
 	temp = NULL;
 	temp1 = NULL;
+	temp2 = NULL;
 	if (ft_strchr(token, '='))
 	{
 		temp = ft_strjoin("declare -x ", strcpy_until(token));
 		if (!temp)
 			error(p, "strjoin", p->status);
-		temp1 = ft_strjoin_free_one(temp, modify_quotes(token));
-		if (!temp1)
+		temp1 = modify_quotes(token);
+		temp2 = ft_strjoin_free_both(temp, temp1);
+		if (!temp2)
 			error(p, "strjoin_free_one", p->status);
 	}
 	else
 	{
-		temp1 = ft_strjoin("declare -x ", token);
-		if (!temp1)
+		temp2 = ft_strjoin("declare -x ", token);
+		if (!temp2)
 			error(p, "strjoin", p->status);
 	}
-	return (temp1);
+	return (temp2);
 }
 
 bool	resorted(char **arr)
@@ -101,9 +102,8 @@ void	add_to_env(t_pipex *p, char *add)
 		arr[x] = p->menv[x];
 		x++;
 	}
-	arr[x] = add;
+	arr[x] = remove_quotes(add);
 	arr[x + 1] = NULL;
-	ft_free_double(p->menv);
 	p->menv = arr;
 }
 
@@ -129,6 +129,5 @@ void	add_to_export(t_pipex *p, char *token)
 		add_to_env(p, ft_substr(add, 11, ft_strlen(add) - 10));
 	arr[x] = add;
 	arr[x + 1] = NULL;
-	ft_free_double(p->xport);
 	p->xport = resort_arr(arr);
 }

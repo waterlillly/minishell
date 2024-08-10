@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:48:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 18:26:08 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 18:49:20 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,27 @@ void	buildins_init(t_pipex *p, char **envp)
 	p->mpath = get_env(p, "PATH");
 	if (!p->home)
 		error(p, "get_env failed", p->status);
-	//get_cdpath(p);
 	combine_export(p);
-	//export
-	//modify cdpath->if smth inside:
-	//	look there first when executing stuff
-	//	if not found go from pwd
-	//	if not found display error
+}
+
+char	*remove_quotes(char *s)
+{
+	int		x;
+	int		y;
+	char	*temp;
+
+	x = 0;
+	y = 0;
+	temp = NULL;
+	temp = malloc(sizeof(char) * (ft_strlen(s) - 1));
+	if (!temp)
+		return (NULL);
+	while (s[x])
+	{
+		if (s[x] == '\"')
+			x++;
+		temp[y++] = s[x++];
+	}
+	temp[y] = '\0';
+	return (temp);
 }

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:09:17 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 22:10:24 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 19:20:51 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,32 @@ bool	is_buildin(char *s)
 
 void	do_this(t_pipex *p)
 {
-	if (ft_strcmp(p->cmd, "unset"))
-		unset(p, p->av);
-	else if (ft_strcmp(p->cmd, "env"))
+	int		x;
+
+	if (ft_strcmp(p->args[0], "unset"))
+		unset(p, p->args);
+	else if (ft_strcmp(p->args[0], "env"))
 		ft_print_array(p->menv);
-	else if (ft_strcmp(p->cmd, "export") && p->args[1] == NULL)
+	else if (ft_strcmp(p->args[0], "export") && p->args[1] == NULL)
 		ft_print_array(p->xport);
-	else if (ft_strcmp(p->cmd, "export") && p->args[1] != NULL)
-		set_export(p, p->av);
-	else if (ft_strcmp(p->cmd, "cd"))
-		cd(p, p->av);
-	else if (ft_strcmp(p->cmd, "echo"))
-		echo(p, p->av);
-	else if (ft_strcmp(p->cmd, "exit"))
-		error(p, NULL, 0);
-	else if (ft_strcmp(p->cmd, "exit"))
+	else if (ft_strcmp(p->args[0], "export") && p->args[1] != NULL)
+		set_export(p, p->args);
+	else if (ft_strcmp(p->args[0], "cd"))
+		cd(p, p->args);
+	else if (ft_strcmp(p->args[0], "echo"))
+		echo(p, p->args);
+	else if (ft_strcmp(p->args[0], "exit"))
 	{
-		err_free(p);
 		if (p->args[1] == NULL)
+		{
+			err_free(p);
 			exit(0);
+		}
 		else
-			exit(ft_atoi(p->args[1]));
+		{
+			x = ft_atoi(p->args[1]);
+			err_free(p);
+			exit(x);
+		}
 	}
 }
