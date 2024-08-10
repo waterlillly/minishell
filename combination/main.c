@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/10 19:15:05 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 21:53:04 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int ac, char **av, char **envp)
 	str = NULL;
 	str = readline("minishell> ");
 	add_history(str);
-	while (!ft_strcmp(str, "exit"))
+	while (1)//!ft_strcmp(str, "exit")
 	{
 		c = 0;
 		p.av = ft_split(str, '\"');
@@ -57,8 +57,6 @@ int	main(int ac, char **av, char **envp)
 			if (WIFEXITED(p.status))
 				p.status = WEXITSTATUS(p.status);
 		}
-		//err_free(&p);
-		//return (p.status);
 		str = readline("minishell> ");
 		add_history(str);
 	}

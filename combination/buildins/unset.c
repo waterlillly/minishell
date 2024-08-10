@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 18:54:32 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/10 18:55:41 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 21:41:48 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,7 @@ void	unset(t_pipex *p, char **token)
 	size_t	len;
 
 	y = 0;
-	x = find_arg(token, "unset") + 1;
-	if (x == 0)
-		return ;
+	x = 1;
 	if (token[x][0] == '$')
 		error(p, "not a valid identifier", p->status);
 	if (ft_strchr(token[x], '=') != NULL || ft_strcmp(token[x], "_"))

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 17:10:58 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 21:43:10 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,10 +129,8 @@ int	cd(t_pipex *p, char **token)
 {
 	int		x;
 
-	x = find_arg(token, "cd");
-	if (!token || !ft_strcmp(token[x], "cd"))
-		return (error(p, "command not found", p->status), 1);
-	else if (token[x + 1] == NULL || ft_strcmp(token[x + 1], "#")
+	x = 0;
+	if (token[x + 1] == NULL || ft_strcmp(token[x + 1], "#")
 		|| (token[x + 1][0] == '-' && token[x + 1][1] == '-'
 		&& token[x + 1][2] == '\0'))
 		return (cd_home(p));

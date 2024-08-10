@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/10 17:04:20 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 21:37:43 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,11 @@ int	exec_cmd(t_pipex *p)
 	p->args = ft_split(p->av[p->x], ' ');
 	if (!p->args)
 		error(p, "ft_split failed", p->status);
-	p->cmd = p->args[0];
+	if (p->args[0][0] == '$'
+		&& valid_env(p, ft_substr(p->args[0], 1, ft_strlen(p->args[0]) - 1)))
+		p->cmd = xpand(p, p->args, 0);
+	else
+		p->cmd = p->args[0];
 	if (is_buildin(p->cmd))
 	{
 		do_this(p);
