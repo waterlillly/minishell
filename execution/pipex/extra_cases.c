@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 14:12:19 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/03 13:52:47 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:41:27 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int closedir(DIR *dirp); (success: 0, err: -1)
 
 void	single_exec(t_pipex *p)
 {
-	p->filein = -1;
-	p->fileout = -1;
 	if (!p->cwd)
 	{
 		if (p->here == true)

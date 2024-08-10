@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 18:54:32 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 11:32:21 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 18:28:01 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	update_unset_exp(t_buildins *vars, char *tok)
 		arr[y++] = vars->xport[x++];
 	}
 	arr[y] = NULL;
-	ft_bzero(vars->xport, sizeof(vars->xport));
+	//ft_bzero(vars->xport, sizeof(vars->xport));
 	vars->xport = arr;
 }
 

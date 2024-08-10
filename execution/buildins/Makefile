@@ -6,7 +6,7 @@
 #    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/27 14:21:08 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/08/06 16:38:02 by lbaumeis         ###   ########.fr        #
+#    Updated: 2024/08/08 13:20:32 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ CFLAGS = -Wall -Werror -Wextra -g
 
 CFILES += main.c utils.c cd.c cd_find_path.c pwd.c env.c echo.c
 CFILES += xpand.c xport.c set_export.c utils2.c add_export.c unset.c
-CFILES += ft_strnstr_bool.c
 OFILES = $(CFILES:.c=.o)
 P_NAME = buildins
 

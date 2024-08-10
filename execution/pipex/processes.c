@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:51 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/03 13:05:07 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 14:05:50 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,6 @@ void	first(t_pipex *p, int *c)
 	exec_cmd(p);
 	err_free(p, 1);
 }
-/*
-void	first(t_pipex *p)
-{
-	if (p->m->infile)
-	{
-		if (dup2(p->filein, STDIN_FILENO) == -1)
-			err_free(p, 1);
-	}
-	if (dup2(p->pip[p->c][1], STDOUT_FILENO) == -1)
-		err_free(p, 1);
-	close_pipes(p);
-	exec_cmd(p);
-	err_free(p, 1);
-}
-*/
 
 void	middle(t_pipex *p, int *c)
 {
@@ -73,22 +58,6 @@ void	last(t_pipex *p, int *c)
 	exec_cmd(p);
 	err_free(p, 1);
 }
-
-/*
-void	last(t_pipex *p)
-{
-	if (dup2(p->pip[p->c - 1][0], STDIN_FILENO) == -1)
-		err_free(p, 1);
-	if (p->m->std_out == false)
-	{
-		if (dup2(p->fileout, STDOUT_FILENO) == -1)
-			err_free(p, 1);
-	}
-	close_pipes(p);
-	exec_cmd(p);
-	err_free(p, 1);
-}
-*/
 
 void	do_child(t_pipex *p, int *c)
 {

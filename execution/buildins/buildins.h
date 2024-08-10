@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:49:02 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 11:32:21 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/08 14:32:36 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int		fill_path(t_buildins *vars, char **token, int x);
 int		cd(t_buildins *vars, char **token);
 
 /*ECHO*/
+bool	dnapxe(t_buildins *vars, char *token);
 void	do_echo(t_buildins *vars, char **token, int x);
 bool	check_n(char *token);
 void	echo(t_buildins *vars, char **token);

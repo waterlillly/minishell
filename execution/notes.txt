@@ -1,5 +1,7 @@
 NOTES
 
+valgrind --show-leak-kinds=all --trace-children=yes --track-fds=yes --leak-check=full --track-origins=yes 
+
 ->full path for command is given DONE
 
 ->no infile, get current location and execute it without an infile DONE

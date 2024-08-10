@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:51:23 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 11:32:21 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 18:16:40 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,29 @@ char	*create_add_export(char *token)
 	int		x;
 	char	*temp;
 	char	*temp1;
+	char	*temp2;
 
 	x = 0;
 	temp = NULL;
 	temp1 = NULL;
+	temp2 = NULL;
 	if (ft_strchr(token, '='))
 	{
 		temp = ft_strjoin("declare -x ", strcpy_until(token));
 		if (!temp)
 			error("strjoin");
-		temp1 = ft_strjoin_free_one(temp, modify_quotes(token));
-		if (!temp1)
+		temp1 = modify_quotes(token);
+		temp2 = ft_strjoin_free_both(temp, temp1);
+		if (!temp2)
 			error("strjoin_free_one");
 	}
 	else
 	{
-		temp1 = ft_strjoin("declare -x ", token);
-		if (!temp1)
+		temp2 = ft_strjoin("declare -x ", token);
+		if (!temp2)
 			error("strjoin");
 	}
-	return (temp1);
+	return (temp2);
 }
 
 bool	resorted(char **arr)
@@ -103,7 +106,6 @@ void	add_to_env(t_buildins *vars, char *add)
 	}
 	arr[x] = add;
 	arr[x + 1] = NULL;
-	ft_free_double(vars->menv);
 	vars->menv = arr;
 }
 
@@ -129,6 +131,5 @@ void	add_to_export(t_buildins *vars, char *token)
 		add_to_env(vars, ft_substr(add, 11, ft_strlen(add) - 10));
 	arr[x] = add;
 	arr[x + 1] = NULL;
-	ft_free_double(vars->xport);
-	vars->xport = resort_arr(arr);//maybe free before that
+	vars->xport = resort_arr(arr);
 }

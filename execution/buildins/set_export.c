@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 11:32:21 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/08 13:27:02 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ void	set_export(t_buildins *vars, char **token)
 	x = find_arg(token, "export") + 1;
 	if (x == 0)
 		error("couldnt find arg");
-	//if (token[x][0] == '$')
-	//	error("not a valid identifier");//not true
+	if (token[x][0] == '$')
+		error("not a valid identifier");//not true
 	if (valid_env(vars, token[x]) == true)
 	{
 		temp = strcpy_until(token[x]);

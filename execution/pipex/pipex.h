@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/03 14:52:54 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:43:05 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_pipex
 	bool	in;
 	bool	out;
 	bool	here;
+	bool	appd;
 	int		status;
 	int		cmd_count;
 	char	*delimiter;

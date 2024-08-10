@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:23:55 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 11:32:21 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/08 15:44:26 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,12 @@ bool	valid_env(t_buildins *vars, char *tok)
 	x = 0;
 	while (vars->menv[x])
 	{
-		y = 0;
+		y = -1;
 		while (tok[y] == vars->menv[x][y])
 		{
-			if (tok[y] == '=' && vars->menv[x][y] == '=')
-				return (true);
 			y++;
+			if ((tok[y] == '=' || tok[y] == '\0') && vars->menv[x][y] == '=')
+				return (true);
 		}
 		x++;
 	}

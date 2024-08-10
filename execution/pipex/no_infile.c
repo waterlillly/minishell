@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 14:12:19 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/24 16:48:14 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/08 19:32:45 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	no_infile_exec(t_pipex *p, int *c)
 
 void	get_cur_cwd(t_pipex *p)
 {
-	p->cwd = getcwd(NULL, 0);
+	p->cwd = getcwd(p->cwd, 0);
 	if (p->cwd == NULL)
 		err_free(p, 1);
 	if (access(p->cwd, R_OK) == -1)

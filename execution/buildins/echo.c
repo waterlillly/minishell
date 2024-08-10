@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/06 16:40:46 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 19:55:17 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	do_echo(t_buildins *vars, char **token, int x)
 {
-	if (token[x][0] == '\'')
-		ft_putstr_fd(token[x], 1);
-	else if (token[x][0] == '$' && token[x][1] != '$' && token[x][1] != '\0')
+	//if (token[x][0] == '$' && valid_env(vars, ft_substr(token[x], 1, ft_strlen(token[x]) - 1)))
+	//	ft_putstr_fd(token[x], 1);
+	if (token[x][0] == '$' && token[x][1] != '$' && token[x][1] != '\0')
 		ft_putstr_fd(xpand(vars, token, x), 1);
 	else
 		ft_putstr_fd(token[x], 1);
@@ -47,6 +47,11 @@ void	echo(t_buildins *vars, char **token)
 	x = 0;
 	n = false;
 	x = find_arg(token, "echo") + 1;
+	if (!token[x])
+	{
+		ft_putstr_fd("\n", 1);
+		return ;
+	}
 	if (check_n(token[x]) == true)
 	{
 		n = true;

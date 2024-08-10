@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:04:36 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/03 14:11:31 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/10 13:49:11 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,21 @@ void	close_pipes(t_pipex *p)
 	int	i;
 
 	i = p->cmd_count - 1;
-	while (i >= 0)
+	if (p->pip)
 	{
-		if (p->pip[i][0] && p->pip[i][0] != -1 && p->pip[i][0] != STDIN_FILENO)
-			close(p->pip[i][0]);
-		if (p->pip[i][1] && p->pip[i][1] != -1 && p->pip[i][0] != STDOUT_FILENO)
-			close(p->pip[i][1]);
-		free(p->pip[i]);
-		p->pip[i] = NULL;
-		i--;
+		while (p->pip && i >= 0 && p->pip[i])
+		{
+			if (p->pip[i][0] && p->pip[i][0] != -1 && p->pip[i][0] != STDIN_FILENO)
+				close(p->pip[i][0]);
+			if (p->pip[i][1] && p->pip[i][1] != -1 && p->pip[i][1] != STDOUT_FILENO)
+				close(p->pip[i][1]);
+			free(p->pip[i]);
+			p->pip[i] = NULL;
+			i--;
+		}
+		free(p->pip);
+		p->pip = NULL;
 	}
-	free(p->pip);
-	p->pip = NULL;
 }
 
 void	close_all(t_pipex *p)
