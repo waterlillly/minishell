@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/10 20:45:00 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 02:29:49 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ char	*remove_quotes(char *s);
 
 /*UTILS2*/
 int		find_str_part(char **str, char *tok);
-//char	*strcpy_from(char *v_part);
 char	*strcpy_until(char *v_part);
 char	**copy_arr_env(t_pipex *p);
 bool	check_quotes(char *token);
@@ -160,7 +159,7 @@ void	get_menv(t_pipex *p, char **envp);
 /*CD_FIND_PATH*/
 int		add_to_path(t_pipex *p, char *t);
 int		go_back(t_pipex *p, int print);
-char	*check_slash(t_pipex *p, char *tok, char *temp);
+char	*check_slash(char *tok, char *temp);//t_pipex *p, 
 int		go_slash(t_pipex *p, char **token, int x);
 int		go_full_path(t_pipex *p, char **token, int x);
 
@@ -193,7 +192,7 @@ void	set_export(t_pipex *p, char **token);
 
 /*ADD_EXPORT*/
 int		ft_strcmp_until(const char *s1, const char *s2);
-char	*create_add_export(t_pipex *p, char *token);
+char	*create_add_export(char *token);//t_pipex *p, 
 bool	resorted(char **arr);
 char	**resort_arr(char **arr);
 void	add_to_env(t_pipex *p, char *add);

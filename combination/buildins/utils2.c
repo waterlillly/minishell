@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:23:55 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/10 20:56:49 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 04:37:52 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ char	*strcpy_until(char *v_part)
 	ret = NULL;
 	c = 0;
 	x = 0;
-	while (v_part[c] != '=')
+	if (!v_part)
+		return (NULL);
+	while (v_part[c] && v_part[c] != '=')
 		c++;
 	ret = malloc(sizeof(char) * (c + 1));
 	if (!ret)
@@ -103,13 +105,16 @@ bool	valid_env(t_pipex *p, char *tok)
 	x = 0;
 	while (p->menv[x])
 	{
-		y = -1;
-		while (tok[y] == p->menv[x][y])
+		y = 0;
+		while (tok[y] && p->menv[x][y] && tok[y] != '=' && tok[y] != '\0' && p->menv[x][y] != '=')
 		{
-			y++;
-			if ((tok[y] == '=' || tok[y] == '\0') && p->menv[x][y] == '=')
-				return (true);
+			if (tok[y] == p->menv[x][y])
+				y++;
+			else
+				break ;
 		}
+		if ((tok[y] == '=' || tok[y] == '\0') && p->menv[x][y] == '=')
+			return (true);
 		x++;
 	}
 	return (false);

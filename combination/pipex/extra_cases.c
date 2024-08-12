@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 14:12:19 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/10 15:15:40 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 02:21:09 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ void	single_exec(t_pipex *p)
 		{
 			p->filein = open("hd", O_RDONLY);
 			if (p->filein == -1 || access("hd", R_OK) == -1)
-				error(p, "hd", p->status);
+				return ;//error(p, "hd", p->status);
 		}
 		if (dup2(p->filein, STDIN_FILENO) == -1)
-			error(p, "dup2 failed", p->status);
+			return ;//error(p, "dup2 failed", p->status);
 	}
 	if (p->out == true)
 	{
 		if (dup2(p->fileout, STDOUT_FILENO) == -1)
-			error(p, "dup2 failed", p->status);
+			return ;//error(p, "dup2 failed", p->status);
 	}
 	if (p->here)
 		unlink("hd");
@@ -51,16 +51,16 @@ void	single_exec(t_pipex *p)
 	if (p->fileout && p->fileout != STDOUT_FILENO && p->fileout != -1)
 		close(p->fileout);
 	if (exec_cmd(p) < 0)
-		error(p, "exec_cmd failed", p->status);
+		return ;//error(p, "exec_cmd failed", p->status);
 }
 
 void	no_infile_exec(t_pipex *p, int *c)
 {
 	if (dup2(p->pip[*c][1], STDOUT_FILENO) == -1)
-		error(p, "dup2 failed", p->status);
+		return ;//error(p, "dup2 failed", p->status);
 	close_pipes(p);
 	if (exec_cmd(p) < 0)
-		error(p, "exec_cmd failed", p->status);
+		return ;//error(p, "exec_cmd failed", p->status);
 }
 
 /*

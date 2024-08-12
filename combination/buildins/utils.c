@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:48:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/10 18:49:20 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 02:19:28 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ void	buildins_init(t_pipex *p, char **envp)
 	go_up_oldpwd(p);
 	p->home = get_env(p, "HOME");
 	if (!p->home)
-		error(p, "get_env failed", p->status);
+		return ;//error(p, "get_env failed", p->status);
 	p->mpath = get_env(p, "PATH");
 	if (!p->home)
-		error(p, "get_env failed", p->status);
+		return ;//error(p, "get_env failed", p->status);
 	combine_export(p);
 }
 
@@ -74,6 +74,8 @@ char	*remove_quotes(char *s)
 	x = 0;
 	y = 0;
 	temp = NULL;
+	if (!s || ft_strlen(s) < 2)
+		return (NULL);
 	temp = malloc(sizeof(char) * (ft_strlen(s) - 1));
 	if (!temp)
 		return (NULL);
@@ -81,7 +83,12 @@ char	*remove_quotes(char *s)
 	{
 		if (s[x] == '\"')
 			x++;
-		temp[y++] = s[x++];
+		else
+		{
+			temp[y] = s[x];
+			y++;
+			x++;
+		}
 	}
 	temp[y] = '\0';
 	return (temp);

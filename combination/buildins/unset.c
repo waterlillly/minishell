@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 18:54:32 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/10 21:41:48 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 02:19:03 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	update_unset(t_pipex *p, char *tok)
 	arr = NULL;
 	arr = malloc(sizeof(char *) * (ft_arrlen(p->menv)));
 	if (!arr)
-		error(p, "malloc", p->status);
+		return ;//error(p, "malloc", p->status);
 	while (p->menv[x])
 	{
 		if (ft_strnstr_bool(p->menv[x], tok, 0, ft_strlen(tok)))
@@ -47,7 +47,7 @@ void	update_unset_exp(t_pipex *p, char *tok)
 	arr = NULL;
 	arr = malloc(sizeof(char *) * (ft_arrlen(p->xport)));
 	if (!arr)
-		error(p, "malloc", p->status);
+		return ;//error(p, "malloc", p->status);
 	while (p->xport[x])
 	{
 		if (ft_strnstr_bool(p->xport[x], tok, 11, ft_strlen(tok)))
@@ -68,7 +68,7 @@ void	unset(t_pipex *p, char **token)
 	y = 0;
 	x = 1;
 	if (token[x][0] == '$')
-		error(p, "not a valid identifier", p->status);
+		return ;//error(p, "not a valid identifier", p->status);
 	if (ft_strchr(token[x], '=') != NULL || ft_strcmp(token[x], "_"))
 		return ;
 	len = ft_strlen(token[x]);

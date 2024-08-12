@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:26:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/07 17:10:53 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 02:28:31 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@ int	add_to_path(t_pipex *p, char *t)
 	new = NULL;
 	temp = ft_strjoin(p->pwd, "/");
 	if (!temp)
-		error(p, temp, p->status);
+		return (1);//error(p, temp, p->status);
 	new = ft_strjoin_free_one(temp, t);
 	if (!new)
-		error(p, temp, p->status);
+		return (1);//error(p, temp, p->status);
 	if (access(new, X_OK) == 0)
-		return (error(p, "access", p->status), 1);
+		return (1);//error(p, "access", p->status)
 	if (new && is_access(new))
 	{
 		reset_old_pwd(p, new);
 		return (chdir(new));
 	}
-	return (error(p, new, p->status), 1);
+	return (1);//error(p, new, p->status)
 }
 
 int	go_back(t_pipex *p, int print)
@@ -42,7 +42,7 @@ int	go_back(t_pipex *p, int print)
 	temp = NULL;
 	temp = ft_strdup(p->oldpwd);
 	if (!temp)
-		error(p, temp, p->status);
+		return (1);//error(p, temp, p->status);
 	if (is_access(temp))
 	{
 		reset_old_pwd(p, temp);
@@ -50,10 +50,10 @@ int	go_back(t_pipex *p, int print)
 			printf("%s\n", p->oldpwd);
 		return (chdir(temp));
 	}
-	return (error(p, temp, p->status), 1);
+	return (1);//error(p, temp, p->status)
 }
 
-char	*check_slash(t_pipex *p, char *tok, char *temp)
+char	*check_slash(char *tok, char *temp)//t_pipex *p, 
 {
 	int	x;
 
@@ -63,13 +63,13 @@ char	*check_slash(t_pipex *p, char *tok, char *temp)
 		if (tok[x] == '/')
 			x++;
 		else
-			return (error(p, "no such file or directory", p->status), NULL);
+			return (NULL);//error(p, "no such file or directory", p->status)
 	}
 	if (x > 2)
 	{
 		temp = ft_strdup("/");
 		if (!temp)
-			error(p, temp, p->status);
+			return (NULL);//error(p, temp, p->status);
 		return (temp);
 	}
 	else
@@ -85,16 +85,16 @@ int	go_slash(t_pipex *p, char **token, int x)
 		|| (token[x + 1][1] == '\0'
 		|| (token[x + 1][1] == '/' && token[x + 1][2] == '/')))
 	{
-		temp = check_slash(p, token[x + 1], temp);
+		temp = check_slash(token[x + 1], temp);//p, 
 		if (!temp)
-			error(p, temp, p->status);
+			return (1);//error(p, temp, p->status);
 		if (is_access(temp))
 		{
 			reset_old_pwd(p, temp);
 			return (chdir(token[x + 1]));
 		}
 	}
-	return (error(p, token[x + 1], p->status), 1);
+	return (1);//error(p, token[x + 1], p->status)
 }
 
 int	go_full_path(t_pipex *p, char **token, int x)
@@ -104,5 +104,5 @@ int	go_full_path(t_pipex *p, char **token, int x)
 		reset_old_pwd(p, token[x + 1]);
 		return (chdir(token[x + 1]));
 	}
-	return (error(p, token[x + 1], p->status), 1);
+	return (1);//error(p, token[x + 1], p->status)
 }

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:34:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/08 12:22:27 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 02:20:40 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,4 @@ void	check_args(t_pipex *p, int ac, char **av)
 	p->ac = ac;
 	p->av = av;
 	p->status = 0;
-	//init_args(p, &a);
-	//parse_av(p, &a);
-	//count_args(&a);
 }

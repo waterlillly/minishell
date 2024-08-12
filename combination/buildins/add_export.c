@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:51:23 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/10 18:44:21 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 02:29:21 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_strcmp_until(const char *s1, const char *s2)
 		return (s2[x] - s1[x]);
 }
 
-char	*create_add_export(t_pipex *p, char *token)
+char	*create_add_export(char *token)//t_pipex *p, 
 {
 	char	*temp;
 	char	*temp1;
@@ -40,17 +40,17 @@ char	*create_add_export(t_pipex *p, char *token)
 	{
 		temp = ft_strjoin("declare -x ", strcpy_until(token));
 		if (!temp)
-			error(p, "strjoin", p->status);
+			return (NULL);//error(p, "strjoin", p->status);
 		temp1 = modify_quotes(token);
 		temp2 = ft_strjoin_free_both(temp, temp1);
 		if (!temp2)
-			error(p, "strjoin_free_one", p->status);
+			return (NULL);//error(p, "strjoin_free_one", p->status);
 	}
 	else
 	{
 		temp2 = ft_strjoin("declare -x ", token);
 		if (!temp2)
-			error(p, "strjoin", p->status);
+			return (NULL);//error(p, "strjoin", p->status);
 	}
 	return (temp2);
 }
@@ -96,7 +96,7 @@ void	add_to_env(t_pipex *p, char *add)
 	arr = NULL;
 	arr = malloc(sizeof(char *) * (ft_arrlen(p->menv) + 2));
 	if (!arr)
-		error(p, "malloc", p->status);
+		return ;//error(p, "malloc", p->status);
 	while (p->menv[x])
 	{
 		arr[x] = p->menv[x];
@@ -116,15 +116,17 @@ void	add_to_export(t_pipex *p, char *token)
 	x = 0;
 	arr = NULL;
 	add = NULL;
+	if (!token)
+		return ;
 	arr = malloc(sizeof(char *) * (ft_arrlen(p->xport) + 2));
 	if (!arr)
-		error(p, "malloc", p->status);
+		return ;//return;//error(p, "malloc", p->status);
 	while (p->xport[x])
 	{
 		arr[x] = p->xport[x];
 		x++;
 	}
-	add = create_add_export(p, token);
+	add = create_add_export(token);//p, 
 	if (ft_strchr(add, '='))
 		add_to_env(p, ft_substr(add, 11, ft_strlen(add) - 10));
 	arr[x] = add;

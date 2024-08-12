@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/10 21:09:48 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 02:34:09 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,22 @@
 
 int	do_echo(t_pipex *p, char **token, int x)
 {
+	char	*temp;
+
+	temp = NULL;
 	if (token[x][0] == '$' && token[x][1] == '?' && token[x][2] == '\0')
 		return (ft_putnbr_fd(p->status, 1), 0);
+	else if (token[x][0] == '$' && token[x][1] != '$' && token[x][1] != '\0'
+		&& valid_env(p, ft_substr(token[x], 1, ft_strlen(token[x]) - 1)))
+	{
+		temp = xpand(p, token, x);
+		if (!temp)
+			return (1);
+		return (ft_putstr_fd(temp, 1), 0);
+	}
 	else if (token[x][0] == '$' && token[x][1] != '\0'
 		&& !valid_env(p, ft_substr(token[x], 1, ft_strlen(token[x]) - 1)))
 		return (1);
-	else if (token[x][0] == '$' && token[x][1] != '$' && token[x][1] != '\0'
-		&& valid_env(p, ft_substr(token[x], 1, ft_strlen(token[x]) - 1)))
-		return (ft_putstr_fd(xpand(p, token, x), 1), 0);
 	else
 		return (ft_putstr_fd(token[x], 1), 0);
 }

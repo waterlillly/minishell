@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/10 21:43:10 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 02:15:47 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	cd_home(t_pipex *p)
 		reset_old_pwd(p, p->home);
 		return (chdir(p->home));
 	}
-	return (error(p, p->home, p->status), 1);
+	return (1);//error(p, p->home, p->status)
 }
 
 int	fill_path(t_pipex *p, char **token, int x)
@@ -122,7 +122,7 @@ int	fill_path(t_pipex *p, char **token, int x)
 		return (go_slash(p, token, x));
 	else
 		return (add_to_path(p, token[x + 1]));
-	return (error(p, token[x + 1], p->status), 1);
+	return (1);//error(p, token[x + 1], p->status)
 }
 
 int	cd(t_pipex *p, char **token)
@@ -136,5 +136,5 @@ int	cd(t_pipex *p, char **token)
 		return (cd_home(p));
 	else if (token[x + 1] != NULL)
 		return (fill_path(p, token, x));
-	return (error(p, token[x + 1], p->status), 1);
+	return (1);//error(p, token[x + 1], p->status)
 }

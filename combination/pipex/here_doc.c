@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:55:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/10 18:07:41 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 02:21:48 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ void	get_cur_cwd(t_pipex *p)
 {
 	p->cwd = get_env(p, "PWD");
 	if (!p->cwd)
-		error(p, "get_env failed", p->status);
+		return ;//error(p, "get_env failed", p->status);
 	if (access(p->cwd, F_OK) == -1)
 	{
 		free(p->cwd);
 		p->cwd = NULL;
-		error(p, "no access", p->status);
+		return ;//error(p, "no access", p->status);
 	}
 }
 
@@ -56,7 +56,7 @@ void	first_heredoc(t_pipex *p)
 	p->fileout = -1;
 	p->filein = open("hd", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (p->filein == -1 || access("hd", R_OK) == -1 || access("hd", W_OK) == -1)
-		error(p, "hd", p->status);
+		return ;//error(p, "hd", p->status);
 	line = readline("> ");
 	while (line && !ft_strcmp(line, p->delimiter))
 	{
@@ -101,7 +101,7 @@ void	adjust_struct_here(t_pipex *p)
 			p->cmd_count = p->ac - 2;//3
 	}
 	else
-		error(p, "error", p->status);
+		return ;//error(p, "error", p->status);
 }
 
 void	here_or_not(t_pipex *p)

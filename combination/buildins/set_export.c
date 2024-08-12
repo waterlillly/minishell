@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/10 21:45:15 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 02:18:41 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*no_quotes(char *token, int x, int y)
 	char	*temp;
 	
 	temp = NULL;
+	if (!token || !token[x] || y <= 1)
+		return (NULL);
 	temp = malloc(sizeof(char) * (y + 1));
 	if (!temp)
 		return (NULL);
@@ -25,7 +27,11 @@ char	*no_quotes(char *token, int x, int y)
 	temp[0] = '=';
 	temp[1] = '\"';
 	while (token[x])
-		temp[y++] = token[x++];
+	{
+		temp[y] = token[x];
+		y++;
+		x++;
+	}
 	temp[y] = '\"';
 	temp[y + 1] = '\0';
 	return (temp);
@@ -36,6 +42,8 @@ char	*has_quotes(char *token, int x, int y)
 	char	*temp;
 	
 	temp = NULL;
+	if (!token || !token[x] || y <= 1)
+		return (NULL);
 	temp = malloc(sizeof(char) * (y + 1));
 	if (!temp)
 		return (NULL);
@@ -81,21 +89,21 @@ void	update_export(t_pipex *p, char *tok, char *token)
 	temp1 = NULL;
 	temp = ft_strjoin("declare -x ", tok);
 	if (!temp)
-		error(p, "strjoin", p->status);
+		return ;//error(p, "strjoin", p->status);
 	x = find_str_part(p->xport, temp);
 	free(temp);
 	temp = NULL;
 	if (x == -1)
-		error(p, "couldnt find argument", p->status);
+		return ;//error(p, "couldnt find argument", p->status);
 	temp = strcpy_until(p->xport[x]);
 	if (!temp)
-		error(p, "strcpy_until", p->status);
+		return ;//error(p, "strcpy_until", p->status);
 	temp1 = modify_quotes(token);
 	if (!temp1)
-		error(p, "modify_quotes", p->status);
+		return ;//error(p, "modify_quotes", p->status);
 	p->xport[x] = ft_strjoin_free_both(temp, temp1);
 	if (!p->xport[x])
-		error(p, "strjoin_free_both", p->status);
+		return ;//error(p, "strjoin_free_both", p->status);
 }
 
 void	set_export(t_pipex *p, char **token)
@@ -106,19 +114,19 @@ void	set_export(t_pipex *p, char **token)
 	temp = NULL;
 	x = 1;
 	if (token[x][0] == '$')
-		error(p, "not a valid identifier", p->status);
+		return ;//error(p, "not a valid identifier", p->status);
 	if (valid_env(p, strcpy_until(token[x])) == true)
 	{
 		temp = strcpy_until(token[x]);
 		if (!temp)
-			error(p, "copy_until", p->status);
+			return ;//error(p, "copy_until", p->status);
 		if (find_str_part(p->menv, temp) == -1)
-			error(p, "couldnt find arg", p->status);
+			return ;//error(p, "couldnt find arg", p->status);
 		else
 		{
 			p->menv[find_str_part(p->menv, temp)] = ft_strdup(token[x]);
 			if (!p->menv[find_str_part(p->menv, temp)])
-				error(p, "strdup", p->status);
+				return ;//error(p, "strdup", p->status);
 			update_export(p, temp, token[x]);
 		}
 	}

@@ -87,12 +87,12 @@ void	combine_export(t_pipex *p)
 	arr = sort_arr(p);
 	p->xport = malloc(sizeof(char *) * (ft_arrlen(arr) + 1));
 	if (!p->xport)
-		error(p, "malloc", p->status);
+		return ;//error(p, "malloc", p->status);
 	while (arr[y])
 	{
 		p->xport[y] = ft_strjoin("declare -x ", exp_whole(p, arr, y));
 		if (!p->xport[y])
-			error(p, "exp_whole", p->status);
+			return ;//error(p, "exp_whole", p->status);
 		y++;
 	}
 	p->xport[y] = NULL;
