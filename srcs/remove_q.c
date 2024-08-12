@@ -6,25 +6,42 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:52:56 by codespace         #+#    #+#             */
-/*   Updated: 2024/07/29 18:54:18 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/09 12:34:31 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	remove_q(t_raw_in *in)
+void	remove_dq(char **in, int len)
 {
 	int		i;
 	char	*tmp;
 
 	i = -1;
-	while (++i < in->n_hd)
+	while (++i < len)
 	{
-		if (*in->del_s[i] == '\'' || *in->del_s[i] == '\"')
+		if (*in[i] == '\"')
 		{
-			tmp = ft_substr(in->del_s[i], 1, ft_strlen(in->del_s[i]) - 2);
-			free(in->del_s[i]);
-			in->del_s[i] = tmp;
+			tmp = ft_substr(in[i], 1, ft_strlen(in[i]) - 2);
+			free(in[i]);
+			in[i] = tmp;
+		}
+	}
+}
+
+void	remove_sq(char **in, int len)
+{
+	int		i;
+	char	*tmp;
+
+	i = -1;
+	while (++i < len)
+	{
+		if (*in[i] == '\'')
+		{
+			tmp = ft_substr(in[i], 1, ft_strlen(in[i]) - 2);
+			free(in[i]);
+			in[i] = tmp;
 		}
 	}
 }

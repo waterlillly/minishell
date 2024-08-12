@@ -39,6 +39,7 @@ typedef struct s_raw_in
 	int		n_red;
 	int		n_words;
 	int		n_lessalloc;
+	int		sum;
 }	t_raw_in;
 
 typedef struct s_minishell_l
@@ -53,7 +54,7 @@ typedef struct s_minishell_l
 typedef struct s_minishell_p
 {
 	char					**str;
-	int						redir;
+	int						str_len;
 	char					*infile;
 	char					*outfile;
 	bool					std_out;
@@ -63,7 +64,8 @@ typedef struct s_minishell_p
 }	t_minishell_p;
 
 int 			error(char *str, int code);
-void			remove_q(t_raw_in *in);
+void			remove_dq(char **in, int len);
+void			remove_sq(char **in, int len);
 int				double_count(char *input);
 int				single_count(char *input);
 int 			open_quotes(char *input);
@@ -74,6 +76,11 @@ t_minishell_l	*lexer(t_raw_in *in);
 int				check_syntax(char *input);
 void			set_first(t_raw_in *in, char *line);
 char			*skip_q(char *str);
+void			set_op(t_raw_in *in, char *line);
+t_minishell_l	*ft_lstlast_lex(t_minishell_l *lst);
+void			ft_lstadd_back_lex(t_minishell_l **alst, t_minishell_l *new);
+t_minishell_p	*parser(t_minishell_l *in, t_raw_in *raw);
+t_minishell_l	*ft_lstfirst_lex(t_minishell_l *lst);
 
 
 

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 18:05:04 by codespace         #+#    #+#             */
-/*   Updated: 2024/07/29 18:05:17 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/12 13:35:26 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strcat(char *dst, char *src)
 	int	len_b;
 	char	*tmp;
 
-	if (!dst)
+	if (!dst || !*dst)
 		len_a = 0;
 	else
 		len_a = ft_strlen(dst);

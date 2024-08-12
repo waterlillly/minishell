@@ -92,14 +92,39 @@ void	init_raw(t_raw_in *in)
 	in->n_chd = 0;
 	in->open_pipe = false;
 	in->n_lessalloc = 0;
+	in->sum = 0;
 }
 
+void	print_parsed(t_minishell_p *in)
+{
+	int	i;
+	t_minishell_l *tmp;
+	while (in)
+	{
+		tmp = in->redirect;
+		i = -1;
+		while (in->str[++i])
+			printf("str%d.:%s\n", i + 1, in->str[i]);
+		if (tmp)
+		{
+			while (tmp)
+			{
+				printf("token:%d\nfile:%s\n", tmp->token, tmp->input);
+				tmp = tmp->next;
+			}
+		}
+		else
+			printf("NULL\n");
+		printf("\n***********\n");
+		in = in->next;
+	}
+}
 
 int	main(void)
 {
 	t_minishell_l	*lexed;
+	t_minishell_p	*parsed;
 	t_raw_in		input;
-	int				i;
 
 	while (1)
 	{
@@ -109,13 +134,8 @@ int	main(void)
 			return (error("syntax error", 0));
 		//printf("%s\n", input.input);
 		lexed = lexer(&input);
-		lexed = lexed;
-		//("hd:%d\nred:%d\npipe:%d\n", input.n_hd, input.n_red, input.n_pipe);
-		//while (++i < input.n_hd)
-		//	printf("%d.%s\n%s", i + 1,  input.del_s[i], input.del_str[i]);
-		i = -1;
-		while (input.out[++i])
-			printf("%d.%s\n", i + 1, input.out[i]);
+		parsed = parser(lexed, &input);
+		print_parsed(parsed);
 		free_raw(&input);
 	}
 }

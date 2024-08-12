@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:25:32 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/08 12:07:39 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/12 13:56:58 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	get_hd(t_raw_in *in)
 {
-	in->del_str = ft_realloc_2d(in->del_str, in->n_hd - in->n_chd);
+	in->del_str = (char **)ft_calloc(in->n_hd + 1, sizeof(char *));
 	if (in->n_hd)
 	{
 		while (in->n_chd < in->n_hd)
@@ -50,15 +50,12 @@ void	get_pipe(t_raw_in *in)
 int	get_line_cnc(t_raw_in *in)
 {
 	in->line = readline("this is a legit minishell> ");
-	if (!check_syntax(in->line))
+	set_op(in, in->line);
+	if (!check_syntax(in->line) || in->open_pipe)
 		return (0);
 	in->input = ft_strcat(in->input, in->line);
 	set_first(in, in->line);
 	free(in->line);
-	while (in->open_pipe || in->n_chd < in->n_hd)
-	{
-		get_hd(in);
-		get_pipe(in);
-	}
+	get_hd(in);
 	return (1);
 }

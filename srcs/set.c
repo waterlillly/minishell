@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 11:14:34 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/09 10:47:07 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/12 13:57:23 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	set_hd(t_raw_in *in, char *line)
 	int	k;
 
 	i = in->n_chd - 1;
-	in->del_s = ft_realloc_2d(in->del_s, in->n_hd - in->n_chd);
+	in->del_s = (char **)ft_calloc(in->n_hd + 1, sizeof(char *));
 	while (i < in->n_hd - 1 && *line && *(line + 1))
 	{
 		k = 2;
@@ -66,7 +66,8 @@ void	set_hd(t_raw_in *in, char *line)
 		}
 		line++;
 	}
-	remove_q(in);
+	remove_dq(in->del_s, in->n_hd);
+	remove_sq(in->del_s, in->n_hd);
 }
 
 void	set_first(t_raw_in *in, char *line)
@@ -101,5 +102,4 @@ void	set_first(t_raw_in *in, char *line)
 		line++;
 	}
 	set_hd(in, tmp[0]);
-	set_op(in, tmp[0]);
 }

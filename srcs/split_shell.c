@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 10:51:09 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/09 10:42:46 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/09 11:08:51 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ int	count(char *str, char *charset)
 void	ft_split_shell(t_raw_in *in)
 {
 	int	i;
-	int	sum;
 	int	len;
 	char	*tmp;
 	
@@ -134,12 +133,11 @@ void	ft_split_shell(t_raw_in *in)
 	tmp = in->input;
 	i = -1;
 	in->n_words = count(in->input, " \t<>|");
-	sum = in->n_words + in->n_hd + in->n_pipe + in->n_red + in->n_lessalloc;
-	printf ("%d,%d , %d, %d, %d\n", in->n_words , in->n_hd , in->n_pipe , in->n_red , in->n_lessalloc);
-	in->out = (char **)ft_calloc(sum + 1, sizeof(char *));
+	in->sum = in->n_words + in->n_hd + in->n_pipe + in->n_red + in->n_lessalloc;
+	in->out = (char **)ft_calloc(in->sum + 1, sizeof(char *));
 	if (!in->out)
 		return ;//fix
-	while (++i < sum)
+	while (++i < in->sum)
 	{
 		in->input = skip_shell(&(in->input[len]), " \t", &len);
 		in->out[i] = ft_calloc(len + 1, sizeof(char));
