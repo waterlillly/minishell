@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/12 02:18:41 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:08:46 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char	*no_quotes(char *token, int x, int y)
 	temp = malloc(sizeof(char) * (y + 1));
 	if (!temp)
 		return (NULL);
-	y = 2;
 	x++;
+	y = 2;
 	temp[0] = '=';
 	temp[1] = '\"';
 	while (token[x])
@@ -48,12 +48,21 @@ char	*has_quotes(char *token, int x, int y)
 	if (!temp)
 		return (NULL);
 	y = 0;
+	x++;
 	while (token[x])
 	{
 		if (y == 1 || x == (int)ft_strlen(token) - 1)
+		{
+			ft_putstr_fd("token[x]: ", token[x]);
 			temp[y] = '\"';
+			ft_putstr_fd("temp[y]: ", temp[y]);
+		}
 		else
+		{
+			ft_putstr_fd("token[x]: ", token[x]);
 			temp[y] = token[x];
+			ft_putstr_fd("temp[y]: ", temp[y]);
+		}
 		x++;
 		y++;
 	}
@@ -61,21 +70,33 @@ char	*has_quotes(char *token, int x, int y)
 	return (temp);
 }
 
-char	*modify_quotes(char *token)
+char	*add_quotes(char *token)
 {
 	int		x;
 	int		y;
+	char	*new;
 
 	x = 0;
+	new = NULL;
 	while (token[x] && token[x] != '=')
 		x++;
 	y = ft_strlen(token) - x;
-	if (check_quotes(token) == false)
+	new = malloc(sizeof(char) * (y + 3));
+	if (!new)
+		return (NULL);
+	x++;
+	y = 2;
+	new[0] = '=';
+	new[1] = '\"';
+	while (token[x])
 	{
-		y += 2;
-		return (no_quotes(token, x, y));
+		new[y] = token[x];
+		y++;
+		x++;
 	}
-	return (has_quotes(token, x, y));
+	new[y] = '\"';
+	new[y + 1] = '\0';
+	return (new);
 }
 
 void	update_export(t_pipex *p, char *tok, char *token)
@@ -91,14 +112,9 @@ void	update_export(t_pipex *p, char *tok, char *token)
 	if (!temp)
 		return ;//error(p, "strjoin", p->status);
 	x = find_str_part(p->xport, temp);
-	free(temp);
-	temp = NULL;
 	if (x == -1)
 		return ;//error(p, "couldnt find argument", p->status);
-	temp = strcpy_until(p->xport[x]);
-	if (!temp)
-		return ;//error(p, "strcpy_until", p->status);
-	temp1 = modify_quotes(token);
+	temp1 = add_quotes(token);
 	if (!temp1)
 		return ;//error(p, "modify_quotes", p->status);
 	p->xport[x] = ft_strjoin_free_both(temp, temp1);
@@ -109,27 +125,24 @@ void	update_export(t_pipex *p, char *tok, char *token)
 void	set_export(t_pipex *p, char **token)
 {
 	char	*temp;
+	char	*toknoquo;
 	int		x;
 
 	temp = NULL;
+	toknoquo = NULL;
 	x = 1;
 	if (token[x][0] == '$')
 		return ;//error(p, "not a valid identifier", p->status);
-	if (valid_env(p, strcpy_until(token[x])) == true)
+	toknoquo = remove_quotes(token[x]);
+	temp = strcpy_until(token[x]);
+	if (!temp)
+		return ;//error(p, "copy_until", p->status);
+	if (valid_env(p, temp) == true)
 	{
-		temp = strcpy_until(token[x]);
-		if (!temp)
-			return ;//error(p, "copy_until", p->status);
-		if (find_str_part(p->menv, temp) == -1)
-			return ;//error(p, "couldnt find arg", p->status);
-		else
-		{
-			p->menv[find_str_part(p->menv, temp)] = ft_strdup(token[x]);
-			if (!p->menv[find_str_part(p->menv, temp)])
-				return ;//error(p, "strdup", p->status);
-			update_export(p, temp, token[x]);
-		}
+		if (ft_strchr(toknoquo, '='))
+			p->menv[find_str_part(p->menv, temp)] = toknoquo;
+		update_export(p, temp, toknoquo);
 	}
 	else
-		add_to_export(p, token[x]);
+		add_to_export(p, toknoquo);
 }

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:23:55 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/12 04:37:52 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 16:25:54 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*strcpy_until(char *v_part)
 	ret = malloc(sizeof(char) * (c + 1));
 	if (!ret)
 		return (NULL);
-	while (x < c)
+	while (x < c && v_part[x])
 	{
 		ret[x] = v_part[x];
 		x++;
@@ -87,7 +87,7 @@ bool	check_quotes(char *token)
 	if (token[x] == '\"' || token[x] == '\'')
 		q1 = true;
 	x++;
-	while (token[x])
+	while (token[x] && token[x + 1])
 	{
 		if ((token[x] == '\"' || token[x] == '\'') && token[x + 1] == '\0'
 			&& q1 == true)
@@ -106,7 +106,8 @@ bool	valid_env(t_pipex *p, char *tok)
 	while (p->menv[x])
 	{
 		y = 0;
-		while (tok[y] && p->menv[x][y] && tok[y] != '=' && tok[y] != '\0' && p->menv[x][y] != '=')
+		while (tok[y] && p->menv[x][y] && tok[y] != '='
+			&& tok[y] != '\0' && p->menv[x][y] != '=')
 		{
 			if (tok[y] == p->menv[x][y])
 				y++;

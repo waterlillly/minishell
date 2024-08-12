@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/12 02:29:49 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 18:28:25 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <dirent.h>
-/*
-typedef struct s_args
-{
-	char	*arg;
-	t_args	*next;
-	t_args	*prev;
-	bool	pipe;
-	bool	in;
-	bool	out;
-	bool	hd;
-	bool	appd;
-	bool	cmd;//execve or buildin
-}	t_args;
-*/
+
 typedef struct s_pipex
 {
 	char	**menv;
@@ -186,7 +173,7 @@ void	combine_export(t_pipex *p);
 /*SET_EXPORT*/
 char	*no_quotes(char *token, int x, int y);
 char	*has_quotes(char *token, int x, int y);
-char	*modify_quotes(char *token);
+char	*add_quotes(char *token);
 void	update_export(t_pipex *p, char *tok, char *token);
 void	set_export(t_pipex *p, char **token);
 

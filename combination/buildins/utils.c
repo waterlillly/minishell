@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:48:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/12 02:19:28 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 16:48:12 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*remove_quotes(char *s)
 		return (NULL);
 	while (s[x])
 	{
-		if (s[x] == '\"')
+		if (s[x] == '\"' || s[x] == '\'')
 			x++;
 		else
 		{

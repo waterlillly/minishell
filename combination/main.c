@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/10 21:53:04 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 18:29:13 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	main(int ac, char **av, char **envp)
 		if (!p.av)
 			error(&p, "split failed", 1);
 		p.ac = ft_arrlen(p.av);
+		
 		init_p(&p);
 		if (p.cmd_count > 500)
 			error(&p, "too many commands", p.status);

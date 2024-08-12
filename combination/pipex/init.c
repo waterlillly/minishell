@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/12 02:22:34 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/12 18:43:52 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	init_p(t_pipex *p)
 {
 	p->filein = -1;
 	p->cwd = NULL;
-	p->in = false;
+	p->in = true;
 	p->out = false;
 	p->appd = false;
 	here_or_not(p);
