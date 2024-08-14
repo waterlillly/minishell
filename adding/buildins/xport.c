@@ -19,7 +19,7 @@ bool	sorted(char **arr)
 	x = 0;
 	while (arr[x] && arr[x + 1])
 	{
-		if (ft_strcmp_org(arr[x], arr[x + 1]) >= 0)
+		if (ft_strcmp(arr[x], arr[x + 1]) >= 0)
 			x++;
 		else
 			return (false);
@@ -47,7 +47,7 @@ char	**sort_arr(t_pipex *p)
 		x = 0;
 		while (arr[x])
 		{
-			if (ft_strcmp_org(arr[x], arr[x + 1]) < 0)
+			if (ft_strcmp(arr[x], arr[x + 1]) < 0)
 				swap(arr, x);
 			x++;
 		}

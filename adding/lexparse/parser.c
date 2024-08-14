@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 11:22:01 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/14 16:53:21 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:09:04 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	set_red_parse(t_minishell_p *parse, t_minishell_l *lex)
 		}
 		if (tmp)
 		{
-			tmp->prev->next = NULL;//nope
+			tmp->prev->next = NULL;
 			lex = tmp->next;
 			lex->prev = NULL;
 			free(tmp);
@@ -131,7 +131,7 @@ t_minishell_p	*parser(t_minishell_l *in, t_raw_in *raw)
 		tmp = ft_lstnew_parse();
 		ft_lstadd_back_parse(&out, tmp);
 	}
-	set_red_parse(out, in);//nope
+	set_red_parse(out, in);
 	clean_parse(out);
 	//set_parse(out);
 	return (out);

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:48:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 14:35:37 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:04:49 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	how_many(char **s, char *o)
 	y = 0;
 	while (s[x])
 	{
-		if (ft_strcmp(s[x], o))
+		if (ft_strcmp_bool(s[x], o))
 			y++;
 		x++;
 	}
@@ -44,7 +44,7 @@ int	find_arg(char **s, char *a)
 		return (-1);
 	while (s[x])
 	{
-		if (ft_strcmp(s[x], a))
+		if (ft_strcmp_bool(s[x], a))
 			return (x);
 		x++;
 	}

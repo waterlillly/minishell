@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 14:35:29 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:03:50 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,9 @@ char	*has_quotes(char *token, int x, int y)
 	while (token[x])
 	{
 		if (y == 1 || x == (int)ft_strlen(token) - 1)
-		{
-			ft_putstr_fd("token[x]: ", token[x]);
 			temp[y] = '\"';
-			ft_putstr_fd("temp[y]: ", temp[y]);
-		}
 		else
-		{
-			ft_putstr_fd("token[x]: ", token[x]);
 			temp[y] = token[x];
-			ft_putstr_fd("temp[y]: ", temp[y]);
-		}
 		x++;
 		y++;
 	}

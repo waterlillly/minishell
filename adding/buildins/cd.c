@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 14:35:16 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:00:41 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	fill_path(t_pipex *p, char **token, int x)
 {
 	if (token[x + 1][0] == '-' && token[x + 1][1] == '\0')
 	{
-		if (ft_strcmp(p->pwd, p->oldpwd))
+		if (ft_strcmp_bool(p->pwd, p->oldpwd))
 			go_up_oldpwd(p);
 		return (go_back(p, 1));
 	}
@@ -130,7 +130,7 @@ int	cd(t_pipex *p, char **token)
 	int		x;
 
 	x = 0;
-	if (token[x + 1] == NULL || ft_strcmp(token[x + 1], "#")
+	if (token[x + 1] == NULL || ft_strcmp_bool(token[x + 1], "#")
 		|| (token[x + 1][0] == '-' && token[x + 1][1] == '-'
 		&& token[x + 1][2] == '\0'))
 		return (cd_home(p));
