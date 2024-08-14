@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:53:55 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 15:53:13 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 20:51:42 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int		ft_isprint_extend(int n);
 int		ft_isascii_extend(int n);
 void	ft_free_double(char **smth);
 void	ft_print_array(char **arr);
-int		ft_strcmp_org(const char *s1, const char *s2);
+bool	ft_strcmp_bool(const char *s1, const char *s2);
 bool	ft_strnstr_bool(const char *big, const char *lil, int start, int len);
 
 char	*get_next_line(int fd);
