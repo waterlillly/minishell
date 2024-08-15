@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 14:38:17 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/15 17:35:05 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,13 @@ char	*is_exec(t_pipex *p)
 		p->part = NULL;
 		i++;
 	}
-	return (NULL);//error(p, "command not found", 127);
-}
-
-void	find_path(t_pipex *p)
-{
-	int		i;
-
-	i = 0;
-	while (ft_strnstr(p->menv[i], "PATH", 4) == 0)
-		i++;
-	p->paths = ft_split(p->mpath, ':');
-	if (!p->paths)
-		return ;//error(p, "ft_split failed", p->status);
-	p->path = is_exec(p);
+	error("command not found", 127);
+	return (NULL);
 }
 
 int	exec_cmd(t_pipex *p)
 {
-	p->args = ft_split(p->av[p->x], ' ');
+	p->args = ft_split(p->pars->redirect->str, ' ');//or p->pars->redirect->input??
 	if (!p->args)
 		return (1);//error(p, "ft_split failed", p->status);
 	if (p->args[0][0] == '$'
@@ -68,7 +56,7 @@ int	exec_cmd(t_pipex *p)
 	}
 	else
 	{
-		find_path(p);
+		p->path = is_exec(p);//find_path(p);
 		execve(p->path, p->args, p->menv);
 		return (1);//error(p, "execve failed", p->status);
 	}

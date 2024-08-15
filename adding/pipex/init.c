@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 15:38:49 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/15 18:02:36 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 
 void	check_filein(t_pipex *p)
 {
-	if (!p->delimiter && !p->cwd)
+	if (p->pars->infile)
 	{
-		p->filein = open(p->av[1], O_RDONLY, 0644);
-		if (p->filein == -1 || access(p->av[1], R_OK) == -1)
-			return ;//error(p, p->av[1], p->status);
+		p->filein = -1;
+		p->filein = open(p->pars->infile, O_RDONLY, 0644);
+		if (p->filein == -1 || access(p->pars->infile, R_OK) == -1)
+			return ;//error(p, p->todo[1], p->status);
 	}
 }
 
 void	check_fileout(t_pipex *p)
 {
-	int	x;
-
-	x = p->x + p->cmd_count;
-	if (p->appd == false)
+	if (p->pars->outfile && p->pars->redirect->token == BIGGER)
 	{
-		p->fileout = open(p->av[x], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (p->fileout == -1 || access(p->av[x], W_OK) == -1)
-			return ;//error(p, p->av[x], p->status);
+		p->fileout = -1;
+		p->fileout = open(p->pars->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (p->fileout == -1 || access(p->pars->outfile, W_OK) == -1)
+			return ;//error(p, p->pars->outfile, p->status);
 	}
-	else
+	else if (p->pars->outfile && p->pars->redirect->token == BIGGERBIGGER)
 	{
-		p->fileout = open(p->av[x], O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (p->fileout == -1 || access(p->av[x], W_OK) == -1)
-			return ;//error(p, p->av[x], p->status);
+		p->fileout = -1;
+		p->fileout = open(p->pars->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (p->fileout == -1 || access(p->pars->outfile, W_OK) == -1)
+			return ;//error(p, p->pars->outfile, p->status);
 	}
 }
 
@@ -65,24 +65,27 @@ void init_pipes(t_pipex *p)
 	}
 }
 
-void	init_p(t_pipex *p, t_minishell_p *parser)
+void	init_p(t_pipex *p, t_minishell_p *parsed)
 {
-	p->parser = parser;
-	p->filein = -1;
-	if (parser->std_out == true)
-		p->out = false;
-	else
-		p->out = true;
+	if (!parsed)
+	{
+		error("syntax error", 1);
+		return ;
+	}
+	p->pars = parsed;
+	p->cmd_count = 0;
+	while (parsed && parsed->next)
+	{
+		p->cmd_count++;
+		parsed = parsed->next;
+	}
 	p->cwd = NULL;
-	p->av = parser->str;
-	p->in = false;
-	p->appd = false;
-	here_or_not(p);
-	p->fileout = -1;
-	if (p->out == true)
-		check_fileout(p);
+	p->delimiter = NULL;
+	here_or_not(p, parsed);
 	p->args = NULL;
-	p->paths = NULL;
+	p->paths = ft_split(p->mpath, ':');
+	if (!p->paths)
+		return ;//error(p, "ft_split failed", p->status);
 	p->path = NULL;
 	p->executable = NULL;
 	p->part = NULL;

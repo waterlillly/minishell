@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line_cnc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:25:32 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/14 20:54:18 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/15 17:31:23 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,15 @@ void	get_pipe(t_raw_in *in)
 
 int	get_line_cnc(t_raw_in *in)
 {
-	in->line = readline("this is a legit minishell> ");
+	in->line = readline("minishell> ");
+	add_history(in->line);
 	set_op(in, in->line);
 	if (!check_syntax(in->line) || in->open_pipe)
 		return (0);
 	in->input = ft_strcat(in->input, in->line);
 	set_first(in, in->line);
 	free(in->line);
+	in->line = NULL;
 	get_hd(in);
 	return (1);
 }

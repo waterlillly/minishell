@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra_cases.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 14:12:19 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 14:38:08 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/15 17:12:43 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,37 +28,27 @@ int closedir(DIR *dirp); (success: 0, err: -1)
 
 void	single_exec(t_pipex *p)
 {
-	if (!p->cwd)
+	if (p->here == true)
 	{
-		if (p->here == true)
-		{
-			p->filein = open("hd", O_RDONLY);
-			if (p->filein == -1 || access("hd", R_OK) == -1)
-				return ;//error(p, "hd", p->status);
-		}
+		p->filein = open("hd", O_RDONLY);
+		if (p->filein == -1 || access("hd", R_OK) == -1)
+			return ;//error(p, "hd", p->status);
 		if (dup2(p->filein, STDIN_FILENO) == -1)
 			return ;//error(p, "dup2 failed", p->status);
 	}
-	if (p->out == true)
+	else if (p->pars->infile)
 	{
+		check_filein(p);
+		if (dup2(p->filein, STDIN_FILENO) == -1)
+			return ;//error(p, "dup2 failed", p->status);
+	}
+	if (p->pars->outfile)
+	{
+		check_fileout(p);
 		if (dup2(p->fileout, STDOUT_FILENO) == -1)
 			return ;//error(p, "dup2 failed", p->status);
 	}
-	if (p->here)
-		unlink("hd");
-	if (p->filein && p->filein != STDIN_FILENO && p->filein != -1)
-		close(p->filein);
-	if (p->fileout && p->fileout != STDOUT_FILENO && p->fileout != -1)
-		close(p->fileout);
-	if (exec_cmd(p) < 0)
-		return ;//error(p, "exec_cmd failed", p->status);
-}
-
-void	no_infile_exec(t_pipex *p, int *c)
-{
-	if (dup2(p->pip[*c][1], STDOUT_FILENO) == -1)
-		return ;//error(p, "dup2 failed", p->status);
-	close_pipes(p);
+	close_all(p);
 	if (exec_cmd(p) < 0)
 		return ;//error(p, "exec_cmd failed", p->status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 21:24:48 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/15 18:02:32 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ int	main(int ac, char **av, char **envp)
 {
 	t_pipex			p;
 	int				c;
-	t_minishell_l	*lexed;
-	t_minishell_p	*parsed;
-	t_raw_in		input;
-
+	
 	if (ac > 4 || av[1] != NULL || !envp)
 	{
 		ft_putendl_fd("invalid input", 2);
@@ -29,14 +26,7 @@ int	main(int ac, char **av, char **envp)
 	first_init(&p, envp);
 	while (1)
 	{
-		ft_bzero(&input, sizeof(t_raw_in));
-		init_raw(&input);
-		if (!get_line_cnc(&input))
-			error("syntax error", 0);
-		lexed = lexer(&input);
-		parsed = parser(lexed, &input);
-		init_p(&p, parsed);
-		free_raw(&input);
+		get_input(&p);
 		c = 0;
 		if (p.cmd_count > 500)
 			error("too many commands", p.status);
@@ -48,15 +38,16 @@ int	main(int ac, char **av, char **envp)
 			if (p.pid[c] == -1)
 				error("fork failed", p.status);
 			if (p.pid[c] == 0)
-				do_child(&p, &c);
+				execute(&p, &c);//do_child(&p, &c);
 			c++;
-			p.x++;
+			p.pars = p.pars->next;
 		}
 		if (wait(NULL) != -1 && p.cmd_count > 1)
 		{
 			if (WIFEXITED(p.status))
 				p.status = WEXITSTATUS(p.status);
 		}
+		err_free(&p);
 	}
 	err_free(&p);
 	return (p.status);
