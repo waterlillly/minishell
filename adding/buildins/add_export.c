@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 14:51:23 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 17:04:50 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/16 18:01:25 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	add_to_env(t_pipex *p, char *add)
 	arr = malloc(sizeof(char *) * (ft_arrlen(p->menv) + 2));
 	if (!arr)
 		return ;//error(p, "malloc", p->status);
-	while (p->menv[x])
+	while (p->menv && p->menv[x])
 	{
 		arr[x] = p->menv[x];
 		x++;
@@ -120,13 +120,12 @@ void	add_to_export(t_pipex *p, char *token)
 	arr = malloc(sizeof(char *) * (ft_arrlen(p->xport) + 2));
 	if (!arr)
 		return ;//error(p, "malloc", p->status);
-	while (p->xport[x])
+	while (p->xport && p->xport[x])
 	{
 		arr[x] = p->xport[x];
 		x++;
 	}
 	add = create_add_export(token);
-	printf("add: %s\n", add);
 	if (ft_strchr(add, '='))
 		add_to_env(p, token);
 	arr[x] = add;

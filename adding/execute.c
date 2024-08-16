@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 16:27:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/16 15:48:21 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/16 18:54:48 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,9 @@ void	redir_output(t_pipex *p, int *c, t_minishell_p *pars)
 {
 	if (pars->outfile)
 		check_fileout(p, pars);
-	if (p->fileout > -1)
+	if (p->fileout != -1)
 	{
 		if (dup2(p->fileout, STDOUT_FILENO) == -1)
-			return ;//error(p, "dup2 failed", p->status);
-	}
-	else if (*c == p->cmd_count - 1)
-	{
-		if (dup2(STDOUT_FILENO, p->copy_stdout) == -1)
 			return ;//error(p, "dup2 failed", p->status);
 	}
 	else if (*c < p->cmd_count - 1)
@@ -53,14 +48,26 @@ void	redir_output(t_pipex *p, int *c, t_minishell_p *pars)
 		if (dup2(p->pip[*c][1], STDOUT_FILENO) == -1)
 		return ;//error(p, "dup2 failed", p->status);
 	}
+	else if (*c == p->cmd_count - 1)
+	{
+		if (dup2(STDOUT_FILENO, p->copy_stdout) == -1)
+			return ;//error(p, "dup2 failed", p->status);
+		if (dup2(STDIN_FILENO, p->copy_stdin) == -1)
+			return ;//error(p, "dup2 failed", p->status);
+	}
 }
 
 void	execute(t_pipex *p, int *c, t_minishell_p *pars)
 {
-	redir_input(p, c, pars);
-	redir_output(p, c, pars);
-	close_all(p);
-	//close_pipes(p);
-	if (exec_cmd(p, pars) < 0)
-		return ;//error(p, "exec_cmd failed", p->status);
+	if (p->cmd_count == 1)
+		single_exec(p, pars);
+	else
+	{
+		redir_input(p, c, pars);
+		redir_output(p, c, pars);
+		close_all(p);
+		//close_pipes(p);
+		if (exec_cmd(p, pars) < 0)
+			return ;//error(p, "exec_cmd failed", p->status);
+	}
 }

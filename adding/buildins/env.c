@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 14:35:23 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/16 18:40:08 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,31 @@ void	get_menv(t_pipex *p, char **envp)
 	if (x != ft_arrlen(envp))
 		return ;//error(p, "menv", p->status);
 	p->menv[x] = NULL;
+}
+
+void	backup_env(t_pipex *p)
+{
+	char	*temp;
+	char	**xpo;
+	char	**mvnew;
+	
+	temp = NULL;
+	xpo = NULL;
+	mvnew = NULL;
+	xpo = malloc(sizeof(char *) * 4);
+	if (!xpo)
+		return ;//error(p, "malloc", p->status);
+	mvnew = malloc(sizeof(char *) * 3);
+	if (!mvnew)
+		return ;//error(p, "malloc", p->status);
+	temp = getcwd(temp, 0);
+	xpo[0] = create_add_export("OLDPWD");
+	xpo[1] = create_add_export(ft_strjoin("PWD=", temp));
+	xpo[2] = create_add_export("SHLVL=1");
+	xpo[3] = NULL;
+	p->xport = resort_arr(xpo);
+	mvnew[0] = ft_strjoin("PWD=", temp);
+	mvnew[1] = ft_strdup("SHLVL=1");
+	mvnew[2] = NULL;
+	p->menv = mvnew;
 }

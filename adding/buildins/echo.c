@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 21:01:03 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:51:34 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	do_echo(t_pipex *p, char **token, int x)
 		temp = xpand(p, token, x);
 		if (!temp)
 			return (1);
-		return (ft_putstr_fd(temp, 1), 0);
+		return (ft_putstr_fd(temp, 1), free(temp), temp = NULL, 0);
 	}
 	else if (token[x][0] == '$' && token[x][1] != '\0'
 		&& !valid_env(p, ft_substr(token[x], 1, ft_strlen(token[x]) - 1)))

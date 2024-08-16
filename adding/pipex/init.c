@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/16 16:54:23 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/16 18:58:04 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,19 @@ void init_pipes(t_pipex *p)
 	int i;
 
 	i = 0;
-	if (p->cmd_count > 1)
+	p->pip = NULL;
+	p->pip = malloc(p->cmd_count * sizeof(int *));
+	if (!p->pip)
+		return ;//error(p, "malloc failed", p->status);
+	while (i < p->cmd_count && p->cmd_count > 1)
 	{
-		p->pip = NULL;
-		p->pip = malloc(p->cmd_count * sizeof(int *));
-		if (!p->pip)
+		p->pip[i] = NULL;
+		p->pip[i] = malloc(sizeof(int) * 2);
+		if (!p->pip[i])
 			return ;//error(p, "malloc failed", p->status);
-		while (i < p->cmd_count && p->cmd_count > 1)
-		{
-			p->pip[i] = NULL;
-			p->pip[i] = malloc(sizeof(int) * 2);
-			if (!p->pip[i])
-				return ;//error(p, "malloc failed", p->status);
-			if (pipe(p->pip[i]) == -1)
-				return ;//error(p, "pipe failed", p->status);
-			i++;
-		}
+		if (pipe(p->pip[i]) == -1)
+			return ;//error(p, "pipe failed", p->status);
+		i++;
 	}
 }
 
@@ -98,11 +95,14 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 	init_pipes(p);
 }
 
-void	first_init(t_pipex *p, char **envp)
+void	first_init(t_pipex *p)
 {
 	p->status = 0;
-	buildins_init(p, envp);
+	buildins_init(p);
 	p->copy_stdout = dup(STDOUT_FILENO);
+	if (p->copy_stdout == -1)
+		return ;//error(p, "dup failed", p->status);
+	p->copy_stdin = dup(STDIN_FILENO);
 	if (p->copy_stdout == -1)
 		return ;//error(p, "dup failed", p->status);
 	p->cwd = NULL;

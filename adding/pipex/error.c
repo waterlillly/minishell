@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:04:36 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/15 16:48:55 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/16 19:00:04 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	close_all(t_pipex *p)
 		close(p->fileout);
 	if (p->copy_stdout && p->copy_stdout != STDOUT_FILENO && p->copy_stdout != -1)
 		close(p->copy_stdout);
+	if (p->copy_stdin && p->copy_stdin != STDIN_FILENO && p->copy_stdin != -1)
+		close(p->copy_stdin);
 	if (p->here)
 		unlink("hd");
 	close_pipes(p);
@@ -71,7 +73,7 @@ void	err_free_two(t_pipex *p)
 		free(p->pid);
 		p->pid = NULL;
 	}
-	if (p->pip || p->copy_stdout)
+	if (p->pip || p->copy_stdout || p->copy_stdin)
 		close_all(p);
 	if (p->args)
 	{

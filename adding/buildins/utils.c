@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:48:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 21:04:49 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/16 18:47:08 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ int	find_arg(char **s, char *a)
 	return (-1);
 }
 
-void	buildins_init(t_pipex *p, char **envp)
+void	buildins_init(t_pipex *p)
 {
-	get_menv(p, envp);
 	get_pwd(p);
 	go_up_oldpwd(p);
 	p->home = get_env(p, "HOME");
