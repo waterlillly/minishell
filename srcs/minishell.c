@@ -120,6 +120,27 @@ void	print_parsed(t_minishell_p *in)
 	}
 }
 
+void free_parse(t_minishell_p *in)
+{
+	t_minishell_l	*tmp_l;
+	t_minishell_p	*tmp_p;
+
+	while (in)
+	{
+		tmp_p = in->next;
+		while (in->redirect)
+		{
+			tmp_l = in->redirect->next;
+			free (in->redirect);
+			in->redirect = tmp_l;
+		}
+		if (in->str)
+			free(in->str);
+		free(in);
+		in = tmp_p;
+	}
+}
+
 int	main(void)
 {
 	t_minishell_l	*lexed;
@@ -137,5 +158,6 @@ int	main(void)
 		parsed = parser(lexed, &input);
 		print_parsed(parsed);
 		free_raw(&input);
+		free_parse(parsed);
 	}
 }

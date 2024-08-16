@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:25:32 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/12 13:56:58 by codespace        ###   ########.fr       */
+/*   Updated: 2024/08/12 16:24:23 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	get_pipe(t_raw_in *in)
 int	get_line_cnc(t_raw_in *in)
 {
 	in->line = readline("this is a legit minishell> ");
+	add_history(in->line);
 	set_op(in, in->line);
 	if (!check_syntax(in->line) || in->open_pipe)
 		return (0);
