@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:04:36 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/16 19:00:04 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/17 17:24:45 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,37 +16,49 @@ void	close_pipes(t_pipex *p)
 {
 	int	i;
 
-	i = p->cmd_count - 1;
-	if (p->pip)
+	i = 0;
+	if (p->cmd_count <= 1)
+		return ;
+	else if (p && p->pip && p->pip[i])
 	{
-		while (p->pip && i >= 0 && p->pip[i])
+		while (p->pip && i < p->cmd_count - 1 && p->pip[i])
 		{
 			if (p->pip[i][0] && p->pip[i][0] != -1 && p->pip[i][0] != STDIN_FILENO)
 				close(p->pip[i][0]);
 			if (p->pip[i][1] && p->pip[i][1] != -1 && p->pip[i][1] != STDOUT_FILENO)
 				close(p->pip[i][1]);
 			free(p->pip[i]);
-			p->pip[i] = NULL;
-			i--;
+			//p->pip[i] = 0;
+			i++;
 		}
 		free(p->pip);
-		p->pip = NULL;
+		//p->pip = 0;
 	}
 }
 
 void	close_all(t_pipex *p)
 {
-	if (p->filein && p->filein != STDIN_FILENO && p->filein != -1)
+	int	x;
+
+	x = 3;
+	while (p && x < 1024)
+	{
+		if (x != p->filein && x != p->fileout)
+			close(x);
+		x++;
+	}
+	if (p && p->filein && p->filein != STDIN_FILENO && p->filein != -1)
 		close(p->filein);
-	if (p->fileout && p->fileout != STDOUT_FILENO && p->fileout != -1)
+	if (p && p->fileout && p->fileout != STDOUT_FILENO && p->fileout != -1)
 		close(p->fileout);
-	if (p->copy_stdout && p->copy_stdout != STDOUT_FILENO && p->copy_stdout != -1)
+	if (p && p->copy_stdout && p->copy_stdout != STDOUT_FILENO && p->copy_stdout != -1)
 		close(p->copy_stdout);
-	if (p->copy_stdin && p->copy_stdin != STDIN_FILENO && p->copy_stdin != -1)
-		close(p->copy_stdin);
-	if (p->here)
+	//if (p && p->copy_stdin && p->copy_stdin != STDIN_FILENO && p->copy_stdin != -1)
+	//	close(p->copy_stdin);
+	if (p && p->here)
 		unlink("hd");
-	close_pipes(p);
+	if (p && p->pip)
+		close_pipes(p);
 }
 
 void	free_double(char **str)
@@ -54,7 +66,7 @@ void	free_double(char **str)
 	int	i;
 
 	i = 0;
-	if (!str)
+	if (!str || !str[i])
 		return ;
 	while (str[i])
 	{
@@ -62,7 +74,7 @@ void	free_double(char **str)
 		str[i] = NULL;
 		i++;
 	}
-	free(str);
+	//free(str);
 	str = NULL;
 }
 
@@ -73,13 +85,8 @@ void	err_free_two(t_pipex *p)
 		free(p->pid);
 		p->pid = NULL;
 	}
-	if (p->pip || p->copy_stdout || p->copy_stdin)
+	if (p->pip || p->copy_stdout)//|| p->copy_stdin
 		close_all(p);
-	if (p->args)
-	{
-		free_double(p->args);
-		p->args = NULL;
-	}
 	if (p->paths)
 	{
 		free_double(p->paths);

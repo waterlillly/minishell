@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:23:55 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 14:35:43 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/17 14:25:21 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ char	**copy_arr_env(t_pipex *p)
 
 	x = 0;
 	arr = NULL;
+	if (!p->menv)
+		backup_env(p);
 	arr = malloc(sizeof(char *) * (ft_arrlen(p->menv) + 1));
 	if (!arr)
 		return (NULL);

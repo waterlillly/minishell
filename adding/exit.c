@@ -3,24 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:21:59 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 15:43:34 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/17 16:53:25 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_shell(t_pipex *p, char *str, int exit_code)
+void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str)
 {
-	err_free(p);
+	int	x;
+
+	x = p->status;
+	free_everything(p, pars, input);
 	perror(str);
-	exit(exit_code);
+	exit(x);
 }
 
 int	error(char *str, int code)
 {
 	perror(str);
-	exit(code);
+	return (code);
+}
+
+void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input)
+{
+	if (p)
+		err_free(p);
+	if (pars)
+		free_parse(pars);
+	if (input)
+		free_raw(input);
 }

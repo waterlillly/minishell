@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/16 18:58:04 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/17 17:24:20 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,13 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 		p->cmd_count++;
 		tmp = tmp->next;
 	}
+	p->copy_stdout = dup(STDOUT_FILENO);
+	//p->copy_stdin = dup(STDIN_FILENO);
 	p->cwd = NULL;
 	p->delimiter = NULL;
 	p->filein = -1;
 	p->fileout = -1;
 	here_or_not(p, pars);
-	p->args = NULL;
 	p->paths = ft_split(p->mpath, ':');
 	if (!p->paths)
 		return ;//error(p, "ft_split failed", p->status);
@@ -95,15 +96,9 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 	init_pipes(p);
 }
 
-void	first_init(t_pipex *p)
+void	first_init(t_pipex *p, char **envp)
 {
 	p->status = 0;
-	buildins_init(p);
-	p->copy_stdout = dup(STDOUT_FILENO);
-	if (p->copy_stdout == -1)
-		return ;//error(p, "dup failed", p->status);
-	p->copy_stdin = dup(STDIN_FILENO);
-	if (p->copy_stdout == -1)
-		return ;//error(p, "dup failed", p->status);
+	buildins_init(p, envp);
 	p->cwd = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/23 14:12:19 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/16 17:05:55 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/17 17:19:16 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,32 @@ struct dirent *readdir(DIR *dirp); DO NOT FREE!!
 int closedir(DIR *dirp); (success: 0, err: -1)
 */
 
-void	single_exec(t_pipex *p, t_minishell_p *pars)
+int	single_exec(t_pipex *p, t_minishell_p *pars)
 {
-	if (p && p->here == true)
+	if (!p || !pars)
+		return (1);
+	if (p->here == true)
 	{
 		p->filein = open("hd", O_RDONLY);
 		if (p->filein == -1 || access("hd", R_OK) == -1)
-			return ;//error(p, "hd", p->status);
+			return (error("hd", p->status));
 		if (dup2(p->filein, STDIN_FILENO) == -1)
-			return ;//error(p, "dup2 failed", p->status);
+			return (error("dup2 failed", p->status));
 	}
-	else if (p && pars && pars->infile)
+	else if (pars->infile)
 	{
 		check_filein(p, pars);
 		if (dup2(p->filein, STDIN_FILENO) == -1)
-			return ;//error(p, "dup2 failed", p->status);
+			return (error("dup2 failed", p->status));
 	}
-	if (p && pars && pars->outfile)
+	if (pars->outfile)
 	{
 		check_fileout(p, pars);
 		if (dup2(p->fileout, STDOUT_FILENO) == -1)
-			return ;//error(p, "dup2 failed", p->status);
+			return (error("dup2 failed", p->status));
 	}
 	close_all(p);
-	if (exec_cmd(p, pars) < 0)
-		return ;//error(p, "exec_cmd failed", p->status);
+	return (exec_cmd(p, pars));
 }
 
 /*

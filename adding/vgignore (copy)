@@ -1,0 +1,31 @@
+
+{
+   ignore_libreadline_errors
+   Memcheck:Leak
+   ...
+   obj:*/libreadline.so.*
+}
+{
+    leak readline
+    Memcheck:Leak 
+    ...
+    fun:readline
+}
+{
+    leak add_history
+    Memcheck:Leak
+    ...
+    fun:add_history
+}
+{
+    leak vgpreload_memcheck-arm64-linux.so
+    Memcheck:Leak
+    ...
+    obj:*/vgpreload_memcheck-arm64-linux.so
+}
+{
+    leak vgpreload_memcheck-amd64-linux.so
+    Memcheck:Leak
+    ...
+    obj:*/vgpreload_memcheck-amd64-linux.so
+}

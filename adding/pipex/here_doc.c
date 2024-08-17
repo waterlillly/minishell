@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 14:55:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/16 16:51:43 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/17 15:27:36 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	first_heredoc(t_pipex *p)
 	if (p->filein == -1 || access("hd", R_OK) == -1 || access("hd", W_OK) == -1)
 		return ;//error(p, "hd", p->status);
 	line = readline("> ");
-	while (line && !ft_strcmp(line, p->delimiter))
+	while (line && !ft_strcmp_bool(line, p->delimiter))
 	{
 		ft_putstr_fd(line, p->filein);
 		ft_putchar_fd('\n', p->filein);

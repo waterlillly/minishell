@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:09:17 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/16 15:49:48 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/17 15:10:20 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,32 @@ bool	is_buildin(char *s)
 	return (false);
 }
 
-void	do_this(t_pipex *p)
+void	do_this(t_pipex *p, t_minishell_p *pars)
 {
 	int		x;
 
-	if (ft_strcmp_bool(p->args[0], "unset"))
-		unset(p, p->args);
-	else if (ft_strcmp_bool(p->args[0], "env"))
+	if (ft_strcmp_bool(pars->str[0], "unset"))
+		unset(p, pars->str);
+	else if (ft_strcmp_bool(pars->str[0], "env"))
 		ft_print_array(p->menv);
-	else if (ft_strcmp_bool(p->args[0], "export") && p->args[1] == NULL)
+	else if (ft_strcmp_bool(pars->str[0], "export") && pars->str[1] == NULL)
 		ft_print_array(p->xport);
-	else if (ft_strcmp_bool(p->args[0], "export") && p->args[1] != NULL)
-		set_export(p, p->args);
-	else if (ft_strcmp_bool(p->args[0], "cd"))
-		cd(p, p->args);
-	else if (ft_strcmp_bool(p->args[0], "echo"))
-		echo(p, p->args);
-	else if (ft_strcmp_bool(p->args[0], "exit"))
+	else if (ft_strcmp_bool(pars->str[0], "export") && pars->str[1] != NULL)
+		set_export(p, pars->str);
+	else if (ft_strcmp_bool(pars->str[0], "cd"))
+		cd(p, pars->str);
+	else if (ft_strcmp_bool(pars->str[0], "echo"))
+		echo(p, pars->str);
+	else if (ft_strcmp_bool(pars->str[0], "exit"))
 	{
-		if (p->args[1] == NULL)
+		if (pars->str[1] == NULL)
 		{
 			err_free(p);
 			exit(0);
 		}
 		else
 		{
-			x = ft_atoi(p->args[1]);
+			x = ft_atoi(pars->str[1]);
 			err_free(p);
 			exit(x);
 		}

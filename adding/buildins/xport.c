@@ -77,7 +77,7 @@ char	*exp_whole(t_pipex *p, char **arr, int y)
 	return (temp1);
 }
 
-void	combine_export(t_pipex *p)
+int	combine_export(t_pipex *p)
 {
 	char	**arr;
 	int		y;
@@ -87,14 +87,15 @@ void	combine_export(t_pipex *p)
 	arr = sort_arr(p);
 	p->xport = malloc(sizeof(char *) * (ft_arrlen(arr) + 1));
 	if (!p->xport)
-		return ;//error(p, "malloc", p->status);
+		return (1);//error(p, "malloc", p->status);
 	while (arr[y])
 	{
 		p->xport[y] = ft_strjoin("declare -x ", exp_whole(p, arr, y));
 		if (!p->xport[y])
-			return ;//error(p, "exp_whole", p->status);
+			return (1);//error(p, "exp_whole", p->status);
 		y++;
 	}
 	p->xport[y] = NULL;
 	ft_free_double(arr);
+	return (0);
 }

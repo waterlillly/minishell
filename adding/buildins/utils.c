@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:48:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/16 18:47:08 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/17 14:46:09 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,18 @@ int	find_arg(char **s, char *a)
 	return (-1);
 }
 
-void	buildins_init(t_pipex *p)
+int	buildins_init(t_pipex *p, char **envp)
 {
+	get_menv(p, envp);
 	get_pwd(p);
 	go_up_oldpwd(p);
 	p->home = get_env(p, "HOME");
 	if (!p->home)
-		return ;//error(p, "get_env failed", p->status);
+		return (err_free(p), 1);//error(p, "get_env failed", p->status);
 	p->mpath = get_env(p, "PATH");
 	if (!p->home)
-		return ;//error(p, "get_env failed", p->status);
-	combine_export(p);
+		return (err_free(p), 1);//error(p, "get_env failed", p->status);
+	return (combine_export(p));
 }
 
 char	*remove_quotes(char *s)

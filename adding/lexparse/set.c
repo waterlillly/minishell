@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 11:14:34 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/14 14:37:33 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/17 16:22:59 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	set_op(t_raw_in *in, char *line)
 {
 	int	len;
 
+	if (ft_strlen(line) <= 0)
+		return ;
 	len = ft_strlen(line) - 1;
 	while (is_sep(" \t", line[len]))
 		len--;
