@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/17 14:37:58 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/18 16:50:15 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
+/*
 void	get_pwd(t_pipex *p)
 {
 	char	*temp;
 
 	temp = NULL;
+	if (!p)
+		return ;
 	if (p->pwd)
 	{
 		temp = ft_strdup(p->pwd);
@@ -31,8 +33,56 @@ void	get_pwd(t_pipex *p)
 		p->pwd = ft_strdup(temp);
 		free(temp);
 		temp = NULL;
-		return ;//error(p, "strdup or access", p->status);
+		return ;
 	}
+}
+*/
+
+char	**copy_arr_env(t_pipex *p)
+{
+	int		x;
+	char	**arr;
+
+	x = 0;
+	if (!p || !p->menv)
+		return (NULL);
+	arr = NULL;
+	arr = malloc(sizeof(char *) * (ft_arrlen(p->menv) + 1));
+	if (!arr)
+		return (NULL);
+	while (p->menv[x])
+	{
+		arr[x] = strcpy_until(p->menv[x]);
+		x++;
+	}
+	arr[x] = NULL;
+	return (arr);
+}
+
+bool	valid_env(t_pipex *p, char *tok)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	if (!p || !tok || !p->menv)
+		return (false);
+	while (p->menv[x])
+	{
+		y = 0;
+		while (tok[y] && p->menv[x][y] && tok[y] != '='
+			&& tok[y] != '\0' && p->menv[x][y] != '=')
+		{
+			if (tok[y] == p->menv[x][y])
+				y++;
+			else
+				break ;
+		}
+		if ((tok[y] == '=' || tok[y] == '\0') && p->menv[x][y] == '=')
+			return (true);
+		x++;
+	}
+	return (false);
 }
 
 char	*get_env(t_pipex *p, char *str)
@@ -41,12 +91,10 @@ char	*get_env(t_pipex *p, char *str)
 	size_t	len;
 	char	*result;
 
-	x = 0;
+	x = -1;
 	len = 0;
 	result = NULL;
-	if (!str)
-		return ("\n");
-	while (p->menv[x])
+	while (p && str && p->menv && p->menv[++x])
 	{
 		if (ft_strnstr(p->menv[x], str, ft_strlen(str))
 			== &(p->menv[x][0]))
@@ -62,66 +110,44 @@ char	*get_env(t_pipex *p, char *str)
 				return (NULL);
 			return (result);
 		}
-		x++;
 	}
 	return ("\n");
 }
 
-void	get_menv(t_pipex *p, char **envp)
+int	get_menv(t_pipex *p, char **envp)
 {
 	int	x;
 
 	x = 0;
+	if (!p)
+		return (1);
+	if (!envp)
+		return (backup(p));
+	p->menv = NULL;
 	p->menv = malloc(sizeof(char *) * (ft_arrlen(envp) + 1));
 	if (!p->menv)
-		return ;//error(p, "malloc", p->status);
+		return (1);
 	while (envp[x])
 	{
 		p->menv[x] = ft_strdup(envp[x]);
 		if (!p->menv[x])
-			return ;//error(p, "strdup", p->status);
+			return (1);
 		x++;
 	}
-	if (x != ft_arrlen(envp))
-		return ;//error(p, "menv", p->status);
 	p->menv[x] = NULL;
+	return (0);
 }
 
-int	backup_env(t_pipex *p)
+int	buildins_init(t_pipex *p, char **envp)
 {
-	char	*temp;
-	
-	temp = NULL;
-	p->xport = malloc(sizeof(char *) * 4);
-	if (!p->xport)
-		return (1);//error(p, "malloc", p->status);
-	p->menv = malloc(sizeof(char *) * 3);
-	if (!p->menv)
-		return (1);//error(p, "malloc", p->status);
-	temp = getcwd(temp, 0);
-	if (!temp || access(temp, R_OK) != 0)
+	get_menv(p, envp);
+	p->pwd = get_env(p, "PWD");
+	go_up_oldpwd(p);
+	p->home = get_env(p, "HOME");
+	if (!p->home)
 		return (err_free(p), 1);
-	p->xport[0] = create_add_export("OLDPWD");
-	if (!p->xport[0])
-		return (ft_free_double(p->xport), ft_free_double(p->menv), err_free(p), 1);
-	p->xport[1] = create_add_export(ft_strjoin("PWD=", temp));
-	if (!p->xport[1])
-		return (ft_free_double(p->xport), ft_free_double(p->menv), err_free(p), 1);
-	p->xport[2] = create_add_export("SHLVL=1");
-	if (!p->xport[2])
-		return (ft_free_double(p->xport), ft_free_double(p->menv), err_free(p), 1);
-	p->xport[3] = NULL;
-	p->xport = resort_arr(p->xport);
-	if (!p->xport)
-		return (ft_free_double(p->xport), ft_free_double(p->menv), err_free(p), 1);
-	p->menv[0] = ft_strjoin("PWD=", temp);
-	if (!p->menv[0])
-		return (ft_free_double(p->xport), ft_free_double(p->menv), err_free(p), 1);
-	p->menv[1] = ft_strdup("SHLVL=1");
-	if (!p->menv[1])
-		return (ft_free_double(p->xport), ft_free_double(p->menv), err_free(p), 1);
-	p->menv[2] = NULL;
-	if (!p->menv)
-		return (ft_free_double(p->xport), ft_free_double(p->menv), err_free(p), 1);
-	return (0);
+	p->mpath = get_env(p, "PATH");
+	if (!p->home)
+		return (err_free(p), 1);
+	return (combine_export(p));
 }

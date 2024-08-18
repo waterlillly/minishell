@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/16 17:51:34 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/18 15:15:17 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,18 @@ bool	check_n(char *token)
 
 void	echo(t_pipex *p, char **token)
 {
-	bool	n;
 	int		x;
 
-	x = 1;
-	n = false;
-	if (!token[x] || !ft_strcmp_bool(token[0], "echo"))
+	if (!p || !token || !ft_strcmp_bool(token[0], "echo"))
+		return ;
+	if (!token[1])
 	{
 		ft_putstr_fd("\n", 1);
 		return ;
 	}
-	if (check_n(token[x]) == true)
-	{
-		n = true;
+	x = 1;
+	if (check_n(token[x]))
 		x++;
-	}
 	while (token[x])
 	{
 		if (do_echo(p, token, x) == 0)
@@ -77,6 +74,6 @@ void	echo(t_pipex *p, char **token)
 		}
 		x++;
 	}
-	if (n == false)
+	if (check_n(token[1]) == false)
 		ft_putstr_fd("\n", 1);
 }

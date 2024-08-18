@@ -6,12 +6,12 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 21:03:50 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/18 17:43:22 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
+/*
 char	*no_quotes(char *token, int x, int y)
 {
 	char	*temp;
@@ -61,35 +61,7 @@ char	*has_quotes(char *token, int x, int y)
 	temp[y] = '\0';
 	return (temp);
 }
-
-char	*add_quotes(char *token)
-{
-	int		x;
-	int		y;
-	char	*new;
-
-	x = 0;
-	new = NULL;
-	while (token[x] && token[x] != '=')
-		x++;
-	y = ft_strlen(token) - x;
-	new = malloc(sizeof(char) * (y + 3));
-	if (!new)
-		return (NULL);
-	x++;
-	y = 2;
-	new[0] = '=';
-	new[1] = '\"';
-	while (token[x])
-	{
-		new[y] = token[x];
-		y++;
-		x++;
-	}
-	new[y] = '\"';
-	new[y + 1] = '\0';
-	return (new);
-}
+*/
 
 void	update_export(t_pipex *p, char *tok, char *token)
 {
@@ -100,6 +72,8 @@ void	update_export(t_pipex *p, char *tok, char *token)
 	x = 0;
 	temp = NULL;
 	temp1 = NULL;
+	if (!p || !tok || !token)
+		return ;
 	temp = ft_strjoin("declare -x ", tok);
 	if (!temp)
 		return ;//error(p, "strjoin", p->status);
@@ -117,24 +91,45 @@ void	update_export(t_pipex *p, char *tok, char *token)
 void	set_export(t_pipex *p, char **token)
 {
 	char	*temp;
-	char	*toknoquo;
-	int		x;
 
 	temp = NULL;
-	toknoquo = NULL;
-	x = 1;
-	if (token[x][0] == '$')
+	if (!p || !token || !ft_strcmp_bool(token[0], "export") || !token[1])
+		return ;
+	if (token[1][0] == '$')
 		return ;//error(p, "not a valid identifier", p->status);
-	toknoquo = remove_quotes(token[x]);
-	temp = strcpy_until(token[x]);
+	temp = strcpy_until(token[1]);
 	if (!temp)
 		return ;//error(p, "copy_until", p->status);
 	if (valid_env(p, temp) == true)
 	{
-		if (ft_strchr(toknoquo, '='))
-			p->menv[find_str_part(p->menv, temp)] = toknoquo;
-		update_export(p, temp, toknoquo);
+		if (ft_strchr(remove_quotes(token[1]), '='))
+			p->menv[find_str_part(p->menv, temp)] = remove_quotes(token[1]);
+		update_export(p, temp, remove_quotes(token[1]));
 	}
 	else
-		add_to_export(p, toknoquo);
+		add_to_export(p, remove_quotes(token[1]));
+	free(temp);
+	temp = NULL;
+}
+
+void	update(t_pipex *p, char *set, char *tok)
+{
+	char	*temp;
+	int		x;
+
+	temp = NULL;
+	x = 0;
+	if (!p || !p->menv || !p->xport || !tok || !is_access(tok))
+		return ;
+	x = find_str_part(p->menv, set);
+	if (x < 0)
+		return ;
+	temp = ft_strjoin(set, "=");
+	if (!temp)
+		return ;
+	p->menv[x] = NULL;
+	p->menv[x] = ft_strjoin_free_one(temp, tok);
+	if (!p->menv[x])
+		return ;
+	update_export(p, set, tok);
 }

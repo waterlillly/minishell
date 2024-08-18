@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/18 11:59:35 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/18 17:43:34 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,6 @@ char	*ft_strnstr_q(const char *big, const char *little, size_t len);
 int		count_hd(char *str);
 int		open_line(char *input);
 
-//int 			error(char *str, int code);
 void			remove_dq(char **in, int len);
 void			remove_sq(char **in, int len);
 int				double_count(char *input);
@@ -191,40 +190,45 @@ int		single_exec(t_pipex *p, t_minishell_p *pars);
 
 /*____________________BUILDINS____________________*/
 /*UTILS*/
-int		how_many(char **s, char *o);
 bool	is_access(char *dir);
 int		find_arg(char **s, char *a);
-int		buildins_init(t_pipex *p, char **envp);
-char	*remove_quotes(char *s);
-
-/*UTILS2*/
 int		find_str_part(char **str, char *tok);
 char	*strcpy_until(char *v_part);
-char	**copy_arr_env(t_pipex *p);
-bool	check_quotes(char *token);
-bool	valid_env(t_pipex *p, char *tok);
+int		ft_strcmp_until(const char *s1, const char *s2);
+
+/*QUOTES*/
+char	*add_quotes(char *token);
+char	*remove_quotes(char *s);
+bool	check_quotes(char *token);//redo
 
 /*PWD*/
 void	reset_old_pwd(t_pipex *p, char *path);
-void	join_oldpwd(t_pipex *p, char **temp, char *oldpwd);
-void	go_up_oldpwd(t_pipex *p);
+int		join_oldpwd(t_pipex *p, char **temp, char *oldpwd);
+int		go_up_oldpwd(t_pipex *p);
 
 /*ENV*/
-void	get_pwd(t_pipex *p);
+//void	get_pwd(t_pipex *p);
+char	**copy_arr_env(t_pipex *p);
+bool	valid_env(t_pipex *p, char *tok);
 char	*get_env(t_pipex *p, char *str);
-void	get_menv(t_pipex *p, char **envp);
-int		backup_env(t_pipex *p);
+int		get_menv(t_pipex *p, char **envp);
+int		buildins_init(t_pipex *p, char **envp);
+
+/*BACKUP*/
+int		backup_env(t_pipex *p, char *temp);
+int		backup_xport(t_pipex *p, char *temp);
+int		backup(t_pipex *p);
 
 /*CD_FIND_PATH*/
 int		add_to_path(t_pipex *p, char *t);
 int		go_back(t_pipex *p, int print);
-char	*check_slash(char *tok, char *temp);//t_pipex *p, 
-int		go_slash(t_pipex *p, char **token, int x);
-int		go_full_path(t_pipex *p, char **token, int x);
+char	*check_slash(char *tok, char *temp);
+int		go_slash(t_pipex *p, char **token);
+int		go_full_path(t_pipex *p, char **token);
 
 /*CD*/
 int		cd_home(t_pipex *p);
-int		fill_path(t_pipex *p, char **token, int x);
+int		fill_path(t_pipex *p, char **token);
 int		cd(t_pipex *p, char **token);
 
 /*ECHO*/
@@ -235,27 +239,26 @@ void	echo(t_pipex *p, char **token);
 /*EXPAND*/
 char	*xpand(t_pipex *p, char **token, int x);
 
-/*EXPORT*/
+/*XPORT*/
+char	*exp_whole(t_pipex *p, char **arr, int y);
+int		combine_export(t_pipex *p);
+char	*create_add_export(char *token);
+void	add_to_env(t_pipex *p, char *add);
+void	add_to_export(t_pipex *p, char *token);
+
+/*SET_EXPORT*/
+//char	*no_quotes(char *token, int x, int y);
+//char	*has_quotes(char *token, int x, int y);
+void	update_export(t_pipex *p, char *tok, char *token);
+void	set_export(t_pipex *p, char **token);
+void	update(t_pipex *p, char *set, char *tok);
+
+/*SORTING*/
 bool	sorted(char **arr);
 void	swap(char **arr, int x);
 char	**sort_arr(t_pipex *p);
-char	*exp_whole(t_pipex *p, char **arr, int y);
-int		combine_export(t_pipex *p);
-
-/*SET_EXPORT*/
-char	*no_quotes(char *token, int x, int y);
-char	*has_quotes(char *token, int x, int y);
-char	*add_quotes(char *token);
-void	update_export(t_pipex *p, char *tok, char *token);
-void	set_export(t_pipex *p, char **token);
-
-/*ADD_EXPORT*/
-int		ft_strcmp_until(const char *s1, const char *s2);
-char	*create_add_export(char *token);
 bool	resorted(char **arr);
 char	**resort_arr(char **arr);
-void	add_to_env(t_pipex *p, char *add);
-void	add_to_export(t_pipex *p, char *token);
 
 /*UNSET*/
 void	update_unset(t_pipex *p, char *tok);
