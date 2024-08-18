@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:26:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/18 15:09:34 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/18 17:54:32 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	go_back(t_pipex *p, int print)
 	{
 		reset_old_pwd(p, temp);
 		if (print == 1)
-			printf("%s\n", p->oldpwd);
+			printf("%s\n", p->pwd);
 		return (chdir(temp));
 	}
 	return (1);//error(p, temp, p->status)
