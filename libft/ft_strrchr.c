@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:41:03 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/06/25 14:54:28 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:51:57 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,3 +36,19 @@ char	*ft_strrchr(const char *s, int c)
 		return (&str[i]);
 	return (NULL);
 }
+
+/*
+char	*ft_strrchr(const char *s, int c)
+{
+	int	i;
+
+	i = ft_strlen(s);
+	while (i >= 0)
+	{
+		if (s[i] == (const unsigned char)c)
+			return ((char *)s + i);
+		i--;
+	}
+	return (NULL);
+}
+*/

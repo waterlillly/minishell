@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.c      +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2023/10/14 08:14:27 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:48:13 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,3 +19,10 @@ int	ft_isascii(int c)
 	else
 		return (0);
 }
+
+/*
+int	ft_isascii(int c)
+{
+	return (c >= 0 && c < 128);
+}
+*/

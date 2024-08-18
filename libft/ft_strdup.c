@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:40:01 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/06/25 14:30:40 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:50:50 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,3 +26,35 @@ char	*ft_strdup(const char *c)
 	ft_strlcpy(duplo, c, b);
 	return (duplo);
 }
+
+/*
+static char	*ft_strcpy(char *dest, char *src)
+{
+	int	i;
+
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+char	*ft_strdup(const char *s)
+{
+	char	*s2;
+	char	*src;
+	int		i;
+
+	i = 0;
+	src = (char *)s;
+	while (src[i])
+		i++;
+	s2 = (char *)malloc((i + 1) * sizeof(char));
+	if (s2 == NULL)
+		return (NULL);
+	return (ft_strcpy(s2, src));
+}
+*/

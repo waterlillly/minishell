@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:57:31 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/06/25 14:46:05 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:51:27 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,3 +33,21 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	z[x] = '\0';
 	return (z);
 }
+
+/*
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+{
+	int		len;
+	char	*out;
+	int		i;
+
+	len = ft_strlen(s);
+	i = -1;
+	out = (char *)ft_calloc((len + 1), sizeof(char));
+	if (!out)
+		return (NULL);
+	while (++i < len)
+		out[i] = (*f)(i, s[i]);
+	return (out);
+}
+*/

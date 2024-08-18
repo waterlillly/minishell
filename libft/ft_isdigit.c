@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.c      +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:38:41 by lbaumeis          #+#    #+#             */
-/*   Updated: 2023/10/14 08:15:08 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:48:16 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,3 +19,12 @@ int	ft_isdigit(int c)
 	else
 		return (0);
 }
+
+/*
+int	ft_isdigit(int c)
+{
+	if ((c >= '0') && (c <= '9'))
+		return (2048);
+	return (0);
+}
+*/

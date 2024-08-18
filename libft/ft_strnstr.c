@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:40:47 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/15 14:31:44 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:51:51 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,28 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	}
 	return (NULL);
 }
+
+/*
+char	*ft_strnstr(const char *big, const char *little, size_t len)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	if ((!big && len == 0) || (len < ft_strlen(little) && !ft_strlen(big)))
+		return (NULL);
+	if (!*little && big)
+		return ((char *)big);
+	while (big[i] && i < len)
+	{
+		while (big[i + j] && big[i + j] == little[j] && i + j < len)
+			j++;
+		if (!little[j])
+			return ((char *)(big + i));
+		j = 0;
+		i++;
+	}
+	return (NULL);
+}
+*/

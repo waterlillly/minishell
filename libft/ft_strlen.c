@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/15 14:30:55 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:51:23 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,3 +23,15 @@ size_t	ft_strlen(const char *s)
 		i++;
 	return (i);
 }
+
+/*
+size_t	ft_strlen(const char *str)
+{
+	size_t	cnt;
+
+	cnt = 0;
+	while (str[cnt] != '\0')
+		cnt++;
+	return (cnt);
+}
+*/

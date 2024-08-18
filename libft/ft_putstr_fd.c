@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 03:08:00 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/06/25 14:26:22 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:50:17 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,3 +25,14 @@ void	ft_putstr_fd(char *s, int fd)
 		i++;
 	}
 }
+
+/*
+void	ft_putstr_fd(char *s, int fd)
+{
+	while (*s)
+	{
+		ft_putchar_fd(*s, fd);
+		s++;
+	}
+}
+*/

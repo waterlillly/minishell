@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 04:09:55 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/07/15 14:32:38 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:51:12 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,22 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	new[i] = '\0';
 	return (new);
 }
+
+/*
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*out;
+
+	if (!s1 || !s2)
+		return (NULL);
+	out = (char *)ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1), sizeof(char));
+	if (!out)
+		return (out);
+	ft_strlcpy(out, s1, ft_strlen(s1) + 1);
+	ft_strlcat(out, s2, ft_strlen(s2) + 1 + ft_strlen(out));
+	return (out);
+}
+*/
 
 /*
 int	main(void)

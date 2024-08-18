@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.c      +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:38:16 by lbaumeis          #+#    #+#             */
-/*   Updated: 2023/10/14 08:12:11 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:47:47 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,3 +19,13 @@ int	ft_isalnum(int c)
 	else
 		return (0);
 }
+
+/*
+int	ft_isalnum(int c)
+{
+	if (((c >= 'a') && (c <= 'z')) || ((c >= 'A') && (c <= 'Z'))
+		|| ((c >= '0') && (c <= '9')))
+		return (8);
+	return (0);
+}
+*/

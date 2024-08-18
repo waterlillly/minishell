@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:46:12 by lbaumeis          #+#    #+#             */
-/*   Updated: 2023/10/14 08:20:21 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:48:28 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,3 +101,59 @@ char	*ft_itoa(int n)
 	}
 	return (result);
 }
+
+/*
+static void	ft_putnbr(char *str, int nb)
+{
+	int		tmp;
+	char	temp;
+
+	if (nb == -2147483648)
+	{
+		ft_strlcat(str, "-2147483648", 12);
+		return ;
+	}
+	tmp = nb;
+	if (tmp < 0)
+	{
+		ft_strlcpy(str, "-", 2);
+		tmp = -tmp;
+	}
+	if (tmp >= 10)
+	{
+		ft_putnbr(str, tmp / 10);
+		ft_putnbr(str, tmp % 10);
+	}
+	else
+	{
+		temp = tmp + '0';
+		ft_strlcat(str, &temp, 2 + ft_strlen(str));
+	}
+}
+
+char	*ft_itoa(int n)
+{
+	char	*out;
+	size_t	i;
+	int		tmp;
+
+	i = 0;
+	tmp = n;
+	if (n <= 0)
+	{
+		n *= -1;
+		i++;
+	}
+	while (n != 0)
+	{
+		n /= 10;
+		i++;
+	}
+	out = (char *)malloc((i + 1) * sizeof(char));
+	if (!out)
+		return (NULL);
+	out[0] = '\0';
+	ft_putnbr(out, tmp);
+	return (out);
+}
+*/

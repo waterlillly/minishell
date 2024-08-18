@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:40:39 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/06/25 14:46:39 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:51:31 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,3 +23,22 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		x++;
 	return ((unsigned char)s1[x] - (unsigned char)s2[x]);
 }
+
+/*
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t			i;
+	unsigned char	*str1;
+	unsigned char	*str2;
+
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	i = 0;
+	if (n == 0)
+		return (0);
+	while (str1[i] == str2[i] && str1[i] != '\0'
+		&& str2[i] != '\0' && (i < n - 1))
+		i++;
+	return (str1[i] - str2[i]);
+}
+*/

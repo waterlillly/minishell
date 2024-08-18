@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 03:36:08 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/06/25 14:26:47 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:50:14 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,3 +32,27 @@ void	ft_putnbr_fd(int n, int fd)
 		ft_putnbr_fd(n % 10, fd);
 	}
 }
+
+/*
+void	ft_putnbr_fd(int n, int fd)
+{
+	int		tmp;
+
+	tmp = n;
+	if (n == -2147483648)
+		ft_putstr_fd("-2147483648", fd);
+	else if (tmp < 0)
+	{
+		ft_putstr_fd("-", fd);
+		tmp = -tmp;
+		ft_putnbr_fd(tmp, fd);
+	}
+	else if (tmp >= 10)
+	{
+		ft_putnbr_fd(tmp / 10, fd);
+		ft_putnbr_fd(tmp % 10, fd);
+	}
+	else
+		ft_putchar_fd(tmp + 48, fd);
+}
+*/

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:40:17 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/06/25 14:45:30 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:51:17 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,3 +31,23 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	dst[s] = '\0';
 	return (srclen);
 }
+
+/*
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	i;
+	size_t	out;
+
+	i = 0;
+	out = ft_strlen(src);
+	if (size == 0)
+		return (out);
+	while (src[i] != '\0' && i < size - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (out);
+}
+*/

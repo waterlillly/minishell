@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 03:51:17 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/06/25 14:31:31 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:50:53 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,3 +25,16 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 		i++;
 	}
 }
+
+/*
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
+{
+	int		len;
+	int		i;
+
+	len = ft_strlen(s);
+	i = -1;
+	while (++i < len)
+		(*f)(i, &s[i]);
+}
+*/
