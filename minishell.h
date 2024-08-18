@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/17 17:24:26 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/18 11:59:35 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input);
 bool	is_buildin(char *s);
 void	do_this(t_pipex *p, t_minishell_p *pars);
 void 	free_parse(t_minishell_p *in);
+void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 int		do_stuff(t_pipex *p, t_minishell_p *pars);
 
 /*EXECUTE*/

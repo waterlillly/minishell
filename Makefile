@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
+#    By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 16:33:47 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/08/15 17:23:34 by lbaumeis         ###   ########.fr        #
+#    Updated: 2024/08/18 12:00:40 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,4 +55,13 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+mval: re
+	($(MAKE) -C libft clean)
+	rm -f $(OFILES)
+	rm -f out
+	rm -f hd
+	rm -f buildins.h.gch
+	rm -f vgcore.*
+	valgrind -s --show-leak-kinds=all --track-fds=yes --leak-check=full --track-origins=yes --suppressions=.vgignore ./$(NAME)
+
+.PHONY: all clean fclean re mval

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/17 17:30:41 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/18 12:10:55 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,33 +61,36 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 	return (p->status);
 }
 
+void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
+{
+	t_minishell_l	*lex;
+	
+	lex = NULL;
+	free_everything(p, *pars, input);
+	get_input(p, &lex, pars, input);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_pipex			p;
-	t_minishell_l	*lex;
 	t_minishell_p	*pars;
 	t_raw_in		input;
-	int				x;
 	
-	x = 0;
 	if (ac < 1 || !av)
 	{
 		ft_putendl_fd("invalid input", 2);
 		exit(EXIT_FAILURE);
 	}
 	ft_bzero(&p, sizeof(t_pipex));
-	lex = NULL;
+	ft_bzero(&input, sizeof(t_raw_in));
 	pars = NULL;
 	first_init(&p, envp);
 	while (1)
 	{
-		ft_bzero(&input, sizeof(t_raw_in));
-		get_input(&p, &lex, &pars, &input);
+		refresh_init(&p, &input, &pars);
 		if (do_stuff(&p, pars) != 0)
 			exit_shell(&p, pars, &input, "error");
-		free_everything(&p, pars, &input);
 	}
-	//free_everything(&p, pars, &input);
 	exit_shell(&p, pars, &input, "done");
 	return (0);
 }

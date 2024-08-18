@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/17 17:26:46 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/18 12:05:47 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 	if (is_buildin(p->cmd))
 	{
 		do_this(p, pars);
+		close_all(p);
 		return (0);
 	}
 	else
@@ -60,5 +61,6 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 		execve(p->path, pars->str, p->menv);
 		return (-1);//error(p, "execve failed", p->status);
 	}
+	close_all(p);
 	return (-1);
 }

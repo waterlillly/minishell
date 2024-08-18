@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/17 17:24:20 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/18 12:06:54 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,10 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 	}
 	p->copy_stdout = dup(STDOUT_FILENO);
 	//p->copy_stdin = dup(STDIN_FILENO);
-	p->cwd = NULL;
 	p->delimiter = NULL;
 	p->filein = -1;
 	p->fileout = -1;
 	here_or_not(p, pars);
-	p->paths = ft_split(p->mpath, ':');
-	if (!p->paths)
-		return ;//error(p, "ft_split failed", p->status);
 	p->path = NULL;
 	p->executable = NULL;
 	p->part = NULL;
@@ -101,4 +97,7 @@ void	first_init(t_pipex *p, char **envp)
 	p->status = 0;
 	buildins_init(p, envp);
 	p->cwd = NULL;
+	p->paths = ft_split(p->mpath, ':');
+	if (!p->paths)
+		return ;//error(p, "ft_split failed", p->status);
 }

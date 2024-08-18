@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:04:36 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/17 17:24:45 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/18 12:07:54 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,11 @@ void	err_free_two(t_pipex *p)
 	}
 	if (p->pip || p->copy_stdout)//|| p->copy_stdin
 		close_all(p);
-	if (p->paths)
-	{
-		free_double(p->paths);
-		p->paths = NULL;
-	}
+	//if (p->paths)
+	//{
+	//	free_double(p->paths);
+	//	p->paths = NULL;
+	//}
 }
 
 void	err_free(t_pipex *p)
