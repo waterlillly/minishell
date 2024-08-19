@@ -75,7 +75,8 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 		p->cmd_count++;
 		tmp = tmp->next;
 	}
-	p->copy_stdout = dup(STDOUT_FILENO);
+	//if (dup2(p->copy_stdout, STDOUT_FILENO) == -1)
+		//return ;
 	//p->copy_stdin = dup(STDIN_FILENO);
 	p->delimiter = NULL;
 	p->filein = -1;
@@ -100,4 +101,8 @@ void	first_init(t_pipex *p, char **envp)
 	p->paths = ft_split(p->mpath, ':');
 	if (!p->paths)
 		return ;//error(p, "ft_split failed", p->status);
+	p->copy_stdout = -1;
+	p->copy_stdout = dup(STDOUT_FILENO);
+	if (p->copy_stdout == -1)
+		return ;//error!
 }
