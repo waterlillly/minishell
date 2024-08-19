@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:21:59 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/18 12:08:57 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 12:56:34 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str)
 	int	x;
 
 	x = p->status;
+	reset_fds(p);
 	if (p && p->paths)
 	{
 		ft_free_double(p->paths);

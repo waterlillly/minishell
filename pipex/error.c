@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:04:36 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/18 12:07:54 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 12:56:20 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	close_all(t_pipex *p)
 		close(p->filein);
 	if (p && p->fileout && p->fileout != STDOUT_FILENO && p->fileout != -1)
 		close(p->fileout);
+	//reset_fds(p);
 	if (p && p->copy_stdout && p->copy_stdout != STDOUT_FILENO && p->copy_stdout != -1)
 		close(p->copy_stdout);
 	//if (p && p->copy_stdin && p->copy_stdin != STDIN_FILENO && p->copy_stdin != -1)

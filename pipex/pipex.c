@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/18 12:05:47 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 13:04:49 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*is_exec(t_pipex *p)
 int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 {
 	if (!p || !pars || !pars->str)
-		return (error("idk", 1));
+		return (1);
 	if (pars->str[0][0] == '$'
 		&& valid_env(p, ft_substr(pars->str[0], 1, ft_strlen(pars->str[0]) - 1)))
 		p->cmd = xpand(p, pars->str, 0);

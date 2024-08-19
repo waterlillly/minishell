@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/18 17:43:34 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 12:55:02 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ typedef struct s_pipex
 	int		**pip;
 	int		status;
 	int		copy_stdout;
-	//int		copy_stdin;
+	int		copy_stdin;
 	
 	//not needed:
 	int		ac;
@@ -126,6 +126,7 @@ void	do_this(t_pipex *p, t_minishell_p *pars);
 void 	free_parse(t_minishell_p *in);
 void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 int		do_stuff(t_pipex *p, t_minishell_p *pars);
+void	reset_fds(t_pipex *p);
 
 /*EXECUTE*/
 int		redir_input(t_pipex *p, int *c, t_minishell_p *pars);

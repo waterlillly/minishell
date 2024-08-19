@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/18 12:10:55 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 12:57:23 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,14 @@ void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	lex = NULL;
 	free_everything(p, *pars, input);
 	get_input(p, &lex, pars, input);
+}
+
+void	reset_fds(t_pipex *p)
+{
+	if (dup2(STDOUT_FILENO, p->copy_stdout) == -1)
+		return ;
+	if (dup2(STDIN_FILENO, p->copy_stdin) == -1)
+		return ;
 }
 
 int	main(int ac, char **av, char **envp)
