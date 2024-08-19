@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_array.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 19:40:16 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 15:49:39 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:07:55 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ void	ft_print_array(char **arr)
 {
 	int	x;
 
-	x = 0;
-	while (arr[x])
-	{
-		ft_printf("%s\n", arr[x]);
-		x++;
-	}
+	x = -1;
+	while (arr[++x])
+		ft_putendl_fd(arr[x], 1);
 }
