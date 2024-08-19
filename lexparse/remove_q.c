@@ -3,28 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   remove_q.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 17:52:56 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/14 14:37:29 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/18 17:12:51 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	remove_dq(char **in, int len)
+void	move_e(char *str)
+{
+	char	tmp;
+
+	while (*(str + 1))
+	{
+		tmp = *(str + 1);
+		*(str + 1) = *str;
+		*str = tmp;
+		str++;
+	}
+	*str = '\0';
+}
+
+void	remove_q(char **in, int len)
 {
 	int		i;
-	char	*tmp;
+	int		j;
+	int		change;
+	int		dq;
+	int		sq;
 
 	i = -1;
 	while (++i < len)
 	{
-		if (*in[i] == '\"')
+		j = 0;
+		sq = 0;
+		dq = 0;
+		change = 0;
+		while(in[i][j])
 		{
-			tmp = ft_substr(in[i], 1, ft_strlen(in[i]) - 2);
-			free(in[i]);
-			in[i] = tmp;
+			if (change != is_oq(in[i][j], &dq, &sq))
+			{
+				if (change)
+					change = 0;
+				else
+					change = 1;
+				move_e(&in[i][j]);
+			}
+			else
+				j++;
 		}
 	}
 }

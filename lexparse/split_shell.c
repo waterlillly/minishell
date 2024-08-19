@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 10:51:09 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/14 14:37:41 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:11:40 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,71 +54,49 @@ char	*ds_skip(char *str, int *len, int i)
 
 char	*skip_shell(char *str, char *charset, int *len)
 {
-	int		i;
-	int		dq;
-	int		sq;
-
-	i = 0;
-	*len = 0;
+	int	j;
+	int	dq;
+	int	sq;
+	
+	j = 0;
 	sq = 0;
 	dq = 0;
-	while (is_sep(charset, *str) && *str)
+	*len = 0;
+	while (*str && is_sep(charset, *str))
 		str++;
-	if (is_sep("><|", *str))
+	if (is_sep("<>|", *(str + *len)))
 		return (red_if(str, len));
-	if (*str == '$')
-		return (ds_skip(str, len, -1));
-	while ((!is_sep(charset, str[i]) && str[i]) || (sq % 2 == 1 || dq % 2 == 1))
+	while (*(str + *len) && (!is_sep(charset, *(str + *len)) || j))
 	{
-		if (str[i] == '\"' && sq % 2 == 0)
-			dq++;
-		if (str[i] == '\'' && dq % 2 == 0)
-			sq++;
-		if (i != 0 && ((is_sep("<>|", str[i]) && !dq && !sq) || 
-		(str[i] == '\"' && dq == 1) || (str[i] == '\'' && sq == 1))) // fix
+		j = is_oq(*(str + *len), &dq, &sq);
+		if (is_sep("<>|", *(str + *len)) && !j)
 			break;
 		*len = *len + 1;
-		i++;
-		if ((sq == 2 || dq == 2) && str[i] != '$')
-			break;
-		else if ((sq == 2 || dq == 2) && str[i] == '$')
-		 	return (ds_skip(str, len, i - 1));
 	}
 	return (str);
 }
 
 int	count(char *str, char *charset)
 {
-	int		len_sub;
-	int		len_sep;
+	int		ls;
+	int		lw;
 	int		i;
 	int		dq;
 	int		sq;
 
-	len_sub = 0;
-	len_sep = 0;
+	ls = 0;
+	lw = 0;
+	dq = 0;
+	sq = 0;
 	i = 0;
-	while (str[len_sub + len_sep])
+	while (str[ls + lw])
 	{
-		dq = 0;
-		sq = 0;
-		while (is_sep(charset, str[len_sub + len_sep]) 
-			&& str[len_sub + len_sep])
-			len_sep++;
-		if (!is_sep(charset, str[len_sub + len_sep]) 
-			&& str[len_sub + len_sep])
+		while (str[ls + lw] && is_sep(charset, str[ls + lw]))
+			lw++;
+		if (str[ls + lw] && !is_sep(charset, str[ls + lw]))
 			i++;
-		while ((!is_sep(charset, str[len_sub + len_sep]) 
-			&& str[len_sub + len_sep]) || (sq % 2 == 1 || dq % 2 == 1))
-		{
-			if (str[len_sep + len_sub] == '\"' && sq % 2 == 0)
-				dq++;
-			if (str[len_sep + len_sub] == '\'' && dq % 2 == 0)
-				sq++;
-			len_sub++;
-			if (sq == 2 || dq == 2)
-				break;
-		}
+		while (str[ls + lw] && (is_oq(str[ls + lw], &dq, &sq) || !is_sep(charset, str[ls + lw])))
+			ls++;
 	}
 	return (i);
 }
@@ -132,14 +110,14 @@ void	ft_split_shell(t_raw_in *in)
 	len = 0;
 	tmp = in->input;
 	i = -1;
-	in->n_words = count(in->input, " \t<>|");
+	in->n_words = count(in->input, " \t><|");
 	in->sum = in->n_words + in->n_hd + in->n_pipe + in->n_red + in->n_lessalloc;
 	in->out = (char **)ft_calloc(in->sum + 1, sizeof(char *));
 	if (!in->out)
 		return ;//fix
 	while (++i < in->sum)
 	{
-		in->input = skip_shell(&(in->input[len]), " \t", &len);
+		in->input = skip_shell(&(in->input[len]), " \t", &len); //fix
 		in->out[i] = ft_calloc(len + 1, sizeof(char));
 		ft_strncpy(in->out[i], in->input, len);
 	}

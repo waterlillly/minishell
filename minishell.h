@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 17:25:33 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:46:50 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ char	*ft_strnstr_q(const char *big, const char *little, size_t len);
 int		count_hd(char *str);
 int		open_line(char *input);
 
-void			remove_dq(char **in, int len);
+void			remove_q(char **in, int len);
 void			remove_sq(char **in, int len);
 int				double_count(char *input);
 int				single_count(char *input);
@@ -161,6 +161,7 @@ t_minishell_l	*ft_lstlast_lex(t_minishell_l *lst);
 void			ft_lstadd_back_lex(t_minishell_l **alst, t_minishell_l *new);
 t_minishell_p	*parser(t_minishell_l *in, t_raw_in *raw);
 t_minishell_l	*ft_lstfirst_lex(t_minishell_l *lst);
+int				is_oq(char	c, int *dq, int *sq);
 
 /*____________________PIPEX____________________*/
 /*PIPEX*/

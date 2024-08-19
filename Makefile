@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
+#    By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 16:33:47 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/08/19 17:10:23 by lbaumeis         ###   ########.fr        #
+#    Updated: 2024/08/19 17:45:20 by mgardesh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ CFILES += pipex/pipex.c pipex/error.c pipex/init.c pipex/here_doc.c
 
 CFILES += lexparse/minishell.c lexparse/remove_q.c lexparse/quote_count.c lexparse/open_quotes.c
 CFILES += lexparse/split_shell.c lexparse/lexer.c lexparse/get_line_cnc.c lexparse/check_syntax.c
-CFILES += lexparse/skip_q.c lexparse/parser.c lexparse/set.c
+CFILES += lexparse/skip_q.c lexparse/parser.c lexparse/set.c lexparse/is_oq.c
 
 OFILES = $(CFILES:.c=.o)
 NAME = minishell
