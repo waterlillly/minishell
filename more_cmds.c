@@ -34,7 +34,7 @@ void	do_this(t_pipex *p, t_minishell_p *pars)
 	else if (ft_strcmp_bool(pars->str[0], "export") && pars->str[1] != NULL)
 		set_export(p, pars->str);
 	else if (ft_strcmp_bool(pars->str[0], "cd"))
-		cd(p, pars->str)
+		cd(p, pars->str);
 	else if (ft_strcmp_bool(pars->str[0], "echo"))
 		echo(p, pars->str);
 	else if (ft_strcmp_bool(pars->str[0], "exit"))
