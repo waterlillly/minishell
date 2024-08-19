@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 16:27:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 16:57:20 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 18:10:36 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 
 int	redir_input(t_pipex *p, int *c, t_minishell_p *pars)
 {
-	if (p->here == true)
-	{
-		p->filein = open("hd", O_RDONLY);
-		if (p->filein == -1 || access("hd", R_OK) == -1)
-			return (error("hd", p->status));
-	}
 	if (pars->infile)
 		check_filein(p, pars);
 	if (p->filein != -1)

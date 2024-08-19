@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 17:46:50 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/19 18:40:19 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,10 @@ typedef struct s_pipex
 	int		copy_stdout;
 	
 	//not needed:
-	int		ac;
 	char	*cwd;
 	int		filein;
 	int		fileout;
-	bool	here;
-	char	*delimiter;
+	char	*here;
 	int		cmd_count;
 	
 	//rewrite:
@@ -166,6 +164,7 @@ int				is_oq(char	c, int *dq, int *sq);
 /*____________________PIPEX____________________*/
 /*PIPEX*/
 char	*is_exec(t_pipex *p);
+void	do_heredoc(t_pipex *p, t_minishell_p *pars);
 int		exec_cmd(t_pipex *p, t_minishell_p *pars);
 
 /*ERROR*/
@@ -184,7 +183,6 @@ void	first_init(t_pipex *p, char **envp);
 
 /*HERE_DOC*/
 void	get_cur_cwd(t_pipex *p);
-void	first_heredoc(t_pipex *p);
 void	here_or_not(t_pipex *p, t_minishell_p *pars);
 
 /*____________________BUILDINS____________________*/
@@ -198,7 +196,9 @@ int		ft_strcmp_until(const char *s1, const char *s2);
 /*QUOTES*/
 char	*add_quotes(char *token);
 char	*remove_quotes(char *s);
-bool	check_quotes(char *token);//redo
+bool	check_d_quotes(char *token);
+bool	check_s_quotes(char *token);
+bool	check_quotes(char *token);
 
 /*PWD*/
 void	reset_old_pwd(t_pipex *p, char *path);

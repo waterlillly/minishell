@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:24:45 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 17:40:39 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 18:39:47 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,28 +67,84 @@ char	*remove_quotes(char *s)
 	return (temp);
 }
 
-bool	check_quotes(char *token)////redo each quote
+bool	check_d_quotes(char *token)
 {
 	int		x;
-	bool	q1;
+	bool	d_q;
 
 	x = 0;
-	q1 = false;
+	d_q = false;
+	if (!token)
+		return (false);
+	while (token[x])
+	{
+		if (token[x] == '\"')
+		{
+			d_q = true;
+			x++;
+			break ;
+		}
+		x++;
+	}
+	while (token[x])
+	{
+		if (token[x] == '\"' && d_q == true)
+			return (true);
+		x++;
+	}
+	return (false);
+}
+
+
+bool	check_s_quotes(char *token)
+{
+	int		x;
+	bool	s_q;
+
+	x = 0;
+	s_q = false;
+	if (!token)
+		return (false);
+	while (token[x])
+	{
+		if (token[x] == '\'')
+		{
+			s_q = true;
+			x++;
+			break ;
+		}
+		x++;
+	}
+	while (token[x])
+	{
+		if (token[x] == '\'' && s_q == true)
+			return (true);
+		x++;
+	}
+	return (false);
+}
+
+bool	check_quotes(char *token)
+{
+	int		x;
+	bool	q;
+
+	x = 0;
+	q = false;
 	if (!token)
 		return (false);
 	while (token[x] && token[x] != '=')
 		x++;
 	x++;
 	if (token[x] == '\"' || token[x] == '\'')
-		q1 = true;
+		q = true;
 	x++;
 	while (token[x] && token[x + 1])
 	{
 		if ((token[x] == '\"' || token[x] == '\'') && token[x + 1] == '\0'
-			&& q1 == true)
+			&& q == true)
 				return (true);
 		x++;
 	}
 	return (false);
 }
-

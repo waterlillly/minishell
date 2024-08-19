@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 16:37:28 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:57:15 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 		p->cmd_count++;
 		tmp = tmp->next;
 	}
-	p->delimiter = NULL;
 	p->filein = -1;
 	p->fileout = -1;
+	p->here = NULL;
 	here_or_not(p, pars);
 	p->path = NULL;
 	p->executable = NULL;
