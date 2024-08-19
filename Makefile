@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+         #
+#    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 16:33:47 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/08/18 17:00:19 by lbaumeis         ###   ########.fr        #
+#    Updated: 2024/08/19 17:10:23 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ CFILES += buildins/utils.c buildins/cd.c buildins/cd_find_path.c buildins/pwd.c 
 CFILES += buildins/env.c buildins/echo.c buildins/quotes.c buildins/sorting.c
 CFILES += buildins/xpand.c buildins/xport.c buildins/set_export.c buildins/unset.c
 
-CFILES += pipex/pipex.c pipex/error.c pipex/init.c pipex/here_doc.c pipex/extra_cases.c
+CFILES += pipex/pipex.c pipex/error.c pipex/init.c pipex/here_doc.c
 
 CFILES += lexparse/minishell.c lexparse/remove_q.c lexparse/quote_count.c lexparse/open_quotes.c
 CFILES += lexparse/split_shell.c lexparse/lexer.c lexparse/get_line_cnc.c lexparse/check_syntax.c

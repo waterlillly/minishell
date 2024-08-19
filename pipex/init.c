@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 13:30:45 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:37:28 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,17 @@ void init_pipes(t_pipex *p)
 	int i;
 
 	i = 0;
+	if (!p)
+		return ;
 	p->pip = NULL;
-	p->pip = malloc(p->cmd_count * sizeof(int *));
-	if (!p->pip)
-		return ;//error(p, "malloc failed", p->status);
-	while (i < p->cmd_count && p->cmd_count > 0)
+	if (p->cmd_count > 1)
+	{
+		p->pip = malloc(p->cmd_count * sizeof(int *));
+		if (!p->pip)
+			return ;//error(p, "malloc failed", p->status);
+		p->pip[p->cmd_count - 1] = NULL;
+	}
+	while (p->cmd_count > 1 && i < (p->cmd_count - 1))
 	{
 		p->pip[i] = NULL;
 		p->pip[i] = malloc(sizeof(int) * 2);
@@ -68,15 +74,15 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 
 	tmp = pars;
 	if (!tmp)
-		error("syntax error", 1);
+		error("no pars", 1);
+	p->copy_stdin = dup(STDIN_FILENO);
+	p->copy_stdout = dup(STDOUT_FILENO);
 	p->cmd_count = 0;
 	while (tmp)
 	{
 		p->cmd_count++;
 		tmp = tmp->next;
 	}
-	p->copy_stdout = dup(STDOUT_FILENO);
-	p->copy_stdin = dup(STDIN_FILENO);
 	p->delimiter = NULL;
 	p->filein = -1;
 	p->fileout = -1;
@@ -97,11 +103,9 @@ void	first_init(t_pipex *p, char **envp)
 	p->status = 0;
 	buildins_init(p, envp);
 	p->cwd = NULL;
+	p->copy_stdin = -1;
+	p->copy_stdout = -1;
 	p->paths = ft_split(p->mpath, ':');
 	if (!p->paths)
 		return ;//error(p, "ft_split failed", p->status);
-	//p->copy_stdout = -1;
-	//p->copy_stdout = dup(STDOUT_FILENO);
-	//if (p->copy_stdout == -1)
-	//	return ;//error!
 }

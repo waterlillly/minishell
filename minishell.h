@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 12:55:02 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:25:33 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ typedef struct s_pipex
 	pid_t	*pid;
 	int		**pip;
 	int		status;
-	int		copy_stdout;
 	int		copy_stdin;
+	int		copy_stdout;
 	
 	//not needed:
 	int		ac;
@@ -126,7 +126,7 @@ void	do_this(t_pipex *p, t_minishell_p *pars);
 void 	free_parse(t_minishell_p *in);
 void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 int		do_stuff(t_pipex *p, t_minishell_p *pars);
-void	reset_fds(t_pipex *p);
+void	restore_fds(t_pipex *p);
 
 /*EXECUTE*/
 int		redir_input(t_pipex *p, int *c, t_minishell_p *pars);
@@ -186,9 +186,6 @@ void	get_cur_cwd(t_pipex *p);
 void	first_heredoc(t_pipex *p);
 void	here_or_not(t_pipex *p, t_minishell_p *pars);
 
-/*EXTRA_CASES*/
-int		single_exec(t_pipex *p, t_minishell_p *pars);
-
 /*____________________BUILDINS____________________*/
 /*UTILS*/
 bool	is_access(char *dir);
@@ -208,7 +205,6 @@ int		join_oldpwd(t_pipex *p, char **temp, char *oldpwd);
 int		go_up_oldpwd(t_pipex *p);
 
 /*ENV*/
-//void	get_pwd(t_pipex *p);
 char	**copy_arr_env(t_pipex *p);
 bool	valid_env(t_pipex *p, char *tok);
 char	*get_env(t_pipex *p, char *str);
@@ -259,7 +255,7 @@ bool	sorted(char **arr);
 void	swap(char **arr, int x);
 char	**sort_arr(t_pipex *p);
 bool	resorted(char **arr);
-char	**resort_arr(char **arr);
+void	resort_arr(char **arr);
 
 /*UNSET*/
 void	update_unset(t_pipex *p, char *tok);

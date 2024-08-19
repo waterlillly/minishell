@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/18 16:50:15 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:05:52 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,8 @@ int	buildins_init(t_pipex *p, char **envp)
 {
 	get_menv(p, envp);
 	p->pwd = get_env(p, "PWD");
-	go_up_oldpwd(p);
+	p->oldpwd = get_env(p, "OLDPWD");
+	//go_up_oldpwd(p);
 	p->home = get_env(p, "HOME");
 	if (!p->home)
 		return (err_free(p), 1);

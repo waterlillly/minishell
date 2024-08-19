@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   backup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 15:30:52 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/18 17:02:48 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:26:52 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int	backup_env(t_pipex *p, char *temp)
 	if (!p->menv[1])
 		return (1);
 	p->menv[2] = NULL;
-	if (!p->menv)
-		return (1);
 	return (0);
 }
 
@@ -46,9 +44,7 @@ int	backup_xport(t_pipex *p, char *temp)
 	if (!p->xport[2])
 		return (1);
 	p->xport[3] = NULL;
-	p->xport = resort_arr(p->xport);
-	if (!p->xport)
-		return (1);
+	resort_arr(p->xport);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 13:04:49 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:12:53 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*is_exec(t_pipex *p)
 
 int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 {
-	if (!p || !pars || !pars->str)
+	if (!p || !pars || !pars->str || !pars->str[0])
 		return (1);
 	if (pars->str[0][0] == '$'
 		&& valid_env(p, ft_substr(pars->str[0], 1, ft_strlen(pars->str[0]) - 1)))
@@ -57,10 +57,10 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 	{
 		p->path = is_exec(p);
 		if (!p->path)
-			return (error("command not found", 127));
-		execve(p->path, pars->str, p->menv);
-		return (-1);//error(p, "execve failed", p->status);
+			return (error(p->path, 0));
+		close_all(p);
+		return (execve(p->path, pars->str, p->menv));
 	}
 	close_all(p);
-	return (-1);
+	return (0);
 }

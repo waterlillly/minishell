@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:54:40 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/18 16:57:06 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:27:11 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ bool	resorted(char **arr)
 	return (true);
 }
 
-char	**resort_arr(char **arr)
+void	resort_arr(char **arr)
 {
 	int		x;
 
 	if (!arr)
-		return (NULL);
+		return ;
 	while (!resorted(arr))
 	{
 		x = 0;
@@ -92,5 +92,4 @@ char	**resort_arr(char **arr)
 			x++;
 		}
 	}
-	return (arr);
 }

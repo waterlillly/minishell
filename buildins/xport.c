@@ -117,9 +117,11 @@ void	add_to_env(t_pipex *p, char *add)
 void	add_to_export(t_pipex *p, char *token)
 {
 	int		x;
+	int		y;
 	char	**arr;
 
 	x = -1;
+	y = -1;
 	arr = NULL;
 	if (!p || !token || !p->xport)
 		return ;
@@ -132,5 +134,14 @@ void	add_to_export(t_pipex *p, char *token)
 	if (ft_strchr(arr[x], '='))
 		add_to_env(p, token);
 	arr[x + 1] = NULL;
-	p->xport = resort_arr(arr);
+	if (p->xport)
+		ft_free_double(p->xport);
+	p->xport = malloc(sizeof(char *) * (ft_arrlen(arr) + 1));
+	if (!p->xport)
+		return ;
+	resort_arr(arr);
+	while (arr[++y])
+		p->xport[y] = ft_strdup(arr[y]);
+	p->xport[y] = NULL;
+	ft_free_double(arr);
 }

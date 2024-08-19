@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_find_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:26:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/18 17:54:32 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:32:43 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,12 @@ int	add_to_path(t_pipex *p, char *t)
 	new = NULL;
 	if (!p || !t)
 		return (1);
-	temp = ft_strjoin(p->pwd, "/");
+	temp = ft_strjoin(p->pwd, "/");//
 	if (!temp)
 		return (1);//error(p, temp, p->status);
 	new = ft_strjoin_free_one(temp, t);
 	if (!new)
 		return (1);//error(p, temp, p->status);
-	//if (access(new, X_OK) == 0)
-	//	return (1);//error(p, "access", p->status)
 	if (new && is_access(new))
 	{
 		reset_old_pwd(p, new);

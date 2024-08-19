@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 12:57:23 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:08:01 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,18 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		p->pid[c] = fork();
 		if (p->pid[c] == -1)
 			return (error("fork failed", 1));
+		
+		if (!pars->str)
+			return (1);
 		if (p->pid[c] == 0)
 		{
 			if (execute(p, &c, pars) != 0)
-				break ;
+				return (error("execute failed", 1));
 		}
 		c++;
 		pars = pars->next;
 	}
-	if (wait(NULL) != -1)
+	while (wait(NULL) != -1 && p->cmd_count > 1)
 	{
 		if (WIFEXITED(p->status))
 			p->status = WEXITSTATUS(p->status);
@@ -66,16 +69,9 @@ void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	t_minishell_l	*lex;
 	
 	lex = NULL;
+	restore_fds(p);
 	free_everything(p, *pars, input);
 	get_input(p, &lex, pars, input);
-}
-
-void	reset_fds(t_pipex *p)
-{
-	if (dup2(STDOUT_FILENO, p->copy_stdout) == -1)
-		return ;
-	if (dup2(STDIN_FILENO, p->copy_stdin) == -1)
-		return ;
 }
 
 int	main(int ac, char **av, char **envp)
