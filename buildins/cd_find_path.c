@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:26:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 16:32:43 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/20 20:01:21 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	go_back(t_pipex *p, int print)
 			printf("%s\n", p->pwd);
 		return (chdir(temp));
 	}
-	return (1);//error(p, temp, p->status)
+	return (0);//error(p, temp, p->status)
 }
 
 char	*check_slash(char *tok, char *temp)//t_pipex *p, 

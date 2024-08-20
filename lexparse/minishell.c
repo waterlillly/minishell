@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:37:12 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 14:43:37 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:38:29 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	init_raw(t_raw_in *in)
 	in->out = NULL;
 	in->n_chd = 0;
 	in->open_pipe = false;
-	in->n_lessalloc = 0;
+	//in->n_lessalloc = 0;
 	in->sum = 0;
 }
 

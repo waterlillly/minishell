@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 11:14:34 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/19 16:02:30 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:37:46 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ void	set_first(t_raw_in *in, char *line)
 	{
 		if (!is_oq(*line, &dq, &sq))
 		{
-			if (*(line + 1) == '$')
-				in->n_lessalloc--;
-			else if (*line == '>')
+			//if (*(line + 1) == '$')
+			//	in->n_lessalloc--;
+			if (*line == '>')
 			{
 				in->n_red++;
 				if (*(line + 1) == '>')

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 18:40:19 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/20 19:42:29 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_raw_in
 	int		n_pipe;
 	int		n_red;
 	int		n_words;
-	int		n_lessalloc;
+	//int		n_lessalloc;
 	int		sum;
 }	t_raw_in;
 
@@ -94,21 +94,16 @@ typedef struct s_pipex
 	char	*home;
 	char	*oldpwd;
 	char	*pwd;
-	
 	pid_t	*pid;
 	int		**pip;
 	int		status;
 	int		copy_stdin;
 	int		copy_stdout;
-	
-	//not needed:
-	char	*cwd;
+	char	*cwd;//
 	int		filein;
 	int		fileout;
 	char	*here;
 	int		cmd_count;
-	
-	//rewrite:
 	char	**paths;
 	char	*path;
 	char	*executable;
@@ -120,7 +115,7 @@ void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str);
 int		error(char *str, int code);
 void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input);
 bool	is_buildin(char *s);
-void	do_this(t_pipex *p, t_minishell_p *pars);
+int		do_this(t_pipex *p, t_minishell_p *pars);
 void 	free_parse(t_minishell_p *in);
 void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 int		do_stuff(t_pipex *p, t_minishell_p *pars);
@@ -164,7 +159,7 @@ int				is_oq(char	c, int *dq, int *sq);
 /*____________________PIPEX____________________*/
 /*PIPEX*/
 char	*is_exec(t_pipex *p);
-void	do_heredoc(t_pipex *p, t_minishell_p *pars);
+int		do_heredoc(t_pipex *p, t_minishell_p *pars);
 int		exec_cmd(t_pipex *p, t_minishell_p *pars);
 
 /*ERROR*/
@@ -182,7 +177,7 @@ void	init_p(t_pipex *p, t_minishell_p *pars);
 void	first_init(t_pipex *p, char **envp);
 
 /*HERE_DOC*/
-void	get_cur_cwd(t_pipex *p);
+//void	get_cur_cwd(t_pipex *p);
 void	here_or_not(t_pipex *p, t_minishell_p *pars);
 
 /*____________________BUILDINS____________________*/
@@ -192,13 +187,15 @@ int		find_arg(char **s, char *a);
 int		find_str_part(char **str, char *tok);
 char	*strcpy_until(char *v_part);
 int		ft_strcmp_until(const char *s1, const char *s2);
+char	**update_free_arr(char **old, char **new);
 
 /*QUOTES*/
 char	*add_quotes(char *token);
 char	*remove_quotes(char *s);
-bool	check_d_quotes(char *token);
-bool	check_s_quotes(char *token);
+bool	check_d_q(char *token);
+bool	check_s_q(char *token);
 bool	check_quotes(char *token);
+bool	s_out_q(char *tok);
 
 /*PWD*/
 void	reset_old_pwd(t_pipex *p, char *path);
@@ -232,36 +229,35 @@ int		cd(t_pipex *p, char **token);
 /*ECHO*/
 int		do_echo(t_pipex *p, char **token, int x);
 bool	check_n(char *token);
-void	echo(t_pipex *p, char **token);
+int		echo(t_pipex *p, char **token);
 
 /*EXPAND*/
+char	*rm_out_q(char *tok);
 char	*xpand(t_pipex *p, char **token, int x);
 
 /*XPORT*/
 char	*exp_whole(t_pipex *p, char **arr, int y);
 int		combine_export(t_pipex *p);
 char	*create_add_export(char *token);
-void	add_to_env(t_pipex *p, char *add);
-void	add_to_export(t_pipex *p, char *token);
+int		add_to_env(t_pipex *p, char *add);
+int		add_to_export(t_pipex *p, char *token);
 
 /*SET_EXPORT*/
-//char	*no_quotes(char *token, int x, int y);
-//char	*has_quotes(char *token, int x, int y);
-void	update_export(t_pipex *p, char *tok, char *token);
-void	set_export(t_pipex *p, char **token);
-void	update(t_pipex *p, char *set, char *tok);
+int		update_export(t_pipex *p, char *tok, char *token);
+int		set_export(t_pipex *p, char **token);
+int		update(t_pipex *p, char *set, char *tok);
 
 /*SORTING*/
 bool	sorted(char **arr);
 void	swap(char **arr, int x);
 char	**sort_arr(t_pipex *p);
 bool	resorted(char **arr);
-void	resort_arr(char **arr);
+char	**resort_arr(char **arr);
 
 /*UNSET*/
-void	update_unset(t_pipex *p, char *tok);
-void	update_unset_exp(t_pipex *p, char *tok);
-void	unset(t_pipex *p, char **token);
+int		update_unset(t_pipex *p, char *tok);
+int		update_unset_exp(t_pipex *p, char *tok);
+int		unset(t_pipex *p, char **token);
 
 #endif
 

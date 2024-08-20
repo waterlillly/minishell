@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:48:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/18 16:52:28 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/20 17:46:08 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,28 @@ int	ft_strcmp_until(const char *s1, const char *s2)
 		return (0);
 	else
 		return (s2[x] - s1[x]);
+}
+
+char	**update_free_arr(char **old, char **new)
+{
+	int		x;
+	char	**ret;
+
+	x = -1;
+	ret = NULL;
+	if (!old || !new)
+		return (NULL);
+	ft_free_double(old);
+	ret = malloc(sizeof(char *) * (ft_arrlen(new) + 1));
+	if (!ret)
+		return (ft_free_double(new), NULL);
+	while (new[++x])
+	{
+		ret[x] = ft_strdup(new[x]);
+		if (!ret[x])
+			return (ft_free_double(new), ft_free_double(ret), NULL);
+	}
+	ret[x] = NULL;
+	ft_free_double(new);
+	return (ret);
 }

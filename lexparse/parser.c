@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 11:22:01 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/14 21:09:04 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:15:33 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	set_red_parse(t_minishell_p *parse, t_minishell_l *lex)
 		}
 		if (tmp)
 		{
-			tmp->prev->next = NULL;
+			tmp = NULL;//->prev->next
 			lex = tmp->next;
 			lex->prev = NULL;
 			free(tmp);

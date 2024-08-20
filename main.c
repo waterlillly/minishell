@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 17:08:01 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/20 20:06:34 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,17 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		p->pid[c] = fork();
 		if (p->pid[c] == -1)
 			return (error("fork failed", 1));
-		
-		if (!pars->str)
-			return (1);
 		if (p->pid[c] == 0)
+			p->status = execute(p, &c, pars);//if funct != 0->return p->status
+		else
 		{
-			if (execute(p, &c, pars) != 0)
-				return (error("execute failed", 1));
+			if (wait(&p->status) == -1)
+				return (perror("waitpid"), exit(EXIT_FAILURE), -1);
+			if (WIFEXITED(p->status))
+				p->status = WEXITSTATUS(p->status);
 		}
 		c++;
 		pars = pars->next;
-	}
-	while (wait(NULL) != -1 && p->cmd_count > 1)
-	{
-		if (WIFEXITED(p->status))
-			p->status = WEXITSTATUS(p->status);
 	}
 	return (p->status);
 }
@@ -79,22 +75,35 @@ int	main(int ac, char **av, char **envp)
 	t_pipex			p;
 	t_minishell_p	*pars;
 	t_raw_in		input;
+	bool			run;
 	
 	if (ac < 1 || !av)
-	{
-		ft_putendl_fd("invalid input", 2);
-		exit(EXIT_FAILURE);
-	}
+		return (perror("invalid input"), 1);
 	ft_bzero(&p, sizeof(t_pipex));
 	ft_bzero(&input, sizeof(t_raw_in));
 	pars = NULL;
 	first_init(&p, envp);
+	run = true;
 	while (1)
 	{
 		refresh_init(&p, &input, &pars);
-		if (do_stuff(&p, pars) != 0)
-			exit_shell(&p, pars, &input, "error");
+		if (pars && pars->str && ft_strcmp_bool(pars->str[0], "exit"))
+		{
+			if (pars->str[1])
+				p.status = ft_atoi(pars->str[1]);
+			run = false;
+		}
+		else
+		{
+			p.status = do_stuff(&p, pars);
+			if (p.status != 0)
+				run = false;
+		}
+		if (run == false)
+		{
+			exit_shell(&p, pars, &input, NULL);
+			exit(p.status);
+		}
 	}
-	exit_shell(&p, pars, &input, "done");
 	return (0);
 }

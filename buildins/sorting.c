@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:54:40 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 17:27:11 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/20 19:43:22 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ bool	resorted(char **arr)
 	return (true);
 }
 
-void	resort_arr(char **arr)
+char	**resort_arr(char **arr)
 {
 	int		x;
 
 	if (!arr)
-		return ;
+		return (NULL);
 	while (!resorted(arr))
 	{
 		x = 0;
@@ -92,4 +92,5 @@ void	resort_arr(char **arr)
 			x++;
 		}
 	}
+	return (arr);
 }

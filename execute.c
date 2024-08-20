@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 16:27:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 18:10:36 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/20 19:09:51 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	execute(t_pipex *p, int *c, t_minishell_p *pars)
 	int	x;
 
 	x = 0;
+	if (!p || !pars)
+		return (1);
 	x = redir_input(p, c, pars);
 	if (x != 0)
 		return (x);

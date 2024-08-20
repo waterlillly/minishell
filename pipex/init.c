@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 17:57:15 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/20 19:19:28 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,10 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 {
 	t_minishell_p	*tmp;
 
+	tmp = NULL;
 	tmp = pars;
 	if (!tmp)
-		error("no pars", 1);
+		return ;
 	p->copy_stdin = dup(STDIN_FILENO);
 	p->copy_stdout = dup(STDOUT_FILENO);
 	p->cmd_count = 0;

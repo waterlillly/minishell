@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:24:45 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 18:39:47 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/20 17:19:52 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*remove_quotes(char *s)
 	return (temp);
 }
 
-bool	check_d_quotes(char *token)
+bool	check_d_q(char *token)
 {
 	int		x;
 	bool	d_q;
@@ -96,7 +96,7 @@ bool	check_d_quotes(char *token)
 }
 
 
-bool	check_s_quotes(char *token)
+bool	check_s_q(char *token)
 {
 	int		x;
 	bool	s_q;
@@ -147,4 +147,12 @@ bool	check_quotes(char *token)
 		x++;
 	}
 	return (false);
+}
+
+bool	s_out_q(char *tok)
+{
+	if (tok[0] == '\'' && tok[ft_strlen(tok) - 1] == '\'')
+		return (true);
+	else
+		return (false);
 }

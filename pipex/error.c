@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:04:36 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 15:16:02 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/20 19:02:46 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,10 @@ void	close_pipes(t_pipex *p)
 
 void	close_all(t_pipex *p)
 {
-	int	x;
-
-	x = 3;
-	//while (p && x < 1024)
-	//{
-	//	if (x != p->copy_stdout && x != p->filein && x != p->fileout)
-	//		close(x);
-	//	x++;
-	//}
 	if (p && p->filein && p->filein != STDIN_FILENO && p->filein != -1)
 		close(p->filein);
 	if (p && p->fileout && p->fileout != STDOUT_FILENO && p->fileout != -1)
 		close(p->fileout);
-	//restore_fds(p);
-	if (p && p->here)
-		unlink("hd");
 	if (p && p->pip)
 		close_pipes(p);
 }
@@ -85,7 +73,6 @@ void	free_double(char **str)
 		str[i] = NULL;
 		i++;
 	}
-	free(str);
 	str = NULL;
 }
 
@@ -96,13 +83,8 @@ void	err_free_two(t_pipex *p)
 		free(p->pid);
 		p->pid = NULL;
 	}
-	if (p->pip || p->copy_stdout)
+	if (p->pip || p->copy_stdout || p->copy_stdin)
 		close_all(p);
-	//if (p->paths)
-	//{
-	//	free_double(p->paths);
-	//	p->paths = NULL;
-	//}
 }
 
 void	err_free(t_pipex *p)

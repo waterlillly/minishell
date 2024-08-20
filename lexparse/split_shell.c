@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 10:51:09 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/19 16:11:40 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:37:18 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	ft_split_shell(t_raw_in *in)
 	tmp = in->input;
 	i = -1;
 	in->n_words = count(in->input, " \t><|");
-	in->sum = in->n_words + in->n_hd + in->n_pipe + in->n_red + in->n_lessalloc;
+	in->sum = in->n_words + in->n_hd + in->n_pipe + in->n_red;// + in->n_lessalloc
 	in->out = (char **)ft_calloc(in->sum + 1, sizeof(char *));
 	if (!in->out)
 		return ;//fix

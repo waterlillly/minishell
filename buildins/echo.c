@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 19:26:04 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/20 18:33:55 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,16 @@
 
 int	do_echo(t_pipex *p, char **token, int x)
 {
+	if (check_n(token[x]))
+		return (0);
 	if (token[x][0] == '$' && token[x][1] == '?' && token[x][2] == '\0')
 		return (ft_putnbr_fd(p->status, 1), 0);
 	else
+	{
+		if (xpand(p, token, x) == NULL)
+			return (1);
 		return (ft_putstr_fd(xpand(p, token, x), 1), 0);
-	//else if (token[x][0] == '$' && token[x][1] != '$' && token[x][1] != '\0')
-	//	//&& valid_env(p, ft_substr(token[x], 1, ft_strlen(token[x]) - 1)))
-	//{
-	//	temp = xpand(p, token, x);
-	//	if (!temp)
-	//		return (1);
-	//	return (ft_putstr_fd(temp, 1), free(temp), temp = NULL, 0);
-	//}
-	//else if (token[x][0] == '$' && token[x][1] != '\0'
-	//	&& !valid_env(p, ft_substr(token[x], 1, ft_strlen(token[x]) - 1)))
-	//	return (1);
-	//else
-	//	return (ft_putstr_fd(token[x], 1), 0);
+	}
 }
 
 bool	check_n(char *token)
@@ -50,29 +43,27 @@ bool	check_n(char *token)
 	return (false);
 }
 
-void	echo(t_pipex *p, char **token)
+int	echo(t_pipex *p, char **token)
 {
-	int		x;
+	int	x;
+	int	y;
 
+	y = 0;
 	if (!p || !token || !ft_strcmp_bool(token[0], "echo"))
-		return ;
+		return (1);
 	if (!token[1])
 	{
 		ft_putstr_fd("\n", 1);
-		return ;
+		return (0);
 	}
-	x = 1;
-	if (check_n(token[x]))
-		x++;
-	while (token[x])
+	x = 0;
+	while (token[++x])
 	{
-		if (do_echo(p, token, x) == 0)
-		{
-			if (token[x + 1] != NULL)
-				ft_putstr_fd(" ", 1);
-		}
-		x++;
+		y = do_echo(p, token, x);
+		if (y != 1 && token[x + 1])
+			ft_putstr_fd(" ", 1);
 	}
 	if (check_n(token[1]) == false)
 		ft_putstr_fd("\n", 1);
+	return (0);
 }

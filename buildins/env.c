@@ -6,37 +6,11 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 16:05:52 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/20 19:41:56 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-/*
-void	get_pwd(t_pipex *p)
-{
-	char	*temp;
-
-	temp = NULL;
-	if (!p)
-		return ;
-	if (p->pwd)
-	{
-		temp = ft_strdup(p->pwd);
-		if (!temp)
-			return ;//error(p, "strdup", p->status);
-		free(p->pwd);
-		p->pwd = NULL;
-	}
-	p->pwd = get_env(p, "PWD");
-	if (!p->pwd || access(p->pwd, F_OK) == -1)
-	{
-		p->pwd = ft_strdup(temp);
-		free(temp);
-		temp = NULL;
-		return ;
-	}
-}
-*/
 
 char	**copy_arr_env(t_pipex *p)
 {
@@ -131,7 +105,7 @@ int	get_menv(t_pipex *p, char **envp)
 	{
 		p->menv[x] = ft_strdup(envp[x]);
 		if (!p->menv[x])
-			return (1);
+			return (ft_free_double(p->menv), 1);
 		x++;
 	}
 	p->menv[x] = NULL;
@@ -140,15 +114,17 @@ int	get_menv(t_pipex *p, char **envp)
 
 int	buildins_init(t_pipex *p, char **envp)
 {
-	get_menv(p, envp);
+	int	x;
+
+	x = 0;
+	x = get_menv(p, envp);
+	if (x != 0)
+		return (x);
 	p->pwd = get_env(p, "PWD");
 	p->oldpwd = get_env(p, "OLDPWD");
-	//go_up_oldpwd(p);
 	p->home = get_env(p, "HOME");
-	if (!p->home)
-		return (err_free(p), 1);
 	p->mpath = get_env(p, "PATH");
-	if (!p->home)
-		return (err_free(p), 1);
+	if (!p->pwd || !p->oldpwd || !p->home || !p->mpath || !p->menv)
+		return (1);
 	return (combine_export(p));
 }

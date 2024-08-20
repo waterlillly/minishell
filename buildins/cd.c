@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/19 17:17:34 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/20 20:04:59 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,31 @@ int	cd_home(t_pipex *p)
 
 int	fill_path(t_pipex *p, char **token)
 {
+	int	x;
+
 	if (!p || !token || !token[1])
 		return (1);
 	if (token[1][0] == '-' && token[1][1] == '\0')
-		return (go_back(p, 1));
+		x = go_back(p, 1);
 	else if (token[1][0] == '.' && token[1][1] == '.'
 		&& token[1][2] == '\0')
 	{
-		if (go_up_oldpwd(p))
-			return (1);
-		return (go_back(p, 0));
+		x = go_up_oldpwd(p);
+		if (x == 0)
+			x = go_back(p, 0);
 	}
 	else if (token[1][0] == '/' && token[1][1] != '\0'
 		&& token[1][1] != '/')
-		return (go_full_path(p, token));
+		x = go_full_path(p, token);
 	else if (token[1][0] == '/')
-		return (go_slash(p, token));
+		x = go_slash(p, token);
 	else
 	{
-		if (add_to_path(p, token[1]) != 0)
-			return (perror(token[1]), 1);
+		x = add_to_path(p, token[1]);
+		if (x != 0)
+			return (perror(token[1]), x);
 	}
-	return (1);
+	return (x);
 }
 
 int	cd(t_pipex *p, char **token)
