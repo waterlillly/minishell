@@ -17,15 +17,3 @@
     ...
     fun:add_history
 }
-{
-    leak vgpreload_memcheck-arm64-linux.so
-    Memcheck:Leak
-    ...
-    obj:*/vgpreload_memcheck-arm64-linux.so
-}
-{
-    leak vgpreload_memcheck-amd64-linux.so
-    Memcheck:Leak
-    ...
-    obj:*/vgpreload_memcheck-amd64-linux.so
-}
