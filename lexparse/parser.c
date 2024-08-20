@@ -108,7 +108,7 @@ void	set_red_parse(t_minishell_p *parse, t_minishell_l *lex)
 		}
 		if (tmp)
 		{
-			tmp = NULL;//->prev->next
+			tmp->prev->next = NULL;
 			lex = tmp->next;
 			lex->prev = NULL;
 			free(tmp);

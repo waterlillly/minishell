@@ -21,7 +21,7 @@ char	**copy_arr_env(t_pipex *p)
 	if (!p || !p->menv)
 		return (NULL);
 	arr = NULL;
-	arr = malloc(sizeof(char *) * (ft_arrlen(p->menv) + 1));
+	arr = ft_calloc((ft_arrlen(p->menv) + 1), sizeof(char *));
 	if (!arr)
 		return (NULL);
 	while (p->menv[x])
@@ -29,7 +29,6 @@ char	**copy_arr_env(t_pipex *p)
 		arr[x] = strcpy_until(p->menv[x]);
 		x++;
 	}
-	arr[x] = NULL;
 	return (arr);
 }
 
@@ -76,9 +75,6 @@ char	*get_env(t_pipex *p, char *str)
 			len = ft_strlen(p->menv[x]) - ft_strlen(str);
 			if (len <= 0)
 				return ("\n");
-			result = malloc(sizeof(char) * len);
-			if (!result)
-				return (NULL);
 			result = ft_substr(p->menv[x], ft_strlen(str) + 1, len - 1);
 			if (!result)
 				return (NULL);
