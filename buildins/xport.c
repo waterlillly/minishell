@@ -27,7 +27,7 @@ char	*exp_whole(t_pipex *p, char **arr, int y)
 	temp1 = ft_strjoin_free_one(temp, "\"");
 	if (!temp1)
 		return (NULL);
-	temp = ft_strjoin_free_both(temp1, get_env(p, arr[y]));
+	temp = ft_strjoin_free_one(temp1, get_env(p, arr[y]));
 	if (!temp)
 		return (NULL);
 	temp1 = ft_strjoin_free_one(temp, "\"");
@@ -39,26 +39,25 @@ char	*exp_whole(t_pipex *p, char **arr, int y)
 int	combine_export(t_pipex *p)
 {
 	char	**arr;
-	char	*tmp;
 	int		y;
 	
 	y = -1;
 	if (!p || !p->menv)
 		return (1);
+	arr = NULL;
 	arr = sort_arr(p);
 	if (!arr)
 		return (1);
-	p->xport = ft_calloc((ft_arrlen(arr) + 1), sizeof(char *));
+	p->xport = malloc(sizeof(char *) * (ft_arrlen(arr) + 1));
 	if (!p->xport)
 		return (1);
 	while (arr && arr[++y])
 	{
-		tmp = exp_whole(p, arr, y);
-		p->xport[y] = ft_strjoin("declare -x ",tmp);
-		free(tmp);
+		p->xport[y] = ft_strjoin("declare -x ", exp_whole(p, arr, y));
 		if (!p->xport[y])
 			return (1);
 	}
+	p->xport[++y] = NULL;
 	ft_free_double(arr);
 	return (0);
 }

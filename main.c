@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/20 20:06:34 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/20 21:37:03 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,6 @@ void free_parse(t_minishell_p *in)
 	}
 }
 
-int	do_stuff(t_pipex *p, t_minishell_p *pars)
-{
-	int	c;
-	
-	c = 0;
-	if (p->cmd_count > 500)
-		return (error("too many commands", 1));
-	while (pars && c < p->cmd_count)
-	{
-		p->pid[c] = fork();
-		if (p->pid[c] == -1)
-			return (error("fork failed", 1));
-		if (p->pid[c] == 0)
-			p->status = execute(p, &c, pars);//if funct != 0->return p->status
-		else
-		{
-			if (wait(&p->status) == -1)
-				return (perror("waitpid"), exit(EXIT_FAILURE), -1);
-			if (WIFEXITED(p->status))
-				p->status = WEXITSTATUS(p->status);
-		}
-		c++;
-		pars = pars->next;
-	}
-	return (p->status);
-}
 
 void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 {
@@ -68,6 +42,35 @@ void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	restore_fds(p);
 	free_everything(p, *pars, input);
 	get_input(p, &lex, pars, input);
+}
+
+int	do_stuff(t_pipex *p, t_minishell_p *pars)
+{
+	int	c;
+	
+	c = 0;
+	if (p->cmd_count > 500)
+		return (error("too many commands", 1));
+	while (p && pars && c < p->cmd_count)
+	{
+		p->pid[c] = fork();
+		if (p->pid[c] == -1)
+			return (error("fork failed", 1));
+		if (p->pid[c] == 0)
+		{
+			p->status = execute(p, &c, pars);
+			if (p->status != 0)
+				return (p->status);
+		}
+		c++;
+		pars = pars->next;
+	}
+	while (wait(NULL) != -1)
+	{
+		if (WIFEXITED(p->status))
+			p->status = WEXITSTATUS(p->status);
+	}
+	return (p->status);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -87,7 +90,7 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		refresh_init(&p, &input, &pars);
-		if (pars && pars->str && ft_strcmp_bool(pars->str[0], "exit"))
+		if (pars->str && ft_strcmp_bool(pars->str[0], "exit"))
 		{
 			if (pars->str[1])
 				p.status = ft_atoi(pars->str[1]);

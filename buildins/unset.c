@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 18:54:32 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/20 16:32:00 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/20 21:08:43 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	update_unset(t_pipex *p, char *tok)
 	arr[y] = NULL;
 	//ft_bzero(p->menv, sizeof(p->menv));
 	p->menv = update_free_arr(p->menv, arr);
+	if (!p->menv)
+		return (1);
 	return (update_unset_exp(p, tok));
 }
 
@@ -61,6 +63,8 @@ int	update_unset_exp(t_pipex *p, char *tok)
 	arr[y] = NULL;
 	//ft_bzero(p->xport, sizeof(p->xport));
 	p->xport = update_free_arr(p->xport, arr);
+	if (!p->xport)
+		return (1);
 	return (0);
 }
 

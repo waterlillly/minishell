@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/20 19:41:56 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/20 20:13:14 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**copy_arr_env(t_pipex *p)
 	if (!p || !p->menv)
 		return (NULL);
 	arr = NULL;
-	arr = ft_calloc((ft_arrlen(p->menv) + 1), sizeof(char *));
+	arr = malloc(sizeof(char *) * (ft_arrlen(p->menv) + 1));
 	if (!arr)
 		return (NULL);
 	while (p->menv[x])
@@ -29,6 +29,7 @@ char	**copy_arr_env(t_pipex *p)
 		arr[x] = strcpy_until(p->menv[x]);
 		x++;
 	}
+	arr[x] = NULL;
 	return (arr);
 }
 
@@ -75,6 +76,9 @@ char	*get_env(t_pipex *p, char *str)
 			len = ft_strlen(p->menv[x]) - ft_strlen(str);
 			if (len <= 0)
 				return ("\n");
+			result = malloc(sizeof(char) * len);
+			if (!result)
+				return (NULL);
 			result = ft_substr(p->menv[x], ft_strlen(str) + 1, len - 1);
 			if (!result)
 				return (NULL);
