@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/21 16:16:25 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:30:04 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int g_signal;
 
 void free_parse(t_minishell_p *in)
 {
@@ -85,6 +87,7 @@ int	main(int ac, char **av, char **envp)
 	ft_bzero(&p, sizeof(t_pipex));
 	ft_bzero(&input, sizeof(t_raw_in));
 	pars = NULL;
+	signal(SIGINT, &sig_int);
 	p.status = first_init(&p, envp);
 	if (p.status != 0)
 	{
@@ -95,6 +98,8 @@ int	main(int ac, char **av, char **envp)
 	while (run)
 	{
 		refresh_init(&p, &input, &pars);
+		if (!pars)
+			continue;
 		if (pars->str && ft_strcmp_bool(pars->str[0], "exit"))
 		{
 			if (pars->str[1])
@@ -113,6 +118,7 @@ int	main(int ac, char **av, char **envp)
 			exit_shell(&p, pars, &input, NULL);
 			exit(p.status);
 		}
+		pars = NULL;
 	}
 	return (0);
 }

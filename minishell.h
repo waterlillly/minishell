@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/21 16:19:52 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:13:58 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ int		redir_output(t_pipex *p, int *c, t_minishell_p *pars);
 int		execute(t_pipex *p, int *c, t_minishell_p *pars);
 
 /*START*/
+void	sig_int(int	num);
 void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *input);
 
 /*____________________LEXPARSE____________________*/
