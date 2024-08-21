@@ -27,7 +27,7 @@ char	*exp_whole(t_pipex *p, char **arr, int y)
 	temp1 = ft_strjoin_free_one(temp, "\"");
 	if (!temp1)
 		return (NULL);
-	temp = ft_strjoin_free_one(temp1, get_env(p, arr[y]));
+	temp = ft_strjoin_free_one(temp1, get_env(p, arr[y]));//
 	if (!temp)
 		return (NULL);
 	temp1 = ft_strjoin_free_one(temp, "\"");
@@ -39,6 +39,7 @@ char	*exp_whole(t_pipex *p, char **arr, int y)
 int	combine_export(t_pipex *p)
 {
 	char	**arr;
+	char	*temp;
 	int		y;
 	
 	y = -1;
@@ -48,18 +49,22 @@ int	combine_export(t_pipex *p)
 	arr = sort_arr(p);
 	if (!arr)
 		return (1);
-	p->xport = malloc(sizeof(char *) * (ft_arrlen(arr) + 1));
+	p->xport = NULL;
+	p->xport = ft_calloc((ft_arrlen(arr) + 1), sizeof(char *));
 	if (!p->xport)
 		return (1);
 	while (arr && arr[++y])
 	{
-		p->xport[y] = ft_strjoin("declare -x ", exp_whole(p, arr, y));
+		temp = exp_whole(p, arr, y);
+		if (!temp)
+			return (1);//ft_free_double(arr), 
+		p->xport[y] = ft_strjoin("declare -x ",temp);
+		free(temp);
+		temp = NULL;
 		if (!p->xport[y])
-			return (1);
+			return (1);//ft_free_double(arr)
 	}
-	p->xport[++y] = NULL;
-	ft_free_double(arr);
-	return (0);
+	return (ft_free_double(arr), 0);
 }
 
 char	*create_add_export(char *token)
@@ -96,21 +101,22 @@ int	add_to_env(t_pipex *p, char *add)
 	int		x;
 	char	**arr;
 
-	x = -1;
+	x = 0;
 	arr = NULL;
 	if (!p || !add || !p->menv)
 		return (0);
-	arr = malloc(sizeof(char *) * (ft_arrlen(p->menv) + 2));
+	arr = ft_calloc((ft_arrlen(p->menv) + 2), sizeof(char *));
 	if (!arr)
 		return (1);
-	while (p->menv[++x])
+	while (p->menv[x])
 	{
 		arr[x] = ft_strdup(p->menv[x]);
 		if (!arr[x])
 			return (ft_free_double(arr), 1);
+		x++;
 	}
-	arr[++x] = add;
-	arr[++x] = NULL;
+	arr[x] = add;
+	arr[x + 1] = NULL;
 	p->menv = update_free_arr(p->menv, arr);
 	return (0);
 }
@@ -124,7 +130,7 @@ int	add_to_export(t_pipex *p, char *token)
 	arr = NULL;
 	if (!p || !token || !p->xport)
 		return (0);
-	arr = malloc(sizeof(char *) * (ft_arrlen(p->xport) + 2));
+	arr = ft_calloc((ft_arrlen(p->xport) + 2), sizeof(char *));
 	if (!arr)
 		return (1);
 	while (p->xport[++x])
@@ -138,7 +144,6 @@ int	add_to_export(t_pipex *p, char *token)
 		return (ft_free_double(arr), 1);
 	//if (ft_strchr(arr[x], '=') && add_to_env(p, token) != 0)
 	//	return (ft_free_double(arr), 1);
-	arr[++x] = NULL;
 	p->xport = update_free_arr(p->xport, resort_arr(arr));
 	return (0);
 }

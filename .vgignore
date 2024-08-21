@@ -1,4 +1,3 @@
-
 {
    ignore_libreadline_errors
    Memcheck:Leak

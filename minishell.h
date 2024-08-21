@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/20 19:42:29 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:48:30 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ int		redir_output(t_pipex *p, int *c, t_minishell_p *pars);
 int		execute(t_pipex *p, int *c, t_minishell_p *pars);
 
 /*START*/
+void	sig_int(int	num);
 void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *input);
 
 /*____________________LEXPARSE____________________*/
@@ -160,7 +161,7 @@ int				is_oq(char	c, int *dq, int *sq);
 /*PIPEX*/
 char	*is_exec(t_pipex *p);
 int		do_heredoc(t_pipex *p, t_minishell_p *pars);
-int		exec_cmd(t_pipex *p, t_minishell_p *pars);
+int		exec_cmd(t_pipex *p, int *c, t_minishell_p *pars);
 
 /*ERROR*/
 void	close_pipes(t_pipex *p);
@@ -174,7 +175,7 @@ void	check_filein(t_pipex *p, t_minishell_p *pars);
 void	check_fileout(t_pipex *p, t_minishell_p *pars);
 void 	init_pipes(t_pipex *p);
 void	init_p(t_pipex *p, t_minishell_p *pars);
-void	first_init(t_pipex *p, char **envp);
+int		first_init(t_pipex *p, char **envp);
 
 /*HERE_DOC*/
 //void	get_cur_cwd(t_pipex *p);
@@ -246,6 +247,7 @@ int		add_to_export(t_pipex *p, char *token);
 int		update_export(t_pipex *p, char *tok, char *token);
 int		set_export(t_pipex *p, char **token);
 int		update(t_pipex *p, char *set, char *tok);
+int		update_both(t_pipex *p);
 
 /*SORTING*/
 bool	sorted(char **arr);

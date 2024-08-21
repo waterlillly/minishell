@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/20 16:44:43 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:49:06 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,16 @@ int	update_export(t_pipex *p, char *tok, char *token)
 	temp = ft_strjoin("declare -x ", tok);
 	if (!temp)
 		return (1);//error(p, "strjoin", p->status);
+	//free(tok);
+	//tok = NULL;
 	x = find_str_part(p->xport, temp);
 	if (x == -1)
 		return (free(temp), temp = NULL, 1);//error(p, "couldnt find argument", p->status);
 	temp1 = add_quotes(token);
 	if (!temp1)
 		return (free(temp), temp = NULL, 1);//error(p, "modify_quotes", p->status);
+	free(p->xport[x]);
+	//p->xport[x] = NULL;
 	p->xport[x] = ft_strjoin_free_both(temp, temp1);
 	if (!p->xport[x])
 		return (1);//error(p, "strjoin_free_both", p->status);
@@ -85,4 +89,16 @@ int	update(t_pipex *p, char *set, char *tok)
 	if (!p->menv[x])
 		return (1);
 	return (update_export(p, set, tok));
+}
+
+int	update_both(t_pipex *p)
+{
+	int	x;
+
+	x = 0;
+	x = update(p, "PWD", p->pwd);
+	if (x != 0)
+		return (x);
+	x = update(p, "OLDPWD", p->oldpwd);
+	return (x);
 }

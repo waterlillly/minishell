@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:48:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/20 17:46:08 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:49:25 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,19 +100,20 @@ char	**update_free_arr(char **old, char **new)
 	int		x;
 	char	**ret;
 
-	x = -1;
+	x = 0;
 	ret = NULL;
 	if (!old || !new)
 		return (NULL);
 	ft_free_double(old);
-	ret = malloc(sizeof(char *) * (ft_arrlen(new) + 1));
+	ret = ft_calloc((ft_arrlen(new) + 1), sizeof(char *));
 	if (!ret)
 		return (ft_free_double(new), NULL);
-	while (new[++x])
+	while (new[x])
 	{
 		ret[x] = ft_strdup(new[x]);
 		if (!ret[x])
 			return (ft_free_double(new), ft_free_double(ret), NULL);
+		x++;
 	}
 	ret[x] = NULL;
 	ft_free_double(new);

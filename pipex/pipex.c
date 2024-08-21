@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/20 21:02:28 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:47:21 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,12 @@ int	do_heredoc(t_pipex *p, t_minishell_p *pars)
 	return (0);
 }
 
-int	exec_cmd(t_pipex *p, t_minishell_p *pars)
+int	exec_cmd(t_pipex *p, int *c, t_minishell_p *pars)
 {
 	int	x;
 
 	x = 0;
+	(void)c;
 	if (!p || !pars || !pars->str)
 		return (1);
 	if (pars->redirect && pars->redirect->token == HEREDOC)

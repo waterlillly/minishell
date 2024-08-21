@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/20 21:37:03 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:46:54 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int g_signal;
 
 void free_parse(t_minishell_p *in)
 {
@@ -40,7 +42,7 @@ void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	
 	lex = NULL;
 	restore_fds(p);
-	free_everything(p, *pars, input);
+	//free_everything(p, *pars, input);
 	get_input(p, &lex, pars, input);
 }
 
@@ -85,11 +87,19 @@ int	main(int ac, char **av, char **envp)
 	ft_bzero(&p, sizeof(t_pipex));
 	ft_bzero(&input, sizeof(t_raw_in));
 	pars = NULL;
-	first_init(&p, envp);
+	signal(SIGINT, &sig_int);
+	p.status = first_init(&p, envp);
+	if (p.status != 0)
+	{
+		exit_shell(&p, pars, &input, NULL);
+		exit(p.status);
+	}
 	run = true;
-	while (1)
+	while (run)
 	{
 		refresh_init(&p, &input, &pars);
+		if (!pars)
+			continue;
 		if (pars->str && ft_strcmp_bool(pars->str[0], "exit"))
 		{
 			if (pars->str[1])
@@ -101,12 +111,14 @@ int	main(int ac, char **av, char **envp)
 			p.status = do_stuff(&p, pars);
 			if (p.status != 0)
 				run = false;
+			free_everything(&p, pars, &input);
 		}
 		if (run == false)
 		{
 			exit_shell(&p, pars, &input, NULL);
 			exit(p.status);
 		}
+		pars = NULL;
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 18:54:32 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/20 21:08:43 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:49:19 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	update_unset(t_pipex *p, char *tok)
 	if (!p || !tok || !p->menv)
 		return (0);
 	arr = NULL;
-	arr = malloc(sizeof(char *) * (ft_arrlen(p->menv)));
+	arr = ft_calloc((ft_arrlen(p->menv)), sizeof(char *));
 	if (!arr)
 		return (1);
 	while (p->menv[x])
@@ -33,7 +33,6 @@ int	update_unset(t_pipex *p, char *tok)
 		arr[y++] = p->menv[x++];
 	}
 	arr[y] = NULL;
-	//ft_bzero(p->menv, sizeof(p->menv));
 	p->menv = update_free_arr(p->menv, arr);
 	if (!p->menv)
 		return (1);
@@ -51,7 +50,7 @@ int	update_unset_exp(t_pipex *p, char *tok)
 	if (!p || !tok || !p->xport)
 		return (0);
 	arr = NULL;
-	arr = malloc(sizeof(char *) * (ft_arrlen(p->xport)));
+	arr = ft_calloc((ft_arrlen(p->xport)), sizeof(char *));
 	if (!arr)
 		return (1);
 	while (p->xport[x])
@@ -61,7 +60,6 @@ int	update_unset_exp(t_pipex *p, char *tok)
 		arr[y++] = p->xport[x++];
 	}
 	arr[y] = NULL;
-	//ft_bzero(p->xport, sizeof(p->xport));
 	p->xport = update_free_arr(p->xport, arr);
 	if (!p->xport)
 		return (1);

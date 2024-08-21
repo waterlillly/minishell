@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/20 20:13:14 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:48:55 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**copy_arr_env(t_pipex *p)
 	if (!p || !p->menv)
 		return (NULL);
 	arr = NULL;
-	arr = malloc(sizeof(char *) * (ft_arrlen(p->menv) + 1));
+	arr = ft_calloc((ft_arrlen(p->menv) + 1), sizeof(char *));
 	if (!arr)
 		return (NULL);
 	while (p->menv[x])
@@ -76,9 +76,9 @@ char	*get_env(t_pipex *p, char *str)
 			len = ft_strlen(p->menv[x]) - ft_strlen(str);
 			if (len <= 0)
 				return ("\n");
-			result = malloc(sizeof(char) * len);
-			if (!result)
-				return (NULL);
+			//result = malloc(sizeof(char) * len);
+			//if (!result)
+			//	return (NULL);
 			result = ft_substr(p->menv[x], ft_strlen(str) + 1, len - 1);
 			if (!result)
 				return (NULL);
@@ -98,7 +98,7 @@ int	get_menv(t_pipex *p, char **envp)
 	if (!envp)
 		return (backup(p));
 	p->menv = NULL;
-	p->menv = malloc(sizeof(char *) * (ft_arrlen(envp) + 1));
+	p->menv = ft_calloc((ft_arrlen(envp) + 1), sizeof(char *));
 	if (!p->menv)
 		return (1);
 	while (envp[x])
@@ -121,10 +121,16 @@ int	buildins_init(t_pipex *p, char **envp)
 	if (x != 0)
 		return (x);
 	p->pwd = get_env(p, "PWD");
+	if (!p->pwd)
+		return (1);
 	p->oldpwd = get_env(p, "OLDPWD");
+	if (!p->oldpwd)
+		return (1);
 	p->home = get_env(p, "HOME");
+	if (!p->home)
+		return (1);
 	p->mpath = get_env(p, "PATH");
-	if (!p->pwd || !p->oldpwd || !p->home || !p->mpath || !p->menv)
+	if (!p->mpath)
 		return (1);
 	return (combine_export(p));
 }

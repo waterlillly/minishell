@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/20 19:19:28 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:49:35 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,20 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 	init_pipes(p);
 }
 
-void	first_init(t_pipex *p, char **envp)
+int	first_init(t_pipex *p, char **envp)
 {
+	int	x;
+
+	x = 0;
 	p->status = 0;
-	buildins_init(p, envp);
+	x = buildins_init(p, envp);
+	if (x != 0)
+		return (x);
 	p->cwd = NULL;
 	p->copy_stdin = -1;
 	p->copy_stdout = -1;
 	p->paths = ft_split(p->mpath, ':');
 	if (!p->paths)
-		return ;//error(p, "ft_split failed", p->status);
+		return (1);//error(p, "ft_split failed", p->status);
+	return (x);
 }
