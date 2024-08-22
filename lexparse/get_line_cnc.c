@@ -6,7 +6,7 @@
 /*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:25:32 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/21 17:47:14 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/22 16:29:42 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,21 @@ void	get_pipe(t_raw_in *in)
 	}
 }
 
+int	is_bad(char *str)
+{
+	while (str)
+	{
+		if (*str != ' ' && *str != '\t')
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
 int	get_line_cnc(t_raw_in *in)
 {
 	in->line = readline("minishell> ");
-	if (!ft_strlen(in->line))
+	if (!in->line || !ft_strlen(in->line) || is_bad(in->line))
 		return (free(in->line), 2);
 	add_history(in->line);
 	set_op(in, in->line);

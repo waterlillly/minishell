@@ -6,7 +6,7 @@
 /*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:23:45 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/21 17:48:24 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/22 16:22:54 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *
 	if (stat == 1)
 	{
 		*lex = lexer(input);
+		if (!*lex)
+			return ;
 		*pars = parser(*lex, input);
 		init_p(p, *pars);
 	}

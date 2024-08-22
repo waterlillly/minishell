@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 11:14:34 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/20 14:37:46 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/22 16:18:10 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	set_op(t_raw_in *in, char *line)
 	if (ft_strlen(line) <= 0)
 		return ;
 	len = ft_strlen(line) - 1;
-	while (is_sep(" \t", line[len]))
+	while (len > 0 && is_sep(" \t", line[len]))
 		len--;
 	if (line[len] == '|')
 		in->open_pipe = true;
