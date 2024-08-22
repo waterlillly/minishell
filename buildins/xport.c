@@ -27,7 +27,7 @@ char	*exp_whole(t_pipex *p, char **arr, int y)
 	temp1 = ft_strjoin_free_one(temp, "\"");
 	if (!temp1)
 		return (NULL);
-	temp = ft_strjoin_free_one(temp1, get_env(p, arr[y]));//
+	temp = ft_strjoin_free_both(temp1, get_env(p, arr[y]));
 	if (!temp)
 		return (NULL);
 	temp1 = ft_strjoin_free_one(temp, "\"");

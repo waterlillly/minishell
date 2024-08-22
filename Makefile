@@ -6,7 +6,7 @@
 #    By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 16:33:47 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/08/21 17:49:12 by mgardesh         ###   ########.fr        #
+#    Updated: 2024/08/22 17:07:53 by mgardesh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,9 @@ CFILES += lexparse/skip_q.c lexparse/parser.c lexparse/set.c lexparse/is_oq.c
 OFILES = $(CFILES:.c=.o)
 NAME = minishell
 
+#NUMTH = $(shell nproc)
+#MAKEFLAGS += --jobs=$(NUMTH)
+
 all: $(NAME)
 
 $(NAME): $(OFILES)
@@ -54,7 +57,8 @@ fclean: clean
 	rm -f hd
 	rm -f buildins.h.gch
 
-re: fclean all
+re: fclean
+	$(MAKE) all
 
 mval: re
 	($(MAKE) -C libft clean)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+         #
+#    By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 18:13:23 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/08/14 20:52:08 by lbaumeis         ###   ########.fr        #
+#    Updated: 2024/08/22 17:07:45 by mgardesh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,9 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = libft.a
 
+#NUMTH = $(shell nproc)
+#MAKEFLAGS += --jobs=$(NUMTH)
+
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -49,6 +52,7 @@ fclean: clean
 	rm -f $(NAME)
 	rm -f a.out
 
-re: fclean all
-
+re: fclean
+	$(MAKE) all
+	
 .PHONY: all clean fclean re

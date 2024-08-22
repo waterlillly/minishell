@@ -6,7 +6,7 @@
 /*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/21 17:46:54 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/22 16:59:31 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void free_parse(t_minishell_p *in)
 	t_minishell_l	*tmp_l;
 	t_minishell_p	*tmp_p;
 
-	while (in && in->next)
+	in = ft_lstfirst_parse(in);
+	while (in)
 	{
 		tmp_p = in->next;
 		while (in->redirect)
@@ -42,7 +43,6 @@ void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	
 	lex = NULL;
 	restore_fds(p);
-	//free_everything(p, *pars, input);
 	get_input(p, &lex, pars, input);
 }
 

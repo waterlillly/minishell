@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 11:22:01 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/20 21:19:14 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/22 16:55:23 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,17 @@ t_minishell_p	*ft_lstnew_parse(void)
 	out->next = NULL;
 	out->prev = NULL;
 	return (out);
+}
+
+t_minishell_p	*ft_lstfirst_parse(t_minishell_p *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->prev)
+	{
+		lst = lst->prev;
+	}
+	return (lst);
 }
 
 t_minishell_p	*ft_lstlast_parse(t_minishell_p *lst)

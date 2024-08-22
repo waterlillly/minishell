@@ -6,7 +6,7 @@
 /*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/21 17:48:30 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/22 16:56:02 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ void			ft_lstadd_back_lex(t_minishell_l **alst, t_minishell_l *new);
 t_minishell_p	*parser(t_minishell_l *in, t_raw_in *raw);
 t_minishell_l	*ft_lstfirst_lex(t_minishell_l *lst);
 int				is_oq(char	c, int *dq, int *sq);
+t_minishell_p	*ft_lstfirst_parse(t_minishell_p *lst);
 
 /*____________________PIPEX____________________*/
 /*PIPEX*/
