@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/22 18:35:12 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/22 19:52:26 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,32 @@ void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	get_input(p, &lex, pars, input);
 }
 
+int	check(t_pipex *p, t_minishell_p *pars, int *c)
+{
+	if (p->cmd_count > 500)
+	{
+		ft_putendl_fd("too many commands", 2);
+		p->status = 1;
+		return (1);
+	}
+	else if (p && pars && pars->str && p->cmd_count == 1
+		&& is_buildin(pars->str[0]))
+	{
+		p->status = execute(p, c, pars);
+		return (1);
+	}
+	return (0);
+}
+
 int	do_stuff(t_pipex *p, t_minishell_p *pars)
 {
 	int	c;
 	
 	c = 0;
-	if (p->cmd_count > 500)
-		return (error("too many commands", 1));
 	while (p && pars && c < p->cmd_count)
 	{
+		if (check(p, pars, &c))
+			return (p->status);
 		p->pid[c] = fork();
 		if (p->pid[c] == -1)
 			return (error("fork failed", 1));
@@ -99,7 +116,7 @@ int	main(int ac, char **av, char **envp)
 	{
 		refresh_init(&p, &input, &pars);
 		if (!pars)
-			continue;
+			continue ;
 		if (pars->str && ft_strcmp_bool(pars->str[0], "exit"))
 		{
 			if (pars->str[1])

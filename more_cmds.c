@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:09:17 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/20 19:10:19 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/22 19:41:38 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	is_buildin(char *s)
 	return (false);
 }
 
-int	do_this(t_pipex *p, t_minishell_p *pars)//add returns
+int	do_this(t_pipex *p, t_minishell_p *pars)
 {
 	if (ft_strcmp_bool(pars->str[0], "unset"))
 		return (unset(p, pars->str));
