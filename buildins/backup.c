@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   backup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 15:30:52 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/22 16:36:30 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/22 20:44:56 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../minishell.h"
 
 int	backup_env(t_pipex *p, char *temp)
 {
 	p->menv = NULL;
-	p->menv = malloc(sizeof(char *) * 3);
+	p->menv = ft_calloc(3, sizeof(char *));
 	if (!p->menv)
 		return (1);
 	p->menv[0] = ft_strjoin("PWD=", temp);
@@ -25,14 +24,13 @@ int	backup_env(t_pipex *p, char *temp)
 	p->menv[1] = ft_strdup("SHLVL=1");
 	if (!p->menv[1])
 		return (1);
-	p->menv[2] = NULL;
 	return (0);
 }
 
 int	backup_xport(t_pipex *p, char *temp)
 {
 	p->xport = NULL;
-	p->xport = malloc(sizeof(char *) * 4);
+	p->xport = ft_calloc(4, sizeof(char *));
 	if (!p->xport)
 		return (1);
 	p->xport[0] = create_add_export("OLDPWD");
@@ -44,8 +42,6 @@ int	backup_xport(t_pipex *p, char *temp)
 	p->xport[2] = create_add_export("SHLVL=1");
 	if (!p->xport[2])
 		return (1);
-	p->xport[3] = NULL;
-	resort_arr(p->xport);
 	return (0);
 }
 

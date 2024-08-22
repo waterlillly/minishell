@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:48:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/21 17:49:25 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/22 23:26:33 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,3 +119,16 @@ char	**update_free_arr(char **old, char **new)
 	ft_free_double(new);
 	return (ret);
 }
+/*
+void	update(t_pipex *p)
+{
+	p->pwd = NULL;
+	p->pwd = get_env(p, "PWD");
+	if (!p->pwd)
+		return ;
+	p->oldpwd = NULL;
+	p->oldpwd = get_env(p, "OLDPWD");
+	if (!p->oldpwd)
+		return ;
+	return (combine_export(p));
+}*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:47:48 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/21 17:49:01 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/22 22:42:47 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,29 @@ void	reset_old_pwd(t_pipex *p, char *path)
 {
 	char	*temp;
 
-	if (!p || !path || !p->pwd)
-		return ;
 	temp = NULL;
 	temp = ft_strdup(p->oldpwd);
 	if (!temp)
 		return ;
-	free(p->oldpwd);
+	//free(p->oldpwd);
 	p->oldpwd = NULL;
 	p->oldpwd = ft_strdup(p->pwd);
 	if (!p->oldpwd)
 		return ;
 	if (is_access(path))
 	{
-		free(p->pwd);
+		//free(p->pwd);
 		p->pwd = NULL;
 		p->pwd = ft_strdup(path);
-		if (!p->pwd)
-			return ;
 	}
 	else
 	{
-		free(p->oldpwd);
+		//free(p->oldpwd);
 		p->oldpwd = NULL;
 		p->oldpwd = ft_strdup(temp);
-		if (!p->oldpwd)
-			return ;
 	}
 	free(temp);
 	temp = NULL;
-	//update_both(p);
 }
 
 int	join_oldpwd(t_pipex *p, char **temp, char *oldpwd)
@@ -53,24 +46,18 @@ int	join_oldpwd(t_pipex *p, char **temp, char *oldpwd)
 	int	x;
 
 	x = 0;
-	if (!p || !temp || !oldpwd)
-		return (1);
-	while (temp[x] && oldpwd)
+	while (p && temp && temp[x] && oldpwd)
 	{
 		if (!temp[x + 1])
 		{
-			free(temp[x]);
-			temp[x] = NULL;
 			p->oldpwd = NULL;
 			p->oldpwd = ft_strjoin_free_one(oldpwd, NULL);
 			if (!p->oldpwd)
-				return (1);
-			//return (update_both(p));
-			return (0);
+				return (free(temp[x]), temp[x] = NULL, 1);
+			return (free(temp[x]), temp[x] = NULL, 0);
 		}
 		if (oldpwd && oldpwd[ft_strlen(oldpwd)] != '/')
 		{
-			printf("oldpwd: %s\n", oldpwd);
 			oldpwd = ft_strjoin_free_one(oldpwd, "/");
 			if (!oldpwd)
 				return (1);
@@ -99,6 +86,8 @@ int	go_up_oldpwd(t_pipex *p)
 		if (!p->pwd)
 			return (1);
 	}
+	if (ft_strcmp_bool(p->pwd, "/"))
+		return (0);
 	temp = ft_split(p->pwd, '/');
 	if (!temp)
 		return (1);

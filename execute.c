@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 16:27:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/21 17:48:44 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/22 21:22:27 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int	redir_input(t_pipex *p, int *c, t_minishell_p *pars)
 	if (p->filein != -1)
 	{
 		if (dup2(p->filein, STDIN_FILENO) == -1)
-		return (error("dup2 failed", p->status));
+		return (perror("dup2"), 1);
 	}
 	else if (*c > 0)
 	{
 		if (dup2(p->pip[*c - 1][0], STDIN_FILENO) == -1)
-		return (error("dup2 failed", p->status));
+		return (perror("dup2"), 1);
 	}
 	return (0);
 }
@@ -36,17 +36,17 @@ int	redir_output(t_pipex *p, int *c, t_minishell_p *pars)
 	if (p->fileout != -1)
 	{
 		if (dup2(p->fileout, STDOUT_FILENO) == -1)
-			return (error("dup2 failed", p->status));
+			return (perror("dup2"), 1);
 	}
 	else if (*c < p->cmd_count - 1)
 	{
 		if (dup2(p->pip[*c][1], STDOUT_FILENO) == -1)
-		return (error("dup2 failed", p->status));
+		return (perror("dup2"), 1);
 	}
 	else if (*c == p->cmd_count - 1)
 	{
 		if (dup2(STDOUT_FILENO, p->copy_stdout) == -1)
-			return (error("dup2 failed", p->status));
+			return (perror("dup2"), 1);
 	}
 	return (0);
 }

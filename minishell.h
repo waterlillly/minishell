@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/22 20:00:48 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/22 23:12:38 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ int		backup(t_pipex *p);
 /*CD_FIND_PATH*/
 int		add_to_path(t_pipex *p, char *t);
 int		go_back(t_pipex *p, int print);
-char	*check_slash(char *tok, char *temp);
+void	check_print(char *s);
 int		go_slash(t_pipex *p, char **token);
 int		go_full_path(t_pipex *p, char **token);
 
