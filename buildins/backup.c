@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   backup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 15:30:52 by lbaumeis          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/08/19 17:26:52 by lbaumeis         ###   ########.fr       */
-=======
-/*   Updated: 2024/08/21 13:18:19 by lbaumeis         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2024/08/21 17:51:20 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../minishell.h"
 
