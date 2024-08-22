@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:37:12 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/20 14:38:29 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/22 19:30:32 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-/*
-
-t_minishell_l	*ft_lstnew_lex(char *content, int type)
-{
-	t_minishell_l	*out;
-
-	out = (t_list *)malloc(sizeof(*out));
-	if (!out)
-		return (out);
-	if (!type)
-		out->input = content;
-	else
-		out->input = NULL;
-	out->token = type;
-	out->next = NULL;
-	out->prev = NULL;
-	return (out);
-}
-*/
 
 int	open_line(char *input)
 {
