@@ -6,7 +6,7 @@
 /*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 09:31:58 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/22 19:07:44 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/22 19:22:57 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ t_minishell_l	*lexer(t_raw_in *in)
 	{
 		tmp = ft_lstnew_lex(in->out[i], check_red_type(in->out[i]));
 		if (!tmp)
-			free_lex(out), exit_shell(NULL, NULL, in, "ALLOC FAILED");
+			return (free_lex(out), free_everything(NULL, NULL, in), NULL);
 		ft_lstadd_back_lex(&out, tmp);
 	}
 	i = -1;

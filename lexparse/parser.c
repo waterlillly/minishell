@@ -6,7 +6,7 @@
 /*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 11:22:01 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/22 16:55:23 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/22 19:27:15 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,11 @@ t_minishell_p	*parser(t_minishell_l *in, t_raw_in *raw)
 	while (++i < raw->n_pipe + 1)
 	{
 		tmp = ft_lstnew_parse();
+		if (!tmp)
+			return (free_lex(in), free_everything(NULL, out, raw), NULL);
 		ft_lstadd_back_parse(&out, tmp);
 	}
 	set_red_parse(out, in);
 	clean_parse(out);
-	//set_parse(out);
 	return (out);
 }
