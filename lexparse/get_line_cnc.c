@@ -6,7 +6,7 @@
 /*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:25:32 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/22 16:29:42 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/22 18:47:47 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 void	get_hd(t_raw_in *in)
 {
 	in->del_str = (char **)ft_calloc(in->n_hd + 1, sizeof(char *));
+	if (!in->del_str)
+		return (exit_shell(NULL, NULL, in, "ALLOC FAILED"));
 	if (in->n_hd)
 	{
 		while (in->n_chd < in->n_hd)
@@ -49,7 +51,7 @@ void	get_pipe(t_raw_in *in)
 
 int	is_bad(char *str)
 {
-	while (str)
+	while (*str)
 	{
 		if (*str != ' ' && *str != '\t')
 			return (0);
@@ -68,6 +70,8 @@ int	get_line_cnc(t_raw_in *in)
 	if (!check_syntax(in->line) || in->open_pipe)
 		return (0);
 	in->input = ft_strcat(in->input, in->line);
+	if (!in->input)
+		return (free_raw(in), 2);
 	set_first(in, in->line);
 	free(in->line);
 	in->line = NULL;

@@ -6,7 +6,7 @@
 /*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 11:14:34 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/22 16:18:10 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/22 18:45:56 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	set_hd(t_raw_in *in, char *line)
 	q[1] = 0;
 	k = -1;
 	in->del_s = (char **)ft_calloc(in->n_hd + 1, sizeof(char *));
+	if (!in->del_s)
+		return (exit_shell(NULL, NULL, in, "FAILED ALLOC"));
 	while (k < in->n_hd - 1 && *line && *(line + 1))
 	{
 		j = 2;

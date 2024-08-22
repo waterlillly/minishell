@@ -6,7 +6,7 @@
 /*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 09:31:58 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/19 16:08:55 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/22 19:07:44 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,17 @@ void	compress_lst(t_minishell_l *in)
 	}
 }
 
+void	free_lex(t_minishell_l *in)
+{
+	t_minishell_l	*tmp;
+	
+	while (in)
+	{
+		tmp = in->next;
+		free(in);
+		in = tmp;	
+	}
+}
 
 t_minishell_l	*lexer(t_raw_in *in)
 {
@@ -117,6 +128,8 @@ t_minishell_l	*lexer(t_raw_in *in)
 	while (++i < in->sum)
 	{
 		tmp = ft_lstnew_lex(in->out[i], check_red_type(in->out[i]));
+		if (!tmp)
+			free_lex(out), exit_shell(NULL, NULL, in, "ALLOC FAILED");
 		ft_lstadd_back_lex(&out, tmp);
 	}
 	i = -1;
