@@ -6,7 +6,7 @@
 /*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/22 19:25:37 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/22 19:38:55 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ int		execute(t_pipex *p, int *c, t_minishell_p *pars);
 
 /*START*/
 void	sig_int(int	num);
+void	sig_quit(int num);
 void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *input);
 
 /*____________________LEXPARSE____________________*/
