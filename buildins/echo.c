@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/20 18:33:55 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/23 16:37:45 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,19 @@
 
 int	do_echo(t_pipex *p, char **token, int x)
 {
+	char	*str;
+
+	str = NULL;
 	if (check_n(token[x]))
 		return (0);
 	if (token[x][0] == '$' && token[x][1] == '?' && token[x][2] == '\0')
 		return (ft_putnbr_fd(p->status, 1), 0);
 	else
 	{
-		if (xpand(p, token, x) == NULL)
+		str = xpand(p, token, x);
+		if (!str)
 			return (1);
-		return (ft_putstr_fd(xpand(p, token, x), 1), 0);
+		return (ft_putstr_fd(str, 1), free(str), str = NULL, 0);
 	}
 }
 
