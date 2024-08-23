@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:26:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/22 23:15:55 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/23 14:31:35 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	check_print(char *s)
 	x = 0;
 	if (ft_strcmp_bool(s, "/"))
 		ft_putchar_fd('/', 1);
-	while (s[x] && s[x + 1])
+	while (s[x])
 	{
 		if (x == 0 && s[x] == '/' && s[x + 1] == '/')
 			x++;
@@ -74,7 +74,6 @@ int	go_back(t_pipex *p, int print)
 		reset_old_pwd(p, temp);
 		if (print == 1)
 			check_print(p->pwd);
-			//ft_putendl_fd(p->pwd, 1);
 		x = chdir(temp);
 		return (free(temp), temp = NULL, x);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/21 17:49:35 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/23 15:33:10 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,38 @@
 
 void	check_filein(t_pipex *p, t_minishell_p *pars)
 {
-	if (pars->infile)
+	if (pars && pars->redirect && pars->redirect->input
+		&& pars->redirect->token == SMALLER)
 	{
 		p->filein = -1;
-		p->filein = open(pars->infile, O_RDONLY, 0644);
-		if (p->filein == -1 || access(pars->infile, R_OK) == -1)
-			return ;//error(p, p->todo[1], p->status);
+		p->filein = open(pars->redirect->input, O_RDONLY, 0644);
+		if (p->filein == -1 || access(pars->redirect->input, R_OK) == -1)
+			return ;
 	}
 }
 
 void	check_fileout(t_pipex *p, t_minishell_p *pars)
 {
-	if (pars->outfile && pars->redirect->token == BIGGER)
+	char	*file;
+
+	file = NULL;
+	if (pars && pars->redirect && pars->redirect->input)
+		file = pars->redirect->input;
+	else
+		return ;
+	if (file && pars->redirect->token == BIGGER)
 	{
 		p->fileout = -1;
-		p->fileout = open(pars->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (p->fileout == -1 || access(pars->outfile, W_OK) == -1)
-			return ;//error(p, pars->outfile, p->status);
+		p->fileout = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (p->fileout == -1 || access(file, W_OK) == -1)
+			return ;
 	}
-	else if (pars->outfile && pars->redirect->token == BIGGERBIGGER)
+	else if (file && pars->redirect->token == BIGGERBIGGER)
 	{
 		p->fileout = -1;
-		p->fileout = open(pars->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (p->fileout == -1 || access(pars->outfile, W_OK) == -1)
-			return ;//error(p, pars->outfile, p->status);
+		p->fileout = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (p->fileout == -1 || access(file, W_OK) == -1)
+			return ;
 	}
 }
 
@@ -51,19 +59,18 @@ void init_pipes(t_pipex *p)
 	p->pip = NULL;
 	if (p->cmd_count > 1)
 	{
-		p->pip = malloc(p->cmd_count * sizeof(int *));
+		p->pip = (int **)ft_calloc(sizeof(int *), p->cmd_count);
 		if (!p->pip)
-			return ;//error(p, "malloc failed", p->status);
-		p->pip[p->cmd_count - 1] = NULL;
+			return ;
 	}
 	while (p->cmd_count > 1 && i < (p->cmd_count - 1))
 	{
 		p->pip[i] = NULL;
-		p->pip[i] = malloc(sizeof(int) * 2);
+		p->pip[i] = (int *)ft_calloc(2, sizeof(int));
 		if (!p->pip[i])
-			return ;//error(p, "malloc failed", p->status);
+			return ;
 		if (pipe(p->pip[i]) == -1)
-			return ;//error(p, "pipe failed", p->status);
+			return ;
 		i++;
 	}
 }
@@ -107,12 +114,12 @@ int	first_init(t_pipex *p, char **envp)
 	p->status = 0;
 	x = buildins_init(p, envp);
 	if (x != 0)
-		return (x);
+		return (p->status = x, x);
 	p->cwd = NULL;
 	p->copy_stdin = -1;
 	p->copy_stdout = -1;
 	p->paths = ft_split(p->mpath, ':');
 	if (!p->paths)
-		return (1);//error(p, "ft_split failed", p->status);
+		return (p->status = 1, 1);
 	return (x);
 }

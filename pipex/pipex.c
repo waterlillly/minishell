@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/21 17:47:21 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/23 15:30:21 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ char	*is_exec(t_pipex *p)
 	{
 		p->executable = ft_strjoin(p->paths[i], "/");
 		if (!p->executable)
-			return (NULL);//error(p, "strjoin failed", p->status);
+			return (NULL);
 		p->part = ft_strjoin(p->executable, p->cmd);
 		free(p->executable);
 		p->executable = NULL;
 		if (!p->part)
-			return (NULL);//error(p, "strjoin failed", p->status);
+			return (NULL);
 		if (access(p->part, X_OK) == 0)
 			return (p->part);
 		free(p->part);
@@ -66,12 +66,11 @@ int	do_heredoc(t_pipex *p, t_minishell_p *pars)
 	return (0);
 }
 
-int	exec_cmd(t_pipex *p, int *c, t_minishell_p *pars)
+int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 {
 	int	x;
 
 	x = 0;
-	(void)c;
 	if (!p || !pars || !pars->str)
 		return (1);
 	if (pars->redirect && pars->redirect->token == HEREDOC)
@@ -91,7 +90,7 @@ int	exec_cmd(t_pipex *p, int *c, t_minishell_p *pars)
 	}
 	p->path = is_exec(p);
 	if (!p->path)
-		return (error(p->path, 0));
+		return (error(p->path, 1));
 	close_all(p);
 	return (execve(p->path, pars->str, p->menv));
 }

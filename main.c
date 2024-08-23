@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/22 20:29:40 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/23 14:22:58 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void free_parse(t_minishell_p *in)
 		while (in->redirect)
 		{
 			tmp_l = in->redirect->next;
-			free (in->redirect);
+			free(in->redirect);
 			in->redirect = tmp_l;
 		}
 		if (in->str)
@@ -35,7 +35,6 @@ void free_parse(t_minishell_p *in)
 		in = tmp_p;
 	}
 }
-
 
 void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 {
@@ -92,12 +91,31 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 	return (p->status);
 }
 
+bool	run(t_pipex *p, t_raw_in *input, t_minishell_p *pars)
+{
+	refresh_init(p, input, &pars);
+	if (!pars)
+		return (true);//continue ;
+	if (pars->str && ft_strcmp_bool(pars->str[0], "exit"))
+	{
+		if (pars->str[1])
+			p->status = ft_atoi(pars->str[1]);
+		return (false);
+	}
+	else
+	{
+		p->status = do_stuff(p, pars);
+		if (p->status != 0)
+			return (false);
+		free_everything(p, pars, input);
+	}
+	return (true);
+}
 int	main(int ac, char **av, char **envp)
 {
 	t_pipex			p;
 	t_minishell_p	*pars;
 	t_raw_in		input;
-	bool			run;
 	
 	if (ac < 1 || !av)
 		return (perror("invalid input"), 1);
@@ -105,32 +123,14 @@ int	main(int ac, char **av, char **envp)
 	ft_bzero(&input, sizeof(t_raw_in));
 	pars = NULL;
 	signal(SIGINT, &sig_int);
-	p.status = first_init(&p, envp);
-	if (p.status != 0)
+	if (first_init(&p, envp) != 0)
 	{
 		exit_shell(&p, pars, &input, NULL);
 		exit(p.status);
 	}
-	run = true;
-	while (run)
+	while (1)
 	{
-		refresh_init(&p, &input, &pars);
-		if (!pars)
-			continue ;
-		if (pars->str && ft_strcmp_bool(pars->str[0], "exit"))
-		{
-			if (pars->str[1])
-				p.status = ft_atoi(pars->str[1]);
-			run = false;
-		}
-		else
-		{
-			p.status = do_stuff(&p, pars);
-			if (p.status != 0)
-				run = false;
-			free_everything(&p, pars, &input);
-		}
-		if (run == false)
+		if (run(&p, &input, pars) == false)
 		{
 			exit_shell(&p, pars, &input, NULL);
 			exit(p.status);

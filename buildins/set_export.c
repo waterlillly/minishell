@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/22 22:23:50 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/23 13:31:48 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ int	update_export(t_pipex *p, char *tok, char *token)
 	x = find_str_part(p->xport, temp);
 	if (x == -1)
 		return (free(temp), temp = NULL, 1);
-	temp1 = ft_strjoin("=", add_quotes(token));
+	temp1 = ft_strjoin("=", add_quotes(ft_substr(token, ft_strlen(tok) + 1,
+		ft_strlen(token) - ft_strlen(tok))));
 	if (!temp1)
 		return (free(temp), temp = NULL, 1);
+	free(p->xport[x]);
 	p->xport[x] = NULL;
 	p->xport[x] = ft_strjoin_free_both(temp, temp1);
 	if (!p->xport[x])

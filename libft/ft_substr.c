@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:40:20 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 15:52:04 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/23 14:46:41 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,30 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	size;
 	size_t	i;
 	char	*src;
 	char	*sub;
 
-	if (!s)
+	if (!s || ft_strlen(s) == 0)
 		return (NULL);
-	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
+	if ((size_t)start >= ft_strlen(s))
+	{
+		sub = ft_strdup("");
+		return (sub);
+	}
 	i = 0;
 	src = (char *)s;
-	size = ft_strlen(s) - start;
-	if (len > size)
-		len = size;
-	sub = (char *)malloc(sizeof(char) * (len + 1));
+	if (len > ft_strlen(s) - (size_t)start)
+		len = ft_strlen(s) - (size_t)start;
+	sub = NULL;
+	sub = (char *)ft_calloc((len + 1), sizeof(char));
 	if (!sub)
 		return (NULL);
-	while (src[i] && i < len)
+	while (i < len && src[start + i])
 	{
-		sub[i] = src[start + i];
+		sub[i] = src[(size_t)start + i];
 		i++;
 	}
-	sub[i] = '\0';
 	return (sub);
 }
 

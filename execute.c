@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 16:27:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/22 21:22:27 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/23 15:40:24 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	redir_input(t_pipex *p, int *c, t_minishell_p *pars)
 {
-	if (pars->infile)
+	if (pars && pars->redirect && pars->redirect->input)
 		check_filein(p, pars);
 	if (p->filein != -1)
 	{
@@ -31,7 +31,7 @@ int	redir_input(t_pipex *p, int *c, t_minishell_p *pars)
 
 int	redir_output(t_pipex *p, int *c, t_minishell_p *pars)
 {
-	if (pars->outfile)
+	if (pars && pars->redirect && pars->redirect->input)
 		check_fileout(p, pars);
 	if (p->fileout != -1)
 	{
@@ -65,5 +65,5 @@ int	execute(t_pipex *p, int *c, t_minishell_p *pars)
 	if (x != 0)
 		return (x);
 	close_all(p);
-	return (exec_cmd(p, c, pars));
+	return (exec_cmd(p, pars));
 }

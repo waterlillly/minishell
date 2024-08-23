@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:48:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/22 23:26:33 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/23 13:42:27 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,17 @@ int	find_str_part(char **str, char *tok)
 	int	y;
 
 	x = 0;
-	if (!str || !tok)
+	if (!str || !tok || !str[x])
 		return (-1);
 	while (str[x] && tok)
 	{
 		y = 0;
 		while (tok[y] && str[x][y] && tok[y] == str[x][y])
+		{
 			y++;
-		if (tok[y] == '\0' && (str[x][y] == '=' || str[x][y] == '\0'))
-			return (x);
+			if (tok[y] == '\0' && (str[x][y] == '\0' || str[x][y] == '='))
+				return (x);
+		}
 		x++;
 	}
 	return (-1);
@@ -116,7 +118,8 @@ char	**update_free_arr(char **old, char **new)
 		x++;
 	}
 	ret[x] = NULL;
-	ft_free_double(new);
+	if (new)
+		ft_free_double(new);
 	return (ret);
 }
 /*

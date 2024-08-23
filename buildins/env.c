@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/21 17:48:55 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/08/23 15:06:04 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ bool	valid_env(t_pipex *p, char *tok)
 char	*get_env(t_pipex *p, char *str)
 {
 	int		x;
-	size_t	len;
+	int		len;
 	char	*result;
 
 	x = -1;
@@ -70,22 +70,18 @@ char	*get_env(t_pipex *p, char *str)
 	result = NULL;
 	while (p && str && p->menv && p->menv[++x])
 	{
-		if (ft_strnstr(p->menv[x], str, ft_strlen(str))
-			== &(p->menv[x][0]))
+		if (ft_strlen(str) > 0 && ft_strlen(p->menv[x]) > 0
+			&& ft_strnstr(p->menv[x], str, ft_strlen(str)) == &(p->menv[x][0]))
 		{
-			len = ft_strlen(p->menv[x]) - ft_strlen(str);
+			len = (int)ft_strlen(p->menv[x]) - (int)ft_strlen(str);
 			if (len <= 0)
-				return ("\n");
-			//result = malloc(sizeof(char) * len);
-			//if (!result)
-			//	return (NULL);
-			result = ft_substr(p->menv[x], ft_strlen(str) + 1, len - 1);
-			if (!result)
-				return (NULL);
+				break ;
+			result = ft_substr(p->menv[x], ft_strlen(str) + 1, (size_t)len + 1);
 			return (result);
 		}
 	}
-	return ("\n");
+	result = ft_strdup("\n");
+	return (result);
 }
 
 int	get_menv(t_pipex *p, char **envp)
@@ -98,7 +94,7 @@ int	get_menv(t_pipex *p, char **envp)
 	if (!envp)
 		return (backup(p));
 	p->menv = NULL;
-	p->menv = ft_calloc((ft_arrlen(envp) + 1), sizeof(char *));
+	p->menv = (char **)ft_calloc((ft_arrlen(envp) + 1), sizeof(char *));
 	if (!p->menv)
 		return (1);
 	while (envp[x])
@@ -108,7 +104,6 @@ int	get_menv(t_pipex *p, char **envp)
 			return (ft_free_double(p->menv), 1);
 		x++;
 	}
-	p->menv[x] = NULL;
 	return (0);
 }
 

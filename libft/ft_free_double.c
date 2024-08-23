@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_double.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 17:00:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 15:47:44 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/23 13:15:27 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 void	ft_free_double(char **smth)
 {
-	int		x;
+	int	x;
 
-	x = 0;
+	if (!smth)
+		return ;
+	x = ft_arrlen(smth);
 	while (smth[x])
-		x++;
-	x--;
-	while (x >= 0)
 	{
 		free(smth[x]);
 		smth[x] = NULL;
 		x--;
 	}
+	free(smth);
 	smth = NULL;
 }

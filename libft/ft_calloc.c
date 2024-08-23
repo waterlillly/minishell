@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:38:01 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 15:47:22 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/23 14:40:40 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*p;
 
+	p = NULL;
 	p = malloc(nmemb * size);
 	if (!p)
 		return (NULL);

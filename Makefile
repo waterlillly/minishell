@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+         #
+#    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 16:33:47 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/08/22 17:07:53 by mgardesh         ###   ########.fr        #
+#    Updated: 2024/08/23 12:58:18 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,8 @@ CFILES += lexparse/skip_q.c lexparse/parser.c lexparse/set.c lexparse/is_oq.c
 OFILES = $(CFILES:.c=.o)
 NAME = minishell
 
-#NUMTH = $(shell nproc)
-#MAKEFLAGS += --jobs=$(NUMTH)
+NUMTH = $(shell nproc)
+MAKEFLAGS += --jobs=$(NUMTH)
 
 all: $(NAME)
 
