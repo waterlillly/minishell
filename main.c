@@ -6,7 +6,7 @@
 /*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/26 15:43:48 by mehras           ###   ########.fr       */
+/*   Updated: 2024/08/26 15:50:05 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	}
 	return (true);
 }
+
 int	main(int ac, char **av, char **envp)
 {
 	t_pipex			p;
@@ -123,6 +124,7 @@ int	main(int ac, char **av, char **envp)
 	ft_bzero(&input, sizeof(t_raw_in));
 	pars = NULL;
 	signal(SIGINT, &sig_int);
+	signal(SIGQUIT, &sig_quit);
 	if (first_init(&p, envp) != 0)
 	{
 		exit_shell(&p, pars, &input, NULL);
