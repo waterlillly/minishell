@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/23 14:22:58 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/26 15:43:48 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,23 +91,23 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 	return (p->status);
 }
 
-bool	run(t_pipex *p, t_raw_in *input, t_minishell_p *pars)
+bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 {
-	refresh_init(p, input, &pars);
-	if (!pars)
+	refresh_init(p, input, pars);
+	if (!*pars)
 		return (true);//continue ;
-	if (pars->str && ft_strcmp_bool(pars->str[0], "exit"))
+	if ((*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit"))
 	{
-		if (pars->str[1])
-			p->status = ft_atoi(pars->str[1]);
+		if ((*pars)->str[1])
+			p->status = ft_atoi((*pars)->str[1]);
 		return (false);
 	}
 	else
 	{
-		p->status = do_stuff(p, pars);
+		p->status = do_stuff(p, *pars);
 		if (p->status != 0)
 			return (false);
-		free_everything(p, pars, input);
+		free_everything(p, *pars, input);
 	}
 	return (true);
 }
@@ -130,7 +130,7 @@ int	main(int ac, char **av, char **envp)
 	}
 	while (1)
 	{
-		if (run(&p, &input, pars) == false)
+		if (run(&p, &input, &pars) == false)
 		{
 			exit_shell(&p, pars, &input, NULL);
 			exit(p.status);

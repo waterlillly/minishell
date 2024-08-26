@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/23 15:30:49 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/26 15:44:03 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 int		check(t_pipex *p, t_minishell_p *pars, int *c);
 int		do_stuff(t_pipex *p, t_minishell_p *pars);
 void	restore_fds(t_pipex *p);
-bool	run(t_pipex *p, t_raw_in *input, t_minishell_p *pars);
+bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 
 /*EXECUTE*/
 int		redir_input(t_pipex *p, int *c, t_minishell_p *pars);
