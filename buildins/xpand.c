@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/27 16:37:09 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/27 17:34:10 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,5 @@ char	*xpand(t_pipex *p, char **token, int x)
 		return (free(temp1), temp1 = NULL, temp2);
 	}
 	else
-		return (free(temp), temp = NULL, free(temp1), temp1 = NULL, temp);
+		return (free(temp1), temp1 = NULL, temp);
 }
