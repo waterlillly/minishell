@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+         #
+#    By: mehras <mehras@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 18:13:23 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/08/22 17:07:45 by mgardesh         ###   ########.fr        #
+#    Updated: 2024/08/26 21:26:30 by mehras           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = libft.a
 
-#NUMTH = $(shell nproc)
-#MAKEFLAGS += --jobs=$(NUMTH)
+NUMTH = $(shell nproc)
+MAKEFLAGS += --jobs=$(NUMTH)
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
