@@ -47,7 +47,7 @@ int	combine_export(t_pipex *p)
 	arr = sort_arr(p);
 	if (!arr)
 		return (1);
-	p->xport = (char **)ft_calloc((ft_arrlen(arr) + 1), sizeof(char *));
+	p->xport = (char **)ft_calloc((ft_strlen_2d(arr) + 1), sizeof(char *));
 	if (!p->xport)
 		return (ft_free_double(arr), 1);
 	while (arr && arr[++y])

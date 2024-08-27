@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/27 17:39:46 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/27 18:47:38 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		if (p->pid[c] == 0)
 		{
 			p->status = execute(p, &c, pars);
-			//if (p->status != 0)
-			//	return (p->status);
+			if (p->status != 0)
+				return (p->status);
 		}
 		c++;
 		pars = pars->next;
@@ -103,9 +103,9 @@ bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	else
 	{
 		p->status = do_stuff(p, *pars);
-		free_everything(p, *pars, input);
 		if (p->status != 0)
 			return (false);
+		free_everything(p, *pars, input);
 	}
 	return (true);
 }
