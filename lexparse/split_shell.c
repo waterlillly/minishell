@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 10:51:09 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/23 13:08:28 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/25 19:28:26 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*skip_shell(char *str, char *charset, int *len)
 	{
 		j = is_oq(*(str + *len), &dq, &sq);
 		if (is_sep("<>|", *(str + *len)) && !j)
-			break;
+			break ;
 		*len = *len + 1;
 	}
 	return (str);
@@ -103,8 +103,8 @@ int	count(char *str, char *charset)
 
 void	ft_split_shell(t_raw_in *in)
 {
-	int	i;
-	int	len;
+	int		i;
+	int		len;
 	char	*tmp;
 	
 	len = 0;

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:24:45 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/23 13:03:06 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:10:26 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ char	*add_quotes(char *token)
 	new = ft_calloc((ft_strlen(token) + 3), sizeof(char));
 	if (!new)
 		return (NULL);
-	new[y++] = '\"';
+	new[y] = '\"';
+	y++;
 	while (token[x])
 		new[y++] = token[x++];
-	new[y++] = '\"';
-	new[y] = '\0';
+	new[y] = '\"';
+	//new[y + 1] = '\0';
 	return (new);
 }
 
@@ -55,11 +56,7 @@ char	*remove_quotes(char *s)
 		if (s[x] == '\"' || s[x] == '\'')
 			x++;
 		else
-		{
-			temp[y] = s[x];
-			y++;
-			x++;
-		}
+			temp[y++] = s[x++];
 	}
 	return (temp);
 }

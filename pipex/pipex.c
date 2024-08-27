@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/23 16:35:54 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:01:30 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,21 @@ int	do_heredoc(t_pipex *p, t_minishell_p *pars)
 {
 	char	**new;
 	int		x;
-	int		y;
 
 	new = NULL;
 	x = -1;
-	y = 0;
-	if (!p || !pars || !pars->redirect || !pars->redirect->str)
+	if (!p || !pars || !pars->redirect || !pars->redirect->str || !pars->str)
 		return (0);
-	//printf("%s\n", pars->redirect->str);
-	if (s_out_q(pars->redirect->str))
-		return (ft_putendl_fd(rm_out_q(pars->redirect->str), 1), 0);
+	if (check_s_q(pars->redirect->input) || check_d_q(pars->redirect->input))
+		return (ft_putstr_fd(rm_out_q(pars->redirect->str), 1), 0);
 	new = ft_split(pars->redirect->str, '\n');
 	if (!new)
 		return (1);
-	//ft_print_array(new);
 	while (new[++x])
 	{
-		y = do_echo(p, new, x);
-		if (y != 0)
-			return (ft_free_double(new), y);
+		do_echo(p, new, x);
 		if (new[x + 1] != NULL)
-			ft_putstr_fd(" ", 1);
+			ft_putstr_fd("\n", 1);
 	}
 	ft_putchar_fd('\n', 1);
 	ft_free_double(new);
@@ -71,9 +65,11 @@ int	do_heredoc(t_pipex *p, t_minishell_p *pars)
 
 int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 {
-	int	x;
+	int		x;
+	char	*temp;
 
 	x = 0;
+	temp = NULL;
 	if (!p || !pars || !pars->str)
 		return (1);
 	if (pars->redirect && pars->redirect->token == HEREDOC)
@@ -81,11 +77,13 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 		x = do_heredoc(p, pars);
 		return (close_all(p), x);
 	}
-	if (pars->str[0][0] == '$' && valid_env(p, ft_substr(pars->str[0], 1,
-		ft_strlen(pars->str[0]) - 1)))
+	temp = ft_substr(pars->str[0], 1, ft_strlen(pars->str[0]) - 1);
+	if (pars->str[0][0] == '$' && valid_env(p, temp))
 		p->cmd = xpand(p, pars->str, 0);
 	else
 		p->cmd = pars->str[0];
+	free(temp);
+	temp = NULL;
 	if (is_buildin(p->cmd))
 	{
 		x = do_this(p, pars);
@@ -93,7 +91,7 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 	}
 	p->path = is_exec(p);
 	if (!p->path)
-		return (error(p->path, 1));
+		return (perror(p->path), 1);
 	close_all(p);
 	return (execve(p->path, pars->str, p->menv));
 }

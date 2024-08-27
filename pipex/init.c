@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/23 15:33:10 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/25 19:30:40 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	check_fileout(t_pipex *p, t_minishell_p *pars)
 	file = NULL;
 	if (pars && pars->redirect && pars->redirect->input)
 		file = pars->redirect->input;
-	else
-		return ;
 	if (file && pars->redirect->token == BIGGER)
 	{
 		p->fileout = -1;
@@ -79,10 +77,7 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 {
 	t_minishell_p	*tmp;
 
-	tmp = NULL;
 	tmp = pars;
-	if (!tmp)
-		return ;
 	p->copy_stdin = dup(STDIN_FILENO);
 	p->copy_stdout = dup(STDOUT_FILENO);
 	p->cmd_count = 0;
@@ -94,15 +89,15 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 	p->filein = -1;
 	p->fileout = -1;
 	p->here = NULL;
-	here_or_not(p, pars);
+	if (pars && pars->redirect && pars->redirect->token == HEREDOC)
+		p->here = ft_strdup(pars->redirect->str);
 	p->path = NULL;
 	p->executable = NULL;
 	p->part = NULL;
 	p->cmd = NULL;
-	p->pid = NULL;
-	p->pid = malloc(sizeof(pid_t) * p->cmd_count);
+	p->pid = (pid_t *)ft_calloc(p->cmd_count, sizeof(pid_t));
 	if (!p->pid)
-		return ;//error(p, "malloc failed", p->status);
+		return ;
 	init_pipes(p);
 }
 
@@ -115,11 +110,10 @@ int	first_init(t_pipex *p, char **envp)
 	x = buildins_init(p, envp);
 	if (x != 0)
 		return (p->status = x, x);
-	p->cwd = NULL;
 	p->copy_stdin = -1;
 	p->copy_stdout = -1;
 	p->paths = ft_split(p->mpath, ':');
 	if (!p->paths)
-		return (p->status = 1, 1);
-	return (x);
+		return (p->status = 1, err_free(p), 1);//maybe return 0?
+	return (0);
 }

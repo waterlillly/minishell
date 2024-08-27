@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/20 18:33:30 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:37:09 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,27 @@ char	*rm_out_q(char *tok)
 char	*xpand(t_pipex *p, char **token, int x)
 {
 	char	*temp;
+	char	*temp1;
+	char	*temp2;
 
 	if (!p || !token || !token[x])
 		return (NULL);
 	temp = NULL;
+	temp1 = NULL;
+	temp2 = NULL;
 	temp = rm_out_q(token[x]);
+	temp1 = ft_substr(temp, 1, ft_strlen(temp) - 1);
 	if ((check_d_q(token[x]) == true || (check_d_q(token[x]) == false
 		&& check_s_q(token[x]) == false)) && temp[0] == '$'
-		&& !valid_env(p, ft_substr(temp, 1, ft_strlen(temp) - 1)))
-		return (NULL);
+		&& !valid_env(p, temp1))
+		return (free(temp), free(temp1), temp = NULL, temp1 = NULL, NULL);
 	else if ((check_d_q(token[x]) == true
 		|| (check_d_q(token[x]) == false && check_s_q(token[x]) == false))
-		&& valid_env(p, ft_substr(temp, 1, ft_strlen(temp) - 1)))
-		return (get_env(p, ft_substr(temp, 1, ft_strlen(temp) - 1)));
+		&& valid_env(p, temp1))
+	{
+		temp2 = get_env(p, temp1);
+		return (free(temp1), temp1 = NULL, temp2);
+	}
 	else
-		return (temp);
+		return (free(temp), temp = NULL, free(temp1), temp1 = NULL, temp);
 }

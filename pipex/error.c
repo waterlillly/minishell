@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:04:36 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/23 15:08:05 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/27 15:01:19 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	restore_fds(t_pipex *p)
 {
-	if (p && p->copy_stdin != -1)
+	if (p->copy_stdin != -1)
 	{
 		dup2(p->copy_stdin, STDIN_FILENO);
 		close(p->copy_stdin);
 	}
-	if (p && p->copy_stdout != -1)
+	if (p->copy_stdout != -1)
 	{
 		dup2(p->copy_stdout, STDOUT_FILENO);
 		close(p->copy_stdout);
@@ -31,9 +31,9 @@ void	close_pipes(t_pipex *p)
 	int	i;
 
 	i = 0;
-	if (!p || p->cmd_count <= 1)
+	if (p->cmd_count <= 1)
 		return ;
-	else if (p && p->pip && p->pip[i])
+	else if (p->pip && p->pip[i])
 	{
 		while (p->pip && i < (p->cmd_count - 1) && p->pip[i])
 		{
@@ -60,20 +60,15 @@ void	close_all(t_pipex *p)
 		close_pipes(p);
 }
 
-void	err_free_two(t_pipex *p)
+void	err_free(t_pipex *p)
 {
 	if (p->pid)
 	{
 		free(p->pid);
 		p->pid = NULL;
 	}
-	if (p->pip || p->copy_stdout || p->copy_stdin)
+	if (p->pip)
 		close_all(p);
-}
-
-void	err_free(t_pipex *p)
-{
-	err_free_two(p);
 	if (p->path)
 	{
 		free(p->path);
@@ -89,4 +84,6 @@ void	err_free(t_pipex *p)
 		free(p->part);
 		p->part = NULL;
 	}
+	if (p->here)
+		free(p->here);
 }

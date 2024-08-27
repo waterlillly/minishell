@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/23 15:06:04 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/27 16:53:12 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,24 @@ char	**copy_arr_env(t_pipex *p)
 {
 	int		x;
 	char	**arr;
+	char	*temp;
 
 	x = 0;
 	if (!p || !p->menv)
 		return (NULL);
-	arr = NULL;
 	arr = ft_calloc((ft_arrlen(p->menv) + 1), sizeof(char *));
 	if (!arr)
 		return (NULL);
 	while (p->menv[x])
 	{
-		arr[x] = strcpy_until(p->menv[x]);
+		temp = strcpy_until(p->menv[x]);
+		if (!temp)
+			return (ft_free_double(arr), NULL);
+		arr[x] = temp;
+		if (!arr[x])
+			return (ft_free_double(arr), NULL);
 		x++;
 	}
-	arr[x] = NULL;
 	return (arr);
 }
 
@@ -39,8 +43,6 @@ bool	valid_env(t_pipex *p, char *tok)
 	int	y;
 
 	x = 0;
-	if (!p || !tok || !p->menv)
-		return (false);
 	while (p->menv[x])
 	{
 		y = 0;
@@ -63,25 +65,25 @@ char	*get_env(t_pipex *p, char *str)
 {
 	int		x;
 	int		len;
-	char	*result;
+	char	*res;
 
 	x = -1;
 	len = 0;
-	result = NULL;
 	while (p && str && p->menv && p->menv[++x])
 	{
 		if (ft_strlen(str) > 0 && ft_strlen(p->menv[x]) > 0
 			&& ft_strnstr(p->menv[x], str, ft_strlen(str)) == &(p->menv[x][0]))
 		{
-			len = (int)ft_strlen(p->menv[x]) - (int)ft_strlen(str);
+			len = ft_strlen(p->menv[x]) - ft_strlen(str);
 			if (len <= 0)
 				break ;
-			result = ft_substr(p->menv[x], ft_strlen(str) + 1, (size_t)len + 1);
-			return (result);
+			res = ft_substr(p->menv[x], ft_strlen(str) + 1, (size_t)len + 1);
+			if (!res)
+				return (NULL);
+			return (res);
 		}
 	}
-	result = ft_strdup("\n");
-	return (result);
+	return ("\n");
 }
 
 int	get_menv(t_pipex *p, char **envp)
@@ -89,19 +91,16 @@ int	get_menv(t_pipex *p, char **envp)
 	int	x;
 
 	x = 0;
-	if (!p)
-		return (1);
-	if (!envp)
-		return (backup(p));
-	p->menv = NULL;
+	//if (!envp)
+	//	return (backup(p));
 	p->menv = (char **)ft_calloc((ft_arrlen(envp) + 1), sizeof(char *));
 	if (!p->menv)
 		return (1);
 	while (envp[x])
 	{
-		p->menv[x] = ft_strdup(envp[x]);
+		p->menv[x] = envp[x];
 		if (!p->menv[x])
-			return (ft_free_double(p->menv), 1);
+			return (1);
 		x++;
 	}
 	return (0);
@@ -127,5 +126,6 @@ int	buildins_init(t_pipex *p, char **envp)
 	p->mpath = get_env(p, "PATH");
 	if (!p->mpath)
 		return (1);
-	return (combine_export(p));
+	x = combine_export(p);
+	return (x);
 }

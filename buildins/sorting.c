@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:54:40 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/20 19:43:22 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/25 21:28:09 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	swap(char **arr, int x)
 
 	if (!arr || !arr[x] || !arr[x + 1])
 		return ;
-	temp = NULL;
 	temp = arr[x];
 	arr[x] = arr[x + 1];
 	arr[x + 1] = temp;
