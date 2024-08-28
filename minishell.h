@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/27 18:09:04 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/28 13:25:13 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 int		check(t_pipex *p, t_minishell_p *pars, int *c);
 int		do_stuff(t_pipex *p, t_minishell_p *pars);
 void	restore_fds(t_pipex *p);
-bool	run(t_pipex *p, t_raw_in *input, t_minishell_p *pars);
+bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 
 /*EXECUTE*/
 int		redir_input(t_pipex *p, int *c, t_minishell_p *pars);

@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/08/27 18:47:38 by mehras           ###   ########.fr       */
-=======
-/*   Updated: 2024/08/27 18:10:31 by lbaumeis         ###   ########.fr       */
->>>>>>> 187b940 (abc)
+/*   Updated: 2024/08/28 13:25:31 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,27 +92,20 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 	return (p->status);
 }
 
-bool	run(t_pipex *p, t_raw_in *input, t_minishell_p *pars)
+bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 {
-	if (pars->str && ft_strcmp_bool(pars->str[0], "exit"))
+	if ((*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit"))
 	{
-		if (pars->str[1])
-			p->status = ft_atoi(pars->str[1]);
+		if ((*pars)->str[1])
+			p->status = ft_atoi((*pars)->str[1]);
 		return (false);
 	}
 	else
 	{
-<<<<<<< HEAD
 		p->status = do_stuff(p, *pars);
 		if (p->status != 0)
 			return (false);
 		free_everything(p, *pars, input);
-=======
-		p->status = do_stuff(p, pars);
-		if (p->status != 0)
-			return (false);
-		free_everything(p, pars, input);
->>>>>>> 187b940 (abc)
 	}
 	return (true);
 }
@@ -144,7 +133,7 @@ int	main(int ac, char **av, char **envp)
 		refresh_init(&p, &input, &pars);
 		if (!pars)
 			continue ;
-		if (run(&p, &input, pars) == false)
+		if (run(&p, &input, &pars) == false)
 		{
 			exit_shell(&p, pars, &input, NULL);
 			exit(p.status);
