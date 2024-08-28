@@ -3,38 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/27 19:04:26 by mehras           ###   ########.fr       */
+/*   Updated: 2024/08/28 16:12:28 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	**copy_arr_env(t_pipex *p)
+void	copy_arr_env(t_pipex *p, char **arr)
 {
 	int		x;
-	char	**arr;
 	char	*temp;
 
 	x = 0;
-	if (!p || !p->menv)
-		return (NULL);
-	arr = ft_calloc((ft_arrlen(p->menv) + 1), sizeof(char *));
-	if (!arr)
-		return (NULL);
+	if (!p || !p->menv || !arr)
+		return ;
 	while (p->menv[x])
 	{
 		temp = strcpy_until(p->menv[x]);
 		if (!temp)
-			return (ft_free_double(arr), NULL);
+			return (ft_free_double(arr));
 		arr[x] = temp;
 		if (!arr[x])
-			return (ft_free_double(arr), NULL);
+			return (ft_free_double(arr));
 		x++;
 	}
-	return (arr);
 }
 
 bool	valid_env(t_pipex *p, char *tok)
@@ -126,6 +121,5 @@ int	buildins_init(t_pipex *p, char **envp)
 	p->mpath = get_env(p, "PATH");
 	if (!p->mpath)
 		return (1);
-	x = combine_export(p);
-	return (x);
+	return (combine_export(p));
 }

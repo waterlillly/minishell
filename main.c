@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/28 13:25:31 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/28 14:59:18 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	
 	lex = NULL;
 	restore_fds(p);
-	err_free(p);
 	get_input(p, &lex, pars, input);
 }
 
@@ -92,12 +91,36 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 	return (p->status);
 }
 
+void	check_exit(t_pipex *p, t_minishell_p *pars)
+{
+	char	*str;
+	char	*temp;
+
+	str = NULL;
+	temp = NULL;
+	temp = ft_itoa(ft_atoi(pars->str[1]));
+	if (ft_strcmp_bool(temp, pars->str[1]))
+		p->status = ft_atoi(pars->str[1]);
+	else
+	{
+		str = ft_strjoin_free_both(ft_strjoin(pars->str[0], ": "),
+			ft_strjoin(pars->str[1], ": "));
+		str = ft_strjoin_free_one(str, "numeric argument required\n");
+		ft_putstr_fd(str, 2);
+		free(str);
+		str = NULL;
+		p->status = 2;
+	}
+	free(temp);
+	temp = NULL;
+}
+
 bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 {
 	if ((*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit"))
 	{
 		if ((*pars)->str[1])
-			p->status = ft_atoi((*pars)->str[1]);
+			check_exit(p, *pars);
 		return (false);
 	}
 	else

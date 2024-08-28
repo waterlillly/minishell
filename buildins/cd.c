@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/27 16:03:10 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:59:39 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ int	cd(t_pipex *p, char **token)
 		else if (token[1] != NULL)
 			x = fill_path(p, token);
 	}
+	p->status = x;
 	if (x != 0)
 	{
-		p->status = x;
 		err = ft_strjoin("cd: ", token[1]);
 		return (perror(err), free(err), err = NULL, 0);
 	}

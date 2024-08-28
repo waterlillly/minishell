@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:37:12 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/27 11:56:59 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/28 15:45:03 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	free_raw(t_raw_in *in)
 	if (in->input)
 		free(in->input);
 	if (in->out)
-		ft_free_2d(in->out);//ft_free_double(in->out);
+		ft_free_double(in->out);//ft_free_2d(in->out);
 }
 
 void	init_raw(t_raw_in *in)

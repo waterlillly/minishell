@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:54:40 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/25 21:28:09 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:35:40 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ void	swap(char **arr, int x)
 	arr[x + 1] = temp;
 }
 
-char	**sort_arr(t_pipex *p)
+void	sort_arr(t_pipex *p, char **arr)
 {
-	char	**arr;
 	int		x;
 
 	if (!p || !p->menv)
-		return (NULL);
-	arr = NULL;
-	arr = copy_arr_env(p);
+		return ;
+	copy_arr_env(p, arr);
+	if (!arr)
+		return ;
 	while (arr && !sorted(arr))
 	{
 		x = 0;
@@ -57,7 +57,6 @@ char	**sort_arr(t_pipex *p)
 			x++;
 		}
 	}
-	return (arr);
 }
 
 bool	resorted(char **arr)
@@ -75,12 +74,12 @@ bool	resorted(char **arr)
 	return (true);
 }
 
-char	**resort_arr(char **arr)
+void	resort_arr(char **arr)
 {
 	int		x;
 
 	if (!arr)
-		return (NULL);
+		return ;
 	while (!resorted(arr))
 	{
 		x = 0;
@@ -91,5 +90,5 @@ char	**resort_arr(char **arr)
 			x++;
 		}
 	}
-	return (arr);
+	//return (arr);
 }

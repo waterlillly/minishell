@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/28 13:25:13 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/28 18:06:35 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 int		check(t_pipex *p, t_minishell_p *pars, int *c);
 int		do_stuff(t_pipex *p, t_minishell_p *pars);
 void	restore_fds(t_pipex *p);
+void	check_exit(t_pipex *p, t_minishell_p *pars);
 bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 
 /*EXECUTE*/
@@ -202,7 +203,7 @@ int		join_oldpwd(t_pipex *p, char **temp, char *oldpwd);
 int		go_up_oldpwd(t_pipex *p);
 
 /*ENV*/
-char	**copy_arr_env(t_pipex *p);
+void	copy_arr_env(t_pipex *p, char **arr);
 bool	valid_env(t_pipex *p, char *tok);
 char	*get_env(t_pipex *p, char *str);
 int		get_menv(t_pipex *p, char **envp);
@@ -232,6 +233,8 @@ int		echo(t_pipex *p, char **token);
 
 /*EXPAND*/
 char	*rm_out_q(char *tok);
+int		multi_d_q(char *token);
+char	*rm_inner_d_q(char *token);
 char	*xpand(t_pipex *p, char **token, int x);
 
 /*XPORT*/
@@ -250,9 +253,9 @@ int		update_both(t_pipex *p);
 /*SORTING*/
 bool	sorted(char **arr);
 void	swap(char **arr, int x);
-char	**sort_arr(t_pipex *p);
+void	sort_arr(t_pipex *p, char **arr);
 bool	resorted(char **arr);
-char	**resort_arr(char **arr);
+void	resort_arr(char **arr);
 
 /*UNSET*/
 int		update_unset(t_pipex *p, char *tok);
