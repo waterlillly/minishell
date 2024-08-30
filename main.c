@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/28 14:59:18 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/30 14:32:52 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 	int	c;
 	
 	c = 0;
-	while (p && pars && c < p->cmd_count)
+	while (p && pars && c <= p->cmd_count)
 	{
 		if (check(p, pars, &c))
 			return (p->status);
@@ -80,6 +80,8 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 			if (p->status != 0)
 				return (p->status);
 		}
+		else
+			wait(NULL);
 		c++;
 		pars = pars->next;
 	}
@@ -115,20 +117,20 @@ void	check_exit(t_pipex *p, t_minishell_p *pars)
 	temp = NULL;
 }
 
-bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
+bool	run(t_pipex *p, t_raw_in *input, t_minishell_p *pars)
 {
-	if ((*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit"))
+	if (pars->str && ft_strcmp_bool(pars->str[0], "exit"))
 	{
-		if ((*pars)->str[1])
-			check_exit(p, *pars);
+		if (pars->str[1])
+			check_exit(p, pars);
 		return (false);
 	}
 	else
 	{
-		p->status = do_stuff(p, *pars);
+		p->status = do_stuff(p, pars);
 		if (p->status != 0)
 			return (false);
-		free_everything(p, *pars, input);
+		free_everything(p, pars, input);
 	}
 	return (true);
 }
@@ -156,7 +158,7 @@ int	main(int ac, char **av, char **envp)
 		refresh_init(&p, &input, &pars);
 		if (!pars)
 			continue ;
-		if (run(&p, &input, &pars) == false)
+		if (run(&p, &input, pars) == false)
 		{
 			exit_shell(&p, pars, &input, NULL);
 			exit(p.status);

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/28 18:06:35 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/30 17:46:58 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct s_pipex
 	char	*executable;
 	char	*part;
 	char	*cmd;
+	int		temp_in;
 }			t_pipex;
 
 void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str);
@@ -119,9 +120,8 @@ void 	free_parse(t_minishell_p *in);
 void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 int		check(t_pipex *p, t_minishell_p *pars, int *c);
 int		do_stuff(t_pipex *p, t_minishell_p *pars);
-void	restore_fds(t_pipex *p);
 void	check_exit(t_pipex *p, t_minishell_p *pars);
-bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
+bool	run(t_pipex *p, t_raw_in *input, t_minishell_p *pars);
 
 /*EXECUTE*/
 int		redir_input(t_pipex *p, int *c, t_minishell_p *pars);
@@ -169,6 +169,7 @@ int		do_heredoc(t_pipex *p, t_minishell_p *pars);
 int		exec_cmd(t_pipex *p, t_minishell_p *pars);
 
 /*ERROR*/
+void	restore_fds(t_pipex *p);
 void	close_pipes(t_pipex *p);
 void	close_all(t_pipex *p);
 void	err_free(t_pipex *p);
