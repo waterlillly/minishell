@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 19:43:09 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 20:43:10 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,9 @@ int	check(t_pipex *p, t_minishell_p *pars, int *c)
 int	do_stuff(t_pipex *p, t_minishell_p *pars)
 {
 	int	c;
-	int	i;
 	
 	c = 0;
-	i = 0;
-	while (p && pars && c <= p->cmd_count)
+	while (p && pars && c < p->cmd_count)
 	{
 		if (check(p, pars, &c))
 			return (p->status);
@@ -93,14 +91,6 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		}
 		c++;
 		pars = pars->next;
-	}
-	while (i++ < p->cmd_count)
-	{
-		if (waitpid(p->pid[i], NULL, 0) != -1)
-		{
-			if (WIFEXITED(p->status))
-				p->status = WEXITSTATUS(p->status);
-		}
 	}
 	return (p->status);
 }
@@ -133,7 +123,7 @@ bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 {
 	refresh_init(p, input, pars);
 	if (!*pars)
-		return (true);//continue ;
+		return (true);
 	if ((*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit"))
 	{
 		if ((*pars)->str[1])
@@ -163,7 +153,6 @@ int	main(int ac, char **av, char **envp)
 	ft_bzero(&input, sizeof(t_raw_in));
 	pars = NULL;
 	signal(SIGINT, &sig_int);
-	signal(SIGQUIT, &sig_quit);
 	signal(SIGQUIT, &sig_quit);
 	if (first_init(&p, envp) != 0)
 	{

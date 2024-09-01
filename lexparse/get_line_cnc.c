@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line_cnc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:25:32 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/01 18:44:06 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 20:37:57 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,11 @@ int	is_bad(char *str)
 
 int	get_line_cnc(t_raw_in *in, t_pipex *p)
 {
-	in->line = readline(ft_strjoin_free_one(ft_strdup(p->pwd), ": "));
+	char	*tmp;
+
+	tmp = ft_strjoin_free_one(ft_strdup(p->pwd), ": ");
+	in->line = readline(tmp);
+	free(tmp);
 	if (!in->line || !ft_strlen(in->line) || is_bad(in->line))
 		return (free(in->line), 2);
 	add_history(in->line);
@@ -75,6 +79,7 @@ int	get_line_cnc(t_raw_in *in, t_pipex *p)
 	set_first(in, in->line);
 	free(in->line);
 	in->line = NULL;
-	get_hd(in);
+	if (in->n_hd)
+		get_hd(in);
 	return (1);
 }
