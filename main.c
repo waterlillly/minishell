@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 19:38:24 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 19:43:09 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,30 +103,6 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		}
 	}
 	return (p->status);
-}
-
-void	check_exit(t_pipex *p, t_minishell_p *pars)
-{
-	char	*str;
-	char	*temp;
-
-	str = NULL;
-	temp = NULL;
-	temp = ft_itoa(ft_atoi(pars->str[1]));
-	if (ft_strcmp_bool(temp, pars->str[1]))
-		p->status = ft_atoi(pars->str[1]);
-	else
-	{
-		str = ft_strjoin_free_both(ft_strjoin(pars->str[0], ": "),
-			ft_strjoin(pars->str[1], ": "));
-		str = ft_strjoin_free_one(str, "numeric argument required\n");
-		ft_putstr_fd(str, 2);
-		free(str);
-		str = NULL;
-		p->status = 2;
-	}
-	free(temp);
-	temp = NULL;
 }
 
 void	check_exit(t_pipex *p, t_minishell_p *pars)
