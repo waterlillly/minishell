@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 19:43:09 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 20:41:57 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,9 @@ int	check(t_pipex *p, t_minishell_p *pars, int *c)
 int	do_stuff(t_pipex *p, t_minishell_p *pars)
 {
 	int	c;
-	int	i;
 	
 	c = 0;
-	i = 0;
-	while (p && pars && c <= p->cmd_count)
+	while (p && pars && c < p->cmd_count)
 	{
 		if (check(p, pars, &c))
 			return (p->status);
@@ -93,14 +91,6 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		}
 		c++;
 		pars = pars->next;
-	}
-	while (i++ < p->cmd_count)
-	{
-		if (waitpid(p->pid[i], NULL, 0) != -1)
-		{
-			if (WIFEXITED(p->status))
-				p->status = WEXITSTATUS(p->status);
-		}
 	}
 	return (p->status);
 }

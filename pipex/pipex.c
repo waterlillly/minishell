@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 16:11:28 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 20:55:48 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 	}
 	p->path = is_exec(p);
 	if (!p->path)
-		perror(p->path);
+		return (perror(p->path), 0);
 	close_all(p);
 	return (execve(p->path, pars->str, p->menv));
 }

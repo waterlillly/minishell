@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 12:13:50 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 20:52:48 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	do_echo(t_pipex *p, char **token, int x)
 		return (1);
 	if (ft_strcmp_bool(token[1], "$?"))
 		return (ft_putnbr_fd(p->status, 1), 0);
-	s = echo_split(token[x], '$');
+	if (!(token[x][0] == '\'' && token[x][ft_strlen(token[x]) - 1] == '\''))
+		s = echo_split(remove_quotes(token[x]), '$');
 	if (!s)
 	{
 		str = xpand(p, token, x);
@@ -63,7 +64,7 @@ int	do_echo(t_pipex *p, char **token, int x)
 			return (ft_free_double(s), 1);
 	}
 	ft_putstr_fd(str, 1);
-	return (ft_free_double(s), 0);//free(str), str = NULL,
+	return (ft_free_double(s), 0);
 }
 
 bool	check_n(char *token)
