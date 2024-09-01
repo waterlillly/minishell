@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/30 17:46:58 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 17:58:31 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ typedef struct s_pipex
 	char	*executable;
 	char	*part;
 	char	*cmd;
-	int		temp_in;
 }			t_pipex;
 
 void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str);
@@ -146,7 +145,7 @@ void			remove_sq(char **in, int len);
 int				double_count(char *input);
 int				single_count(char *input);
 int 			open_quotes(char *input);
-int				get_line_cnc(t_raw_in *in);
+int				get_line_cnc(t_raw_in *in, t_pipex *p);
 void			ft_split_shell(t_raw_in *in);
 int				is_sep(char *charset, char c);
 t_minishell_l	*lexer(t_raw_in *in);
@@ -228,9 +227,15 @@ int		fill_path(t_pipex *p, char **token);
 int		cd(t_pipex *p, char **token);
 
 /*ECHO*/
+char	*split_and_xpand(t_pipex *p, char **s);
 int		do_echo(t_pipex *p, char **token, int x);
 bool	check_n(char *token);
 int		echo(t_pipex *p, char **token);
+
+/*ECHO_SPLIT*/
+int		countstrs(char *s, char c);
+int		do_split(char *s, char c, int pos_a);
+char	**echo_split(char *s, int c);
 
 /*EXPAND*/
 char	*rm_out_q(char *tok);

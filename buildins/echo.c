@@ -6,30 +6,64 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/28 16:44:41 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 12:13:50 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+char	*split_and_xpand(t_pipex *p, char **s)
+{
+	char	*temp;
+	char	*str;
+	int		y;
+
+	y = 0;
+	str = NULL;
+	temp = NULL;
+	if (!s || !p)
+		return (NULL);
+	while (s[y])
+	{
+		temp = xpand(p, s, y);
+		if (temp)
+		{
+			str = ft_strjoin_free_both(str, temp);
+			if (!str)
+				return (NULL);
+		}
+		y++;
+	}
+	return (str);
+}
+
 int	do_echo(t_pipex *p, char **token, int x)
 {
 	char	*str;
-
-	if (!token || !token[x])
-		return (1);
-	if (x == 1 && ft_strcmp_bool(token[0], "echo") && check_n(token[x]))
+	char	**s;
+	
+	str = NULL;
+	s = NULL;
+	if (!token || !token[x]
+		|| (x == 1 && ft_strcmp_bool(token[0], "echo") && check_n(token[x])))
 		return (1);
 	if (ft_strcmp_bool(token[1], "$?"))
 		return (ft_putnbr_fd(p->status, 1), 0);
-	else
+	s = echo_split(token[x], '$');
+	if (!s)
 	{
 		str = xpand(p, token, x);
 		if (!str)
 			return (1);
-		ft_putstr_fd(str, 1);
-		return (0);
 	}
+	else
+	{
+		str = split_and_xpand(p, s);
+		if (!str)
+			return (ft_free_double(s), 1);
+	}
+	ft_putstr_fd(str, 1);
+	return (ft_free_double(s), 0);//free(str), str = NULL,
 }
 
 bool	check_n(char *token)
@@ -41,9 +75,9 @@ bool	check_n(char *token)
 		return (false);
 	while (token[x])
 	{
-		if (x == 0 && token[x] == '-')
+		if (x == 0 && token[x] && token[x] == '-')
 			x++;
-		else if (x >= 1 && token[x] == 'n')
+		else if (x >= 1 && token[x] && token[x] == 'n')
 			x++;
 		else if (x >= 2 && token[x] == '\0')
 			return (true);

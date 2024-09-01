@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line_cnc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:25:32 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/22 18:47:47 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/09/01 18:44:06 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	get_hd(t_raw_in *in)
 	{
 		while (in->n_chd < in->n_hd)
 		{
-			in->line = readline("heredoc> ");
+			in->line = readline("> ");
 			if (!ft_strcmp(in->del_s[in->n_chd], in->line))
 			{
 				in->n_chd++;
@@ -60,9 +60,9 @@ int	is_bad(char *str)
 	return (1);
 }
 
-int	get_line_cnc(t_raw_in *in)
+int	get_line_cnc(t_raw_in *in, t_pipex *p)
 {
-	in->line = readline("minishell> ");
+	in->line = readline(ft_strjoin_free_one(ft_strdup(p->pwd), ": "));
 	if (!in->line || !ft_strlen(in->line) || is_bad(in->line))
 		return (free(in->line), 2);
 	add_history(in->line);

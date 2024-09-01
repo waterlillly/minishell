@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:04:36 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/30 17:49:43 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 14:59:12 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 void	restore_fds(t_pipex *p)
 {
-	dup2(p->copy_stdin, STDIN_FILENO);
-	close(p->copy_stdin);
-	dup2(p->copy_stdout, STDOUT_FILENO);
-	close(p->copy_stdout);
+	if (p->copy_stdin != -1)
+	{
+		dup2(p->copy_stdin, STDIN_FILENO);
+		close(p->copy_stdin);
+	}
+	if (p->copy_stdout != -1)
+	{
+		dup2(p->copy_stdout, STDOUT_FILENO);
+		close(p->copy_stdout);
+	}
 }
 
 void	close_pipes(t_pipex *p)
@@ -53,8 +59,6 @@ void	close_all(t_pipex *p)
 		close(p->copy_stdin);
 	if (p && p->copy_stdout != -1 && p->copy_stdout != STDOUT_FILENO)
 		close(p->copy_stdout);
-	if (p->temp_in != -1)
-		close(p->temp_in);
 	if (p && p->pip)
 		close_pipes(p);
 }
@@ -87,6 +91,4 @@ void	err_free(t_pipex *p)
 		free(p->here);
 		p->here = NULL;
 	}
-	//if (p->temp_file != -1)
-	//	unlink("temp");
 }

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/28 18:07:15 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 12:03:32 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,6 @@ int	multi_d_q(char *token)
 	}
 	return (c);
 }
-/*
-char	**sep_d_q(char *token)
-{
-	char	**tok;
-
-	tok = NULL;
-	tok = ft_split(token, '\"');
-	if (!tok)
-		return (NULL);
-	
-}
-*/
 
 char	*rm_inner_d_q(char *token)
 {

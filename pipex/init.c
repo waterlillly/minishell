@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/30 18:02:54 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 15:02:08 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,8 @@ void	check_filein(t_pipex *p, t_minishell_p *pars)
 	if (pars && pars->redirect && pars->redirect->input
 		&& pars->redirect->token == SMALLER)
 	{
-		p->filein = -1;
 		p->filein = open(pars->redirect->input, O_RDONLY, 0644);
 		if (p->filein == -1 || access(pars->redirect->input, R_OK) == -1)
-			return ;
-	}
-	else
-	{
-		p->temp_in = -1;
-		p->temp_in = open("temp_in", O_RDWR | O_CREAT | O_APPEND, 0644);
-		if (p->temp_in == -1)
 			return ;
 	}
 }
@@ -34,29 +26,27 @@ void	check_filein(t_pipex *p, t_minishell_p *pars)
 void	check_fileout(t_pipex *p, t_minishell_p *pars)
 {
 	char	*file;
+	t_token	tok;
 
 	file = NULL;
+	tok = 0;
 	if (pars && pars->redirect && pars->redirect->input)
+	{
 		file = pars->redirect->input;
+		tok = pars->redirect->token;
+	}
 	else if (pars && pars->redirect && pars->redirect->next
 		&& pars->redirect->next->input)
+	{
 		file = pars->redirect->next->input;
-	if (file && (pars->redirect->token == BIGGER
-		|| pars->redirect->next->token == BIGGER))
-	{
-		p->fileout = -1;
-		p->fileout = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		if (p->fileout == -1 || access(file, W_OK) == -1)
-			return ;
+		tok = pars->redirect->next->token;
 	}
-	else if (file && (pars->redirect->token == BIGGERBIGGER
-		|| pars->redirect->next->token == BIGGERBIGGER))
-	{
-		p->fileout = -1;
+	if (file && tok == BIGGER)
+		p->fileout = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (file && tok == BIGGERBIGGER)
 		p->fileout = open(file, O_RDWR | O_CREAT | O_APPEND, 0644);
-		if (p->fileout == -1 || access(file, W_OK) == -1)
-			return ;
-	}
+	if (p->fileout == -1 || access(file, W_OK) == -1)
+		return ;
 }
 
 void	init_pipes(t_pipex *p)
@@ -92,7 +82,11 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 	tmp = pars;
 	p->cmd_count = 0;
 	p->copy_stdin = dup(STDIN_FILENO);
+	if (p->copy_stdin == -1)
+		return ;
 	p->copy_stdout = dup(STDOUT_FILENO);
+	if (p->copy_stdout == -1)
+		return ;
 	while (tmp)
 	{
 		p->cmd_count++;
@@ -100,9 +94,6 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 	}
 	p->filein = -1;
 	p->fileout = -1;
-	if (p->temp_in != -1)
-		unlink("temp_in");
-	p->temp_in = -1;
 	p->here = NULL;
 	if (pars && pars->redirect && pars->redirect->token == HEREDOC)
 		p->here = ft_strdup(pars->redirect->str);
