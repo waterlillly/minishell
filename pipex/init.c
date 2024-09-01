@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 20:41:03 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/09/01 22:17:35 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	init_pipes(t_pipex *p)
 		if (!p->pip)
 			return ;
 	}
-	while (p->cmd_count > 1 && i < p->cmd_count - 1)
+	while (p->cmd_count > 1 && i < p->cmd_count)
 	{
 		p->pip[i] = NULL;
 		p->pip[i] = (int *)ft_calloc(2, sizeof(int));

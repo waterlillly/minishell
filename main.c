@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 20:59:04 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 21:58:46 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,10 @@ int	check(t_pipex *p, t_minishell_p *pars, int *c)
 int	do_stuff(t_pipex *p, t_minishell_p *pars)
 {
 	int	c;
+	int	i;
 	
 	c = 0;
+	i = -1;
 	while (p && pars && c < p->cmd_count)
 	{
 		if (check(p, pars, &c))
@@ -75,22 +77,16 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		if (p->pid[c] == -1)
 			return (error("fork failed", 1));
 		if (p->pid[c] == 0)
-		{
 			p->status = execute(p, &c, pars);
-			if (p->status != 0)
-				return (p->status);
-		}
-		else
-		{
-			close_all(p);
-			if (waitpid(p->pid[c], NULL, 0) != -1)
-			{
-				if (WIFEXITED(p->status))
-					p->status = WEXITSTATUS(p->status);
-			}
-		}
+		close_all(p);
+		wait(NULL);
 		c++;
 		pars = pars->next;
+	}
+	while (i++ < p->cmd_count && waitpid(p->pid[i], NULL, 0) != -1)
+	{
+		if (WIFEXITED(p->status))
+			p->status = WEXITSTATUS(p->status);
 	}
 	return (p->status);
 }
@@ -124,6 +120,8 @@ bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	refresh_init(p, input, pars);
 	if (!*pars)
 		return (true);
+	if (!p || !input)
+		return (false);
 	if ((*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit"))
 	{
 		if ((*pars)->str[1])
@@ -139,7 +137,6 @@ bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	}
 	return (true);
 }
-
 
 int	main(int ac, char **av, char **envp)
 {
@@ -159,14 +156,9 @@ int	main(int ac, char **av, char **envp)
 		exit_shell(&p, pars, &input, NULL);
 		exit(p.status);
 	}
-	while (1)
-	{
-		if (run(&p, &input, &pars) == false)
-		{
-			exit_shell(&p, pars, &input, NULL);
-			exit(p.status);
-		}
+	while (run(&p, &input, &pars))
 		pars = NULL;
-	}
+	exit_shell(&p, pars, &input, NULL);
+	exit(p.status);
 	return (0);
 }

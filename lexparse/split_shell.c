@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 10:51:09 by codespace         #+#    #+#             */
-/*   Updated: 2024/08/25 19:28:26 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 21:30:55 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	ft_split_shell(t_raw_in *in)
 		in->input = skip_shell(&(in->input[len]), " \t", &len);
 		in->out[i] = ft_calloc(len + 1, sizeof(char));
 		if (!in->out[i])
-			return (exit_shell(NULL, NULL, in, "ALLOC FAILED"));
+			return (free_raw(in));//return (exit_shell(NULL, NULL, in, "ALLOC FAILED"));
 		ft_strncpy(in->out[i], in->input, len);
 	}
 	in->input = tmp;

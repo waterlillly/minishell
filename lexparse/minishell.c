@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:37:12 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 19:40:38 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 21:33:12 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,30 +60,33 @@ char	*ft_strnstr_q(const char *big, const char *little, size_t len)
 
 void	free_raw(t_raw_in *in)
 {
-	if (in->del_s)
+	if (in && in->del_s)
 		ft_free_double(in->del_s);//ft_free_2d(in->del_s);
-	if (in->del_str)
+	if (in && in->del_str)
 		ft_free_double(in->del_str);//ft_free_2d(in->del_str);
-	if (in->input)
+	if (in && in->input)
+	{
 		free(in->input);
-	if (in->out)
-		ft_free_2d(in->out);
+		in->input = NULL;
+	}
+	if (in && in->out)
+		ft_free_double(in->out);//ft_free_2d(in->out);
 }
 
 void	init_raw(t_raw_in *in)
 {
-	in->del_s = NULL;
-	in->del_str = NULL;
-	in->input = NULL;
-	in->n_hd = 0;
-	in->n_pipe = 0;
-	in->n_red = 0;
-	in->n_words = 0;
-	in->out = NULL;
-	in->n_chd = 0;
-	in->open_pipe = false;
-	//in->n_lessalloc = 0;
-	in->sum = 0;
+	ft_bzero(in, sizeof(t_raw_in));
+	// in->del_s = NULL;
+	// in->del_str = NULL;
+	// in->input = NULL;
+	// in->n_hd = 0;
+	// in->n_pipe = 0;
+	// in->n_red = 0;
+	// in->n_words = 0;
+	// in->out = NULL;
+	// in->n_chd = 0;
+	// in->open_pipe = false;
+	// in->sum = 0;
 }
 
 void	print_parsed(t_minishell_p *in)

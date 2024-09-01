@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 16:27:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 18:34:25 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 22:15:47 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,14 @@ int	redir_input(t_pipex *p, int *c, t_minishell_p *pars)
 		if (dup2(p->filein, STDIN_FILENO) == -1)
 			return (perror("dup2"), 1);
 	}
-	else if (*c > 0 && p->cmd_count > 1)
+	else if (p && p->pip && *c > 0 && p->cmd_count >= 1 && p->pip[*c - 1])
 	{
 		if (dup2(p->pip[*c - 1][0], STDIN_FILENO) == -1)
+			return (perror("dup2"), 1);
+	}
+	else if (p && p->pip && *c == 0 && p->cmd_count >= 1 && p->pip[*c])
+	{
+		if (dup2(p->pip[*c][0], STDIN_FILENO) == -1)
 			return (perror("dup2"), 1);
 	}
 	return (0);
@@ -36,7 +41,7 @@ int	redir_output(t_pipex *p, int *c, t_minishell_p *pars)
 		if (dup2(p->fileout, STDOUT_FILENO) == -1)
 			return (perror("dup2"), 1);
 	}
-	else if (*c <= p->cmd_count && *c > 0)
+	else if (p && p->pip && *c <= p->cmd_count - 1 && *c >= 0 && p->pip[*c])
 	{
 		if (dup2(p->pip[*c][1], STDOUT_FILENO) == -1)
 			return (perror("dup2"), 1);

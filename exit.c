@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:21:59 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 14:57:48 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 21:13:19 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,13 @@ void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input)
 	if (p)
 		err_free(p);
 	if (pars)
+	{
 		free_parse(pars);
+		pars = NULL;
+	}
 	if (input)
+	{
 		free_raw(input);
+		input = NULL;
+	}
 }
