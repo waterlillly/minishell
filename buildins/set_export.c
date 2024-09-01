@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/23 13:31:48 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 17:30:58 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,17 @@ int	update_export(t_pipex *p, char *tok, char *token)
 	x = 0;
 	temp = NULL;
 	temp1 = NULL;
-	if (!p || !tok || !token)
-		return (1);
 	temp = ft_strjoin("declare -x ", tok);
 	if (!temp)
 		return (1);
 	x = find_str_part(p->xport, temp);
 	if (x == -1)
 		return (free(temp), temp = NULL, 1);
-	temp1 = ft_strjoin("=", add_quotes(ft_substr(token, ft_strlen(tok) + 1,
+	temp1 = ft_strjoin_free_both(ft_strdup("="),
+		add_quotes(ft_substr(token, ft_strlen(tok) + 1,
 		ft_strlen(token) - ft_strlen(tok))));
 	if (!temp1)
 		return (free(temp), temp = NULL, 1);
-	free(p->xport[x]);
-	p->xport[x] = NULL;
 	p->xport[x] = ft_strjoin_free_both(temp, temp1);
 	if (!p->xport[x])
 		return (1);
@@ -46,7 +43,6 @@ int	set_export(t_pipex *p, char **token)
 	char	*temp;
 	int		x;
 
-	temp = NULL;
 	x = 0;
 	if (!p || !token || !ft_strcmp_bool(token[0], "export") || !token[1])
 		return (1);
@@ -58,7 +54,13 @@ int	set_export(t_pipex *p, char **token)
 	if (valid_env(p, temp))
 	{
 		if (ft_strchr(remove_quotes(token[1]), '='))
+		{
+			if (find_str_part(p->menv, temp) < 0)
+				return (free(temp), temp = NULL, 1);
 			p->menv[find_str_part(p->menv, temp)] = remove_quotes(token[1]);
+			if (!p->menv[x])
+				return (free(temp), temp = NULL, x);
+		}
 		x = update_export(p, temp, remove_quotes(token[1]));
 	}
 	else
@@ -83,7 +85,6 @@ int	update(t_pipex *p, char *set, char *tok)
 	temp = ft_strjoin(set, "=");
 	if (!temp)
 		return (1);
-	p->menv[x] = NULL;
 	p->menv[x] = ft_strjoin_free_one(temp, tok);
 	if (!p->menv[x])
 		return (1);
@@ -92,7 +93,7 @@ int	update(t_pipex *p, char *set, char *tok)
 
 int	update_both(t_pipex *p)
 {
-	int	x;
+	int		x;
 
 	x = 0;
 	x = update(p, "OLDPWD", get_env(p, "PWD"));

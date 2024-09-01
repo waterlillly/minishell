@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:04:36 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/23 15:08:05 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 14:59:12 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	restore_fds(t_pipex *p)
 {
-	if (p && p->copy_stdin != -1)
+	if (p->copy_stdin != -1)
 	{
 		dup2(p->copy_stdin, STDIN_FILENO);
 		close(p->copy_stdin);
 	}
-	if (p && p->copy_stdout != -1)
+	if (p->copy_stdout != -1)
 	{
 		dup2(p->copy_stdout, STDOUT_FILENO);
 		close(p->copy_stdout);
@@ -42,7 +42,6 @@ void	close_pipes(t_pipex *p)
 			if (p->pip[i][1] && p->pip[i][1] != -1 && p->pip[i][1] != STDOUT_FILENO)
 				close(p->pip[i][1]);
 			free(p->pip[i]);
-			p->pip[i] = 0;
 			i++;
 		}
 		free(p->pip);
@@ -52,28 +51,26 @@ void	close_pipes(t_pipex *p)
 
 void	close_all(t_pipex *p)
 {
-	if (p && p->filein && p->filein != STDIN_FILENO && p->filein != -1)
+	if (p && p->filein != -1 && p->filein != STDIN_FILENO)
 		close(p->filein);
-	if (p && p->fileout && p->fileout != STDOUT_FILENO && p->fileout != -1)
+	if (p && p->fileout != -1 && p->fileout != STDOUT_FILENO)
 		close(p->fileout);
+	if (p && p->copy_stdin != -1 && p->copy_stdin != STDIN_FILENO)
+		close(p->copy_stdin);
+	if (p && p->copy_stdout != -1 && p->copy_stdout != STDOUT_FILENO)
+		close(p->copy_stdout);
 	if (p && p->pip)
 		close_pipes(p);
 }
 
-void	err_free_two(t_pipex *p)
+void	err_free(t_pipex *p)
 {
+	close_all(p);
 	if (p->pid)
 	{
 		free(p->pid);
 		p->pid = NULL;
 	}
-	if (p->pip || p->copy_stdout || p->copy_stdin)
-		close_all(p);
-}
-
-void	err_free(t_pipex *p)
-{
-	err_free_two(p);
 	if (p->path)
 	{
 		free(p->path);
@@ -88,5 +85,10 @@ void	err_free(t_pipex *p)
 	{
 		free(p->part);
 		p->part = NULL;
+	}
+	if (p->here)
+	{
+		free(p->here);
+		p->here = NULL;
 	}
 }

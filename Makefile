@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mehras <mehras@student.42.fr>              +#+  +:+       +#+         #
+#    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 16:33:47 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/08/26 21:26:21 by mehras           ###   ########.fr        #
+#    Updated: 2024/09/01 19:40:27 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,11 @@ CFLAGS = -Wall -Werror -Wextra -g
 
 CFILES += main.c more_cmds.c exit.c execute.c start.c signals.c
 
-CFILES += buildins/utils.c buildins/cd.c buildins/cd_find_path.c buildins/pwd.c buildins/backup.c
-CFILES += buildins/env.c buildins/echo.c buildins/quotes.c buildins/sorting.c
+CFILES += buildins/utils.c buildins/cd.c buildins/cd_find_path.c buildins/pwd.c #buildins/backup.c
+CFILES += buildins/env.c buildins/echo.c buildins/echo_split.c buildins/quotes.c buildins/sorting.c
 CFILES += buildins/xpand.c buildins/xport.c buildins/set_export.c buildins/unset.c
 
-CFILES += pipex/pipex.c pipex/error.c pipex/init.c pipex/here_doc.c
+CFILES += pipex/pipex.c pipex/error.c pipex/init.c
 
 CFILES += lexparse/minishell.c lexparse/remove_q.c lexparse/quote_count.c lexparse/open_quotes.c
 CFILES += lexparse/split_shell.c lexparse/lexer.c lexparse/get_line_cnc.c lexparse/check_syntax.c

@@ -39,30 +39,25 @@ char	*exp_whole(t_pipex *p, char **arr, int y)
 int	combine_export(t_pipex *p)
 {
 	char	**arr;
-	char	*temp;
 	int		y;
 	
 	y = -1;
 	if (!p || !p->menv)
 		return (1);
-	arr = NULL;
-	arr = sort_arr(p);
+	arr = (char **)ft_calloc((ft_arrlen(p->menv) + 1), sizeof(char *));
 	if (!arr)
 		return (1);
-	p->xport = NULL;
-	p->xport = ft_calloc((ft_arrlen(arr) + 1), sizeof(char *));
-	if (!p->xport)
+	sort_arr(p, arr);
+	if (!arr)
 		return (1);
+	p->xport = (char **)ft_calloc((ft_arrlen(arr) + 1), sizeof(char *));//ft_strlen_2d(arr)
+	if (!p->xport)
+		return (ft_free_double(arr), 1);
 	while (arr && arr[++y])
 	{
-		temp = NULL;
-		temp = exp_whole(p, arr, y);
-		if (!temp)
-			return (1);
-		p->xport[y] = ft_strjoin("declare -x ",temp);
-		free(temp);
+		p->xport[y] = ft_strjoin_free_both(ft_strdup("declare -x "), exp_whole(p, arr, y));
 		if (!p->xport[y])
-			return (temp = NULL, 1);
+			return (ft_free_double(arr), 1);
 	}
 	return (ft_free_double(arr), 0);
 }
@@ -82,23 +77,14 @@ char	*create_add_export(char *token)
 	{
 		while (token[x] && token[x] != '=')
 			x++;
-		temp = ft_strjoin((ft_strjoin(strcpy_until(token), "=")),
-			(add_quotes(ft_substr(token, x + 1,
-			ft_strlen(token) - (x + 1)))));
+		temp = ft_strjoin_free_both((ft_strjoin(strcpy_until(token), "=")),
+			(add_quotes(ft_substr(token, x + 1, ft_strlen(token) - (x + 1)))));
 		if (!temp)
 			return (NULL);
-		temp1 = ft_strjoin("declare -x ", temp);
-		free(temp);
-		temp = NULL;
-		if (!temp1)
-			return (NULL);
+		temp1 = ft_strjoin_free_both(ft_strdup("declare -x "), temp);
 	}
 	else
-	{
 		temp1 = ft_strjoin("declare -x ", token);
-		if (!temp1)
-			return (NULL);
-	}
 	return (temp1);
 }
 
@@ -108,7 +94,6 @@ int	add_to_env(t_pipex *p, char *add)
 	char	**arr;
 
 	x = 0;
-	arr = NULL;
 	if (!p || !add || !p->menv)
 		return (0);
 	arr = ft_calloc((ft_arrlen(p->menv) + 2), sizeof(char *));
@@ -116,14 +101,17 @@ int	add_to_env(t_pipex *p, char *add)
 		return (1);
 	while (p->menv[x])
 	{
-		arr[x] = ft_strdup(p->menv[x]);
+		arr[x] = p->menv[x];
 		if (!arr[x])
 			return (ft_free_double(arr), 1);
 		x++;
 	}
 	arr[x] = add;
-	arr[x + 1] = NULL;
+	if (!arr[x])
+		return (ft_free_double(arr), 1);
 	p->menv = update_free_arr(p->menv, arr);
+	if (!p->menv)
+		return (1);
 	return (0);
 }
 
@@ -133,7 +121,6 @@ int	add_to_export(t_pipex *p, char *token)
 	char	**arr;
 
 	x = 0;
-	arr = NULL;
 	if (!p || !token || !p->xport)
 		return (0);
 	arr = ft_calloc((ft_arrlen(p->xport) + 2), sizeof(char *));
@@ -141,7 +128,7 @@ int	add_to_export(t_pipex *p, char *token)
 		return (1);
 	while (p->xport[x])
 	{
-		arr[x] = ft_strdup(p->xport[x]);
+		arr[x] = p->xport[x];
 		if (!arr[x])
 			return (ft_free_double(arr), 1);
 		x++;
@@ -149,6 +136,9 @@ int	add_to_export(t_pipex *p, char *token)
 	arr[x] = create_add_export(token);
 	if (!arr[x] || (ft_strchr(arr[x], '=') && add_to_env(p, token) != 0))
 		return (ft_free_double(arr), 1);
-	p->xport = update_free_arr(p->xport, resort_arr(arr));
+	resort_arr(arr);
+	p->xport = update_free_arr(p->xport, arr);
+	if (!p->xport)
+		return (1);
 	return (0);
 }

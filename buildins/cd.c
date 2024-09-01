@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/23 14:36:01 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 17:46:07 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,40 @@ int	fill_path(t_pipex *p, char **token)
 
 int	cd(t_pipex *p, char **token)
 {
-	int		x;
 	char	*err;
 
-	x = 0;
 	err = NULL;
 	if (p && token && ft_strcmp_bool(token[0], "cd"))
 	{
 		if (token[1] == NULL)
-			x = cd_home(p);
+			p->status = cd_home(p);
 		else if (token[1][0] == '.' && token[1][1] == '\0')
 			return (0);
 		else if (token[1] != NULL)
-			x = fill_path(p, token);
+			p->status = fill_path(p, token);
 	}
-	if (x != 0)
+	if (!is_access(getcwd(NULL, 0)))
+	{
+		if (!is_access(get_env(p, "OLDPWD")))
+		{
+			free(p->pwd);
+			p->pwd = NULL;
+			p->pwd = get_env(p, "HOME");
+		}
+		else
+		{
+			free(p->pwd);
+			p->pwd = NULL;
+			p->pwd = ft_strdup(p->oldpwd);
+			if (!p->pwd)
+				return (perror(p->pwd), 1);
+		}
+		return (update(p, "PWD", p->pwd));
+	}
+	else if (p->status != 0)
 	{
 		err = ft_strjoin("cd: ", token[1]);
-		return (perror(err), free(err), err = NULL, x);
+		return (perror(err), free(err), err = NULL, 0);
 	}
 	return (update_both(p));
 }

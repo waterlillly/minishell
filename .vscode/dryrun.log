@@ -1,0 +1,47 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/home/lbaumeis/CCore/projects/minishell'
+cc -Wall -Werror -Wextra -g -c main.c -o main.o
+cc -Wall -Werror -Wextra -g -c more_cmds.c -o more_cmds.o
+cc -Wall -Werror -Wextra -g -c exit.c -o exit.o
+cc -Wall -Werror -Wextra -g -c execute.c -o execute.o
+cc -Wall -Werror -Wextra -g -c start.c -o start.o
+cc -Wall -Werror -Wextra -g -c signals.c -o signals.o
+cc -Wall -Werror -Wextra -g -c buildins/utils.c -o buildins/utils.o
+cc -Wall -Werror -Wextra -g -c buildins/cd.c -o buildins/cd.o
+cc -Wall -Werror -Wextra -g -c buildins/cd_find_path.c -o buildins/cd_find_path.o
+cc -Wall -Werror -Wextra -g -c buildins/pwd.c -o buildins/pwd.o
+cc -Wall -Werror -Wextra -g -c buildins/env.c -o buildins/env.o
+cc -Wall -Werror -Wextra -g -c buildins/echo.c -o buildins/echo.o
+cc -Wall -Werror -Wextra -g -c buildins/echo_split.c -o buildins/echo_split.o
+cc -Wall -Werror -Wextra -g -c buildins/quotes.c -o buildins/quotes.o
+cc -Wall -Werror -Wextra -g -c buildins/sorting.c -o buildins/sorting.o
+cc -Wall -Werror -Wextra -g -c buildins/xpand.c -o buildins/xpand.o
+cc -Wall -Werror -Wextra -g -c buildins/xport.c -o buildins/xport.o
+cc -Wall -Werror -Wextra -g -c buildins/set_export.c -o buildins/set_export.o
+cc -Wall -Werror -Wextra -g -c buildins/unset.c -o buildins/unset.o
+cc -Wall -Werror -Wextra -g -c pipex/pipex.c -o pipex/pipex.o
+cc -Wall -Werror -Wextra -g -c pipex/error.c -o pipex/error.o
+cc -Wall -Werror -Wextra -g -c pipex/init.c -o pipex/init.o
+cc -Wall -Werror -Wextra -g -c lexparse/minishell.c -o lexparse/minishell.o
+cc -Wall -Werror -Wextra -g -c lexparse/remove_q.c -o lexparse/remove_q.o
+cc -Wall -Werror -Wextra -g -c lexparse/quote_count.c -o lexparse/quote_count.o
+cc -Wall -Werror -Wextra -g -c lexparse/open_quotes.c -o lexparse/open_quotes.o
+cc -Wall -Werror -Wextra -g -c lexparse/split_shell.c -o lexparse/split_shell.o
+cc -Wall -Werror -Wextra -g -c lexparse/lexer.c -o lexparse/lexer.o
+cc -Wall -Werror -Wextra -g -c lexparse/get_line_cnc.c -o lexparse/get_line_cnc.o
+cc -Wall -Werror -Wextra -g -c lexparse/check_syntax.c -o lexparse/check_syntax.o
+cc -Wall -Werror -Wextra -g -c lexparse/skip_q.c -o lexparse/skip_q.o
+cc -Wall -Werror -Wextra -g -c lexparse/parser.c -o lexparse/parser.o
+cc -Wall -Werror -Wextra -g -c lexparse/set.c -o lexparse/set.o
+cc -Wall -Werror -Wextra -g -c lexparse/is_oq.c -o lexparse/is_oq.o
+(make -C libft)
+ 
+make[1]: Entering directory '/home/lbaumeis/CCore/projects/minishell/libft'
+make[1]: Leaving directory '/home/lbaumeis/CCore/projects/minishell/libft'
+ 
+Makefile:6: *** missing separator.  Stop.
+
+make: *** [Makefile:40: minishell] Error 2
+
+make: Leaving directory '/home/lbaumeis/CCore/projects/minishell'
+ 

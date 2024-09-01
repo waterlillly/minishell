@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/26 15:50:05 by mehras           ###   ########.fr       */
+/*   Updated: 2024/09/01 19:38:24 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int g_signal;
 
-void free_parse(t_minishell_p *in)
+void	free_parse(t_minishell_p *in)
 {
 	t_minishell_l	*tmp_l;
 	t_minishell_p	*tmp_p;
@@ -65,9 +65,11 @@ int	check(t_pipex *p, t_minishell_p *pars, int *c)
 int	do_stuff(t_pipex *p, t_minishell_p *pars)
 {
 	int	c;
+	int	i;
 	
 	c = 0;
-	while (p && pars && c < p->cmd_count)
+	i = 0;
+	while (p && pars && c <= p->cmd_count)
 	{
 		if (check(p, pars, &c))
 			return (p->status);
@@ -80,15 +82,75 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 			if (p->status != 0)
 				return (p->status);
 		}
+		else
+		{
+			close_all(p);
+			if (waitpid(p->pid[c], NULL, 0) != -1)
+			{
+				if (WIFEXITED(p->status))
+					p->status = WEXITSTATUS(p->status);
+			}
+		}
 		c++;
 		pars = pars->next;
 	}
-	while (wait(NULL) != -1)
+	while (i++ < p->cmd_count)
 	{
-		if (WIFEXITED(p->status))
-			p->status = WEXITSTATUS(p->status);
+		if (waitpid(p->pid[i], NULL, 0) != -1)
+		{
+			if (WIFEXITED(p->status))
+				p->status = WEXITSTATUS(p->status);
+		}
 	}
 	return (p->status);
+}
+
+void	check_exit(t_pipex *p, t_minishell_p *pars)
+{
+	char	*str;
+	char	*temp;
+
+	str = NULL;
+	temp = NULL;
+	temp = ft_itoa(ft_atoi(pars->str[1]));
+	if (ft_strcmp_bool(temp, pars->str[1]))
+		p->status = ft_atoi(pars->str[1]);
+	else
+	{
+		str = ft_strjoin_free_both(ft_strjoin(pars->str[0], ": "),
+			ft_strjoin(pars->str[1], ": "));
+		str = ft_strjoin_free_one(str, "numeric argument required\n");
+		ft_putstr_fd(str, 2);
+		free(str);
+		str = NULL;
+		p->status = 2;
+	}
+	free(temp);
+	temp = NULL;
+}
+
+void	check_exit(t_pipex *p, t_minishell_p *pars)
+{
+	char	*str;
+	char	*temp;
+
+	str = NULL;
+	temp = NULL;
+	temp = ft_itoa(ft_atoi(pars->str[1]));
+	if (ft_strcmp_bool(temp, pars->str[1]))
+		p->status = ft_atoi(pars->str[1]);
+	else
+	{
+		str = ft_strjoin_free_both(ft_strjoin(pars->str[0], ": "),
+			ft_strjoin(pars->str[1], ": "));
+		str = ft_strjoin_free_one(str, "numeric argument required\n");
+		ft_putstr_fd(str, 2);
+		free(str);
+		str = NULL;
+		p->status = 2;
+	}
+	free(temp);
+	temp = NULL;
 }
 
 bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
@@ -99,7 +161,7 @@ bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	if ((*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit"))
 	{
 		if ((*pars)->str[1])
-			p->status = ft_atoi((*pars)->str[1]);
+			check_exit(p, *pars);
 		return (false);
 	}
 	else
@@ -111,6 +173,7 @@ bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	}
 	return (true);
 }
+
 
 int	main(int ac, char **av, char **envp)
 {
@@ -124,6 +187,7 @@ int	main(int ac, char **av, char **envp)
 	ft_bzero(&input, sizeof(t_raw_in));
 	pars = NULL;
 	signal(SIGINT, &sig_int);
+	signal(SIGQUIT, &sig_quit);
 	signal(SIGQUIT, &sig_quit);
 	if (first_init(&p, envp) != 0)
 	{

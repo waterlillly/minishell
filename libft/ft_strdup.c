@@ -3,15 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:40:01 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/14 15:50:50 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/08/27 13:51:58 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+char	*ft_strdup(const char *s)
+{
+	size_t	len;
+	int		x;
+	char	*new;
+
+	if (!s)
+		return (NULL);
+	x = 0;
+	len = ft_strlen(s);
+	new = (char *)ft_calloc((len + 1), sizeof(char));
+	if (!new)
+		return (NULL);
+	while (s[x])
+	{
+		new[x] = s[x];
+		x++;
+	}
+	return (new);
+}
+/*
 char	*ft_strdup(const char *c)
 {
 	size_t	b;
@@ -26,7 +47,7 @@ char	*ft_strdup(const char *c)
 	ft_strlcpy(duplo, c, b);
 	return (duplo);
 }
-
+*/
 /*
 static char	*ft_strcpy(char *dest, char *src)
 {

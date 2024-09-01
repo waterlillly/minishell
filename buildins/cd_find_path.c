@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:26:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/23 14:31:35 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/01 12:54:58 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,11 @@ void	check_print(char *s)
 			x++;
 		else if (s[x] == '/' && (s[x + 1] == '/' || s[x + 1] == '\0'))
 			x++;
-		ft_putchar_fd(s[x], 1);
-		x++;
+		else
+		{
+			ft_putchar_fd(s[x], 1);
+			x++;
+		}
 	}
 	ft_putchar_fd('\n', 1);
 }

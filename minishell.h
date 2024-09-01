@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/26 15:44:03 by mehras           ###   ########.fr       */
+/*   Updated: 2024/09/01 19:39:55 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_raw_in
 	int		n_pipe;
 	int		n_red;
 	int		n_words;
-	//int		n_lessalloc;
 	int		sum;
 }	t_raw_in;
 
@@ -99,7 +98,6 @@ typedef struct s_pipex
 	int		status;
 	int		copy_stdin;
 	int		copy_stdout;
-	char	*cwd;
 	int		filein;
 	int		fileout;
 	char	*here;
@@ -113,6 +111,7 @@ typedef struct s_pipex
 
 void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str);
 int		error(char *str, int code);
+void	free_p_rest(t_pipex *p);
 void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input);
 bool	is_buildin(char *s);
 int		do_this(t_pipex *p, t_minishell_p *pars);
@@ -120,7 +119,7 @@ void 	free_parse(t_minishell_p *in);
 void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 int		check(t_pipex *p, t_minishell_p *pars, int *c);
 int		do_stuff(t_pipex *p, t_minishell_p *pars);
-void	restore_fds(t_pipex *p);
+void	check_exit(t_pipex *p, t_minishell_p *pars);
 bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 
 /*EXECUTE*/
@@ -146,7 +145,7 @@ void			remove_sq(char **in, int len);
 int				double_count(char *input);
 int				single_count(char *input);
 int 			open_quotes(char *input);
-int				get_line_cnc(t_raw_in *in);
+int				get_line_cnc(t_raw_in *in, t_pipex *p);
 void			ft_split_shell(t_raw_in *in);
 int				is_sep(char *charset, char c);
 t_minishell_l	*lexer(t_raw_in *in);
@@ -169,10 +168,9 @@ int		do_heredoc(t_pipex *p, t_minishell_p *pars);
 int		exec_cmd(t_pipex *p, t_minishell_p *pars);
 
 /*ERROR*/
+void	restore_fds(t_pipex *p);
 void	close_pipes(t_pipex *p);
 void	close_all(t_pipex *p);
-//void	free_double(char **str);
-void	err_free_two(t_pipex *p);
 void	err_free(t_pipex *p);
 
 /*INIT*/
@@ -181,10 +179,6 @@ void	check_fileout(t_pipex *p, t_minishell_p *pars);
 void 	init_pipes(t_pipex *p);
 void	init_p(t_pipex *p, t_minishell_p *pars);
 int		first_init(t_pipex *p, char **envp);
-
-/*HERE_DOC*/
-//void	get_cur_cwd(t_pipex *p);
-void	here_or_not(t_pipex *p, t_minishell_p *pars);
 
 /*____________________BUILDINS____________________*/
 /*UTILS*/
@@ -209,16 +203,16 @@ int		join_oldpwd(t_pipex *p, char **temp, char *oldpwd);
 int		go_up_oldpwd(t_pipex *p);
 
 /*ENV*/
-char	**copy_arr_env(t_pipex *p);
+void	copy_arr_env(t_pipex *p, char **arr);
 bool	valid_env(t_pipex *p, char *tok);
 char	*get_env(t_pipex *p, char *str);
 int		get_menv(t_pipex *p, char **envp);
 int		buildins_init(t_pipex *p, char **envp);
 
 /*BACKUP*/
-int		backup_env(t_pipex *p, char *temp);
-int		backup_xport(t_pipex *p, char *temp);
-int		backup(t_pipex *p);
+//int		backup_env(t_pipex *p, char *temp);
+//int		backup_xport(t_pipex *p, char *temp);
+//int		backup(t_pipex *p);
 
 /*CD_FIND_PATH*/
 int		add_to_path(t_pipex *p, char *t);
@@ -233,12 +227,20 @@ int		fill_path(t_pipex *p, char **token);
 int		cd(t_pipex *p, char **token);
 
 /*ECHO*/
+char	*split_and_xpand(t_pipex *p, char **s);
 int		do_echo(t_pipex *p, char **token, int x);
 bool	check_n(char *token);
 int		echo(t_pipex *p, char **token);
 
+/*ECHO_SPLIT*/
+int		countstrs(char *s, char c);
+int		do_split(char *s, char c, int pos_a);
+char	**echo_split(char *s, int c);
+
 /*EXPAND*/
 char	*rm_out_q(char *tok);
+int		multi_d_q(char *token);
+char	*rm_inner_d_q(char *token);
 char	*xpand(t_pipex *p, char **token, int x);
 
 /*XPORT*/
@@ -257,9 +259,9 @@ int		update_both(t_pipex *p);
 /*SORTING*/
 bool	sorted(char **arr);
 void	swap(char **arr, int x);
-char	**sort_arr(t_pipex *p);
+void	sort_arr(t_pipex *p, char **arr);
 bool	resorted(char **arr);
-char	**resort_arr(char **arr);
+void	resort_arr(char **arr);
 
 /*UNSET*/
 int		update_unset(t_pipex *p, char *tok);
@@ -267,5 +269,3 @@ int		update_unset_exp(t_pipex *p, char *tok);
 int		unset(t_pipex *p, char **token);
 
 #endif
-
-//make re; make clean; c; valgrind --show-leak-kinds=all --track-fds=yes --leak-check=full --track-origins=yes --suppressions=.vgignore ./minishell
