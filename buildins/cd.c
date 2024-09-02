@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 17:46:07 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:42:03 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,23 @@ int	fill_path(t_pipex *p, char **token)
 	else
 		return (add_to_path(p, token[1]));
 }
+/*
+void	post_cd(t_pipex *p)
+{
+	if (find_arg(p->xport, "PWD") == -1 || !is_access(p->pwd)
+		|| !is_access(getcwd(NULL, 0)) || !is_access(get_env(p, "PWD")))
 
+	if (find_arg(p->xport, "OLDPWD") == -1 || !is_access(p->oldpwd)
+		|| !is_access(get_env(p, "OLDPWD")))
+}
+*/
 int	cd(t_pipex *p, char **token)
 {
 	char	*err;
+	char	*copy_pwd;
 
 	err = NULL;
+	copy_pwd = ft_strdup(p->pwd);
 	if (p && token && ft_strcmp_bool(token[0], "cd"))
 	{
 		if (token[1] == NULL)
@@ -65,25 +76,19 @@ int	cd(t_pipex *p, char **token)
 		else if (token[1] != NULL)
 			p->status = fill_path(p, token);
 	}
-	if (!is_access(getcwd(NULL, 0)))
+	if (!is_access(getcwd(NULL, 0)) || !is_access(get_env(p, "OLDPWD")) || !is_access(get_env(p, "PWD")))
 	{
-		if (!is_access(get_env(p, "OLDPWD")))
+		if (p->pwd && !is_access(get_env(p, "OLDPWD")))
 		{
 			free(p->pwd);
 			p->pwd = NULL;
-			p->pwd = get_env(p, "HOME");
-		}
-		else
-		{
-			free(p->pwd);
-			p->pwd = NULL;
-			p->pwd = ft_strdup(p->oldpwd);
+			p->pwd = get_env(p, "PWD");
 			if (!p->pwd)
-				return (perror(p->pwd), 1);
+				p->pwd = get_env(p, "HOME");
 		}
-		return (update(p, "PWD", p->pwd));
+		return (update(p, "PWD", p->pwd));//just add setting it back for env and export once cd executed again! also remove oldpwd things (=) if cd -!
 	}
-	else if (p->status != 0)
+	if (p->status != 0)
 	{
 		err = ft_strjoin("cd: ", token[1]);
 		return (perror(err), free(err), err = NULL, 0);
