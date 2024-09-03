@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/03 15:20:42 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:54:16 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,8 @@ void			free_lex(t_minishell_l *in);
 /*PIPEX*/
 char	*is_exec(t_pipex *p);
 int		do_heredoc(t_pipex *p, t_minishell_p *pars);
+bool	valid_cmd(char **str, t_pipex *p);
+char	**check_cmd(t_pipex *p, t_minishell_p *pars);
 int		exec_cmd(t_pipex *p, t_minishell_p *pars);
 
 /*ERROR*/

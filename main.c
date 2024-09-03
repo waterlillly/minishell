@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/03 15:43:37 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:37:37 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,43 @@ void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 
 int	check(t_pipex *p, t_minishell_p *pars, int *c)
 {
+	char	**cmd;
+	int		i;
+
+	cmd = NULL;
+	i = 0;
 	if (p->cmd_count > 500)
 	{
 		ft_putendl_fd("too many commands", 2);
 		p->status = 1;
 		return (1);
 	}
-	else if (p && pars && pars->str && p->cmd_count == 1
-		&& is_buildin(pars->str[0]))
+	else if (p && pars && pars->str && p->cmd_count == 1)
 	{
-		p->status = execute(p, c, pars);
-		return (1);
+		cmd = check_cmd(p, pars);
+		if (!cmd)
+			return (perror(cmd[0]), 1);//err
+		if (is_buildin(pars->str[0]))
+		{
+			p->status = execute(p, c, pars);
+			return (1);
+		}
+		else if (valid_cmd(cmd, p))
+		{
+			ft_free_double(pars->str);
+			pars->str = cmd;
+			while (cmd[i++])
+			{
+				pars->str[i] = ft_strdup(cmd[i]);
+				if (!pars->str[i])
+					return (ft_free_double(cmd), 1);//err
+			}
+			ft_free_double(cmd);
+			p->status = execute(p, c, pars);
+			return (1);
+		}
+		else
+			return (perror(cmd[0]), 0);
 	}
 	return (0);
 }
@@ -76,10 +102,13 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		p->pid[c] = fork();
 		if (p->pid[c] == -1)
 			return (error("fork failed", 1));
-		if (p->pid[c] == 0)
+		else if (p->pid[c] == 0)
 			p->status = execute(p, &c, pars);
-		close_all(p);
-		wait(NULL);
+		else
+		{
+			close_all(p);
+			waitpid(p->pid[c], (int *)p->status, 0);
+		}
 		c++;
 		pars = pars->next;
 	}

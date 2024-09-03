@@ -1,4 +1,4 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/lbaumeis/CCore/projects/minishell'
  
 cc -Wall -Werror -Wextra -g -c main.c -o main.o
@@ -37,6 +37,7 @@ cc -Wall -Werror -Wextra -g -c lexparse/set.c -o lexparse/set.o
 cc -Wall -Werror -Wextra -g -c lexparse/is_oq.c -o lexparse/is_oq.o
 (make -C libft)
 make[1]: Entering directory '/home/lbaumeis/CCore/projects/minishell/libft'
+ 
 cc -Wall -Wextra -Werror -c ft_isalpha.c -o ft_isalpha.o
 cc -Wall -Wextra -Werror -c ft_isdigit.c -o ft_isdigit.o
 cc -Wall -Wextra -Werror -c ft_isalnum.c -o ft_isalnum.o
@@ -61,9 +62,6 @@ cc -Wall -Wextra -Werror -c ft_atoi.c -o ft_atoi.o
 cc -Wall -Wextra -Werror -c ft_calloc.c -o ft_calloc.o
 cc -Wall -Wextra -Werror -c ft_strdup.c -o ft_strdup.o
 cc -Wall -Wextra -Werror -c ft_substr.c -o ft_substr.o
- 
-make[1]: warning: -j16 forced in makefile: resetting jobserver mode.
-
 cc -Wall -Wextra -Werror -c ft_strjoin.c -o ft_strjoin.o
 cc -Wall -Wextra -Werror -c ft_strtrim.c -o ft_strtrim.o
 cc -Wall -Wextra -Werror -c ft_striteri.c -o ft_striteri.o
@@ -78,60 +76,48 @@ cc -Wall -Wextra -Werror -c ft_printf.c -o ft_printf.o
 cc -Wall -Wextra -Werror -c ft_printchar.c -o ft_printchar.o
 cc -Wall -Wextra -Werror -c ft_printstr.c -o ft_printstr.o
 cc -Wall -Wextra -Werror -c ft_printnbr.c -o ft_printnbr.o
- 
 cc -Wall -Wextra -Werror -c ft_printptr.c -o ft_printptr.o
 cc -Wall -Wextra -Werror -c ft_decideformat.c -o ft_decideformat.o
 cc -Wall -Wextra -Werror -c ft_strcmp.c -o ft_strcmp.o
 cc -Wall -Wextra -Werror -c ft_white.c -o ft_white.o
 cc -Wall -Wextra -Werror -c ft_atof.c -o ft_atof.o
- 
 cc -Wall -Wextra -Werror -c ft_str_upper.c -o ft_str_upper.o
 cc -Wall -Wextra -Werror -c ft_isalpha_extend.c -o ft_isalpha_extend.o
 cc -Wall -Wextra -Werror -c ft_isprint_extend.c -o ft_isprint_extend.o
- 
 cc -Wall -Wextra -Werror -c ft_isascii_extend.c -o ft_isascii_extend.o
 cc -Wall -Wextra -Werror -c get_next_line.c -o get_next_line.o
- 
 cc -Wall -Wextra -Werror -c ft_strjoin_free_both.c -o ft_strjoin_free_both.o
 cc -Wall -Wextra -Werror -c ft_strjoin_free_one.c -o ft_strjoin_free_one.o
 cc -Wall -Wextra -Werror -c ft_str_lower.c -o ft_str_lower.o
- 
 cc -Wall -Wextra -Werror -c ft_arrlen.c -o ft_arrlen.o
 cc -Wall -Wextra -Werror -c ft_free_double.c -o ft_free_double.o
 cc -Wall -Wextra -Werror -c ft_print_array.c -o ft_print_array.o
- 
 cc -Wall -Wextra -Werror -c ft_strcmp_bool.c -o ft_strcmp_bool.o
 cc -Wall -Wextra -Werror -c ft_strnstr_bool.c -o ft_strnstr_bool.o
 cc -Wall -Wextra -Werror -c ft_atoi_long.c -o ft_atoi_long.o
- 
 cc -Wall -Wextra -Werror -c ft_itoa_long.c -o ft_itoa_long.o
 cc -Wall -Wextra -Werror -c ft_lstnew.c -o ft_lstnew.o
 cc -Wall -Wextra -Werror -c ft_lstadd_front.c -o ft_lstadd_front.o
- 
 cc -Wall -Wextra -Werror -c ft_lstsize.c -o ft_lstsize.o
 cc -Wall -Wextra -Werror -c ft_lstlast.c -o ft_lstlast.o
 cc -Wall -Wextra -Werror -c ft_lstadd_back.c -o ft_lstadd_back.o
- 
 cc -Wall -Wextra -Werror -c ft_lstdelone.c -o ft_lstdelone.o
 cc -Wall -Wextra -Werror -c ft_lstclear.c -o ft_lstclear.o
- 
 cc -Wall -Wextra -Werror -c ft_lstiter.c -o ft_lstiter.o
 cc -Wall -Wextra -Werror -c ft_lstmap.c -o ft_lstmap.o
 cc -Wall -Wextra -Werror -c ft_strcat.c -o ft_strcat.o
- 
 cc -Wall -Wextra -Werror -c ft_strlen_2d.c -o ft_strlen_2d.o
 cc -Wall -Wextra -Werror -c ft_realloc_2d.c -o ft_realloc_2d.o
 cc -Wall -Wextra -Werror -c ft_free_2d.c -o ft_free_2d.o
- 
 cc -Wall -Wextra -Werror -c ft_strncpy.c -o ft_strncpy.o
 ar rc libft.a ft_isalpha.o ft_isdigit.o ft_isalnum.o ft_isascii.o ft_isprint.o ft_strlen.o ft_memset.o ft_bzero.o ft_memcpy.o ft_memmove.o ft_strlcpy.o ft_strlcat.o ft_toupper.o ft_tolower.o ft_strchr.o ft_strrchr.o ft_strncmp.o ft_memchr.o ft_memcmp.o ft_strnstr.o ft_atoi.o ft_calloc.o ft_strdup.o ft_substr.o ft_strjoin.o ft_strtrim.o ft_striteri.o ft_putchar_fd.o ft_putstr_fd.o ft_putendl_fd.o ft_putnbr_fd.o ft_split.o ft_itoa.o ft_strmapi.o ft_printf.o ft_printchar.o ft_printstr.o ft_printnbr.o ft_printptr.o ft_decideformat.o ft_strcmp.o ft_white.o ft_atof.o ft_str_upper.o ft_isalpha_extend.o ft_isprint_extend.o ft_isascii_extend.o get_next_line.o ft_strjoin_free_both.o ft_strjoin_free_one.o ft_str_lower.o ft_arrlen.o ft_free_double.o ft_print_array.o ft_strcmp_bool.o ft_strnstr_bool.o ft_atoi_long.o ft_itoa_long.o ft_lstnew.o ft_lstadd_front.o ft_lstsize.o ft_lstlast.o ft_lstadd_back.o ft_lstdelone.o ft_lstclear.o ft_lstiter.o ft_lstmap.o ft_strcat.o ft_strlen_2d.o ft_realloc_2d.o ft_free_2d.o ft_strncpy.o 
 ranlib libft.a
 make[1]: Leaving directory '/home/lbaumeis/CCore/projects/minishell/libft'
- 
 cc -Wall -Werror -Wextra -g -o minishell main.o more_cmds.o exit.o execute.o start.o signals.o buildins/utils.o buildins/cd.o buildins/cd_find_path.o buildins/pwd.o buildins/env.o buildins/echo.o buildins/echo_split.o buildins/quotes.o buildins/sorting.o buildins/xpand.o buildins/xport.o buildins/set_export.o buildins/unset.o pipex/pipex.o pipex/error.o pipex/init.o lexparse/minishell.o lexparse/remove_q.o lexparse/quote_count.o lexparse/open_quotes.o lexparse/split_shell.o lexparse/lexer.o lexparse/get_line_cnc.o lexparse/check_syntax.o lexparse/skip_q.o lexparse/parser.o lexparse/set.o lexparse/is_oq.o libft/libft.a -lreadline
 rm -f out
 rm -f hd
 rm -f buildins.h.gch
- 
 make: Leaving directory '/home/lbaumeis/CCore/projects/minishell'
  
+make[1]: warning: -j16 forced in makefile: resetting jobserver mode.
+
