@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:53:55 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/27 13:50:28 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/03 13:18:58 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,14 @@ char	*get_next_line(int fd);
 char	*ft_buf(char *buf, int *x);
 char	*ft_next(char *buf, int fd);
 char	*ft_rest(int x, char *buf);
+long	ft_atoi_long(const char *nptr);
+long	ft_isdigit_long(long c);
+long	ft_white_long(const char *s);
+char	*ft_itoa_long(long n);
+char	*ft_resultoa_long(long n, long len, long backup, char *result);
+char	*ft_extra_long(void);
+long	ft_times_ten_long(long len);
+long	ft_nbrlen_long(long nbr);
 
 /*EXTRA MEHRAS*/
 t_list	*ft_lstnew(void *content);

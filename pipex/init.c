@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 22:17:35 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:39:59 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 	if (!p->pid)
 		return ;
 	init_pipes(p);
-	
 }
 
 int	first_init(t_pipex *p, char **envp)

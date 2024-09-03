@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 21:58:46 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:43:37 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		c++;
 		pars = pars->next;
 	}
-	while (i++ < p->cmd_count && waitpid(p->pid[i], NULL, 0) != -1)
+	while (i++ < p->cmd_count && waitpid(p->pid[i], (int *)p->status, 0) != -1)
 	{
 		if (WIFEXITED(p->status))
 			p->status = WEXITSTATUS(p->status);
@@ -98,9 +98,19 @@ void	check_exit(t_pipex *p, t_minishell_p *pars)
 
 	str = NULL;
 	temp = NULL;
-	temp = ft_itoa(ft_atoi(pars->str[1]));
+	if (pars->str[2])
+	{
+		str = ft_strjoin_free_both(ft_strjoin(pars->str[0], ": "),
+			ft_strjoin(pars->str[1], ": "));
+		str = ft_strjoin_free_one(str, "too many arguments\n");
+		ft_putstr_fd(str, 2);
+		free(str);
+		str = NULL;
+		p->status = 1;
+	}
+	temp = ft_itoa_long(ft_atoi_long(pars->str[1]));
 	if (ft_strcmp_bool(temp, pars->str[1]))
-		p->status = ft_atoi(pars->str[1]);
+		p->status = ft_atoi_long(pars->str[1]);
 	else
 	{
 		str = ft_strjoin_free_both(ft_strjoin(pars->str[0], ": "),
@@ -126,6 +136,8 @@ bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	{
 		if ((*pars)->str[1])
 			check_exit(p, *pars);
+		if (p->status == 1)
+			return (true);
 		return (false);
 	}
 	else

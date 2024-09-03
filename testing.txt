@@ -1,0 +1,118 @@
+# Basic command
+ls -l
+
+# Single pipe
+ls -l | grep .txt
+
+# Multiple pipes
+ls -l | grep .txt | wc -l
+
+# Input redirection
+sort < file.txt
+
+# Output redirection
+echo "Hello World" > output.txt
+cat output.txt
+
+# Combination of pipe and redirection
+ls -l | grep .txt > result.txt
+
+# Built-in command
+echo $PATH
+
+# Environment variables
+export MY_VAR="test"
+echo $MY_VAR
+
+# Edge case
+ls -l | grep .txt > output.txt 2>&1
+
+import subprocess
+import os
+
+def run_test(command):
+    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output, error = process.communicate()
+    return output.decode(), error.decode()
+
+def test_minishell():
+    tests = [
+        ("ls -l", "minishell"),
+        ("echo Hello World", "minishell"),
+        ("ls -l | grep .txt", "minishell"),
+        ("sort < test.txt", "minishell"),
+        ("echo Hello World > output.txt", "minishell"),
+        ("cat output.txt", "minishell"),
+        ("export MY_VAR=test && echo $MY_VAR", "minishell"),
+        ("cd .. && pwd", "minishell"),
+    ]
+
+    for test in tests:
+        command, shell = test
+        minishell_output, _ = run_test(f"{shell} && {command}")
+        bash_output, _ = run_test(f"bash -c '{command}'")
+        
+        if minishell_output.strip() != bash_output.strip():
+            print(f"Test failed for command: {command}")
+            print(f"Minishell output:\n{minishell_output}")
+            print(f"Bash output:\n{bash_output}")
+
+if __name__ == "__main__":
+    test_minishell()
+
+import subprocess
+import os
+import time
+
+def send_signal(pid, signal):
+    os.kill(pid, signal)
+
+def test_signal_handling(command, signal):
+    process = subprocess.Popen(f"minishell && {command}", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    
+    time.sleep(1)  # Wait for command to start
+    send_signal(process.pid, signal)
+    
+    output, error = process.communicate()
+    return output.decode(), error.decode()
+
+# Test Ctrl-C handling
+test_signal_handling("sleep 10", 2)
+
+# Test Ctrl-D handling
+test_signal_handling("cat", 4)
+
+import subprocess
+import time
+
+def run_performance_test(num_commands):
+    start_time = time.time()
+    for _ in range(num_commands):
+        subprocess.run(["minishell", "-c", "ls -l"], capture_output=True)
+    end_time = time.time()
+    print(f"Time taken for {num_commands} commands: {end_time - start_time} seconds")
+
+run_performance_test(1000)
+
+def test_edge_cases():
+    tests = [
+        ("ls -l | grep .txt > output.txt 2>&1", "minishell"),
+        ("echo $PATH", "minishell"),
+        ("cd .. && pwd", "minishell"),
+        ("export MY_VAR=test && echo $MY_VAR", "minishell"),
+        ("ls -l | grep .txt > output.txt 2>&1", "minishell"),
+    ]
+
+    for test in tests:
+        command, shell = test
+        minishell_output, _ = run_test(f"{shell} && {command}")
+        bash_output, _ = run_test(f"bash -c '{command}'")
+        
+        if minishell_output.strip() != bash_output.strip():
+            print(f"Test failed for command: {command}")
+            print(f"Minishell output:\n{minishell_output}")
+            print(f"Bash output:\n{bash_output}")
+
+if __name__ == "__main__":
+    test_edge_cases()
+

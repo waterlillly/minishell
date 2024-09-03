@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/02 15:34:16 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:20:42 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ typedef struct s_pipex
 	char	*pwd;
 	pid_t	*pid;
 	int		**pip;
-	int		status;
+	long	status;
 	int		copy_stdin;
 	int		copy_stdout;
 	int		filein;

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 21:03:28 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:42:21 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 		x = do_heredoc(p, pars);
 		return (close_all(p), x);
 	}
-	temp = ft_substr(pars->str[0], 1, ft_strlen(pars->str[0]) - 1);
+	temp = ft_substr(pars->str[0], 1, ft_strlen(pars->str[0]) - 1);//add check for expr and expand values
 	if (pars->str[0][0] == '$' && valid_env(p, temp))
 		p->cmd = xpand(p, pars->str, 0);
 	else

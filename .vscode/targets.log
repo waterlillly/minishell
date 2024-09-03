@@ -8,7 +8,7 @@ make: *** No rule to make target 'main.o', needed by 'minishell'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Sep  2 10:47:38 2024
+# Make data base, printed on Tue Sep  3 13:14:49 2024
 
 # Variables
 
@@ -57,7 +57,7 @@ OLDPWD = /home/lbaumeis/CCore/projects/minishell
 # environment
 VSCODE_CODE_CACHE_PATH = /home/lbaumeis/.config/Code/CachedData/b1c0a14de1414fcdaa400695b4db1c0799bc3124
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session17
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session18
 # environment
 LANG = C
 # environment
@@ -67,17 +67,15 @@ XAUTHORITY = /home/lbaumeis/.Xauthority
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.96
+GNOME_TERMINAL_SERVICE = :1.88
 # makefile
 MAKEFLAGS = pqrR -j16 --jobserver-auth=3,4
 # environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/101355/bus,guid=664b6b1e0ad51d664258b51466d57b7c
+DBUS_STARTER_ADDRESS = unix:path=/run/user/101355/bus,guid=710c862912b477bdefb2737466d6df0a
 # makefile
 CURDIR := /home/lbaumeis/CCore/projects/minishell
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
-# environment
-VSCODE_L10N_BUNDLE_LOCATION = 
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -97,15 +95,15 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 1630928
+VSCODE_PID = 1664314
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_101355_1N24cd
+KRB5CCNAME = FILE:/tmp/krb5cc_101355_p3GWBD
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/c3r10p5.42vienna.com:@/tmp/.ICE-unix/1629760,unix/c3r10p5.42vienna.com:/tmp/.ICE-unix/1629760
+SESSION_MANAGER = local/c3r10p5.42vienna.com:@/tmp/.ICE-unix/1663511,unix/c3r10p5.42vienna.com:/tmp/.ICE-unix/1663511
 # automatic
 *F = $(notdir $*)
 # makefile (from 'Makefile', line 34)
@@ -113,7 +111,7 @@ NUMTH = $(shell nproc)
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101355/bus,guid=664b6b1e0ad51d664258b51466d57b7c
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101355/bus,guid=710c862912b477bdefb2737466d6df0a
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -131,7 +129,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/b881f587_587e_46d2_a303_2e06903d973f
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/8b2d2e2a_5d96_4f6d_a411_b2456965d8ff
 # environment
 MAKELEVEL := 0
 # default
@@ -173,7 +171,7 @@ LOGNAME = lbaumeis
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 1629760
+SYSTEMD_EXEC_PID = 1663511
 # environment
 DISPLAY = :0
 # environment
@@ -219,6 +217,7 @@ FT_HOOK_PATHNAME = login-user.d
 # default
 SUFFIXES := 
 # environment
+ 
 VSCODE_CLI = 1
 # environment
 FT_HOOK_NAME = login-user
@@ -237,7 +236,7 @@ XDG_MENU_PREFIX = gnome-
 # environment
 GDMSESSION = ubuntu
 # variable set hash-table stats:
-# Load=112/1024=11%, Rehash=0, Collisions=15/167=9%
+# Load=111/1024=11%, Rehash=0, Collisions=14/166=8%
 
 # Pattern-specific Variable Values
 
@@ -268,7 +267,6 @@ buildins/unset.o:
 #  Modification time never checked.
 #  File has not been updated.
 
- 
 # Not a target:
 lexparse/lexer.o:
 #  Implicit rule search has not been done.
@@ -514,6 +512,7 @@ buildins/sorting.o:
 #  Modification time never checked.
 #  File has not been updated.
 
+ 
 # Not a target:
 lexparse/remove_q.o:
 #  Implicit rule search has not been done.
@@ -562,8 +561,7 @@ buildins/echo.o:
 
 # strcache performance: lookups = 85 / hit rate = 25%
 # hash-table stats:
- 
 # Load=63/8192=1%, Rehash=0, Collisions=1/85=1%
-# Finished Make data base on Mon Sep  2 10:47:38 2024
+# Finished Make data base on Tue Sep  3 13:14:49 2024
 
  
