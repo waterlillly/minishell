@@ -6,11 +6,23 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 12:03:32 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/04 19:21:17 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+bool	only_dollars(char *tok)
+{
+	int	x;
+
+	x = 0;
+	while (tok[x] && tok[x] == '$')
+		x++;
+	if (tok[x] == '\0')
+		return (true);
+	return (false);
+}
 
 char	*rm_out_q(char *tok)
 {
@@ -74,6 +86,7 @@ char	*xpand(t_pipex *p, char **token, int x)
 	temp2 = NULL;
 	temp = rm_out_q(token[x]);
 	temp1 = ft_substr(temp, 1, ft_strlen(temp) - 1);
+	//printf("%s\n", temp1);
 	if ((check_d_q(token[x]) == true || (check_d_q(token[x]) == false
 		&& check_s_q(token[x]) == false)) && temp[0] == '$'
 		&& !valid_env(p, temp1))
@@ -85,9 +98,9 @@ char	*xpand(t_pipex *p, char **token, int x)
 		temp2 = get_env(p, temp1);
 		return (free(temp1), temp1 = NULL, temp2);
 	}
-	else if (token[x][0] == '\'' && token[x][ft_strlen(token[x]) - 1] == '\'')
+	else if (s_out_q(token[x]))
 		return (free(temp1), temp1 = NULL, temp);
-	else if (token[x][0] == '\"' && token[x][ft_strlen(token[x]) - 1] == '\"')
+	else if (d_out_q(token[x]))
 		return (free(temp1), temp1 = NULL, rm_inner_d_q(token[x]));
 	else
 		return (free(temp1), temp1 = NULL, remove_quotes(temp));

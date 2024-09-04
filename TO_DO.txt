@@ -1,0 +1,39 @@
+###>>TO-DO<<###
+
+->get minishell-tester to work!
+
+//input: $cmd
+//	->get correct error msg
+
+input: (execute some cmds) then exit
+	->should exit on first exit!
+
+input: $cmd | ls
+	->ignore first, no error msg, just execute ls
+
+input: echo hi > out > out1 > out2
+	->put "hi" into out2, also create the other two files but they stay empty
+
+input: ls | wc
+	->fix pipes!
+
+input: mkdir a; cd a; mkdir b; cd b; mkdir c; cd c; rm -r ../../../a;
+	->cd .. should display "path/to/pwd/.."
+	->cd .. should display "path/to/pwd/../.."
+	->cd .. should display actual pwd again (if exists)
+
+input: echo ""$""
+	->should display a nl
+	->only for a single $-sign
+	->if double_quote_count % 2 == 0: only nl
+	->else: display $-sign with a nl
+
+input: expr $? + $?
+	->expand values (exitcodes) before passing values to execve
+
+input: unset PWD; cd ..; cd /minishell
+	->should work& also update env and export as soon as there is a valid pwd/oldpwd again
+
+input: start minishell without env; show env+export
+	-> has to have backup env and export!
+

@@ -8,7 +8,7 @@ make: *** No rule to make target 'main.o', needed by 'minishell'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Sep  3 19:32:31 2024
+# Make data base, printed on Wed Sep  4 19:13:45 2024
 
 # Variables
 
@@ -23,7 +23,7 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 # makefile (from 'Makefile', line 31)
 OFILES = $(CFILES:.c=.o)
 # makefile (from 'Makefile', line 29)
-CFILES = main.c more_cmds.c exit.c execute.c start.c signals.c buildins/utils.c buildins/cd.c buildins/cd_find_path.c buildins/pwd.c  buildins/env.c buildins/echo.c buildins/echo_split.c buildins/quotes.c buildins/sorting.c buildins/xpand.c buildins/xport.c buildins/set_export.c buildins/unset.c pipex/pipex.c pipex/error.c pipex/init.c lexparse/minishell.c lexparse/remove_q.c lexparse/quote_count.c lexparse/open_quotes.c lexparse/split_shell.c lexparse/lexer.c lexparse/get_line_cnc.c lexparse/check_syntax.c lexparse/skip_q.c lexparse/parser.c lexparse/set.c lexparse/is_oq.c
+CFILES = main.c more_cmds.c exit.c execute.c start.c signals.c pre_exec.c buildins/utils.c buildins/cd.c buildins/cd_find_path.c buildins/pwd.c  buildins/env.c buildins/echo.c buildins/echo_split.c buildins/quotes.c buildins/sorting.c buildins/xpand.c buildins/xport.c buildins/set_export.c buildins/unset.c pipex/pipex.c pipex/error.c pipex/init.c lexparse/minishell.c lexparse/remove_q.c lexparse/quote_count.c lexparse/open_quotes.c lexparse/split_shell.c lexparse/lexer.c lexparse/get_line_cnc.c lexparse/check_syntax.c lexparse/skip_q.c lexparse/parser.c lexparse/set.c lexparse/is_oq.c
 # environment
 VSCODE_CRASH_REPORTER_PROCESS_TYPE = extensionHost
 # environment
@@ -57,7 +57,7 @@ OLDPWD = /home/lbaumeis/CCore/projects/minishell
 # environment
 VSCODE_CODE_CACHE_PATH = /home/lbaumeis/.config/Code/CachedData/b1c0a14de1414fcdaa400695b4db1c0799bc3124
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session19
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session21
 # environment
 LANG = C
 # environment
@@ -67,11 +67,11 @@ XAUTHORITY = /home/lbaumeis/.Xauthority
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.90
+GNOME_TERMINAL_SERVICE = :1.88
 # makefile
 MAKEFLAGS = pqrR -j16 --jobserver-auth=3,4
 # environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/101355/bus,guid=20b6c59c7353572876f45bf066d741b0
+DBUS_STARTER_ADDRESS = unix:path=/run/user/101355/bus,guid=1668bc8d471d90849275a8dd66d8952b
 # makefile
 CURDIR := /home/lbaumeis/CCore/projects/minishell
 # environment
@@ -95,15 +95,15 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 1698792
+VSCODE_PID = 1743962
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_101355_5CfaCY
+KRB5CCNAME = FILE:/tmp/krb5cc_101355_bCrFqT
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/c3r10p5.42vienna.com:@/tmp/.ICE-unix/1697804,unix/c3r10p5.42vienna.com:/tmp/.ICE-unix/1697804
+SESSION_MANAGER = local/c3r10p5.42vienna.com:@/tmp/.ICE-unix/1743169,unix/c3r10p5.42vienna.com:/tmp/.ICE-unix/1743169
 # automatic
 *F = $(notdir $*)
 # makefile (from 'Makefile', line 34)
@@ -111,7 +111,7 @@ NUMTH = $(shell nproc)
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101355/bus,guid=20b6c59c7353572876f45bf066d741b0
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101355/bus,guid=1668bc8d471d90849275a8dd66d8952b
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -129,7 +129,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/4214e004_5e0f_4d5a_9207_e56ede59f1e8
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/b1a9a9c0_4c46_42b5_8de2_c9073d743bad
 # environment
 MAKELEVEL := 0
 # default
@@ -171,7 +171,7 @@ LOGNAME = lbaumeis
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 1697804
+SYSTEMD_EXEC_PID = 1743169
 # environment
 DISPLAY = :0
 # environment
@@ -243,15 +243,16 @@ GDMSESSION = ubuntu
 
 # Directories
 
-# . (device 2048, inode 4260053): 19 files, no impossibilities.
+# . (device 2048, inode 4260053): 21 files, no impossibilities.
 
-# 19 files, no impossibilities in 1 directories.
+# 21 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
 # No implicit rules.
 
 # Files
+ 
 
 .c.o:
 #  Implicit rule search has not been done.
@@ -284,10 +285,9 @@ lexparse/get_line_cnc.o:
 #  Modification time never checked.
 #  File has not been updated.
 
- 
-minishell: main.o more_cmds.o exit.o execute.o start.o signals.o buildins/utils.o buildins/cd.o buildins/cd_find_path.o buildins/pwd.o buildins/env.o buildins/echo.o buildins/echo_split.o buildins/quotes.o buildins/sorting.o buildins/xpand.o buildins/xport.o buildins/set_export.o buildins/unset.o pipex/pipex.o pipex/error.o pipex/init.o lexparse/minishell.o lexparse/remove_q.o lexparse/quote_count.o lexparse/open_quotes.o lexparse/split_shell.o lexparse/lexer.o lexparse/get_line_cnc.o lexparse/check_syntax.o lexparse/skip_q.o lexparse/parser.o lexparse/set.o lexparse/is_oq.o
+minishell: main.o more_cmds.o exit.o execute.o start.o signals.o pre_exec.o buildins/utils.o buildins/cd.o buildins/cd_find_path.o buildins/pwd.o buildins/env.o buildins/echo.o buildins/echo_split.o buildins/quotes.o buildins/sorting.o buildins/xpand.o buildins/xport.o buildins/set_export.o buildins/unset.o pipex/pipex.o pipex/error.o pipex/init.o lexparse/minishell.o lexparse/remove_q.o lexparse/quote_count.o lexparse/open_quotes.o lexparse/split_shell.o lexparse/lexer.o lexparse/get_line_cnc.o lexparse/check_syntax.o lexparse/skip_q.o lexparse/parser.o lexparse/set.o lexparse/is_oq.o
 #  Implicit rule search has not been done.
-#  Last modified 2024-09-03 18:03:21.341510501
+#  Last modified 2024-09-04 15:56:53.196055887
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 40):
 	($(MAKE) -C libft)
@@ -329,7 +329,7 @@ signals.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2024-09-01 19:56:10.066485878
+#  Last modified 2024-09-04 14:56:25.467002423
 #  File has been updated.
 #  Successfully updated.
 
@@ -422,6 +422,7 @@ buildins/xpand.o:
 #  File has not been updated.
 
 # Not a target:
+ 
 buildins/env.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -489,6 +490,12 @@ buildins/quotes.o:
 #  File has not been updated.
 
 # Not a target:
+pre_exec.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
 main.o:
 #  Implicit rule search has been done.
 #  File does not exist.
@@ -548,19 +555,20 @@ buildins/echo.o:
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=45/1024=4%, Rehash=0, Collisions=1/100=1%
+# Load=46/1024=4%, Rehash=0, Collisions=1/102=1%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 64 / storage = 814 B / avg = 12 B
-# current buf: size = 8162 B / used = 814 B / count = 64 / avg = 12 B
+# strcache buffers: 1 (0) / strings = 67 / storage = 846 B / avg = 12 B
+# current buf: size = 8162 B / used = 846 B / count = 67 / avg = 12 B
 
-# strcache performance: lookups = 87 / hit rate = 26%
+# strcache performance: lookups = 90 / hit rate = 25%
 # hash-table stats:
-# Load=64/8192=1%, Rehash=0, Collisions=1/87=1%
-# Finished Make data base on Tue Sep  3 19:32:31 2024
+ 
+# Load=67/8192=1%, Rehash=0, Collisions=1/90=1%
+# Finished Make data base on Wed Sep  4 19:13:45 2024
 
  

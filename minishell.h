@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/03 17:54:16 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:40:43 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,18 +109,29 @@ typedef struct s_pipex
 	char	*cmd;
 }			t_pipex;
 
+/*MAIN*/
+void 	free_parse(t_minishell_p *in);
+void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
+int		do_stuff(t_pipex *p, t_minishell_p *pars);
+bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
+
+/*EXIT*/
 void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str);
 int		error(char *str, int code);
 void	free_p_rest(t_pipex *p);
 void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input);
+void	check_exit(t_pipex *p, t_minishell_p *pars);
+
+/*MORE_CMDS*/
 bool	is_buildin(char *s);
 int		do_this(t_pipex *p, t_minishell_p *pars);
-void 	free_parse(t_minishell_p *in);
-void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
-int		check(t_pipex *p, t_minishell_p *pars, int *c);
-int		do_stuff(t_pipex *p, t_minishell_p *pars);
-void	check_exit(t_pipex *p, t_minishell_p *pars);
-bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
+
+/*PRE_EXEC*/
+void	check_access(t_pipex *p, t_minishell_p *pars, char **cmd);
+void	check(t_pipex *p, t_minishell_p *pars);
+bool	valid_cmd(char **str, t_pipex *p);
+char	*loop_cmd_check(t_pipex *p, t_minishell_p *pars, int x);
+char	**check_cmd(t_pipex *p, t_minishell_p *pars);
 
 /*EXECUTE*/
 int		redir_input(t_pipex *p, int *c, t_minishell_p *pars);
@@ -165,8 +176,6 @@ void			free_lex(t_minishell_l *in);
 /*PIPEX*/
 char	*is_exec(t_pipex *p);
 int		do_heredoc(t_pipex *p, t_minishell_p *pars);
-bool	valid_cmd(char **str, t_pipex *p);
-char	**check_cmd(t_pipex *p, t_minishell_p *pars);
 int		exec_cmd(t_pipex *p, t_minishell_p *pars);
 
 /*ERROR*/
@@ -198,6 +207,7 @@ bool	check_d_q(char *token);
 bool	check_s_q(char *token);
 bool	check_quotes(char *token);
 bool	s_out_q(char *tok);
+bool	d_out_q(char *tok);
 
 /*PWD*/
 void	reset_old_pwd(t_pipex *p, char *path);
@@ -241,6 +251,7 @@ int		do_split(char *s, char c, int pos_a);
 char	**echo_split(char *s, int c);
 
 /*EXPAND*/
+bool	only_dollars(char *tok);
 char	*rm_out_q(char *tok);
 int		multi_d_q(char *token);
 char	*rm_inner_d_q(char *token);

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/03 19:37:37 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:59:51 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,49 +45,6 @@ void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	get_input(p, &lex, pars, input);
 }
 
-int	check(t_pipex *p, t_minishell_p *pars, int *c)
-{
-	char	**cmd;
-	int		i;
-
-	cmd = NULL;
-	i = 0;
-	if (p->cmd_count > 500)
-	{
-		ft_putendl_fd("too many commands", 2);
-		p->status = 1;
-		return (1);
-	}
-	else if (p && pars && pars->str && p->cmd_count == 1)
-	{
-		cmd = check_cmd(p, pars);
-		if (!cmd)
-			return (perror(cmd[0]), 1);//err
-		if (is_buildin(pars->str[0]))
-		{
-			p->status = execute(p, c, pars);
-			return (1);
-		}
-		else if (valid_cmd(cmd, p))
-		{
-			ft_free_double(pars->str);
-			pars->str = cmd;
-			while (cmd[i++])
-			{
-				pars->str[i] = ft_strdup(cmd[i]);
-				if (!pars->str[i])
-					return (ft_free_double(cmd), 1);//err
-			}
-			ft_free_double(cmd);
-			p->status = execute(p, c, pars);
-			return (1);
-		}
-		else
-			return (perror(cmd[0]), 0);
-	}
-	return (0);
-}
-
 int	do_stuff(t_pipex *p, t_minishell_p *pars)
 {
 	int	c;
@@ -97,13 +54,15 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 	i = -1;
 	while (p && pars && c < p->cmd_count)
 	{
-		if (check(p, pars, &c))
-			return (p->status);
 		p->pid[c] = fork();
 		if (p->pid[c] == -1)
 			return (error("fork failed", 1));
 		else if (p->pid[c] == 0)
-			p->status = execute(p, &c, pars);
+		{
+			check(p, pars);
+			if (p->status != 1)
+				p->status = execute(p, &c, pars);
+		}
 		else
 		{
 			close_all(p);
@@ -118,40 +77,6 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 			p->status = WEXITSTATUS(p->status);
 	}
 	return (p->status);
-}
-
-void	check_exit(t_pipex *p, t_minishell_p *pars)
-{
-	char	*str;
-	char	*temp;
-
-	str = NULL;
-	temp = NULL;
-	if (pars->str[2])
-	{
-		str = ft_strjoin_free_both(ft_strjoin(pars->str[0], ": "),
-			ft_strjoin(pars->str[1], ": "));
-		str = ft_strjoin_free_one(str, "too many arguments\n");
-		ft_putstr_fd(str, 2);
-		free(str);
-		str = NULL;
-		p->status = 1;
-	}
-	temp = ft_itoa_long(ft_atoi_long(pars->str[1]));
-	if (ft_strcmp_bool(temp, pars->str[1]))
-		p->status = ft_atoi_long(pars->str[1]);
-	else
-	{
-		str = ft_strjoin_free_both(ft_strjoin(pars->str[0], ": "),
-			ft_strjoin(pars->str[1], ": "));
-		str = ft_strjoin_free_one(str, "numeric argument required\n");
-		ft_putstr_fd(str, 2);
-		free(str);
-		str = NULL;
-		p->status = 2;
-	}
-	free(temp);
-	temp = NULL;
 }
 
 bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)

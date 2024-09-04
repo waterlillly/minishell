@@ -6,7 +6,7 @@
 #    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 16:33:47 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/09/01 19:40:27 by lbaumeis         ###   ########.fr        #
+#    Updated: 2024/09/04 14:56:25 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Werror -Wextra -g
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
 
-CFILES += main.c more_cmds.c exit.c execute.c start.c signals.c
+CFILES += main.c more_cmds.c exit.c execute.c start.c signals.c pre_exec.c
 
 CFILES += buildins/utils.c buildins/cd.c buildins/cd_find_path.c buildins/pwd.c #buildins/backup.c
 CFILES += buildins/env.c buildins/echo.c buildins/echo_split.c buildins/quotes.c buildins/sorting.c

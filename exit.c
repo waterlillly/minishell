@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:21:59 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/03 15:20:49 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/04 15:06:01 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,33 @@ void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input)
 		free_raw(input);
 		input = NULL;
 	}
+}
+
+void	check_exit(t_pipex *p, t_minishell_p *pars)
+{
+	char	*str;
+	char	*temp;
+
+	str = NULL;
+	temp = NULL;
+	temp = ft_itoa_long(ft_atoi_long(pars->str[1]));
+	if (ft_strcmp_bool(temp, pars->str[1]))
+	{
+		p->status = ft_atoi_long(pars->str[1]);
+		return (free(temp), temp = NULL, (void)NULL);
+	}
+	str = ft_strjoin_free_both(ft_strjoin(pars->str[0], ": "),
+		ft_strjoin(pars->str[1], ": "));
+	if (pars->str[2])
+	{
+		str = ft_strjoin_free_one(str, "too many arguments\n");
+		p->status = 1;
+	}
+	else
+	{
+		str = ft_strjoin_free_one(str, "numeric argument required\n");
+		p->status = 2;
+	}
+	ft_putstr_fd(str, 2);
+	return (free(str), str = NULL, free(temp), temp = NULL, (void)NULL);
 }
