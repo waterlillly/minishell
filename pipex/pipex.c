@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/04 14:55:33 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/05 21:07:13 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 	temp = NULL;
 	if (!p || !pars || !pars->str)
 		return (1);
+	check(p, pars);
 	if (pars->redirect && pars->redirect->token == HEREDOC)
 	{
 		x = do_heredoc(p, pars);

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/04 19:21:17 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:42:41 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ char	*xpand(t_pipex *p, char **token, int x)
 	temp2 = NULL;
 	temp = rm_out_q(token[x]);
 	temp1 = ft_substr(temp, 1, ft_strlen(temp) - 1);
-	//printf("%s\n", temp1);
 	if ((check_d_q(token[x]) == true || (check_d_q(token[x]) == false
 		&& check_s_q(token[x]) == false)) && temp[0] == '$'
 		&& !valid_env(p, temp1))

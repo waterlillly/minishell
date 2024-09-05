@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/04 15:59:51 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/05 22:37:48 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,26 +52,21 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 	
 	c = 0;
 	i = -1;
-	while (p && pars && c < p->cmd_count)
+	while (p && pars && c < p->cmd_count && p->cmd_count > 0)
 	{
 		p->pid[c] = fork();
 		if (p->pid[c] == -1)
 			return (error("fork failed", 1));
 		else if (p->pid[c] == 0)
-		{
-			check(p, pars);
-			if (p->status != 1)
-				p->status = execute(p, &c, pars);
-		}
-		else
-		{
-			close_all(p);
-			waitpid(p->pid[c], (int *)p->status, 0);
-		}
+			p->status = execute(p, &c, pars);
+		close_all(p);
+		waitpid(p->pid[c], (int *)p->status, 0);
+		if (WIFEXITED(p->status))
+			p->status = WEXITSTATUS(p->status);
 		c++;
 		pars = pars->next;
 	}
-	while (i++ < p->cmd_count && waitpid(p->pid[i], (int *)p->status, 0) != -1)
+	while (++i < p->cmd_count && p->cmd_count >= 1 && waitpid(p->pid[i], (int *)p->status, 0) != -1)
 	{
 		if (WIFEXITED(p->status))
 			p->status = WEXITSTATUS(p->status);
@@ -90,8 +85,8 @@ bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	{
 		if ((*pars)->str[1])
 			check_exit(p, *pars);
-		if (p->status == 1)
-			return (true);
+		//else if (p->status == 1)
+		//	return (true);//??
 		return (false);
 	}
 	else

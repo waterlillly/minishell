@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:09:17 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/04 19:14:24 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/05 18:07:51 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	is_buildin(char *s)
 int	do_this(t_pipex *p, t_minishell_p *pars)
 {
 	if (!p || !pars || !pars->str)
-		return (0);
+		return (1);
 	if (ft_strcmp_bool(pars->str[0], "unset"))
 		p->status = unset(p, pars->str);
 	else if (ft_strcmp_bool(pars->str[0], "env") && p->menv)
@@ -39,6 +39,6 @@ int	do_this(t_pipex *p, t_minishell_p *pars)
 		p->status = echo(p, pars->str);
 	//else if (ft_strcmp_bool(pars->str[0], "expr") && pars->str[1] != NULL)
 	//	p->status = expr(p, pars->str);
-	return (0);
+	return (p->status);
 }
 

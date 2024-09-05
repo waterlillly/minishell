@@ -6,13 +6,13 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:42:56 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/04 15:58:54 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:04:35 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_access(t_pipex *p, t_minishell_p *pars, char **cmd)
+int	check_access(t_pipex *p, char **cmd, t_minishell_p *pars)
 {
 	char	**temp;
 	int		i;
@@ -23,21 +23,22 @@ void	check_access(t_pipex *p, t_minishell_p *pars, char **cmd)
 	temp = NULL;
 	temp = ft_split(pars->str[0], ' ');
 	if (!temp)
-		return ;
+		return (1);
 	if (valid_cmd(temp, p))
 	{
 		cmd = ft_calloc(ft_arrlen(pars->str) + ft_arrlen(temp), sizeof(char *));
 		if (!cmd)
-			return ;
+			return (0);
 		while (temp[++i])
 			cmd[i] = ft_strdup(temp[i]);
 		while (pars->str[j])
 			cmd[i++] = ft_strdup(pars->str[j++]);
-		ft_free_double(pars->str);
-		pars->str = cmd;
-		return (ft_free_double(temp));
+		pars->str = update_free_arr(pars->str, cmd);
+		//ft_free_double(pars->str);
+		//pars->str = cmd;
+		return (ft_free_double(temp), 0);
 	}
-	return (perror(pars->str[0]));
+	return (perror(pars->str[0]), 127);
 }
 
 void	check(t_pipex *p, t_minishell_p *pars)
@@ -51,19 +52,35 @@ void	check(t_pipex *p, t_minishell_p *pars)
 		p->status = 1;
 		return ;
 	}
-	else if (p && pars && pars->str)
+	else if (p && pars->str)
 	{
 		cmd = check_cmd(p, pars);
 		if (!cmd)
+		{
+			p->status = 1;
 			return ;
-		ft_free_double(pars->str);
-		pars->str = cmd;
+		}
+		pars->str = update_free_arr(pars->str, cmd);
+		//ft_free_double(pars->str);
+		//pars->str = cmd;
 		if (valid_cmd(pars->str, p) || is_buildin(pars->str[0]))
+		{
+			p->status = 0;
 			return ;
-		else if (access(pars->str[0], X_OK) != 0)
-			return (check_access(p, pars, cmd));
-		return (perror(pars->str[0]));
+		}
+		if (access(pars->str[0], X_OK) != 0)
+		{
+			p->status = check_access(p, cmd, pars);
+			return ;
+		}
+		else
+		{
+			p->status = 1;
+			return (perror(pars->str[0]));
+		}
 	}
+	p->status = 1;
+	return ;
 }
 
 bool	valid_cmd(char **str, t_pipex *p)
@@ -86,7 +103,7 @@ bool	valid_cmd(char **str, t_pipex *p)
 		if (!p->part)
 			return (false);
 		if (access(p->part, X_OK) == 0)
-			return (true);
+			return (free(p->part), p->part = NULL, true);
 		free(p->part);
 		p->part = NULL;
 	}
@@ -100,7 +117,8 @@ char	*loop_cmd_check(t_pipex *p, t_minishell_p *pars, int x)
 
 	s = NULL;
 	temp = NULL;
-	if (!s_out_q(pars->str[x]) && !only_dollars(pars->str[x]))
+	if (!s_out_q(pars->str[x]) && !only_dollars(pars->str[x])
+		&& !ft_strcmp_bool(pars->str[x], "$?"))
 	{
 		s = echo_split(remove_quotes(pars->str[x]), '$');
 		if (!s)

@@ -22,14 +22,24 @@ input: mkdir a; cd a; mkdir b; cd b; mkdir c; cd c; rm -r ../../../a;
 	->cd .. should display "path/to/pwd/../.."
 	->cd .. should display actual pwd again (if exists)
 
-input: echo ""$""
+input: echo ""$"" (same for ''$'')
 	->should display a nl
 	->only for a single $-sign
 	->if double_quote_count % 2 == 0: only nl
 	->else: display $-sign with a nl
 
+input: echo hi$$$
+	->should print the whole thing, do not leave out the dollar signs!
+
 input: expr $? + $?
 	->expand values (exitcodes) before passing values to execve
+
+input: echo $?
+	->should print the right exitcode
+
+input: exit 2 | exit 42
+	->should not exit the shell, just update the exitstatus to the second part (42)
+	(if echo $? gets called afterwards it should say 42!)
 
 input: unset PWD; cd ..; cd /minishell
 	->should work& also update env and export as soon as there is a valid pwd/oldpwd again
@@ -37,3 +47,6 @@ input: unset PWD; cd ..; cd /minishell
 input: start minishell without env; show env+export
 	-> has to have backup env and export!
 
+input: cntl-C
+	->exit code: 130 and exits!
+	->cntl-D ->sets exit code to 130?

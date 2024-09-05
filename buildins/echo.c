@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/04 19:21:21 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:46:08 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,19 @@ int	do_echo(t_pipex *p, char **token, int x)
 		|| (x == 1 && ft_strcmp_bool(token[0], "echo") && check_n(token[x])))
 		return (1);
 	if (ft_strcmp_bool(token[1], "$?"))
-		return (ft_putnbr_fd(p->status, 1), 0);
-	if (!s_out_q(token[x]))
-		s = echo_split(remove_quotes(token[x]), '$');
-	if (!s)
+		return (ft_putnbr_fd((int)p->status, 1), 0);
+	if ((check_d_q(token[x]) && only_dollars(remove_quotes(token[x]))) || only_dollars(token[x]))
+		str = ft_strdup(remove_quotes(token[x]));
+	else if (!s_out_q(token[x]))
+		s = echo_split(token[x], '$');
+	if (!str && !s)
 	{
 		str = xpand(p, token, x);
 		if (!str)
 			return (1);
 	}
-	else
+	else if (!str && s)
 	{
-		//ft_print_array(s);
 		str = split_and_xpand(p, s);
 		if (!str)
 			return (ft_free_double(s), 1);

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/04 15:40:43 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:04:50 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ bool	is_buildin(char *s);
 int		do_this(t_pipex *p, t_minishell_p *pars);
 
 /*PRE_EXEC*/
-void	check_access(t_pipex *p, t_minishell_p *pars, char **cmd);
+int		check_access(t_pipex *p, char **cmd, t_minishell_p *pars);
 void	check(t_pipex *p, t_minishell_p *pars);
 bool	valid_cmd(char **str, t_pipex *p);
 char	*loop_cmd_check(t_pipex *p, t_minishell_p *pars, int x);

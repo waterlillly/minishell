@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:24:45 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/04 15:26:34 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/05 15:43:39 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*remove_quotes(char *s)
 	x = 0;
 	y = 0;
 	temp = NULL;
-	if (!s || ft_strlen(s) < 2)
+	if (!s)// || ft_strlen(s) < 2)
 		return (NULL);
 	else if (!check_d_q(s) && !check_s_q(s))
 		return (s);
