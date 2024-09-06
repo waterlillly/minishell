@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:42:56 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/05 14:04:35 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/06 13:18:29 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	check_access(t_pipex *p, char **cmd, t_minishell_p *pars)
 	return (perror(pars->str[0]), 127);
 }
 
-void	check(t_pipex *p, t_minishell_p *pars)
+int	check(t_pipex *p, t_minishell_p *pars)
 {
 	char	**cmd;
 
@@ -49,38 +49,22 @@ void	check(t_pipex *p, t_minishell_p *pars)
 	if (p->cmd_count > 500)
 	{
 		ft_putendl_fd("too many commands", 2);
-		p->status = 1;
-		return ;
+		return (p->status = 1);
 	}
 	else if (p && pars->str)
 	{
 		cmd = check_cmd(p, pars);
 		if (!cmd)
-		{
-			p->status = 1;
-			return ;
-		}
+			return (p->status = 1);
 		pars->str = update_free_arr(pars->str, cmd);
-		//ft_free_double(pars->str);
-		//pars->str = cmd;
 		if (valid_cmd(pars->str, p) || is_buildin(pars->str[0]))
-		{
-			p->status = 0;
-			return ;
-		}
+			return (p->status = 0);
 		if (access(pars->str[0], X_OK) != 0)
-		{
-			p->status = check_access(p, cmd, pars);
-			return ;
-		}
+			return (p->status = check_access(p, cmd, pars));
 		else
-		{
-			p->status = 1;
-			return (perror(pars->str[0]));
-		}
+			return (perror(pars->str[0]), p->status = 1);
 	}
-	p->status = 1;
-	return ;
+	return (p->status = 1);
 }
 
 bool	valid_cmd(char **str, t_pipex *p)

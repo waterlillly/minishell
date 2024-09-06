@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:04:36 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/05 20:44:37 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/06 21:57:19 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,19 @@ void	restore_fds(t_pipex *p)
 {
 	if (p->copy_stdin != -1)
 	{
-		dup2(p->copy_stdin, STDIN_FILENO);
-		close(p->copy_stdin);
+		//printf("before: copy in: %d stdin: %d\n", p->copy_stdin, STDIN_FILENO);
+		if (dup2(p->copy_stdin, STDIN_FILENO) == -1)
+			return (perror("dup2"));
+		//printf("after: copy in: %d stdin: %d\n\n", p->copy_stdin, STDIN_FILENO);
+		//close(p->copy_stdin);
 	}
 	if (p->copy_stdout != -1)
 	{
-		dup2(p->copy_stdout, STDOUT_FILENO);
-		close(p->copy_stdout);
+		//printf("before: copy out: %d stdout: %d\n", p->copy_stdout, STDOUT_FILENO);
+		if (dup2(p->copy_stdout, STDOUT_FILENO) == -1)
+			return (perror("dup2"));
+		//printf("after: copy out: %d stdout: %d\n\n", p->copy_stdout, STDOUT_FILENO);
+		//close(p->copy_stdout);
 	}
 }
 
@@ -31,11 +37,11 @@ void	close_pipes(t_pipex *p)
 	int	i;
 
 	i = 0;
-	if (!p || p->cmd_count < 1)
+	if (!p || p->cmd_count <= 1)
 		return ;
 	else if (p && p->pip && p->pip[i])
 	{
-		while (p->pip && i < p->cmd_count && p->pip[i])
+		while (p->pip && i < p->cmd_count - 1 && p->pip[i])
 		{
 			if (p->pip[i][0] && p->pip[i][0] != -1)// && p->pip[i][0] != STDIN_FILENO)
 				close(p->pip[i][0]);
@@ -55,10 +61,10 @@ void	close_all(t_pipex *p)
 		close(p->filein);
 	if (p && p->fileout != -1)// && p->fileout != STDOUT_FILENO)
 		close(p->fileout);
-	if (p && p->copy_stdin != -1)// && p->copy_stdin != STDIN_FILENO)
-		close(p->copy_stdin);
-	if (p && p->copy_stdout != -1)// && p->copy_stdout != STDOUT_FILENO)
-		close(p->copy_stdout);
+	// if (p && p->copy_stdin != -1)// && p->copy_stdin != STDIN_FILENO)
+	// 	close(p->copy_stdin);
+	// if (p && p->copy_stdout != -1)// && p->copy_stdout != STDOUT_FILENO)
+	// 	close(p->copy_stdout);
 	if (p && p->pip)
 		close_pipes(p);
 }

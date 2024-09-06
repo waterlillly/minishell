@@ -79,6 +79,7 @@ cc -Wall -Wextra -Werror -c ft_printptr.c -o ft_printptr.o
 cc -Wall -Wextra -Werror -c ft_decideformat.c -o ft_decideformat.o
 cc -Wall -Wextra -Werror -c ft_strcmp.c -o ft_strcmp.o
 cc -Wall -Wextra -Werror -c ft_white.c -o ft_white.o
+ 
 cc -Wall -Wextra -Werror -c ft_atof.c -o ft_atof.o
 cc -Wall -Wextra -Werror -c ft_str_upper.c -o ft_str_upper.o
 cc -Wall -Wextra -Werror -c ft_isalpha_extend.c -o ft_isalpha_extend.o
@@ -93,6 +94,9 @@ cc -Wall -Wextra -Werror -c ft_free_double.c -o ft_free_double.o
 cc -Wall -Wextra -Werror -c ft_print_array.c -o ft_print_array.o
 cc -Wall -Wextra -Werror -c ft_strcmp_bool.c -o ft_strcmp_bool.o
 cc -Wall -Wextra -Werror -c ft_strnstr_bool.c -o ft_strnstr_bool.o
+ 
+make[1]: warning: -j16 forced in makefile: resetting jobserver mode.
+
 cc -Wall -Wextra -Werror -c ft_atoi_long.c -o ft_atoi_long.o
 cc -Wall -Wextra -Werror -c ft_itoa_long.c -o ft_itoa_long.o
 cc -Wall -Wextra -Werror -c ft_lstnew.c -o ft_lstnew.o
@@ -105,6 +109,7 @@ cc -Wall -Wextra -Werror -c ft_lstclear.c -o ft_lstclear.o
 cc -Wall -Wextra -Werror -c ft_lstiter.c -o ft_lstiter.o
 cc -Wall -Wextra -Werror -c ft_lstmap.c -o ft_lstmap.o
 cc -Wall -Wextra -Werror -c ft_strcat.c -o ft_strcat.o
+ 
 cc -Wall -Wextra -Werror -c ft_strlen_2d.c -o ft_strlen_2d.o
 cc -Wall -Wextra -Werror -c ft_realloc_2d.c -o ft_realloc_2d.o
 cc -Wall -Wextra -Werror -c ft_free_2d.c -o ft_free_2d.o
@@ -118,5 +123,3 @@ rm -f hd
 rm -f buildins.h.gch
 make: Leaving directory '/home/lbaumeis/CCore/projects/minishell'
  
-make[1]: warning: -j16 forced in makefile: resetting jobserver mode.
-

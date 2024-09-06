@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:25:32 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/02 14:07:35 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/06 13:03:28 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	get_line_cnc(t_raw_in *in, t_pipex *p)
 {
 	char	*tmp;
 
-	tmp = ft_strjoin_free_one(ft_strdup(p->pwd), ": ");
+	tmp = ft_strjoin_free_one(ft_strdup(p->pwd), "> ");
 	in->line = readline(tmp);
 	free(tmp);
 	if (!in->line || !ft_strlen(in->line) || is_bad(in->line))

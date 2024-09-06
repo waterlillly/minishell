@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 16:27:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/05 22:43:58 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/06 21:53:19 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,21 @@ int	redir_input(t_pipex *p, int *c, t_minishell_p *pars)
 	{
 		if (dup2(p->filein, STDIN_FILENO) == -1)
 			return (perror("dup2"), 1);
+		close(p->filein);
 	}
-	else if (p && p->pip && *c > 0 && p->cmd_count >= 1 && p->pip[*c - 1])
+	else if (p && p->pip && *c > 0 && p->cmd_count > 1 && p->pip[*c - 1])
 	{
 		if (dup2(p->pip[*c - 1][0], STDIN_FILENO) == -1)
 			return (perror("dup2"), 1);
+		close(p->pip[*c - 1][0]);
+		close(p->pip[*c - 1][1]);
+	}
+	else if (p && p->pip && *c == 0 && p->cmd_count >= 1 && p->pip[*c])
+	{
+		if (dup2(p->pip[*c][0], STDIN_FILENO) == -1)
+			return (perror("dup2"), 1);
+		close(p->pip[*c][0]);
+		close(p->pip[*c][1]);
 	}
 	return (0);
 }
@@ -35,11 +45,14 @@ int	redir_output(t_pipex *p, int *c, t_minishell_p *pars)
 	{
 		if (dup2(p->fileout, STDOUT_FILENO) == -1)
 			return (perror("dup2"), 1);
+		close(p->fileout);
 	}
 	else if (p && p->pip && *c < p->cmd_count - 1 && p->pip[*c])
 	{
 		if (dup2(p->pip[*c][1], STDOUT_FILENO) == -1)
 			return (perror("dup2"), 1);
+		close(p->pip[*c][0]);
+		close(p->pip[*c][1]);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:21:59 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/05 20:45:51 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/06 21:49:19 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str)
 {
+	//restore_fds(p);
 	close_all(p);
-	restore_fds(p);
 	if (p->paths)
 		ft_free_double(p->paths);//ft_free_2d(p->paths);
 	if (p->xport)

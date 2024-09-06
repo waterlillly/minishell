@@ -116,3 +116,11 @@ def test_edge_cases():
 if __name__ == "__main__":
     test_edge_cases()
 
+
+lbaumeis@c3r10p5:~/CCore/projects/minishell$ echo hi | echo hello
+hello
+lbaumeis@c3r10p5:~/CCore/projects/minishell$ echo hi | echo hello | echo hey
+hey
+lbaumeis@c3r10p5:~/CCore/projects/minishell$ echo hi > out | echo hello > out1
+lbaumeis@c3r10p5:~/CCore/projects/minishell$ < out cat > out2
+lbaumeis@c3r10p5:~/CCore/projects/minishell$ < out cat | cat > out3

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/05 21:07:13 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/06 19:26:36 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,13 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 	x = 0;
 	temp = NULL;
 	if (!p || !pars || !pars->str)
-		return (1);
-	check(p, pars);
+		return (p->status = 1);
+	if (check(p, pars) != 0)
+		return (p->status);//close_all(p), 
 	if (pars->redirect && pars->redirect->token == HEREDOC)
 	{
 		x = do_heredoc(p, pars);
-		return (close_all(p), x);
+		return (x);//close_all(p), 
 	}
 	temp = ft_substr(pars->str[0], 1, ft_strlen(pars->str[0]) - 1);
 	if (pars->str[0][0] == '$' && valid_env(p, temp))
@@ -88,11 +89,11 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 	if (is_buildin(p->cmd))
 	{
 		x = do_this(p, pars);
-		return (close_all(p), x);
+		return (x);//close_all(p), 
 	}
 	p->path = is_exec(p);
 	//if (!p->path)
 	//	return (perror(p->path), 1);
-	close_all(p);
+	//close_all(p);
 	return (execve(p->path, pars->str, p->menv));
 }

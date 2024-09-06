@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/05 20:50:09 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/06 21:56:38 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,17 @@ void	init_pipes(t_pipex *p)
 	p->pip = NULL;
 	if (p->cmd_count > 1)
 	{
-		p->pip = (int **)ft_calloc(sizeof(int *), p->cmd_count);
+		p->pip = (int **)ft_calloc(p->cmd_count, sizeof(int *));
 		if (!p->pip)
 			return ;
 	}
-	while (p->cmd_count > 1 && i < p->cmd_count)
+	while (p->cmd_count > 1 && i < p->cmd_count - 1)
 	{
-		p->pip[i] = NULL;
 		p->pip[i] = (int *)ft_calloc(2, sizeof(int));
 		if (!p->pip[i])
 			return ;
 		if (pipe(p->pip[i]) == -1)
-			return ;
+			return (perror("pipe"));
 		i++;
 	}
 }
@@ -81,9 +80,11 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 
 	tmp = pars;
 	p->cmd_count = 0;
+	//dup2(STDIN_FILENO, p->copy_stdin);
 	p->copy_stdin = dup(STDIN_FILENO);
 	if (p->copy_stdin == -1)
 		return ;
+	// //dup2(STDOUT_FILENO, p->copy_stdout);
 	p->copy_stdout = dup(STDOUT_FILENO);
 	if (p->copy_stdout == -1)
 		return ;
@@ -116,8 +117,8 @@ int	first_init(t_pipex *p, char **envp)
 	if (x != 0)
 		return (p->status = x, x);
 	p->status = 0;
-	p->copy_stdin = -1;
-	p->copy_stdout = -1;
+	// p->copy_stdin = -1;
+	// p->copy_stdout = -1;
 	p->paths = ft_split(p->mpath, ':');
 	if (!p->paths)
 		return (p->status = 1, err_free(p), 1);
