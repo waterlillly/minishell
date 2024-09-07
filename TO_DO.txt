@@ -37,9 +37,29 @@ input: expr $? + $?
 input: echo $?
 	->should print the right exitcode
 
-input: exit 2 | exit 42
-	->should not exit the shell, just update the exitstatus to the second part (42)
-	(if echo $? gets called afterwards it should say 42!)
+//input: exit 2 | exit 42
+//	->should not exit the shell, just update the exitstatus to the second part (42)
+//	(if echo $? gets called afterwards it should say 42!)
+//	-> if multiple exits and ls at the end: exit with ls exit code (0) and display ls!
+//		>>lbaumeis@c3r10p5:~/CCore/projects/minishell$ exit 42 | exit -1
+//		>>lbaumeis@c3r10p5:~/CCore/projects/minishell$ echo $?
+//		>>255
+//		>>lbaumeis@c3r10p5:~/CCore/projects/minishell$ exit 42 | exit -10
+//		>>lbaumeis@c3r10p5:~/CCore/projects/minishell$ echo $?
+//		>>246
+//		>>lbaumeis@c3r10p5:~/CCore/projects/minishell$ exit 42 | exit -100
+//		>>lbaumeis@c3r10p5:~/CCore/projects/minishell$ echo $?
+//		>>156
+//
+//		this works:
+//		/home/lbaumeis/CCore/projects/minishell> exit abc | exit 2
+//		exit: abc: numeric argument required
+//		lbaumeis@c3r10p5:~/CCore/projects/minishell$ echo $?
+//		2
+//		lbaumeis@c3r10p5:~/CCore/projects/minishell$ exit abc | exit 2
+//		bash: exit: abc: numeric argument required
+//		lbaumeis@c3r10p5:~/CCore/projects/minishell$ echo $?
+//		2
 
 input: unset PWD; cd ..; cd /minishell
 	->should work& also update env and export as soon as there is a valid pwd/oldpwd again
@@ -50,3 +70,12 @@ input: start minishell without env; show env+export
 input: cntl-C
 	->exit code: 130 and exits!
 	->cntl-D ->sets exit code to 130?
+
+//input: echo hi | echo hello
+//	->should display only hello
+
+input: echo hi > out | echo hello > out1
+	->should create two files with hi in out and hello in out1
+
+input: echo hi > out > out1 > out2
+	->should create all 3 files, but only write the hi into out2

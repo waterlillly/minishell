@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/06 21:56:38 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/07 23:07:39 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,12 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 	tmp = pars;
 	p->cmd_count = 0;
 	//dup2(STDIN_FILENO, p->copy_stdin);
+	p->copy_stdin = -1;
 	p->copy_stdin = dup(STDIN_FILENO);
 	if (p->copy_stdin == -1)
 		return ;
-	// //dup2(STDOUT_FILENO, p->copy_stdout);
+	// dup2(STDOUT_FILENO, p->copy_stdout);
+	p->copy_stdout = -1;
 	p->copy_stdout = dup(STDOUT_FILENO);
 	if (p->copy_stdout == -1)
 		return ;

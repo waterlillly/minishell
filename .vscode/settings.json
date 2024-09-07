@@ -2,6 +2,7 @@
 	"makefile.extensionOutputFolder": "./.vscode",
 	"files.associations": {
 		"sstream": "c",
-		"minishell.h": "c"
+		"minishell.h": "c",
+		"cstdlib": "c"
 	}
 }

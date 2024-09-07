@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/06 13:18:38 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/07 18:55:22 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str);
 int		error(char *str, int code);
 void	free_p_rest(t_pipex *p);
 void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input);
-void	check_exit(t_pipex *p, t_minishell_p *pars);
+bool	check_exit(t_pipex *p, t_minishell_p *pars);
 
 /*MORE_CMDS*/
 bool	is_buildin(char *s);
@@ -134,9 +134,9 @@ char	*loop_cmd_check(t_pipex *p, t_minishell_p *pars, int x);
 char	**check_cmd(t_pipex *p, t_minishell_p *pars);
 
 /*EXECUTE*/
-int		redir_input(t_pipex *p, int *c, t_minishell_p *pars);
-int		redir_output(t_pipex *p, int *c, t_minishell_p *pars);
-int		execute(t_pipex *p, int *c, t_minishell_p *pars);
+int		redir_input(t_pipex *p, int c, t_minishell_p *pars);
+int		redir_output(t_pipex *p, int c, t_minishell_p *pars);
+int		execute(t_pipex *p, int c, t_minishell_p *pars);
 
 /*START*/
 void	sig_int(int	num);
@@ -180,6 +180,7 @@ int		exec_cmd(t_pipex *p, t_minishell_p *pars);
 
 /*ERROR*/
 void	restore_fds(t_pipex *p);
+void	closing(t_pipex *p);
 void	close_pipes(t_pipex *p);
 void	close_all(t_pipex *p);
 void	err_free(t_pipex *p);

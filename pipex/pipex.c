@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/06 19:26:36 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/07 22:30:23 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 	if (!p || !pars || !pars->str)
 		return (p->status = 1);
 	if (check(p, pars) != 0)
-		return (p->status);//close_all(p), 
+		return (p->status);
 	if (pars->redirect && pars->redirect->token == HEREDOC)
 	{
-		x = do_heredoc(p, pars);
-		return (x);//close_all(p), 
+		p->status = do_heredoc(p, pars);
+		return (p->status);
 	}
 	temp = ft_substr(pars->str[0], 1, ft_strlen(pars->str[0]) - 1);
 	if (pars->str[0][0] == '$' && valid_env(p, temp))
@@ -88,8 +88,8 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 	temp = NULL;
 	if (is_buildin(p->cmd))
 	{
-		x = do_this(p, pars);
-		return (x);//close_all(p), 
+		p->status = do_this(p, pars);
+		return (p->status);
 	}
 	p->path = is_exec(p);
 	//if (!p->path)
