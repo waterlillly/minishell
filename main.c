@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/07 23:17:08 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/07 23:29:17 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		}
 		else
 		{
+			close_all(p);//closing(p);//
 			if (wait(NULL) == -1)//(waitpid(p->pid[c], NULL, 0) != 0)
 				return (perror("wait"), 1);
-			close_all(p);//closing(p);//
 		}
 		c++;
 		pars = pars->next;

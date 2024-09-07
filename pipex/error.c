@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:04:36 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/07 23:21:06 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/07 23:26:17 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	closing(t_pipex *p)
 	int	i;
 
 	i = 0;
-	if (!p || p->cmd_count < 1)
+	if (!p || p->cmd_count <= 1)
 		return ;
 	if (p && p->filein != -1 && p->filein != STDIN_FILENO)
 		close(p->filein);
@@ -66,7 +66,7 @@ void	close_pipes(t_pipex *p)
 	int	i;
 
 	i = 0;
-	if (!p || p->cmd_count < 1)
+	if (!p || p->cmd_count <= 1)
 		return ;
 	else if (p && p->pip && p->pip[i])
 	{
