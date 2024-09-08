@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:21:59 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/07 23:27:45 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/08 16:17:39 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ bool	check_exit(t_pipex *p, t_minishell_p *pars)
 		{
 			str = ft_strjoin_free_one(ft_strjoin_free_both(ft_strjoin(pars->str[0], ": "),
 				ft_strjoin(pars->str[1], ": ")), "numeric argument required\n");
-			return (p->status = 2, ft_putendl_fd("exit", 2), ft_putstr_fd(str, 2),
+			return (p->status = 2, ft_putstr_fd(str, 2),
 				free(str), str = NULL, false);
 		}
 	}

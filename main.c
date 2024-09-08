@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/08 14:33:02 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/08 16:47:45 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,53 +57,56 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		p->pid[c] = fork();
 		if (p->pid[c] == -1)
 			return (perror("fork"), 1);
-		closing(p);////close_all(p);
 		if (p->pid[c] == 0)
 		{
 			p->status = execute(p, c, pars);
-			if (p->status != 0 && kill(p->pid[c], 0) == 0)
-			{
-				if (kill(p->pid[c], SIGCHLD) != 0)
-					return (perror("kill"), (int)p->status);
-			}
+			// if (p->status != 0 && kill(p->pid[c], 0) == 0)
+			// {
+			// 	if (kill(p->pid[c], SIGCHLD) != 0)
+			// 		return (perror("kill"), (int)p->status);
+			// }
 		}
 		else
 		{
-			close_all(p);//closing(p);//
-			if (wait(NULL) == -1)//(waitpid(p->pid[c], NULL, 0) != 0)
+			if (wait(NULL) == -1)
 				return (perror("wait"), 1);
+			if (WIFEXITED(p->status))
+				p->status = WEXITSTATUS(p->status);
 		}
+		printf("pipe in: %s\n", get_next_line(p->pip[c][0]));
+		printf("pipe out: %s\n", get_next_line(p->pip[c][1]));
+		printf("std in: %s\n", get_next_line(STDIN_FILENO));
+		printf("std out: %s\n", get_next_line(STDOUT_FILENO));
 		c++;
 		pars = pars->next;
 	}
-	while (i < p->cmd_count - 1 && waitpid(p->pid[i], (int *)p->status, 0) != -1)
+	while (i < p->cmd_count - 1 && waitpid(p->pid[i], NULL, 0) != -1)
 	{
 		if (WIFEXITED(p->status))
 			p->status = WEXITSTATUS(p->status);
 		i++;
 	}
-	//restore_fds(p);
-	close_all(p);
 	return ((int)p->status);
 }
 
 bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 {
-	t_minishell_p	**tmp;
+	//t_minishell_p	**tmp;
 
-	tmp = pars;
+	//tmp = pars;
 	refresh_init(p, input, pars);
 	if (!*pars)
 		return (true);
 	if (!p || !input)
 		return (false);
-	if ((*tmp) && (*tmp)->str && ft_strcmp_bool((*tmp)->str[0], "exit"))
+	if ((*pars) && (*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit"))
 	{
-		while ((*tmp) && (*tmp)->str && (*tmp)->next && (*tmp)->next->str)
-			(*tmp) = (*tmp)->next;
-		pars = tmp;
-		if ((*tmp) && (*tmp)->str && ft_strcmp_bool((*tmp)->str[0], "exit") && !(*tmp)->next)
-			return (check_exit(p, *pars));
+		while ((*pars) && (*pars)->str && (*pars)->next && (*pars)->next->str)
+			(*pars) = (*pars)->next;
+		//pars = tmp;
+		if ((*pars) && (*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit") && !(*pars)->next)
+			if (check_exit(p, *pars) == false)
+				return (false);
 	}
 	if (do_stuff(p, *pars) != 0)
 		return (false);
