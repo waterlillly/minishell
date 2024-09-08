@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/08 01:06:13 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/09/08 14:01:51 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,12 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		if (p->pid[c] == 0)
 		{
 			p->status = execute(p, c, pars);
-			if (p->status != 0 && kill(p->pid[c], 0) == 0)
-			{
-				if (kill(p->pid[c], SIGCHLD) != 0)
-					return (perror("kill"), (int)p->status);
-			}
+			ft_putnbr_fd(c, 1);
 		}
 		else
 		{
 			close_all(p);//closing(p);//
-			if (wait(NULL) == -1)//(waitpid(p->pid[c], NULL, 0) != 0)
-				return (perror("wait"), 1);
+			wait(NULL);
 		}
 		c++;
 		pars = pars->next;

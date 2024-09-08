@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/07 22:30:23 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/08 14:03:35 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,8 @@ int	do_heredoc(t_pipex *p, t_minishell_p *pars)
 
 int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 {
-	int		x;
 	char	*temp;
 
-	x = 0;
 	temp = NULL;
 	if (!p || !pars || !pars->str)
 		return (p->status = 1);
@@ -92,8 +90,5 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 		return (p->status);
 	}
 	p->path = is_exec(p);
-	//if (!p->path)
-	//	return (perror(p->path), 1);
-	//close_all(p);
 	return (execve(p->path, pars->str, p->menv));
 }
