@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/08 17:16:31 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/09/08 22:33:11 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	t_minishell_l	*lex;
 	
 	lex = NULL;
-	//restore_fds(p);
 	get_input(p, &lex, pars, input);
 }
 
@@ -66,21 +65,11 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 			// 		return (perror("kill"), (int)p->status);
 			// }
 		}
-		else
-		{
-			if (wait(NULL) == -1)
-				return (perror("wait"), 1);
-			if (WIFEXITED(p->status))
-				p->status = WEXITSTATUS(p->status);
-		}
-		printf("pipe in: %s\n", get_next_line(p->pip[c][0]));
-		printf("pipe out: %s\n", get_next_line(p->pip[c][1]));
-		printf("std in: %s\n", get_next_line(STDIN_FILENO));
-		printf("std out: %s\n", get_next_line(STDOUT_FILENO));
 		c++;
 		pars = pars->next;
 	}
-	while (i < p->cmd_count - 1 && waitpid(p->pid[i], NULL, 0) != -1)
+	close_all(p);
+	while (i < p->cmd_count - 1 && p->cmd_count > 1 && waitpid(p->pid[i], NULL, 0) != -1)
 	{
 		if (WIFEXITED(p->status))
 			p->status = WEXITSTATUS(p->status);
@@ -91,9 +80,6 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 
 bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 {
-	//t_minishell_p	**tmp;
-
-	//tmp = pars;
 	refresh_init(p, input, pars);
 	if (!*pars)
 		return (true);
@@ -103,7 +89,6 @@ bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	{
 		while ((*pars) && (*pars)->str && (*pars)->next && (*pars)->next->str)
 			(*pars) = (*pars)->next;
-		//pars = tmp;
 		if ((*pars) && (*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit") && !(*pars)->next)
 			if (check_exit(p, *pars) == false)
 				return (false);
