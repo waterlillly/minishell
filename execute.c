@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 16:27:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/08 16:58:03 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:15:18 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	execute(t_pipex *p, int c, t_minishell_p *pars)
 	if (!p)
 		return (1);
 	x = redir_input(p, c, pars);
-	if (x != 0)
+	if (x == 0)
 		return (x);
 	x = redir_output(p, c, pars);
 	if (x != 0)
