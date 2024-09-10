@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:21:59 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/08 22:29:43 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/09 17:02:04 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str)
 {
 	//restore_fds(p);
-	closing(p);
-	if (p->copy_stdin != -1)// && p->copy_stdin != STDIN_FILENO)
-		close(p->copy_stdin);
-	if (p->copy_stdout != -1)// && p->copy_stdout != STDOUT_FILENO)
-		close(p->copy_stdout);
+	// closing(p);
+	// if (p->copy_stdin != -1)// && p->copy_stdin != STDIN_FILENO)
+	// 	close(p->copy_stdin);
+	// if (p->copy_stdout != -1)// && p->copy_stdout != STDOUT_FILENO)
+	// 	close(p->copy_stdout);
+	close_all(p);
 	if (p->pip)
 	{
 		free(p->pip);

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/08 22:27:09 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:42:38 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 void	check_filein(t_pipex *p, t_minishell_p *pars)
 {
-	if (pars && pars->redirect && pars->redirect->input
-		&& pars->redirect->token == SMALLER)
+	//puts("check_filein\n");
+	if (p && pars && pars->redirect && pars->redirect->input
+		&& pars->redirect->token && (pars->redirect->token == SMALLER
+		|| (pars->redirect->token != BIGGER && pars->redirect->token != BIGGERBIGGER)))
 	{
+		//puts(pars->redirect->input);
 		p->filein = open(pars->redirect->input, O_RDONLY, 0644);
 		if (p->filein == -1 || access(pars->redirect->input, R_OK) == -1)
 			return ;
@@ -30,8 +33,10 @@ void	check_fileout(t_pipex *p, t_minishell_p *pars)
 
 	file = NULL;
 	tok = 0;
-	if (pars && pars->redirect && pars->redirect->input)
+	//puts("check_fileout\n");
+	if (pars && pars->redirect && pars->redirect->input && pars->redirect->token)
 	{
+		//puts(pars->redirect->input);
 		file = pars->redirect->input;
 		tok = pars->redirect->token;
 	}

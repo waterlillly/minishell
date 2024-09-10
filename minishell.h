@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/08 21:22:40 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/09 17:06:07 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 
 typedef enum e_token
 {
-	PIPE = 1,
+	PIPE = 1,//
 	BIGGER,
 	BIGGERBIGGER,
 	SMALLER,
@@ -76,10 +76,10 @@ typedef struct s_minishell_l
 typedef struct s_minishell_p
 {
 	char					**str;
-	int						str_len;
-	char					*infile;
-	char					*outfile;
-	bool					std_out;
+	int						str_len;//
+	char					*infile;//
+	char					*outfile;//
+	bool					std_out;//
 	t_minishell_l			*redirect;
 	struct s_minishell_p	*next;
 	struct s_minishell_p	*prev;
@@ -137,6 +137,8 @@ char	**check_cmd(t_pipex *p, t_minishell_p *pars);
 //int		redir_input(t_pipex *p, int c, t_minishell_p *pars);
 //int		redir_output(t_pipex *p, int c, t_minishell_p *pars);
 int		redirect(t_pipex *p, int c, t_minishell_p *pars);
+//int		redirect_in(t_pipex *p, int c, t_minishell_p *pars);
+//int		redirect_out(t_pipex *p, int c, t_minishell_p *pars);
 int		execute(t_pipex *p, int c, t_minishell_p *pars);
 
 /*START*/
@@ -187,6 +189,8 @@ void	close_all(t_pipex *p);
 void	err_free(t_pipex *p);
 
 /*INIT*/
+// int		count_out_files(t_minishell_p *pars);
+// int		count_in_files(t_minishell_p *pars);
 void	check_filein(t_pipex *p, t_minishell_p *pars);
 void	check_fileout(t_pipex *p, t_minishell_p *pars);
 void 	init_pipes(t_pipex *p);

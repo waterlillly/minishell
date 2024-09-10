@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/08 22:33:11 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/10 14:26:23 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,18 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		if (p->pid[c] == 0)
 		{
 			p->status = execute(p, c, pars);
-			// if (p->status != 0 && kill(p->pid[c], 0) == 0)
-			// {
-			// 	if (kill(p->pid[c], SIGCHLD) != 0)
-			// 		return (perror("kill"), (int)p->status);
-			// }
+			if (p->status != 0 && kill(p->pid[c], 0) == 0)
+			{
+				if (kill(p->pid[c], SIGCHLD) != 0)
+					return (perror("kill"), (int)p->status);
+			}
 		}
 		c++;
 		pars = pars->next;
 	}
+	//restore_fds(p);
 	close_all(p);
-	while (i < p->cmd_count - 1 && p->cmd_count > 1 && waitpid(p->pid[i], NULL, 0) != -1)
+	while (i < p->cmd_count && p->cmd_count > 0 && waitpid(p->pid[i], NULL, 0) != -1)
 	{
 		if (WIFEXITED(p->status))
 			p->status = WEXITSTATUS(p->status);
