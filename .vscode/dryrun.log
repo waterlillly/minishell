@@ -1,6 +1,5 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/lbaumeis/CCore/projects/minishell'
- 
 cc -Wall -Werror -Wextra -g -c main.c -o main.o
 cc -Wall -Werror -Wextra -g -c more_cmds.c -o more_cmds.o
 cc -Wall -Werror -Wextra -g -c exit.c -o exit.o
@@ -37,13 +36,12 @@ cc -Wall -Werror -Wextra -g -c lexparse/parser.c -o lexparse/parser.o
 cc -Wall -Werror -Wextra -g -c lexparse/set.c -o lexparse/set.o
 cc -Wall -Werror -Wextra -g -c lexparse/is_oq.c -o lexparse/is_oq.o
 (make -C libft)
- 
 make[1]: Entering directory '/home/lbaumeis/CCore/projects/minishell/libft'
+cc -Wall -Wextra -Werror -c ft_isalpha.c -o ft_isalpha.o
+cc -Wall -Wextra -Werror -c ft_isdigit.c -o ft_isdigit.o
  
 make[1]: warning: -j16 forced in makefile: resetting jobserver mode.
 
-cc -Wall -Wextra -Werror -c ft_isalpha.c -o ft_isalpha.o
-cc -Wall -Wextra -Werror -c ft_isdigit.c -o ft_isdigit.o
 cc -Wall -Wextra -Werror -c ft_isalnum.c -o ft_isalnum.o
 cc -Wall -Wextra -Werror -c ft_isascii.c -o ft_isascii.o
 cc -Wall -Wextra -Werror -c ft_isprint.c -o ft_isprint.o

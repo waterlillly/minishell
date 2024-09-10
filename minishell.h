@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/09 17:06:07 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/10 18:13:50 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,9 +209,8 @@ char	**update_free_arr(char **old, char **new);
 /*QUOTES*/
 char	*add_quotes(char *token);
 char	*remove_quotes(char *s);
-bool	check_d_q(char *token);
+int		check_d_q(char *token);
 bool	check_s_q(char *token);
-bool	check_quotes(char *token);
 bool	s_out_q(char *tok);
 bool	d_out_q(char *tok);
 
@@ -259,8 +258,8 @@ char	**echo_split(char *s, int c);
 /*EXPAND*/
 bool	only_dollars(char *tok);
 char	*rm_out_q(char *tok);
-int		multi_d_q(char *token);
-char	*rm_inner_d_q(char *token);
+int		multi_q(char *token);
+char	*rm_q(char *token);
 char	*xpand(t_pipex *p, char **token, int x);
 
 /*XPORT*/

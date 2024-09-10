@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:04:36 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/09 17:01:46 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:49:02 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,21 +103,21 @@ void	err_free(t_pipex *p)
 		free(p->pid);
 		p->pid = NULL;
 	}
-	if (p->path)
-	{
-		free(p->path);
-		p->path = NULL;
-	}
-	if (p->executable)
-	{
-		free(p->executable);
-		p->executable = NULL;
-	}
-	if (p->part)
-	{
-		free(p->part);
-		p->part = NULL;
-	}
+	// if (p->path)
+	// {
+	// 	free(p->path);
+	// 	p->path = NULL;
+	// }
+	// if (p->executable)
+	// {
+	// 	free(p->executable);
+	// 	p->executable = NULL;
+	// }
+	// if (p->part)
+	// {
+	// 	free(p->part);
+	// 	p->part = NULL;
+	// }
 	if (p->here)
 	{
 		free(p->here);

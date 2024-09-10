@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:24:45 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/05 15:43:39 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/10 18:50:14 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,24 @@ char	*remove_quotes(char *s)
 {
 	int		x;
 	int		y;
+	int		q;
 	char	*temp;
 
 	x = 0;
 	y = 0;
 	temp = NULL;
-	if (!s)// || ft_strlen(s) < 2)
+	if (!s || ft_strlen(s) < 3)
 		return (NULL);
 	else if (!check_d_q(s) && !check_s_q(s))
 		return (s);
-	temp = ft_calloc((ft_strlen(s) - 1), sizeof(char));
+	q = 0;
+	while (*s)
+	{
+		if (*s == '\'' || *s == '\"')
+			q++;
+		s++;
+	}
+	temp = ft_calloc((ft_strlen(s) - q + 1), sizeof(char));///possibly negative
 	if (!temp)
 		return (NULL);
 	while (s[x])
@@ -60,85 +68,41 @@ char	*remove_quotes(char *s)
 	return (temp);
 }
 
-bool	check_d_q(char *token)
+int	check_d_q(char *token)
 {
-	int		x;
-	bool	d_q;
+	int	x;
+	int	d_q;
 
 	x = 0;
-	d_q = false;
+	d_q = 0;
 	if (!token)
 		return (false);
 	while (token[x])
 	{
 		if (token[x] == '\"')
-		{
-			d_q = true;
-			x++;
-			break ;
-		}
+			d_q++;
 		x++;
 	}
-	while (token[x])
-	{
-		if (token[x] == '\"' && d_q == true)
-			return (true);
-		x++;
-	}
-	return (false);
+	return (d_q);
 }
-
 
 bool	check_s_q(char *token)
 {
-	int		x;
-	bool	s_q;
+	int	x;
+	int	s_q;
 
 	x = 0;
-	s_q = false;
+	s_q = 0;
 	if (!token)
 		return (false);
 	while (token[x])
 	{
 		if (token[x] == '\'')
-		{
-			s_q = true;
-			x++;
-			break ;
-		}
+			s_q++;
 		x++;
 	}
-	while (token[x])
-	{
-		if (token[x] == '\'' && s_q == true)
-			return (true);
-		x++;
-	}
-	return (false);
-}
-
-bool	check_quotes(char *token)
-{
-	int		x;
-	bool	q;
-
-	x = 0;
-	q = false;
-	if (!token)
-		return (false);
-	while (token[x] && token[x] != '=')
-		x++;
-	x++;
-	if (token[x] == '\"' || token[x] == '\'')
-		q = true;
-	x++;
-	while (token[x] && token[x + 1])
-	{
-		if ((token[x] == '\"' || token[x] == '\'') && token[x + 1] == '\0'
-			&& q == true)
-				return (true);
-		x++;
-	}
+	if (s_q != 0 && s_q % 2 == 0)
+		return (true);
 	return (false);
 }
 
@@ -152,7 +116,7 @@ bool	s_out_q(char *tok)
 
 bool	d_out_q(char *tok)
 {
-	if (tok[0] == '\"' && tok[ft_strlen(tok) - 1] == '\"')
+	if (tok[0] == '\"' && tok[ft_strlen(tok)] == '\"')
 		return (true);
 	else
 		return (false);

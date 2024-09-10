@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/08 00:57:32 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/09/10 18:46:58 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ int	do_echo(t_pipex *p, char **token, int x)
 		return (1);
 	if (ft_strcmp_bool(token[1], "$?"))
 		return (ft_putnbr_fd((int)p->status, 1), 0);
-	if ((check_d_q(token[x]) && only_dollars(remove_quotes(token[x]))) || only_dollars(token[x]))
-		str = ft_strdup(remove_quotes(token[x]));
-	else if (!s_out_q(token[x]))
+	if ((!check_s_q(token[x]) && only_dollars(rm_q(token[x]))) || only_dollars(token[x]))
+		str = ft_strdup(rm_q(token[x]));
+	if (!s_out_q(token[x]))
 		s = echo_split(token[x], '$');
 	if (!str && !s)
 	{
@@ -100,12 +100,13 @@ int	echo(t_pipex *p, char **token)
 		return (1);
 	if (!token[1])
 		return (ft_putstr_fd("\n", 1), 0);
-	x = 0;
-	while (token[++x])
+	x = 1;
+	while (token[x])
 	{
 		y = do_echo(p, token, x);
 		if (y != 1 && token[x + 1])
 			ft_putstr_fd(" ", 1);
+		x++;
 	}
 	if (check_n(token[1]))
 		return (0);

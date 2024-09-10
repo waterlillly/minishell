@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/05 15:42:41 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/10 18:47:17 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,14 @@ bool	only_dollars(char *tok)
 	int	x;
 
 	x = 0;
-	while (tok[x] && tok[x] == '$')
-		x++;
-	if (tok[x] == '\0')
-		return (true);
-	return (false);
+	while (tok[x])
+	{
+		if (tok[x] == '$')
+			x++;
+		else
+			return (false);
+	}
+	return (true);
 }
 
 char	*rm_out_q(char *tok)
@@ -33,7 +36,7 @@ char	*rm_out_q(char *tok)
 		return (tok);
 }
 
-int	multi_d_q(char *token)
+int	multi_q(char *token)
 {
 	int	x;
 	int	c;
@@ -42,14 +45,14 @@ int	multi_d_q(char *token)
 	c = 0;
 	while (token[x])
 	{
-		if (token[x] == '\"')
+		if (token[x] == '\"' || token[x] == '\'')
 			c++;
 		x++;
 	}
 	return (c);
 }
 
-char	*rm_inner_d_q(char *token)
+char	*rm_q(char *token)
 {
 	char	*new;
 	int		q;
@@ -59,7 +62,9 @@ char	*rm_inner_d_q(char *token)
 	new = NULL;
 	x = 1;
 	y = 0;
-	q = multi_d_q(token);
+	if (check_d_q(token) <= 0 && !check_s_q(token))
+		return (token);
+	q = multi_q(token);
 	new = ft_calloc((ft_strlen(token) - q + 1), sizeof(char));
 	if (!new)
 		return (NULL);
@@ -72,6 +77,8 @@ char	*rm_inner_d_q(char *token)
 	}
 	return (new);
 }
+
+
 
 char	*xpand(t_pipex *p, char **token, int x)
 {
@@ -86,21 +93,19 @@ char	*xpand(t_pipex *p, char **token, int x)
 	temp2 = NULL;
 	temp = rm_out_q(token[x]);
 	temp1 = ft_substr(temp, 1, ft_strlen(temp) - 1);
-	if ((check_d_q(token[x]) == true || (check_d_q(token[x]) == false
-		&& check_s_q(token[x]) == false)) && temp[0] == '$'
-		&& !valid_env(p, temp1))
+	if (!check_s_q(token[x]) && temp[0] == '$' && temp[1] != '$'
+		&& temp[1] != '\0' && !valid_env(p, temp1))
 		return (free(temp), free(temp1), temp = NULL, temp1 = NULL, NULL);
-	else if ((check_d_q(token[x]) == true
-		|| (check_d_q(token[x]) == false && check_s_q(token[x]) == false))
-		&& valid_env(p, temp1))
+	else if (!check_s_q(token[x]) && valid_env(p, temp1))
 	{
 		temp2 = get_env(p, temp1);
 		return (free(temp1), temp1 = NULL, temp2);
 	}
 	else if (s_out_q(token[x]))
 		return (free(temp1), temp1 = NULL, temp);
-	else if (d_out_q(token[x]))
-		return (free(temp1), temp1 = NULL, rm_inner_d_q(token[x]));
+	else if (check_d_q(token[x]) > 0
+		&& (check_d_q(token[x]) / 2) % 2 == 0 && ft_strcmp_bool(rm_q(token[x]), "$"))
+		return (free(temp), free(temp1), temp = NULL, temp1 = NULL, ft_strdup(""));
 	else
-		return (free(temp1), temp1 = NULL, remove_quotes(temp));
+		return (free(temp1), temp1 = NULL, rm_q(temp));
 }

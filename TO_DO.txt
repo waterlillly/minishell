@@ -91,3 +91,10 @@ input: 	/home/lbaumeis/CCore/projects/minishell> cd ..
 		/home/lbaumeis/CCore/projects> cd minishell
 		/home/lbaumeis/CCore/projects/minishell> 
 
+input: cntl+Z
+	->should not exit bash, cntl+D should! (cntl+C should start a new promt)
+
+
+fix exit | exit
+fix echo hi > out > out1
+fix echo hi > out | echo hello > out1 (dup2 c - 1 is bad fd)

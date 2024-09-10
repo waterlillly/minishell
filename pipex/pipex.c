@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/08 17:17:33 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:43:29 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,19 @@ char	*is_exec(t_pipex *p)
 		p->executable = ft_strjoin(p->paths[i], "/");
 		if (!p->executable)
 			return (NULL);
-		p->part = ft_strjoin(p->executable, p->cmd);
-		free(p->executable);
-		p->executable = NULL;
+		p->part = ft_strjoin_free_one(p->executable, p->cmd);
+		// free(p->executable);
+		// p->executable = NULL;
 		if (!p->part)
 			return (NULL);
-		if (access(p->part, X_OK) == 0)
+		else if (access(p->part, X_OK) == 0)
 			return (p->part);
-		free(p->part);
-		p->part = NULL;
-		i++;
+		else
+		{
+			free(p->part);
+			p->part = NULL;
+			i++;
+		}
 	}
 	return (NULL);
 }
