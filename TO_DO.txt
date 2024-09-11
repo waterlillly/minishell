@@ -98,3 +98,4 @@ fix echo hi > out > out1
 fix echo hi > out | echo hello > out1 (dup2 c - 1 is bad fd)
 
 rewrite update_free_arr and learn loop_cmd_check
+single execute
