@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/11 16:24:32 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/11 16:56:56 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,11 +134,7 @@ char	*loop_cmd_check(t_pipex *p, t_minishell_p *pars, int x);
 char	**check_cmd(t_pipex *p, t_minishell_p *pars);
 
 /*EXECUTE*/
-//int		redir_input(t_pipex *p, int c, t_minishell_p *pars);
-//int		redir_output(t_pipex *p, int c, t_minishell_p *pars);
 int		redirect(t_pipex *p, int c, t_minishell_p *pars);
-//int		redirect_in(t_pipex *p, int c, t_minishell_p *pars);
-//int		redirect_out(t_pipex *p, int c, t_minishell_p *pars);
 int		execute(t_pipex *p, int c, t_minishell_p *pars);
 
 /*START*/

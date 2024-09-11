@@ -3,9 +3,9 @@
 ->get minishell-tester to work!
 
 //input: $cmd
-//	->get correct error msg
+	->get correct error msg
 
-input: (execute some cmds) then exit
+//input: (execute some cmds) then exit
 	->should exit on first exit!
 
 input: $cmd | ls
