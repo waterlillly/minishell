@@ -83,8 +83,6 @@ input: echo hi > out > out1 > out2
 input: any builtin
 	-> should change return and the data should change in parent
 
-mehras: figure out the correct return values and try killing children where I should without coming out of the loop also see if it even matters for one commanf
-
 input: 	/home/lbaumeis/CCore/projects/minishell> cd ..
 		/home/lbaumeis/CCore/projects> cd minishell/
 		/home/lbaumeis/CCore/projects/minishell/> cd ..
@@ -98,3 +96,5 @@ input: cntl+Z
 fix exit | exit
 fix echo hi > out > out1
 fix echo hi > out | echo hello > out1 (dup2 c - 1 is bad fd)
+
+rewrite update_free_arr and learn loop_cmd_check

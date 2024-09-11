@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:37:12 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 21:33:12 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/11 22:51:10 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	free_raw(t_raw_in *in)
 		in->input = NULL;
 	}
 	if (in && in->out)
-		ft_free_double(in->out);//ft_free_2d(in->out);
+		ft_free_2d(in->out);//ft_free_2d(in->out);
 }
 
 void	init_raw(t_raw_in *in)

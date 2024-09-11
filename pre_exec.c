@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:42:56 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/11 12:48:52 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/11 23:38:45 by mehras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	check_access(t_pipex *p, char **cmd, t_minishell_p *pars)
 int	check(t_pipex *p, t_minishell_p *pars)
 {
 	char	**cmd;
+	
 
 	cmd = NULL;
 	if (p->cmd_count > 500)
@@ -136,7 +137,7 @@ char	**check_cmd(t_pipex *p, t_minishell_p *pars)
 			cmd[x] = ft_strdup(pars->str[x]);
 		else
 		{
-			cmd[x] = ft_strdup(loop_cmd_check(p, pars, x));
+			cmd[x] = loop_cmd_check(p, pars, x);
 			if (!cmd[x])
 				return (NULL);
 		}
