@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/05 14:00:52 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/11 16:28:41 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	cd(t_pipex *p, char **token)
 		else if (token[1] != NULL)
 			p->status = fill_path(p, token);
 	}
-	if (p->status != 0 || (!is_access(get_env(p, "OLDPWD")) || !is_access(get_env(p, "PWD"))))
+	if (!is_access(get_env(p, "OLDPWD")) || !is_access(get_env(p, "PWD")))
 	{
 		if (p->pwd && !is_access(get_env(p, "OLDPWD")))
 		{
@@ -84,7 +84,7 @@ int	cd(t_pipex *p, char **token)
 			if (!p->pwd)
 				p->pwd = get_env(p, "HOME");
 		}
-		return (update(p, "PWD", p->pwd), update(p, "OLDPWD", p->oldpwd));//just add setting it back for env and export once cd executed again! also remove oldpwd things (=) if cd -!
+		return (update_both(p));//update(p, "PWD", p->pwd), update(p, "OLDPWD", p->oldpwd)//just add setting it back for env and export once cd executed again! also remove oldpwd things (=) if cd -!
 	}
 	if (p->status != 0)
 	{

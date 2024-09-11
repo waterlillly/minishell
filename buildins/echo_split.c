@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:54:22 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/10 15:39:05 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/11 14:02:59 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,23 @@ int	countstrs(char *s, char c)
 
 	counter = 0;
 	x = 0;
-	while (s && s[x])
+	while (s[x])
 	{
-		if (x == 0 && s[x] != c)
-		{
-			counter++;
-			while (s[x] && s[x] != c)
-				x++;
-		}
-		else if (s[x] == c)
+		if (s[x] == c)
 		{
 			x++;
-			counter++;
-			if (s[x] && s[x] == c)
+			if (s[x] == c || s[x] == '\0')
+			{
 				x++;
+				counter++;
+			}
 		}
 		else
-			x++;
+		{
+			while (s[x] && s[x] != c)
+				x++;
+			counter++;
+		}
 	}
 	return (counter);
 }
@@ -50,7 +50,7 @@ int	do_split(char *s, char c, int pos_a)
 		else
 		{
 			while (s[pos_a] && s[pos_a] != c)
-			pos_a++;
+				pos_a++;
 		}
 	}
 	else

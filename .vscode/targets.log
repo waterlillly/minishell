@@ -8,7 +8,7 @@ make: *** No rule to make target 'main.o', needed by 'minishell'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Sep 10 15:18:01 2024
+# Make data base, printed on Wed Sep 11 11:54:09 2024
 
 # Variables
 
@@ -57,7 +57,7 @@ OLDPWD = /home/lbaumeis/CCore/projects/minishell
 # environment
 VSCODE_CODE_CACHE_PATH = /home/lbaumeis/.config/Code/CachedData/b1c0a14de1414fcdaa400695b4db1c0799bc3124
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session42
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session43
 # environment
 LANG = C
 # environment
@@ -67,11 +67,11 @@ XAUTHORITY = /home/lbaumeis/.Xauthority
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.93
+GNOME_TERMINAL_SERVICE = :1.96
 # makefile
 MAKEFLAGS = pqrR -j16 --jobserver-auth=3,4
 # environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/101355/bus,guid=01f1335583f7c776b472213466e046ed
+DBUS_STARTER_ADDRESS = unix:path=/run/user/101355/bus,guid=50a09915550bb60004ecdc0c66e16581
 # makefile
 CURDIR := /home/lbaumeis/CCore/projects/minishell
 # environment
@@ -95,15 +95,15 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 3645696
+VSCODE_PID = 3683830
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_101355_NHfAxX
+KRB5CCNAME = FILE:/tmp/krb5cc_101355_nTFccm
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/c3r10p3.42vienna.com:@/tmp/.ICE-unix/3644732,unix/c3r10p3.42vienna.com:/tmp/.ICE-unix/3644732
+SESSION_MANAGER = local/c3r10p3.42vienna.com:@/tmp/.ICE-unix/3682492,unix/c3r10p3.42vienna.com:/tmp/.ICE-unix/3682492
 # automatic
 *F = $(notdir $*)
 # makefile (from 'Makefile', line 34)
@@ -111,7 +111,7 @@ NUMTH = $(shell nproc)
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101355/bus,guid=01f1335583f7c776b472213466e046ed
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101355/bus,guid=50a09915550bb60004ecdc0c66e16581
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -129,7 +129,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/ca020bfa_5784_4bde_b735_483d5ca60feb
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/8522e8d4_6ba1_41c0_92f2_0322161c2256
 # environment
 MAKELEVEL := 0
 # default
@@ -149,6 +149,7 @@ DOCKER_HOST = unix:///run/user/101355/docker.sock
 # automatic
 ?F = $(notdir $?)
 # makefile (from 'Makefile', line 32)
+ 
 NAME = minishell
 # environment
 GTK_IM_MODULE = ibus
@@ -171,7 +172,7 @@ LOGNAME = lbaumeis
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 3644732
+SYSTEMD_EXEC_PID = 3682492
 # environment
 DISPLAY = :0
 # environment
@@ -277,6 +278,7 @@ lexparse/is_oq.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+ 
 
 # Not a target:
 lexparse/get_line_cnc.o:
@@ -308,7 +310,6 @@ lexparse/parser.o:
 #  File has not been updated.
 
 # Not a target:
- 
 lexparse/check_syntax.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -329,7 +330,7 @@ signals.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2024-09-08 22:34:01.989917147
+#  Last modified 2024-09-10 18:55:07.62558628
 #  File has been updated.
 #  Successfully updated.
 
@@ -400,6 +401,7 @@ mval: re
 # Not a target:
 pipex/pipex.o:
 #  Implicit rule search has not been done.
+ 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -558,6 +560,7 @@ buildins/echo.o:
 # VPATH Search Paths
 
 # No 'vpath' search paths.
+ 
 
 # No general ('VPATH' variable) search path.
 
@@ -567,6 +570,6 @@ buildins/echo.o:
 # strcache performance: lookups = 90 / hit rate = 24%
 # hash-table stats:
 # Load=68/8192=1%, Rehash=0, Collisions=1/90=1%
-# Finished Make data base on Tue Sep 10 15:18:01 2024
+# Finished Make data base on Wed Sep 11 11:54:09 2024
 
  

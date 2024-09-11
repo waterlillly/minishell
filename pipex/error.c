@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:04:36 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/10 15:49:02 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:04:02 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	closing(t_pipex *p)
 		close(p->filein);
 	if (p && p->fileout != -1 && p->fileout != STDOUT_FILENO)
 		close(p->fileout);
-	if (p && p->copy_stdin != -1 && p->copy_stdin != STDIN_FILENO)
-		close(p->copy_stdin);
-	if (p && p->copy_stdout != -1 && p->copy_stdout != STDOUT_FILENO)
-		close(p->copy_stdout);
+	// if (p && p->copy_stdin != -1 && p->copy_stdin != STDIN_FILENO)
+	// 	close(p->copy_stdin);
+	// if (p && p->copy_stdout != -1 && p->copy_stdout != STDOUT_FILENO)
+	// 	close(p->copy_stdout);
 	if (p && p->pip && p->pip[i])
 	{
 		while (i < p->cmd_count && p->pip[i])
@@ -87,10 +87,10 @@ void	close_all(t_pipex *p)
 		close(p->filein);
 	if (p && p->fileout != -1 && p->fileout != STDOUT_FILENO)
 		close(p->fileout);
-	if (p && p->copy_stdin != -1 && p->copy_stdin != STDIN_FILENO)
-		close(p->copy_stdin);
-	if (p && p->copy_stdout != -1 && p->copy_stdout != STDOUT_FILENO)
-		close(p->copy_stdout);
+	// if (p && p->copy_stdin != -1 && p->copy_stdin != STDIN_FILENO)
+	// 	close(p->copy_stdin);
+	// if (p && p->copy_stdout != -1 && p->copy_stdout != STDOUT_FILENO)
+	// 	close(p->copy_stdout);
 	if (p && p->pip)
 		close_pipes(p);
 }

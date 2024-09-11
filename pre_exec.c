@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:42:56 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/06 13:18:29 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/11 12:48:52 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ bool	valid_cmd(char **str, t_pipex *p)
 		p->executable = ft_strjoin(p->paths[i], "/");
 		if (!p->executable)
 			return (false);
-		p->part = ft_strjoin(p->executable, str[0]);
-		free(p->executable);
-		p->executable = NULL;
+		p->part = ft_strjoin_free_one(p->executable, str[0]);
+		// free(p->executable);
+		// p->executable = NULL;
 		if (!p->part)
 			return (false);
 		if (access(p->part, X_OK) == 0)
@@ -131,7 +131,8 @@ char	**check_cmd(t_pipex *p, t_minishell_p *pars)
 		return (NULL);
 	while (pars && pars->str[x])
 	{
-		if (only_dollars(pars->str[x]) || ft_strcmp_bool(pars->str[x], "$?"))
+		if (only_dollars(pars->str[x]) || ft_strcmp_bool(pars->str[x], "$?")
+			|| (x > 0 && ft_strcmp_bool(pars->str[x - 1], "echo")))
 			cmd[x] = ft_strdup(pars->str[x]);
 		else
 		{

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/10 18:13:50 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/11 16:24:32 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,8 +189,8 @@ void	close_all(t_pipex *p);
 void	err_free(t_pipex *p);
 
 /*INIT*/
-// int		count_out_files(t_minishell_p *pars);
-// int		count_in_files(t_minishell_p *pars);
+//int		count_out_files(t_minishell_p *pars);
+//int		count_in_files(t_minishell_p *pars);
 void	check_filein(t_pipex *p, t_minishell_p *pars);
 void	check_fileout(t_pipex *p, t_minishell_p *pars);
 void 	init_pipes(t_pipex *p);

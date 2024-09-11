@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/10 13:42:38 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/11 16:24:03 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,6 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 
 	tmp = pars;
 	p->cmd_count = 0;
-	p->copy_stdin = dup(STDIN_FILENO);
-	if (p->copy_stdin == -1)
-		return ;
-	p->copy_stdout = dup(STDOUT_FILENO);
-	if (p->copy_stdout == -1)
-		return ;
 	while (tmp)
 	{
 		p->cmd_count++;
@@ -120,8 +114,6 @@ int	first_init(t_pipex *p, char **envp)
 	if (x != 0)
 		return (p->status = x, x);
 	p->status = 0;
-	// p->copy_stdin = -1;
-	// p->copy_stdout = -1;
 	p->paths = ft_split(p->mpath, ':');
 	if (!p->paths)
 		return (p->status = 1, err_free(p), 1);

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/10 18:46:58 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/11 14:03:07 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	do_echo(t_pipex *p, char **token, int x)
 		if (!str)
 			return (1);
 	}
-	else if (!str && s)
+	else if (s)
 	{
 		str = split_and_xpand(p, s);
 		if (!str)

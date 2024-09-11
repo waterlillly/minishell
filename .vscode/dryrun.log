@@ -1,5 +1,6 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/lbaumeis/CCore/projects/minishell'
+ 
 cc -Wall -Werror -Wextra -g -c main.c -o main.o
 cc -Wall -Werror -Wextra -g -c more_cmds.c -o more_cmds.o
 cc -Wall -Werror -Wextra -g -c exit.c -o exit.o
@@ -7,6 +8,7 @@ cc -Wall -Werror -Wextra -g -c execute.c -o execute.o
 cc -Wall -Werror -Wextra -g -c start.c -o start.o
 cc -Wall -Werror -Wextra -g -c signals.c -o signals.o
 cc -Wall -Werror -Wextra -g -c pre_exec.c -o pre_exec.o
+ 
 cc -Wall -Werror -Wextra -g -c buildins/utils.c -o buildins/utils.o
 cc -Wall -Werror -Wextra -g -c buildins/cd.c -o buildins/cd.o
 cc -Wall -Werror -Wextra -g -c buildins/cd_find_path.c -o buildins/cd_find_path.o
@@ -15,6 +17,7 @@ cc -Wall -Werror -Wextra -g -c buildins/env.c -o buildins/env.o
 cc -Wall -Werror -Wextra -g -c buildins/echo.c -o buildins/echo.o
 cc -Wall -Werror -Wextra -g -c buildins/echo_split.c -o buildins/echo_split.o
 cc -Wall -Werror -Wextra -g -c buildins/quotes.c -o buildins/quotes.o
+ 
 cc -Wall -Werror -Wextra -g -c buildins/sorting.c -o buildins/sorting.o
 cc -Wall -Werror -Wextra -g -c buildins/xpand.c -o buildins/xpand.o
 cc -Wall -Werror -Wextra -g -c buildins/xport.c -o buildins/xport.o
@@ -39,9 +42,6 @@ cc -Wall -Werror -Wextra -g -c lexparse/is_oq.c -o lexparse/is_oq.o
 make[1]: Entering directory '/home/lbaumeis/CCore/projects/minishell/libft'
 cc -Wall -Wextra -Werror -c ft_isalpha.c -o ft_isalpha.o
 cc -Wall -Wextra -Werror -c ft_isdigit.c -o ft_isdigit.o
- 
-make[1]: warning: -j16 forced in makefile: resetting jobserver mode.
-
 cc -Wall -Wextra -Werror -c ft_isalnum.c -o ft_isalnum.o
 cc -Wall -Wextra -Werror -c ft_isascii.c -o ft_isascii.o
 cc -Wall -Wextra -Werror -c ft_isprint.c -o ft_isprint.o
@@ -121,3 +121,5 @@ rm -f hd
 rm -f buildins.h.gch
 make: Leaving directory '/home/lbaumeis/CCore/projects/minishell'
  
+make[1]: warning: -j16 forced in makefile: resetting jobserver mode.
+
