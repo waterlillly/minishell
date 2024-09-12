@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:26:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 12:54:58 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:39:39 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ int	add_to_path(t_pipex *p, char *t)
 	temp = ft_strjoin(p->pwd, "/");
 	if (!temp)
 		return (1);
-	new = ft_strjoin_free_one(temp, t);
+	if (t[ft_strlen(t) - 1] == '/')
+		new = ft_strjoin_free_one(temp, ft_substr(t, 0, ft_strlen(t) - 1));
+	else
+		new = ft_strjoin_free_one(temp, t);
 	if (!new)
 		return (1);
 	if (new && is_access(new))

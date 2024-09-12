@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/11 16:28:41 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:06:32 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	post_cd(t_pipex *p)
 		|| !is_access(get_env(p, "OLDPWD")))
 }
 */
+
 int	cd(t_pipex *p, char **token)
 {
 	char	*err;
@@ -84,7 +85,7 @@ int	cd(t_pipex *p, char **token)
 			if (!p->pwd)
 				p->pwd = get_env(p, "HOME");
 		}
-		return (update_both(p));//update(p, "PWD", p->pwd), update(p, "OLDPWD", p->oldpwd)//just add setting it back for env and export once cd executed again! also remove oldpwd things (=) if cd -!
+		return (update(p, "PWD", p->pwd), update(p, "OLDPWD", p->oldpwd));
 	}
 	if (p->status != 0)
 	{
@@ -93,3 +94,7 @@ int	cd(t_pipex *p, char **token)
 	}
 	return (update_both(p));
 }
+
+	//printf("pwd: %s\noldpwd: %s\n", p->pwd, p->oldpwd);
+		//just add setting it back for env and export once cd executed again!
+		//also remove oldpwd things (=) if cd -!

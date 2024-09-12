@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:25:32 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/06 13:03:28 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:02:00 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	get_hd(t_raw_in *in)
 			{
 				in->n_chd++;
 				free(in->line);
-				continue;
+				continue ;
 			}
 			in->del_str[in->n_chd] = ft_strcat(in->del_str[in->n_chd], in->line);
 			in->del_str[in->n_chd] = ft_strcat(in->del_str[in->n_chd], "\n");

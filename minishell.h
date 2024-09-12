@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/11 16:56:56 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/12 17:43:01 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str);
 int		error(char *str, int code);
 void	free_p_rest(t_pipex *p);
 void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input);
-bool	check_exit(t_pipex *p, t_minishell_p *pars);
+int		check_exit(t_pipex *p, t_minishell_p *pars);
 
 /*MORE_CMDS*/
 bool	is_buildin(char *s);

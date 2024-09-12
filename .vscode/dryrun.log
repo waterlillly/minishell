@@ -1,6 +1,5 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/lbaumeis/CCore/projects/minishell'
- 
 cc -Wall -Werror -Wextra -g -c main.c -o main.o
 cc -Wall -Werror -Wextra -g -c more_cmds.c -o more_cmds.o
 cc -Wall -Werror -Wextra -g -c exit.c -o exit.o
@@ -8,7 +7,6 @@ cc -Wall -Werror -Wextra -g -c execute.c -o execute.o
 cc -Wall -Werror -Wextra -g -c start.c -o start.o
 cc -Wall -Werror -Wextra -g -c signals.c -o signals.o
 cc -Wall -Werror -Wextra -g -c pre_exec.c -o pre_exec.o
- 
 cc -Wall -Werror -Wextra -g -c buildins/utils.c -o buildins/utils.o
 cc -Wall -Werror -Wextra -g -c buildins/cd.c -o buildins/cd.o
 cc -Wall -Werror -Wextra -g -c buildins/cd_find_path.c -o buildins/cd_find_path.o
@@ -17,7 +15,6 @@ cc -Wall -Werror -Wextra -g -c buildins/env.c -o buildins/env.o
 cc -Wall -Werror -Wextra -g -c buildins/echo.c -o buildins/echo.o
 cc -Wall -Werror -Wextra -g -c buildins/echo_split.c -o buildins/echo_split.o
 cc -Wall -Werror -Wextra -g -c buildins/quotes.c -o buildins/quotes.o
- 
 cc -Wall -Werror -Wextra -g -c buildins/sorting.c -o buildins/sorting.o
 cc -Wall -Werror -Wextra -g -c buildins/xpand.c -o buildins/xpand.o
 cc -Wall -Werror -Wextra -g -c buildins/xport.c -o buildins/xport.o

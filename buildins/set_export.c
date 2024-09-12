@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/01 17:30:58 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/12 17:00:45 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	update_export(t_pipex *p, char *tok, char *token)
 		return (free(temp), temp = NULL, 1);
 	temp1 = ft_strjoin_free_both(ft_strdup("="),
 		add_quotes(ft_substr(token, ft_strlen(tok) + 1,
-		ft_strlen(token) - ft_strlen(tok))));
+		ft_strlen(token) - ft_strlen(tok))));///////////
 	if (!temp1)
 		return (free(temp), temp = NULL, 1);
 	p->xport[x] = ft_strjoin_free_both(temp, temp1);
@@ -44,6 +44,7 @@ int	set_export(t_pipex *p, char **token)
 	int		x;
 
 	x = 0;
+	ft_print_array(token);
 	if (!p || !token || !ft_strcmp_bool(token[0], "export") || !token[1])
 		return (1);
 	if (token[1][0] == '$')
@@ -53,18 +54,18 @@ int	set_export(t_pipex *p, char **token)
 		return (1);
 	if (valid_env(p, temp))
 	{
-		if (ft_strchr(remove_quotes(token[1]), '='))
+		if (ft_strchr(rm_q(token[1]), '='))
 		{
 			if (find_str_part(p->menv, temp) < 0)
 				return (free(temp), temp = NULL, 1);
-			p->menv[find_str_part(p->menv, temp)] = remove_quotes(token[1]);
+			p->menv[find_str_part(p->menv, temp)] = rm_q(token[1]);
 			if (!p->menv[x])
 				return (free(temp), temp = NULL, x);
 		}
-		x = update_export(p, temp, remove_quotes(token[1]));
+		x = update_export(p, temp, rm_q(token[1]));
 	}
 	else
-		x = add_to_export(p, remove_quotes(token[1]));
+		(printf("=> %s\n", token[1]), x = add_to_export(p, rm_q(token[1])));
 	return (free(temp), temp = NULL, x);
 }
 

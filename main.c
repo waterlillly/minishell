@@ -6,13 +6,13 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/11 17:01:44 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/12 18:36:28 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int g_signal;
+extern int	g_signal;
 
 void	free_parse(t_minishell_p *in)
 {
@@ -39,7 +39,7 @@ void	free_parse(t_minishell_p *in)
 void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 {
 	t_minishell_l	*lex;
-	
+
 	lex = NULL;
 	get_input(p, &lex, pars, input);
 }
@@ -48,7 +48,7 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 {
 	int	c;
 	int	i;
-	
+
 	c = 0;
 	i = 0;
 	while (p && pars && c < p->cmd_count && p->cmd_count > 0)
@@ -68,9 +68,8 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		c++;
 		pars = pars->next;
 	}
-	//restore_fds(p);
 	close_all(p);
-	while (i < p->cmd_count && p->cmd_count > 0 && waitpid(p->pid[i], NULL, 0) != -1)
+	while (i < p->cmd_count && waitpid(p->pid[i], NULL, 0) != -1)
 	{
 		if (WIFEXITED(p->status))
 			p->status = WEXITSTATUS(p->status);
@@ -81,6 +80,9 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 
 bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 {
+	int	x;
+
+	x = -1;
 	refresh_init(p, input, pars);
 	if (!*pars)
 		return (true);
@@ -88,11 +90,19 @@ bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 		return (false);
 	if ((*pars) && (*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit"))
 	{
+		if (!(*pars)->str[1] && !(*pars)->next)
+			return (ft_putendl_fd("exit", 1), false);
 		while ((*pars) && (*pars)->str && (*pars)->next && (*pars)->next->str)
 			(*pars) = (*pars)->next;
-		if ((*pars) && (*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit") && !(*pars)->next)
-			if (check_exit(p, *pars) == false)
+		if ((*pars) && (*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit")
+			&& !(*pars)->next)
+		{
+			x = check_exit(p, *pars);
+			if (x == 2)
 				return (false);
+			else if (x == 0)
+				return (true);
+		}
 	}
 	if (do_stuff(p, *pars) != 0)
 		return (false);
@@ -105,7 +115,7 @@ int	main(int ac, char **av, char **envp)
 	t_pipex			p;
 	t_minishell_p	*pars;
 	t_raw_in		input;
-	
+
 	if (ac < 1 || !av)
 		return (perror("invalid input"), 1);
 	ft_bzero(&p, sizeof(t_pipex));
