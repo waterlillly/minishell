@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pre_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:42:56 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/11 23:38:45 by mehras           ###   ########.fr       */
+/*   Updated: 2024/09/12 20:15:01 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	*loop_cmd_check(t_pipex *p, t_minishell_p *pars, int x)
 	if (!s_out_q(pars->str[x]) && !only_dollars(pars->str[x])
 		&& !ft_strcmp_bool(pars->str[x], "$?"))
 	{
-		s = echo_split(remove_quotes(pars->str[x]), '$');
+		s = echo_split(rm_q(pars->str[x]), '$');
 		if (!s)
 			temp = xpand(p, pars->str, x);
 		else
@@ -134,13 +134,11 @@ char	**check_cmd(t_pipex *p, t_minishell_p *pars)
 	{
 		if (only_dollars(pars->str[x]) || ft_strcmp_bool(pars->str[x], "$?")
 			|| (x > 0 && ft_strcmp_bool(pars->str[x - 1], "echo")))
-			cmd[x] = ft_strdup(pars->str[x]);
+			cmd[x] = ft_strdup(pars->str[x]);///////////////////
 		else
-		{
 			cmd[x] = loop_cmd_check(p, pars, x);
-			if (!cmd[x])
-				return (NULL);
-		}
+		if (!cmd[x])
+			return (ft_free_2d(cmd), NULL);
 		x++;
 	}
 	return (cmd);

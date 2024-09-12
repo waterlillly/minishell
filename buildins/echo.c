@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/11 23:24:23 by mehras           ###   ########.fr       */
+/*   Updated: 2024/09/12 20:17:10 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	do_echo(t_pipex *p, char **token, int x)
 			return (ft_free_double(s), 1);
 	}
 	ft_putstr_fd(str, 1);
-	return (ft_free_double(s), 0);
+	return (ft_free_double(s), free(str), str = NULL, 0);
 }
 
 bool	check_n(char *token)
