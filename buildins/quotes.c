@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:24:45 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/10 18:50:14 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/13 14:37:59 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*remove_quotes(char *s)
 			q++;
 		s++;
 	}
-	temp = ft_calloc((ft_strlen(s) - q + 1), sizeof(char));///possibly negative
+	temp = ft_calloc((ft_strlen(s) - q + 1), sizeof(char));
 	if (!temp)
 		return (NULL);
 	while (s[x])

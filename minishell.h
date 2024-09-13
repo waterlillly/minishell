@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/12 17:43:01 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/13 16:43:24 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,6 @@ int		do_heredoc(t_pipex *p, t_minishell_p *pars);
 int		exec_cmd(t_pipex *p, t_minishell_p *pars);
 
 /*ERROR*/
-void	restore_fds(t_pipex *p);
 void	closing(t_pipex *p);
 void	close_pipes(t_pipex *p);
 void	close_all(t_pipex *p);

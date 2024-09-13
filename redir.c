@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:50:42 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/11 16:24:18 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/13 14:34:57 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	check_filein(t_pipex *p, t_minishell_p *pars)
 
 	tmp = pars;
 	num_files = count_in_files(pars);
-	//printf("infile counter: %d\n", num_files);
 	x = 0;
 	arr = malloc(sizeof(int) * num_files);
 	if (!arr)
@@ -70,32 +69,19 @@ void	check_filein(t_pipex *p, t_minishell_p *pars)
 		x++;
 		tmp->redirect = tmp->redirect->next;
 	}
-	//arr[x] = '\0';
-	// if (arr)
-	// 	return (arr);
-	// return (NULL);
 }
 
 void	check_fileout(t_pipex *p, t_minishell_p *pars)
 {
 	int				f;
-	//t_minishell_p	*tmp;
 	int				num_files;
-	//int				x;
 
 	f = -1;
-	//tmp = pars;
 	num_files = count_out_files(pars);
-	printf("outfile counter: %d\n", num_files);
-	//x = 0;
 	if (p && pars && pars->redirect)
 	{
-		puts("B\n");
 		while (pars->redirect && pars->redirect->input)
-			// && (pars->redirect->token == BIGGER
-			// || pars->redirect->token == BIGGERBIGGER))
 		{
-			printf("fileout: %s\n", pars->redirect->input);
 			if (pars->redirect->token == BIGGER)
 			{
 				f = open(pars->redirect->input, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -110,16 +96,10 @@ void	check_fileout(t_pipex *p, t_minishell_p *pars)
 			}
 			if (f != -1)
 			{
-				puts("A\n");
 				p->fileout = f;
 				ft_putnbr_fd(p->fileout, 1);
-				//x++;
 			}
 			pars->redirect = pars->redirect->next;
 		}
 	}
-	// arr[x] = '\0';
-	// if (arr)
-	// 	return (arr);
-	// return (NULL);
 }

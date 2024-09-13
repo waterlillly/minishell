@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:47:48 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/05 13:59:02 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/13 14:38:12 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	go_up_oldpwd(t_pipex *p)
 	if (!p->pwd)
 	{
 		p->pwd = NULL;
-		//p->pwd = getcwd(p->pwd, 0);
 		p->pwd = get_env(p, "PWD");
 		if (!p->pwd)
 			return (1);

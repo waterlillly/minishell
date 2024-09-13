@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/12 17:18:27 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/13 16:46:45 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ char	*is_exec(t_pipex *p)
 		if (!p->executable)
 			return (NULL);
 		p->part = ft_strjoin_free_one(p->executable, p->cmd);
-		// free(p->executable);
-		// p->executable = NULL;
 		if (!p->part)
 			return (NULL);
 		else if (access(p->part, X_OK) == 0)

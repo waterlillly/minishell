@@ -50,7 +50,7 @@ int	combine_export(t_pipex *p)
 	sort_arr(p, arr);
 	if (!arr)
 		return (1);
-	p->xport = (char **)ft_calloc((ft_arrlen(arr) + 1), sizeof(char *));//ft_strlen_2d(arr)
+	p->xport = (char **)ft_calloc((ft_arrlen(arr) + 1), sizeof(char *));
 	if (!p->xport)
 		return (ft_free_double(arr), 1);
 	while (arr && arr[++y])
@@ -134,7 +134,6 @@ int	add_to_export(t_pipex *p, char *token)
 		x++;
 	}
 	arr[x] = create_add_export(token);
-	//printf("arr[x]: %s\n", arr[x]);
 	if (!arr[x] || (ft_strchr(arr[x], '=') && add_to_env(p, token) != 0))
 		return (ft_free_double(arr), 1);
 	resort_arr(arr);

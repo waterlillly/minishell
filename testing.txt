@@ -1,23 +1,23 @@
-# Basic command
+Basic command
 ls -l
 
-# Single pipe
+Single pipe
 ls -l | grep .txt
 
-# Multiple pipes
+Multiple pipes
 ls -l | grep .txt | wc -l
 
 # Input redirection
 sort < file.txt
 
-# Output redirection
+Output redirection
 echo "Hello World" > output.txt
 cat output.txt
 
-# Combination of pipe and redirection
+Combination of pipe and redirection
 ls -l | grep .txt > result.txt
 
-# Built-in command
+Built-in command
 echo $PATH
 
 # Environment variables
