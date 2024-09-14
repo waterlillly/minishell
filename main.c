@@ -6,7 +6,7 @@
 /*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/14 15:05:48 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/09/14 17:39:40 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,18 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 	i = 0;
 	while (p && pars && c < p->cmd_count && p->cmd_count > 0)
 	{
+		check(p, pars);
 		p->pid[c] = fork();
 		if (p->pid[c] == -1)
 			return (perror("fork"), 1);
-		if (p->pid[c] == 0 && check(p, pars) != 0)
+		if (p->pid[c] == 0 && p->status != 0)
 			return (p->status);
 		if (p->cmd_count == 1 && is_buildin(pars->str[0]))
 		{
 			if (p->pid[c] == 0)
 				return (1);
 			p->status = do_this(p, pars);
-			return (p->status);
+			return (0);
 		}
 		if (p->pid[c] == 0)
 		{
