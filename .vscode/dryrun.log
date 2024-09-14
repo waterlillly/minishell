@@ -36,30 +36,21 @@ cc -Wall -Werror -Wextra -g -c lexparse/parser.c -o lexparse/parser.o
 cc -Wall -Werror -Wextra -g -c lexparse/set.c -o lexparse/set.o
 cc -Wall -Werror -Wextra -g -c lexparse/is_oq.c -o lexparse/is_oq.o
 (make -C libft)
- 
 make[1]: Entering directory '/home/lbaumeis/CCore/projects/minishell/libft'
- 
-make[1]: warning: -j16 forced in makefile: resetting jobserver mode.
-
 cc -Wall -Wextra -Werror -c ft_isalpha.c -o ft_isalpha.o
 cc -Wall -Wextra -Werror -c ft_isdigit.c -o ft_isdigit.o
- 
 cc -Wall -Wextra -Werror -c ft_isalnum.c -o ft_isalnum.o
- 
 cc -Wall -Wextra -Werror -c ft_isascii.c -o ft_isascii.o
 cc -Wall -Wextra -Werror -c ft_isprint.c -o ft_isprint.o
 cc -Wall -Wextra -Werror -c ft_strlen.c -o ft_strlen.o
 cc -Wall -Wextra -Werror -c ft_memset.c -o ft_memset.o
- 
 cc -Wall -Wextra -Werror -c ft_bzero.c -o ft_bzero.o
- 
 cc -Wall -Wextra -Werror -c ft_memcpy.c -o ft_memcpy.o
 cc -Wall -Wextra -Werror -c ft_memmove.c -o ft_memmove.o
 cc -Wall -Wextra -Werror -c ft_strlcpy.c -o ft_strlcpy.o
 cc -Wall -Wextra -Werror -c ft_strlcat.c -o ft_strlcat.o
 cc -Wall -Wextra -Werror -c ft_toupper.c -o ft_toupper.o
 cc -Wall -Wextra -Werror -c ft_tolower.c -o ft_tolower.o
- 
 cc -Wall -Wextra -Werror -c ft_strchr.c -o ft_strchr.o
 cc -Wall -Wextra -Werror -c ft_strrchr.c -o ft_strrchr.o
 cc -Wall -Wextra -Werror -c ft_strncmp.c -o ft_strncmp.o
@@ -76,20 +67,17 @@ cc -Wall -Wextra -Werror -c ft_striteri.c -o ft_striteri.o
 cc -Wall -Wextra -Werror -c ft_putchar_fd.c -o ft_putchar_fd.o
 cc -Wall -Wextra -Werror -c ft_putstr_fd.c -o ft_putstr_fd.o
 cc -Wall -Wextra -Werror -c ft_putendl_fd.c -o ft_putendl_fd.o
- 
 cc -Wall -Wextra -Werror -c ft_putnbr_fd.c -o ft_putnbr_fd.o
 cc -Wall -Wextra -Werror -c ft_split.c -o ft_split.o
 cc -Wall -Wextra -Werror -c ft_itoa.c -o ft_itoa.o
 cc -Wall -Wextra -Werror -c ft_strmapi.c -o ft_strmapi.o
 cc -Wall -Wextra -Werror -c ft_printf.c -o ft_printf.o
- 
 cc -Wall -Wextra -Werror -c ft_printchar.c -o ft_printchar.o
 cc -Wall -Wextra -Werror -c ft_printstr.c -o ft_printstr.o
 cc -Wall -Wextra -Werror -c ft_printnbr.c -o ft_printnbr.o
 cc -Wall -Wextra -Werror -c ft_printptr.c -o ft_printptr.o
 cc -Wall -Wextra -Werror -c ft_decideformat.c -o ft_decideformat.o
 cc -Wall -Wextra -Werror -c ft_strcmp.c -o ft_strcmp.o
- 
 cc -Wall -Wextra -Werror -c ft_white.c -o ft_white.o
 cc -Wall -Wextra -Werror -c ft_atof.c -o ft_atof.o
 cc -Wall -Wextra -Werror -c ft_str_upper.c -o ft_str_upper.o
@@ -130,3 +118,5 @@ rm -f hd
 rm -f buildins.h.gch
 make: Leaving directory '/home/lbaumeis/CCore/projects/minishell'
  
+make[1]: warning: -j16 forced in makefile: resetting jobserver mode.
+

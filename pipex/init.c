@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/13 16:14:45 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/14 22:45:47 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	check_fileout(t_pipex *p, t_minishell_p *pars)
 		p->fileout = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (file && tok == BIGGERBIGGER)
 		p->fileout = open(file, O_RDWR | O_CREAT | O_APPEND, 0644);
-	if (p->fileout == -1 || access(file, W_OK) == -1)
+	if (p->fileout == -1 || access(file, W_OK) == -1)///
 		return ;
 }
 

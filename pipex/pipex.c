@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/14 14:33:57 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/09/14 22:02:22 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,12 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 	// 	return (p->status);
 	if (pars->redirect && pars->redirect->token == HEREDOC)
 	{
-		p->status = do_heredoc(p, pars);
-		return (p->status);
+		do_heredoc(p, pars);
+		return (1);
 	}
 	temp = ft_substr(pars->str[0], 1, ft_strlen(pars->str[0]) - 1);
+	if (!temp)
+		return (1);
 	if (pars->str[0][0] == '$' && valid_env(p, temp))
 		p->cmd = xpand(p, pars->str, 0);
 	else
@@ -89,7 +91,7 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 	temp = NULL;
 	if (is_buildin(p->cmd))
 	{
-		p->status = do_this(p, pars);
+		do_this(p, pars);
 		return (1);
 	}
 	p->path = is_exec(p);

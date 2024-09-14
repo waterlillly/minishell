@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 16:27:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/14 17:17:35 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/14 22:43:44 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	redirect(t_pipex *p, int c, t_minishell_p *pars)
 {
+	// if (!p || !pars)
+	// 	return (1);
 	check_filein(p, pars);
 	if (p && pars  && p->filein != -1)
 	{
