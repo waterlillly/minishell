@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 16:27:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/14 14:30:27 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/09/14 17:17:35 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	redirect(t_pipex *p, int c, t_minishell_p *pars)
 	{
 		if (p->pip[c - 1][1] != -1 && p->pip[c - 1][1] != STDOUT_FILENO)
 			close(p->pip[c - 1][1]);
-		if (dup2(p->pip[c - 1][0], STDIN_FILENO) == -1)
-			return (perror("dup2 c - 1 redir input"), 1);
+		dup2(p->pip[c - 1][0], STDIN_FILENO);
+			//return (perror("dup2 c - 1 redir input"), 1);//OSTRICH
 	}
 	check_fileout(p, pars);
 	if (p && pars && p->fileout != -1)
