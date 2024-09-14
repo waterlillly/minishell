@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/14 17:39:40 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/09/14 18:15:28 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		if (p->pid[c] == -1)
 			return (perror("fork"), 1);
 		if (p->pid[c] == 0 && p->status != 0)
-			return (p->status);
+			return (0);//return (p->status);
 		if (p->cmd_count == 1 && is_buildin(pars->str[0]))
 		{
 			if (p->pid[c] == 0)
@@ -78,7 +78,6 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		c++;
 		pars = pars->next;
 	}
-	//restore_fds(p);
 	close_all(p);
 	while (i < p->cmd_count && p->cmd_count > 0 && waitpid(p->pid[i], NULL, 0) != -1)
 	{
