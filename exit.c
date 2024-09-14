@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:21:59 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/12 18:45:32 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/14 15:03:19 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,18 @@ void	free_p_rest(t_pipex *p)
 
 void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input)
 {
-	if (p)
-		err_free(p);
-	if (pars)
-	{
-		free_parse(pars);
-		pars = NULL;
-	}
 	if (input)
 	{
 		free_raw(input);
 		input = NULL;
 	}
+	if (pars)
+	{
+		free_parse(pars);
+		pars = NULL;
+	}
+	if (p)
+		err_free(p);
 }
 
 int	check_exit(t_pipex *p, t_minishell_p *pars)

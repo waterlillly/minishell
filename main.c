@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/13 16:43:06 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/14 15:05:48 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,15 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		p->pid[c] = fork();
 		if (p->pid[c] == -1)
 			return (perror("fork"), 1);
+		if (p->pid[c] == 0 && check(p, pars) != 0)
+			return (p->status);
+		if (p->cmd_count == 1 && is_buildin(pars->str[0]))
+		{
+			if (p->pid[c] == 0)
+				return (1);
+			p->status = do_this(p, pars);
+			return (p->status);
+		}
 		if (p->pid[c] == 0)
 		{
 			p->status = execute(p, c, pars);
@@ -68,8 +77,9 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		c++;
 		pars = pars->next;
 	}
+	//restore_fds(p);
 	close_all(p);
-	while (i < p->cmd_count && waitpid(p->pid[i], NULL, 0) != -1)
+	while (i < p->cmd_count && p->cmd_count > 0 && waitpid(p->pid[i], NULL, 0) != -1)
 	{
 		if (WIFEXITED(p->status))
 			p->status = WEXITSTATUS(p->status);
@@ -80,9 +90,6 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 
 bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 {
-	int	x;
-
-	x = -1;
 	refresh_init(p, input, pars);
 	if (!*pars)
 		return (true);
@@ -90,19 +97,13 @@ bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 		return (false);
 	if ((*pars) && (*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit"))
 	{
-		if (!(*pars)->str[1] && !(*pars)->next)
-			return (ft_putendl_fd("exit", 1), false);
+		if (!(*pars)->next)
+			return (false);
 		while ((*pars) && (*pars)->str && (*pars)->next && (*pars)->next->str)
 			(*pars) = (*pars)->next;
-		if ((*pars) && (*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit")
-			&& !(*pars)->next)
-		{
-			x = check_exit(p, *pars);
-			if (x == 2)
+		if ((*pars) && (*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit") && !(*pars)->next)
+			if (check_exit(p, *pars) == false)
 				return (false);
-			else if (x == 0)
-				return (true);
-		}
 	}
 	if (do_stuff(p, *pars) != 0)
 		return (false);

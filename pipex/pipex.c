@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/13 16:46:45 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/14 14:33:57 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	*is_exec(t_pipex *p)
 		if (!p->executable)
 			return (NULL);
 		p->part = ft_strjoin_free_one(p->executable, p->cmd);
+		// free(p->executable);
+		// p->executable = NULL;
 		if (!p->part)
 			return (NULL);
 		else if (access(p->part, X_OK) == 0)
@@ -71,8 +73,8 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 	temp = NULL;
 	if (!p || !pars || !pars->str)
 		return (p->status = 1);
-	if (check(p, pars) != 0)
-		return (p->status);
+	// if (check(p, pars) != 0)
+	// 	return (p->status);
 	if (pars->redirect && pars->redirect->token == HEREDOC)
 	{
 		p->status = do_heredoc(p, pars);
