@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/12 20:17:10 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:07:44 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,39 @@ char	*split_and_xpand(t_pipex *p, char **s)
 	return (str);
 }
 
+int	dollar_count(char *s)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	if (!s)
+		return (0);
+	while (s[x++])
+	{
+		if (s[x] == '$')
+			y++;
+	}
+	return (y);
+}
+
+bool	even_q(char *s)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	if (!s)
+		return (false);
+	while (s[x++] && s[x] == '\"')
+		y++;
+	if (y > 0 && y % 2 != 0)
+		return (true);
+	return (false);
+}
+
 int	do_echo(t_pipex *p, char **token, int x)
 {
 	char	*str;
@@ -50,18 +83,20 @@ int	do_echo(t_pipex *p, char **token, int x)
 	if (ft_strcmp_bool(token[1], "$?"))
 		return (ft_putnbr_fd((int)p->status, 1), 0);
 	if ((!check_s_q(token[x]) && only_dollars(rm_q(token[x]))) || only_dollars(token[x]))
-		str = ft_strdup(rm_q(token[x]));
-	if (!s_out_q(token[x]))
-		s = echo_split(token[x], '$');
-	if (!str && !s)
 	{
-		str = xpand(p, token, x);
-		if (!str)
-			return (1);
+		if (even_q(token[x]) && dollar_count(token[x]) == 1)
+			return (0);
+		else
+			str = rm_q(token[x]);
 	}
-	else if (s)
+	else if (!s_out_q(token[x]))
+		s = echo_split(token[x], '$');
+	if (!str)
 	{
-		str = split_and_xpand(p, s);
+		if (s)
+			str = split_and_xpand(p, s);
+		else
+			str = xpand(p, token, x);
 		if (!str)
 			return (ft_free_double(s), 1);
 	}
