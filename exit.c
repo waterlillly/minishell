@@ -6,7 +6,7 @@
 /*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:21:59 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/14 15:03:19 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/09/16 19:28:20 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,26 +88,21 @@ int	check_exit(t_pipex *p, t_minishell_p *pars)
 	char	*str;
 
 	str = NULL;
-	if (ft_strcmp_bool(pars->str[0], "exit"))
+	if (pars->str && pars->str[0] && pars->str[1] && !pars->str[2]
+		&& ft_strcmp_bool(ft_itoa_long(ft_atoi_long(pars->str[1])), pars->str[1]))
+		return (p->status = ft_atoi_long(pars->str[1]), ft_putendl_fd("exit", 2), 1);
+	else if (pars->str && pars->str[0] && pars->str[1] && pars->str[2])
 	{
-		if (pars->str && pars->str[0] && pars->str[1] && !pars->str[2]
-			&& ft_strcmp_bool(ft_itoa_long(ft_atoi_long(pars->str[1])), pars->str[1]))
-			return (p->status = ft_atoi_long(pars->str[1]), ft_putendl_fd("exit", 2), 2);
-		else if (pars->str && pars->str[0] && pars->str[1] && pars->str[2])
-		{
-			str = ft_strjoin_free_one(ft_strjoin(pars->str[0], ": "), "too many arguments\n");
-			return (p->status = 1, ft_putendl_fd("exit", 2), ft_putstr_fd(str, 2),
-				free(str), str = NULL, 0);
-		}
-		else if (pars->str && pars->str[0] && ft_strcmp_bool(pars->str[0], "exit") && pars->str[1])
-		{
-			str = ft_strjoin_free_one(ft_strjoin_free_both(ft_strjoin(pars->str[0], ": "),
-				ft_strjoin(pars->str[1], ": ")), "numeric argument required\n");
-			return (p->status = 2, ft_putstr_fd(str, 2),
-				free(str), str = NULL, 0);
-		}
-		else
-			return (1);
+		str = ft_strjoin_free_one(ft_strjoin(pars->str[0], ": "), "too many arguments\n");
+		return (p->status = 1, ft_putendl_fd("exit", 2), ft_putstr_fd(str, 2),
+			free(str), str = NULL, 0);
 	}
-	return (ft_putendl_fd("exit", 2), 2);
+	else if (pars->str && pars->str[0] && ft_strcmp_bool(pars->str[0], "exit") && pars->str[1])
+	{
+		str = ft_strjoin_free_one(ft_strjoin_free_both(ft_strjoin(pars->str[0], ": "),
+			ft_strjoin(pars->str[1], ": ")), "numeric argument required\n");
+		return (p->status = 2, ft_putstr_fd(str, 2),
+			free(str), str = NULL, 0);
+	}
+	return (1);
 }

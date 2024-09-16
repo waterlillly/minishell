@@ -6,7 +6,7 @@
 /*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/16 17:43:59 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/09/16 19:28:45 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,10 @@ bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 		return (false);
 	if ((*pars) && (*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit"))
 	{
-		if (!(*pars)->next)
-			return (false);
 		while ((*pars) && (*pars)->str && (*pars)->next && (*pars)->next->str)
 			(*pars) = (*pars)->next;
 		if ((*pars) && (*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit") && !(*pars)->next)
-			if (check_exit(p, *pars) == false)
+			if (check_exit(p, *pars) == true)
 				return (false);
 	}
 	p->status = do_stuff(p, *pars);
