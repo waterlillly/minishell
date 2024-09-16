@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/14 18:15:28 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/16 15:42:48 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,47 +53,40 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 	i = 0;
 	while (p && pars && c < p->cmd_count && p->cmd_count > 0)
 	{
-		check(p, pars);
-		p->pid[c] = fork();
-		if (p->pid[c] == -1)
-			return (perror("fork"), 1);
-		// if (p->pid[c] == 0 && p->status != 0)
-		// 	return (p->status);
+		if (check(p, pars) != 0)
+			return (0);
 		if (p->cmd_count == 1 && is_buildin(pars->str[0]))
 		{
-			if (!is_buildin(pars->str[0]) && p->pid[c] == 0)
-				return (127);
-			else if (p->pid[c] == 0)
-				return (1);
-			else if (is_buildin(pars->str[0]))
-				p->status = do_this(p, pars);
+			p->status = do_this(p, pars);
 			return (0);
 		}
-		if (p->pid[c] == 0)
+		else
 		{
-			p->status = execute(p, c, pars);
-			if (p->status != 0 && kill(p->pid[c], 0) == 0)
+			p->pid[c] = fork();
+			if (p->pid[c] == -1)
+				return (perror("fork"), 1);
+			if (p->pid[c] == 0)
 			{
-				if (kill(p->pid[c], SIGCHLD) != 0)
-					return (perror("kill"), (int)p->status);
+				p->status = execute(p, c, pars);
+				if (p->status == 1 && kill(p->pid[c], 0) == 0)
+				{
+					if (kill(p->pid[c], SIGCHLD) != 0)
+						return (perror("kill"), (int)p->status);
+					return (1);
+				}
+				return (0);
 			}
 		}
-		else
-			while (waitpid(p->pid[i], NULL, 0) != -1)
-			{
-				if (WIFEXITED(p->status))
-					p->status = WEXITSTATUS(p->status);
-			}
 		c++;
 		pars = pars->next;
 	}
 	close_all(p);
-	// while (i < p->cmd_count && p->cmd_count > 0 && waitpid(p->pid[i], NULL, 0) != -1)
-	// {
-	// 	if (WIFEXITED(p->status))
-	// 		p->status = WEXITSTATUS(p->status);
-	// 	i++;
-	// }
+	while (i < p->cmd_count && p->cmd_count > 0 && waitpid(p->pid[i], NULL, 0) != -1)
+	{
+		if (WIFEXITED(p->status))
+			p->status = WEXITSTATUS(p->status);
+		i++;
+	}
 	return ((int)p->status);
 }
 
