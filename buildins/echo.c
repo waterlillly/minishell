@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/16 17:22:56 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:39:27 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,39 +35,6 @@ char	*split_and_xpand(t_pipex *p, char **s)
 		y++;
 	}
 	return (str);
-}
-
-int	dollar_count(char *s)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	y = 0;
-	if (!s)
-		return (0);
-	while (s[x++])
-	{
-		if (s[x] == '$')
-			y++;
-	}
-	return (y);
-}
-
-bool	even_q(char *s)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	y = 0;
-	if (!s)
-		return (false);
-	while (s[x++] && s[x] == '\"')
-		y++;
-	if (y > 0 && y % 2 != 0)
-		return (true);
-	return (false);
 }
 
 int	dollar_count(char *s)
