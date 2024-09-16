@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/16 15:21:22 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/16 17:37:10 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,27 +55,26 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 	{
 		if (check(p, pars) != 0)
 			return (0);
-		if (p->cmd_count == 1 && is_buildin(pars->str[0]) && !pars->redirect)
+		if (p->cmd_count == 1 && is_buildin(pars->str[0]))
 		{
-			p->status = do_this(p, pars);//p->status = execute(p, c, pars);//
-			if (p->status != 0)
-				return (0);
+			p->status = do_this(p, pars);
+			return (0);
 		}
 		else
 		{
 			p->pid[c] = fork();
 			if (p->pid[c] == -1)
 				return (perror("fork"), 1);
-			if (p->pid[c] == 0 && p->status != 0)
-				return (0);//return (p->status);
 			if (p->pid[c] == 0)
 			{
 				p->status = execute(p, c, pars);
-				if (kill(p->pid[c], 0) == 0)
+				if (p->status == 1 && kill(p->pid[c], 0) == 0)
 				{
 					if (kill(p->pid[c], SIGCHLD) != 0)
 						return (perror("kill"), (int)p->status);
+					return (1);
 				}
+				return (0);
 			}
 		}
 		c++;
@@ -88,7 +87,7 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 			p->status = WEXITSTATUS(p->status);
 		i++;
 	}
-	return (p->status);
+	return ((int)p->status);
 }
 
 bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
