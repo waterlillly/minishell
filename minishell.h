@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/16 17:22:38 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/16 21:22:20 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ typedef struct s_pipex
 /*MAIN*/
 void 	free_parse(t_minishell_p *in);
 void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
-int		do_stuff(t_pipex *p, t_minishell_p *pars);
+int		do_stuff(t_pipex *p, int c, t_minishell_p *pars);
 bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 
 /*EXIT*/
@@ -120,7 +120,7 @@ void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str);
 int		error(char *str, int code);
 void	free_p_rest(t_pipex *p);
 void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input);
-int		check_exit(t_pipex *p, t_minishell_p *pars);
+bool	check_exit(t_pipex *p, int *c, t_minishell_p **pars);
 
 /*MORE_CMDS*/
 bool	is_buildin(char *s);

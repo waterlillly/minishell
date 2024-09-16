@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:21:59 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/14 15:03:19 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/09/16 22:00:36 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,31 +83,49 @@ void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input)
 		err_free(p);
 }
 
-int	check_exit(t_pipex *p, t_minishell_p *pars)
+bool	check_exit(t_pipex *p, int *c, t_minishell_p **pars)
 {
 	char	*str;
+	int		x;
 
 	str = NULL;
-	if (ft_strcmp_bool(pars->str[0], "exit"))
+	x = *c;
+	if ((*pars) && (*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit"))
 	{
-		if (pars->str && pars->str[0] && pars->str[1] && !pars->str[2]
-			&& ft_strcmp_bool(ft_itoa_long(ft_atoi_long(pars->str[1])), pars->str[1]))
-			return (p->status = ft_atoi_long(pars->str[1]), ft_putendl_fd("exit", 2), 2);
-		else if (pars->str && pars->str[0] && pars->str[1] && pars->str[2])
+		if (!(*pars)->str[1] && !(*pars)->next)
+			return (false);
+		while ((*pars) && (*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit"))
 		{
-			str = ft_strjoin_free_one(ft_strjoin(pars->str[0], ": "), "too many arguments\n");
-			return (p->status = 1, ft_putendl_fd("exit", 2), ft_putstr_fd(str, 2),
-				free(str), str = NULL, 0);
+			if ((*pars)->str[1] && ft_strcmp_bool(ft_itoa_long(ft_atoi_long((*pars)->str[1])), (*pars)->str[1]))
+			{
+				p->status = ft_atoi_long((*pars)->str[1]), ft_putendl_fd("exit", 2);
+				if (*c == x && !(*pars)->next)
+					return (false);
+				else if (*c > x && !(*pars)->next)
+					return (true);
+			}
+			else if ((*pars)->str[1] && !(*pars)->str[2])
+			{
+				str = ft_strjoin_free_one(ft_strjoin_free_both(ft_strjoin((*pars)->str[0], ": "),
+					ft_strjoin((*pars)->str[1], ": ")), "numeric argument required\n");
+				p->status = 2;
+				(ft_putstr_fd(str, 2), free(str), str = NULL);
+				if (!(*pars)->next)
+					return (true);
+			}
+			else if ((*pars)->str[1] && (*pars)->str[2])
+			{
+				str = ft_strjoin_free_one(ft_strjoin((*pars)->str[0], ": "), "too many arguments\n");
+				p->status = 1;
+				(ft_putstr_fd(str, 2), free(str), str = NULL);
+				if (!(*pars)->next)
+					return (true);
+			}
+			(*c)++;
+			(*pars) = (*pars)->next;
 		}
-		else if (pars->str && pars->str[0] && ft_strcmp_bool(pars->str[0], "exit") && pars->str[1])
-		{
-			str = ft_strjoin_free_one(ft_strjoin_free_both(ft_strjoin(pars->str[0], ": "),
-				ft_strjoin(pars->str[1], ": ")), "numeric argument required\n");
-			return (p->status = 2, ft_putstr_fd(str, 2),
-				free(str), str = NULL, 0);
-		}
-		else
-			return (1);
+		if (*c > x && (*pars)->str && !ft_strcmp_bool((*pars)->str[0], "exit"))
+			return (true);
 	}
-	return (ft_putendl_fd("exit", 2), 2);
+	return (true);
 }
