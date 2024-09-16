@@ -57,13 +57,16 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		p->pid[c] = fork();
 		if (p->pid[c] == -1)
 			return (perror("fork"), 1);
-		if (p->pid[c] == 0 && p->status != 0)
-			return (0);//return (p->status);
+		// if (p->pid[c] == 0 && p->status != 0)
+		// 	return (p->status);
 		if (p->cmd_count == 1 && is_buildin(pars->str[0]))
 		{
-			if (p->pid[c] == 0)
+			if (!is_buildin(pars->str[0]) && p->pid[c] == 0)
+				return (127);
+			else if (p->pid[c] == 0)
 				return (1);
-			p->status = do_this(p, pars);
+			else if (is_buildin(pars->str[0]))
+				p->status = do_this(p, pars);
 			return (0);
 		}
 		if (p->pid[c] == 0)
@@ -75,16 +78,22 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 					return (perror("kill"), (int)p->status);
 			}
 		}
+		else
+			while (waitpid(p->pid[i], NULL, 0) != -1)
+			{
+				if (WIFEXITED(p->status))
+					p->status = WEXITSTATUS(p->status);
+			}
 		c++;
 		pars = pars->next;
 	}
 	close_all(p);
-	while (i < p->cmd_count && p->cmd_count > 0 && waitpid(p->pid[i], NULL, 0) != -1)
-	{
-		if (WIFEXITED(p->status))
-			p->status = WEXITSTATUS(p->status);
-		i++;
-	}
+	// while (i < p->cmd_count && p->cmd_count > 0 && waitpid(p->pid[i], NULL, 0) != -1)
+	// {
+	// 	if (WIFEXITED(p->status))
+	// 		p->status = WEXITSTATUS(p->status);
+	// 	i++;
+	// }
 	return ((int)p->status);
 }
 
