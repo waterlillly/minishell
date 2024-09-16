@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/16 17:23:02 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/16 19:06:53 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*rm_q(char *token)
 	int		y;
 
 	new = NULL;
-	x = 1;
+	x = 0;
 	y = 0;
 	if (check_d_q(token) <= 0 && !check_s_q(token))
 		return (token);
@@ -101,9 +101,6 @@ char	*xpand(t_pipex *p, char **token, int x)
 	}
 	else if (s_out_q(token[x]))
 		return (free(temp1), temp1 = NULL, temp);
-	// else if (check_d_q(token[x]) > 0
-	// 	&& (check_d_q(token[x]) / 2) % 2 == 0 && ft_strcmp_bool(rm_q(token[x]), "$"))
-	// 	return (free(temp), free(temp1), temp = NULL, temp1 = NULL, ft_strdup(""));
 	else
 		return (free(temp1), temp1 = NULL, rm_q(temp));
 }
