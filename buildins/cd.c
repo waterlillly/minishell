@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/16 17:57:41 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:06:32 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,3 +94,7 @@ int	cd(t_pipex *p, char **token)
 	}
 	return (update_both(p));
 }
+
+	//printf("pwd: %s\noldpwd: %s\n", p->pwd, p->oldpwd);
+		//just add setting it back for env and export once cd executed again!
+		//also remove oldpwd things (=) if cd -!

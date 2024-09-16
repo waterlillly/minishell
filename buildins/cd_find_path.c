@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:26:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/16 19:13:36 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/12 15:39:39 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,7 @@ int	go_back(t_pipex *p, int print)
 	temp = ft_strdup(p->oldpwd);
 	if (!temp)
 		return (1);
-	puts(temp);
-	if (temp && !is_access(temp))
-	{
-		temp = ft_strjoin_free_one(temp, "/..");
-		if (!temp)
-			return (1);
-	}
-	if (temp)
+	if (temp && is_access(temp))
 	{
 		reset_old_pwd(p, temp);
 		if (print == 1)

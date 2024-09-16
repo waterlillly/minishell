@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/16 19:43:13 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/16 19:28:45 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,13 @@ int	do_stuff(t_pipex *p, t_minishell_p *pars)
 		pars = pars->next;
 	}
 	close_all(p);
-	while (i < p->cmd_count && waitpid(p->pid[i], NULL, 0) != -1)
+	while (i < p->cmd_count && p->cmd_count > 0 && waitpid(p->pid[i], NULL, 0) != -1)
 	{
-		if (WIFEXITED(p->pid[i]))
-			p->status = WEXITSTATUS(p->pid[i]);
+		if (WIFEXITED(p->status))
+			p->status = WEXITSTATUS(p->status);
 		i++;
 	}
-	return (p->status);
+	return ((int)p->status);
 }
 
 bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
@@ -102,10 +102,8 @@ bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 		while ((*pars) && (*pars)->str && (*pars)->next && (*pars)->next->str)
 			(*pars) = (*pars)->next;
 		if ((*pars) && (*pars)->str && ft_strcmp_bool((*pars)->str[0], "exit") && !(*pars)->next)
-		{
 			if (check_exit(p, *pars) == true)
 				return (false);
-		}
 	}
 	p->status = do_stuff(p, *pars);
 	if (p->status != 0)
@@ -120,8 +118,6 @@ int	main(int ac, char **av, char **envp)
 	t_minishell_p	*pars;
 	t_raw_in		input;
 
-	if (!(*envp))
-		return (ft_putendl_fd("exit: no env found", 2), 0);
 	if (ac < 1 || !av)
 		return (perror("invalid input"), 1);
 	ft_bzero(&p, sizeof(t_pipex));
