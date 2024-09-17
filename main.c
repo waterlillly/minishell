@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/16 21:28:56 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/17 20:06:18 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 	{
 		if (check(p, pars) != 0)
 			return (0);
-		if (p->cmd_count == 1 && is_buildin(pars->str[0]))
+		if (p->cmd_count == 1 && is_buildin(pars->str[0]) && !pars->redirect)
 		{
 			p->status = do_this(p, pars);
 			return (0);

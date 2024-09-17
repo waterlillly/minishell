@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/16 21:22:20 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/17 20:09:51 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,10 @@ void	sig_int(int	num);
 void	sig_quit(int num);
 void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *input);
 
+/*REDIR*/
+void	check_filein(t_pipex *p, t_minishell_p *pars);
+void	check_fileout(t_pipex *p, t_minishell_p *pars);
+
 /*____________________LEXPARSE____________________*/
 void	print_parsed(t_minishell_p *in);
 void	init_raw(t_raw_in *in);
@@ -184,10 +188,6 @@ void	close_all(t_pipex *p);
 void	err_free(t_pipex *p);
 
 /*INIT*/
-//int		count_out_files(t_minishell_p *pars);
-//int		count_in_files(t_minishell_p *pars);
-void	check_filein(t_pipex *p, t_minishell_p *pars);
-void	check_fileout(t_pipex *p, t_minishell_p *pars);
 void 	init_pipes(t_pipex *p);
 void	init_p(t_pipex *p, t_minishell_p *pars);
 int		first_init(t_pipex *p, char **envp);
