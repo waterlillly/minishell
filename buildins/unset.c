@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 18:54:32 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/08/31 15:15:28 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/18 16:30:37 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	unset(t_pipex *p, char **token)
 	size_t	len;
 
 	x = 0;
-	if (!p || !p->menv || !token || !ft_strcmp_bool(token[0], "unset"))
+	if (!p || !p->menv || !token)
 		return (0);
 	if (!token[1] || token[1][0] == '$')
 		return (perror("not a valid identifier"), 0);

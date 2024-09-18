@@ -11,7 +11,7 @@
 *input: $cmd | ls (dup2 c - 1 redir input: bad fd)*
 	->ignore first, no error msg, just execute ls
 
-**input: echo hi > out > out1 > out2**
+*input: echo hi > out > out1 > out2*
 	->put "hi" into out2, also create the other two files but they stay empty
 
 *input: ls | wc*
@@ -34,7 +34,7 @@
 **input: expr $? + $?**
 	->expand values (exitcodes) before passing values to execve
 
-*input: echo $?*
+**input: echo $?**
 	->should print the right exitcode
 
 **input: exit 2 | exit 42**

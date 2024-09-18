@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/12 15:06:32 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/18 18:16:10 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,26 @@ int	cd(t_pipex *p, char **token)
 		else if (token[1] != NULL)
 			p->status = fill_path(p, token);
 	}
-	if (!is_access(get_env(p, "OLDPWD")) || !is_access(get_env(p, "PWD")))
+	//update(p, "OLDPWD", p->oldpwd);
+	//update(p, "PWD", p->pwd);
+	if (find_str_part(p->menv, "PWD") == -1)
 	{
-		if (p->pwd && !is_access(get_env(p, "OLDPWD")))
-		{
-			free(p->pwd);
-			p->pwd = NULL;
-			p->pwd = get_env(p, "PWD");
-			if (!p->pwd)
-				p->pwd = get_env(p, "HOME");
-		}
-		return (update(p, "PWD", p->pwd), update(p, "OLDPWD", p->oldpwd));
+		update_unset(p, "PWD");
+		add_to_export(p, ft_strjoin("PWD=", p->pwd));
+		return (update_export(p, "OLDPWD", p->menv[find_str_part(p->menv, "OLDPWD")]));
 	}
+	// if (!is_access(get_env(p, "OLDPWD")) || !is_access(get_env(p, "PWD")))
+	// {
+	// 	if (p->pwd && !is_access(get_env(p, "OLDPWD")))
+	// 	{
+	// 		free(p->pwd);
+	// 		p->pwd = NULL;
+	// 		p->pwd = get_env(p, "PWD");
+	// 		if (!p->pwd)
+	// 			p->pwd = getcwd(p->pwd, 0);//p->pwd = get_env(p, "HOME");
+	// 	}
+	// 	return (update(p, "PWD", p->pwd), update(p, "OLDPWD", p->oldpwd));
+	// }
 	if (p->status != 0)
 	{
 		err = ft_strjoin("cd: ", token[1]);
