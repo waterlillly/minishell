@@ -3,52 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/15 21:17:48 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/17 20:09:35 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	check_filein(t_pipex *p, t_minishell_p *pars)
-{
-	if (p && pars && pars->redirect && pars->redirect->input
-		&& pars->redirect->token && (pars->redirect->token == SMALLER
-		|| (pars->redirect->token != BIGGER && pars->redirect->token != BIGGERBIGGER)))
-	{
-		p->filein = open(pars->redirect->input, O_RDONLY, 0644);
-		if (p->filein == -1 || access(pars->redirect->input, R_OK) == -1)
-			return ;
-	}
-}
-
-void	check_fileout(t_pipex *p, t_minishell_p *pars)
-{
-	char	*file;
-	t_token	tok;
-
-	file = NULL;
-	tok = 0;
-	if (pars && pars->redirect && pars->redirect->input && pars->redirect->token)
-	{
-		file = pars->redirect->input;
-		tok = pars->redirect->token;
-	}
-	else if (pars && pars->redirect && pars->redirect->next
-		&& pars->redirect->next->input)
-	{
-		file = pars->redirect->next->input;
-		tok = pars->redirect->next->token;
-	}
-	if (file && tok == BIGGER)
-		p->fileout = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (file && tok == BIGGERBIGGER)
-		p->fileout = open(file, O_RDWR | O_CREAT | O_APPEND, 0644);
-	if (p->fileout == -1 || access(file, W_OK) == -1)
-		return ;
-}
 
 void	init_pipes(t_pipex *p)
 {

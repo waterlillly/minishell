@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+         #
+#    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 16:33:47 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/09/16 19:30:30 by mgardesh         ###   ########.fr        #
+#    Updated: 2024/09/18 14:45:47 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Werror -Wextra -g
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
 
-CFILES += main.c more_cmds.c exit.c execute.c start.c signals.c pre_exec.c
+CFILES += main.c more_cmds.c exit.c execute.c start.c signals.c pre_exec.c redir.c
 
 CFILES += buildins/utils.c buildins/cd.c buildins/cd_find_path.c buildins/pwd.c #buildins/backup.c
 CFILES += buildins/env.c buildins/echo.c buildins/echo_split.c buildins/quotes.c buildins/sorting.c

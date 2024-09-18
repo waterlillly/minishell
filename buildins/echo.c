@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/16 17:39:27 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/09/16 22:16:06 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int	echo(t_pipex *p, char **token)
 	int	y;
 
 	y = 0;
-	if (!p || !token || !ft_strcmp_bool(token[0], "echo"))
+	if (!p || !token)
 		return (1);
 	if (!token[1])
 		return (ft_putstr_fd("\n", 1), 0);

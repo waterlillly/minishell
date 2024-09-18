@@ -63,7 +63,7 @@ bash: exit: abc: numeric argument required
 **input: unset PWD; cd ..; cd /minishell**
 	->should work& also update env and export as soon as there is a valid pwd/oldpwd again
 
-**input: start minishell without env; show env+export**
+*input: start minishell without env; show env+export* (handled for now with check in main)
 	-> has to have backup env and export!
 	-> 'env -i ./minishell'
 
@@ -73,10 +73,7 @@ bash: exit: abc: numeric argument required
 *input: echo hi > out | echo hello > out1 (dup2 c - 1 redir input: bad fd) (ostrich-fix)*
 	->should create two files with hi in out and hello in out1
 
-**input: echo hi > out > out1 > out2**
-	->should create all 3 files, but only write the hi into out2
-
-**input: any builtin**
+*input: any builtin*
 	-> should change return and the data should change in parent
 
 input: 	/home/lbaumeis/CCore/projects/minishell> cd ..
@@ -92,14 +89,20 @@ input: 	/home/lbaumeis/CCore/projects/minishell> cd ..
 **input: cntl+Z**
 	->should not exit bash, cntl+D should! (cntl+C should start a new promt)
 
-**input: (mostly when piping I think)**
+*input: (mostly when piping I think)*
 	->minishell and bash suddenly dont display input anymore but still execute commands
 
-**input: -> export cmd=" -l" = [export] [md= -l]**
+*input: -> export cmd=" -l" = [export] [md= -l]*
 
-**input: cd ..**
+*input: cd ..*
 	->if executed in child: doesnt work
 	->if (buildins) moved to run/parent process:
 		echo hi | echo hello displays both because forking only happens if its not a buildin then
+
+**rewrite expand& echo split part**
+
+**sort exit messages**
+
+**add i (=index) to pipex struct instead of using c to iterate through the cmds/processes**
 
 rewrite update_free_arr and learn loop_cmd_check

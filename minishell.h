@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/16 17:22:38 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/17 20:09:51 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ typedef struct s_pipex
 /*MAIN*/
 void 	free_parse(t_minishell_p *in);
 void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
-int		do_stuff(t_pipex *p, t_minishell_p *pars);
+int		do_stuff(t_pipex *p, int c, t_minishell_p *pars);
 bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 
 /*EXIT*/
@@ -120,7 +120,7 @@ void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str);
 int		error(char *str, int code);
 void	free_p_rest(t_pipex *p);
 void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input);
-int		check_exit(t_pipex *p, t_minishell_p *pars);
+bool	check_exit(t_pipex *p, int *c, t_minishell_p **pars);
 
 /*MORE_CMDS*/
 bool	is_buildin(char *s);
@@ -141,6 +141,10 @@ int		execute(t_pipex *p, int c, t_minishell_p *pars);
 void	sig_int(int	num);
 void	sig_quit(int num);
 void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *input);
+
+/*REDIR*/
+void	check_filein(t_pipex *p, t_minishell_p *pars);
+void	check_fileout(t_pipex *p, t_minishell_p *pars);
 
 /*____________________LEXPARSE____________________*/
 void	print_parsed(t_minishell_p *in);
@@ -184,10 +188,6 @@ void	close_all(t_pipex *p);
 void	err_free(t_pipex *p);
 
 /*INIT*/
-//int		count_out_files(t_minishell_p *pars);
-//int		count_in_files(t_minishell_p *pars);
-void	check_filein(t_pipex *p, t_minishell_p *pars);
-void	check_fileout(t_pipex *p, t_minishell_p *pars);
 void 	init_pipes(t_pipex *p);
 void	init_p(t_pipex *p, t_minishell_p *pars);
 int		first_init(t_pipex *p, char **envp);
