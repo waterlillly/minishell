@@ -106,3 +106,5 @@ input: 	/home/lbaumeis/CCore/projects/minishell> cd ..
 **add i (=index) to pipex struct instead of using c to iterate through the cmds/processes**
 
 rewrite update_free_arr and learn loop_cmd_check
+
+**simplify (file xport.c) create_add_export -> too many temps**

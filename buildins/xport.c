@@ -39,6 +39,7 @@ char	*exp_whole(t_pipex *p, char **arr, int y)
 int	combine_export(t_pipex *p)
 {
 	char	**arr;
+	char	*temp;
 	int		y;
 	
 	y = -1;
@@ -55,7 +56,11 @@ int	combine_export(t_pipex *p)
 		return (ft_free_double(arr), 1);
 	while (arr && arr[++y])
 	{
-		p->xport[y] = ft_strjoin_free_both(ft_strdup("declare -x "), exp_whole(p, arr, y));
+		temp = NULL;
+		temp = exp_whole(p, arr, y);
+		puts(temp);
+		p->xport[y] = ft_strjoin("declare -x ", temp);
+		(free(temp), temp = NULL);
 		if (!p->xport[y])
 			return (ft_free_double(arr), 1);
 	}
@@ -66,24 +71,31 @@ char	*create_add_export(char *token)
 {
 	char	*temp;
 	char	*temp1;
+	char	*temp2;
+	char	*temp3;
+	char	*temp4;
 	int		x;
 
 	temp = NULL;
 	temp1 = NULL;
+	temp2 = NULL;
+	temp3 = NULL;
+	temp4 = NULL;
 	x = 0;
-	if (!token)
-		return (NULL);
-	if (ft_strchr(token, '='))
+	if (token && ft_strchr(token, '='))
 	{
 		while (token[x] && token[x] != '=')
 			x++;
-		temp = ft_strjoin_free_both((ft_strjoin(strcpy_until(token), "=")),
-			(add_quotes(ft_substr(token, x + 1, ft_strlen(token) - (x + 1)))));
-		if (!temp)
+		temp = ft_strjoin_free_one(strcpy_until(token), "=");
+		temp4 = ft_substr(token, x + 1, ft_strlen(token) - (x + 1));
+		temp2 = add_quotes(temp4);
+		(free(temp4), temp4 = NULL);
+		temp3 = ft_strjoin_free_both(temp, temp2);
+		if (!temp3)
 			return (NULL);
-		temp1 = ft_strjoin_free_both(ft_strdup("declare -x "), temp);
+		temp1 = ft_strjoin_free_both(ft_strdup("declare -x "), temp3);
 	}
-	else
+	else if (token)
 		temp1 = ft_strjoin("declare -x ", token);
 	return (temp1);
 }

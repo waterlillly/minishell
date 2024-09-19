@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/13 14:51:17 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:33:23 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ int	update_export(t_pipex *p, char *tok, char *token)
 	if (x == -1)
 		return (free(temp), temp = NULL, 1);
 	temp1 = ft_strjoin_free_both(ft_strdup("="),
-		add_quotes(ft_substr(token, ft_strlen(tok) + 1,
-		ft_strlen(token) - ft_strlen(tok))));
+		add_quotes(token));
 	if (!temp1)
 		return (free(temp), temp = NULL, 1);
 	p->xport[x] = ft_strjoin_free_both(temp, temp1);
@@ -46,8 +45,6 @@ int	set_export(t_pipex *p, char **token)
 	x = 0;
 	if (!p || !token || !ft_strcmp_bool(token[0], "export") || !token[1])
 		return (1);
-	if (token[1][0] == '$')
-		return (perror("not a valid identifier"), 1);
 	temp = strcpy_until(token[1]);
 	if (!temp)
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/18 18:16:10 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/19 12:34:29 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,6 @@ int	fill_path(t_pipex *p, char **token)
 	else
 		return (add_to_path(p, token[1]));
 }
-/*
-void	post_cd(t_pipex *p)
-{
-	if (find_arg(p->xport, "PWD") == -1 || !is_access(p->pwd)
-		|| !is_access(getcwd(NULL, 0)) || !is_access(get_env(p, "PWD")))
-
-	if (find_arg(p->xport, "OLDPWD") == -1 || !is_access(p->oldpwd)
-		|| !is_access(get_env(p, "OLDPWD")))
-}
-*/
 
 int	cd(t_pipex *p, char **token)
 {
@@ -75,26 +65,12 @@ int	cd(t_pipex *p, char **token)
 		else if (token[1] != NULL)
 			p->status = fill_path(p, token);
 	}
-	//update(p, "OLDPWD", p->oldpwd);
-	//update(p, "PWD", p->pwd);
 	if (find_str_part(p->menv, "PWD") == -1)
 	{
 		update_unset(p, "PWD");
 		add_to_export(p, ft_strjoin("PWD=", p->pwd));
-		return (update_export(p, "OLDPWD", p->menv[find_str_part(p->menv, "OLDPWD")]));
+		return (update(p, "PWD", p->pwd), update(p, "OLDPWD", p->oldpwd));
 	}
-	// if (!is_access(get_env(p, "OLDPWD")) || !is_access(get_env(p, "PWD")))
-	// {
-	// 	if (p->pwd && !is_access(get_env(p, "OLDPWD")))
-	// 	{
-	// 		free(p->pwd);
-	// 		p->pwd = NULL;
-	// 		p->pwd = get_env(p, "PWD");
-	// 		if (!p->pwd)
-	// 			p->pwd = getcwd(p->pwd, 0);//p->pwd = get_env(p, "HOME");
-	// 	}
-	// 	return (update(p, "PWD", p->pwd), update(p, "OLDPWD", p->oldpwd));
-	// }
 	if (p->status != 0)
 	{
 		err = ft_strjoin("cd: ", token[1]);
@@ -102,7 +78,3 @@ int	cd(t_pipex *p, char **token)
 	}
 	return (update_both(p));
 }
-
-	//printf("pwd: %s\noldpwd: %s\n", p->pwd, p->oldpwd);
-		//just add setting it back for env and export once cd executed again!
-		//also remove oldpwd things (=) if cd -!

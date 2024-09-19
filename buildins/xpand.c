@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/16 17:23:02 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:33:59 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	multi_q(char *token)
 	return (c);
 }
 
-char	*rm_q(char *token)
+char	*rm_q(char *token)//maybe needs to return ft_strdup(token) in line 66?
 {
 	char	*new;
 	int		q;
@@ -68,7 +68,7 @@ char	*rm_q(char *token)
 	new = ft_calloc((ft_strlen(token) - q + 1), sizeof(char));
 	if (!new)
 		return (NULL);
-	while (token[x] && x < (int)ft_strlen(token) - 1)
+	while (token[x] && x < (int)ft_strlen(token) - q + 1)
 	{
 		if (token[x] == '\"')
 			x++;
@@ -101,9 +101,6 @@ char	*xpand(t_pipex *p, char **token, int x)
 	}
 	else if (s_out_q(token[x]))
 		return (free(temp1), temp1 = NULL, temp);
-	// else if (check_d_q(token[x]) > 0
-	// 	&& (check_d_q(token[x]) / 2) % 2 == 0 && ft_strcmp_bool(rm_q(token[x]), "$"))
-	// 	return (free(temp), free(temp1), temp = NULL, temp1 = NULL, ft_strdup(""));
 	else
 		return (free(temp1), temp1 = NULL, rm_q(temp));
 }

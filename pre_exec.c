@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:42:56 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/14 19:49:48 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:07:40 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,16 @@ char	*loop_cmd_check(t_pipex *p, t_minishell_p *pars, int x)
 {
 	char	**s;
 	char	*temp;
+	char	*temp1;
 
 	s = NULL;
 	temp = NULL;
+	temp1 = NULL;
 	if (!s_out_q(pars->str[x]) && !only_dollars(pars->str[x])
 		&& !ft_strcmp_bool(pars->str[x], "$?"))
 	{
-		s = echo_split(rm_q(pars->str[x]), '$');
+		temp1 = rm_q(pars->str[x]);
+		s = echo_split(temp1, '$');
 		if (!s)
 			temp = xpand(p, pars->str, x);
 		else

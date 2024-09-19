@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:54:22 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/13 14:38:42 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/19 13:07:10 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,16 @@ char	**echo_split(char *s, int c)
 	int		pos_a;
 	int		pos_b;
 	int		x;
+	int		y;
 	char	**result;
 
 	pos_a = 0;
 	pos_b = 0;
 	x = 0;
-	result = NULL;
-	if (!s || countstrs(s, c) < 1)
+	if (!s)
+		return (NULL);
+	y = countstrs(s, c);
+	if (y < 1)
 		return (NULL);
 	result = ft_calloc(countstrs(s, c) + 1, sizeof(char *));
 	if (!result)
