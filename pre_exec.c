@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:42:56 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/19 13:07:40 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/19 16:45:44 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_access(t_pipex *p, char **cmd, t_minishell_p *pars)
 		pars->str = update_free_arr(pars->str, cmd);
 		return (ft_free_double(temp), 0);
 	}
-	return (perror(pars->str[0]), 127);
+	return (ft_putendl_fd("Command not found", 2), 127);
 }
 
 int	check(t_pipex *p, t_minishell_p *pars)
@@ -54,16 +54,16 @@ int	check(t_pipex *p, t_minishell_p *pars)
 	{
 		cmd = check_cmd(p, pars);
 		if (!cmd)
-			return (p->status = 1);
+			return (1);
 		pars->str = update_free_arr(pars->str, cmd);
 		if (valid_cmd(pars->str, p) || is_buildin(pars->str[0]))
-			return (p->status = 0);
+			return (0);
 		if (access(pars->str[0], X_OK) != 0)
 			return (p->status = check_access(p, cmd, pars));
 		else
 			return (perror(pars->str[0]), p->status = 1);
 	}
-	return (p->status = 1);
+	return (1);
 }
 
 bool	valid_cmd(char **str, t_pipex *p)
@@ -95,16 +95,13 @@ char	*loop_cmd_check(t_pipex *p, t_minishell_p *pars, int x)
 {
 	char	**s;
 	char	*temp;
-	char	*temp1;
 
 	s = NULL;
 	temp = NULL;
-	temp1 = NULL;
 	if (!s_out_q(pars->str[x]) && !only_dollars(pars->str[x])
 		&& !ft_strcmp_bool(pars->str[x], "$?"))
 	{
-		temp1 = rm_q(pars->str[x]);
-		s = echo_split(temp1, '$');
+		s = echo_split(rm_q(pars->str[x]), '$');
 		if (!s)
 			temp = xpand(p, pars->str, x);
 		else

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:09:17 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/16 22:31:11 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/19 16:29:13 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,8 @@ int	do_this(t_pipex *p, t_minishell_p *pars)
 		&& pars->str[1] != NULL && p->xport)
 		p->status = set_export(p, pars->str);
 	else if (ft_strcmp_bool(pars->str[0], "cd"))
-		(p->status = cd(p, pars->str));
+		p->status = cd(p, pars->str);
 	else if (ft_strcmp_bool(pars->str[0], "echo"))
 		p->status = echo(p, pars->str);
 	return (p->status);
 }
-
-	//else if (ft_strcmp_bool(pars->str[0], "expr") && pars->str[1] != NULL)
-	//	p->status = expr(p, pars->str);

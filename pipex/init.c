@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/17 20:09:35 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/19 16:27:10 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ int	first_init(t_pipex *p, char **envp)
 	int	x;
 
 	x = 0;
+	p->status = 0;
 	x = buildins_init(p, envp);
 	if (x != 0)
 		return (p->status = x, x);
-	p->status = 0;
 	p->paths = ft_split(p->mpath, ':');
 	if (!p->paths)
 		return (p->status = 1, err_free(p), 1);

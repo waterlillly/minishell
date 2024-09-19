@@ -58,7 +58,6 @@ int	combine_export(t_pipex *p)
 	{
 		temp = NULL;
 		temp = exp_whole(p, arr, y);
-		puts(temp);
 		p->xport[y] = ft_strjoin("declare -x ", temp);
 		(free(temp), temp = NULL);
 		if (!p->xport[y])

@@ -6,12 +6,13 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/18 14:45:21 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/19 16:55:37 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//volatile sig_atomic_t	g_signal = 0;
 extern int	g_signal;
 
 void	free_parse(t_minishell_p *in)
@@ -65,8 +66,8 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 				return (perror("fork"), 1);
 			if (p->pid[c] == 0)
 			{
-				p->status = execute(p, c, pars);
-				if (p->status == 1 && kill(p->pid[c], 0) == 0)
+				execute(p, c, pars);
+				if (kill(p->pid[c], 0) == 0)
 				{
 					if (kill(p->pid[c], SIGCHLD) != 0)
 						return (perror("kill"), (int)p->status);
@@ -102,8 +103,7 @@ bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 		return (false);
 	if ((*pars) && !ft_strcmp_bool((*pars)->str[0], "exit"))
 	{
-		p->status = do_stuff(p, c, *pars);
-		if (p->status != 0)
+		if (do_stuff(p, c, *pars) != 0)
 			return (false);
 		free_everything(p, *pars, input);
 	}

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 16:27:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/16 15:23:43 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/19 15:18:27 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	redirect(t_pipex *p, int c, t_minishell_p *pars)
 		if (p->pip[c - 1][1] != -1 && p->pip[c - 1][1] != STDOUT_FILENO)
 			close(p->pip[c - 1][1]);
 		if (dup2(p->pip[c - 1][0], STDIN_FILENO) == -1)
-			return (perror("dup2 c - 1 redir input"), 1);//OSTRICH
+			return (perror("dup2 c - 1 redir input"), 1);
 	}
 	check_fileout(p, pars);
 	if (p && pars && p->fileout != -1)
