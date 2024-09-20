@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/19 13:33:23 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:31:27 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	update(t_pipex *p, char *set, char *tok)
 	x = 0;
 	if (!p || !set || !tok)
 		return (0);
-	if (!is_access(tok))
+	if (!is_access(tok) && tok[ft_strlen(tok) - 1] != '.' && tok[ft_strlen(tok) - 2] != '.')
 		return (perror(tok), 1);
 	x = find_str_part(p->menv, set);
 	if (x < 0)

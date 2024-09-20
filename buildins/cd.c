@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/19 16:27:56 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:13:29 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	fill_path(t_pipex *p, char **token)
 		{
 			if (ft_strcmp_bool(p->pwd, "/"))
 				return (update(p, "OLDPWD", "/"));
-			else
-				return (go_back(p, 0));
+			x = go_back(p, 0);
+			return (x);
 		}
 		return (x);
 	}
@@ -50,16 +50,6 @@ int	fill_path(t_pipex *p, char **token)
 	else
 		return (add_to_path(p, token[1]));
 }
-/*
-void	post_cd(t_pipex *p)
-{
-	if (find_arg(p->xport, "PWD") == -1 || !is_access(p->pwd)
-		|| !is_access(getcwd(NULL, 0)) || !is_access(get_env(p, "PWD")))
-
-	if (find_arg(p->xport, "OLDPWD") == -1 || !is_access(p->oldpwd)
-		|| !is_access(get_env(p, "OLDPWD")))
-}
-*/
 
 int	cd(t_pipex *p, char **token)
 {
@@ -75,7 +65,7 @@ int	cd(t_pipex *p, char **token)
 		else if (token[1] != NULL)
 			p->status = fill_path(p, token);
 	}
-	if (!is_access(get_env(p, "OLDPWD")) || !is_access(get_env(p, "PWD")))
+	if (!get_env(p, "OLDPWD") || !get_env(p, "PWD"))
 	{
 		if (p->pwd && !is_access(get_env(p, "OLDPWD")))
 		{
@@ -85,16 +75,13 @@ int	cd(t_pipex *p, char **token)
 			if (!p->pwd)
 				p->pwd = get_env(p, "HOME");
 		}
-		return (update(p, "PWD", p->pwd), update(p, "OLDPWD", p->oldpwd));
+		//return (update(p, "PWD", p->pwd), update(p, "OLDPWD", p->oldpwd));
 	}
 	if (p->status != 0)
 	{
 		err = ft_strjoin("cd: ", token[1]);
 		return (perror(err), free(err), err = NULL, 0);
 	}
-	return (update_both(p));
+	return (update(p, "PWD", p->pwd), update(p, "OLDPWD", p->oldpwd));
+	//return (update_both(p));
 }
-
-	//printf("pwd: %s\noldpwd: %s\n", p->pwd, p->oldpwd);
-		//just add setting it back for env and export once cd executed again!
-		//also remove oldpwd things (=) if cd -!

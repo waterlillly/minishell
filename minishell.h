@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/19 16:05:25 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/20 16:07:16 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,7 @@ bool	d_out_q(char *tok);
 
 /*PWD*/
 void	reset_old_pwd(t_pipex *p, char *path);
+int		get_int(char **temp);
 int		join_oldpwd(t_pipex *p, char **temp, char *oldpwd);
 int		go_up_oldpwd(t_pipex *p);
 

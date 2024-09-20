@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:26:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/12 15:39:39 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:07:36 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,21 @@ int	go_back(t_pipex *p, int print)
 	temp = ft_strdup(p->oldpwd);
 	if (!temp)
 		return (1);
-	if (temp && is_access(temp))
+	if (is_access(temp))
 	{
 		reset_old_pwd(p, temp);
 		if (print == 1)
 			check_print(p->pwd);
 		x = chdir(temp);
 		return (free(temp), temp = NULL, x);
+	}
+	else if (!is_access(temp))
+	{
+		(free(p->oldpwd), p->oldpwd = NULL);
+		p->oldpwd = ft_strdup(p->pwd);
+		(free(p->pwd), p->pwd = NULL);
+		p->pwd = ft_strdup(temp);
+		chdir(temp);
 	}
 	return (free(temp), temp = NULL, 0);
 }
