@@ -8,7 +8,7 @@ make: *** No rule to make target 'main.o', needed by 'minishell'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Sep 19 12:13:30 2024
+# Make data base, printed on Sun Sep 22 13:41:13 2024
 
 # Variables
 
@@ -57,7 +57,7 @@ OLDPWD = /home/lbaumeis/CCore/projects/minishell
 # environment
 VSCODE_CODE_CACHE_PATH = /home/lbaumeis/.config/Code/CachedData/b1c0a14de1414fcdaa400695b4db1c0799bc3124
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session3
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session7
 # environment
 LANG = C
 # environment
@@ -67,17 +67,15 @@ XAUTHORITY = /home/lbaumeis/.Xauthority
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.90
+GNOME_TERMINAL_SERVICE = :1.88
 # makefile
 MAKEFLAGS = pqrR -j16 --jobserver-auth=3,4
 # environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/101355/bus,guid=4ea1577900804187e371bf4b66ebf6b8
+DBUS_STARTER_ADDRESS = unix:path=/run/user/101355/bus,guid=6c04056da18f5a8fb4facab466f0023d
 # makefile
 CURDIR := /home/lbaumeis/CCore/projects/minishell
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
-# environment
-VSCODE_L10N_BUNDLE_LOCATION = 
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -97,15 +95,15 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 116845
+VSCODE_PID = 288228
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_101355_j5BeBD
+KRB5CCNAME = FILE:/tmp/krb5cc_101355_4k4QND
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/c3r10p3.42vienna.com:@/tmp/.ICE-unix/115980,unix/c3r10p3.42vienna.com:/tmp/.ICE-unix/115980
+SESSION_MANAGER = local/c3r10p3.42vienna.com:@/tmp/.ICE-unix/287419,unix/c3r10p3.42vienna.com:/tmp/.ICE-unix/287419
 # automatic
 *F = $(notdir $*)
 # makefile (from 'Makefile', line 34)
@@ -113,7 +111,7 @@ NUMTH = $(shell nproc)
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101355/bus,guid=4ea1577900804187e371bf4b66ebf6b8
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101355/bus,guid=6c04056da18f5a8fb4facab466f0023d
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -129,9 +127,9 @@ MAKECMDGOALS := all
 # environment
 XMODIFIERS = @im=ibus
 # environment
-SHLVL = 1
+SHLVL = 2
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/10b391cd_047f_4550_8094_bc38825f6653
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/d17bd6cb_cda8_418d_b462_249845bd3674
 # environment
 MAKELEVEL := 0
 # default
@@ -173,7 +171,7 @@ LOGNAME = lbaumeis
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 115980
+SYSTEMD_EXEC_PID = 287419
 # environment
 DISPLAY = :0
 # environment
@@ -237,7 +235,7 @@ XDG_MENU_PREFIX = gnome-
 # environment
 GDMSESSION = ubuntu
 # variable set hash-table stats:
-# Load=112/1024=11%, Rehash=0, Collisions=15/167=9%
+# Load=111/1024=11%, Rehash=0, Collisions=14/166=8%
 
 # Pattern-specific Variable Values
 
@@ -245,9 +243,9 @@ GDMSESSION = ubuntu
 
 # Directories
 
-# . (device 2048, inode 4260053): 21 files, no impossibilities.
+# . (device 2048, inode 4260053): 22 files, no impossibilities.
 
-# 21 files, no impossibilities in 1 directories.
+# 22 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -330,7 +328,7 @@ signals.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2024-09-18 14:48:08.45070112
+#  Last modified 2024-09-19 13:54:37.490347729
 #  File has been updated.
 #  Successfully updated.
 
@@ -349,6 +347,7 @@ exit.o:
 # Not a target:
 execute.o:
 #  Implicit rule search has not been done.
+ 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -381,7 +380,6 @@ re: fclean
 # Not a target:
 buildins/pwd.o:
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -569,12 +567,12 @@ buildins/echo.o:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 69 / storage = 861 B / avg = 12 B
-# current buf: size = 8162 B / used = 861 B / count = 69 / avg = 12 B
+# strcache buffers: 1 (0) / strings = 70 / storage = 863 B / avg = 12 B
+# current buf: size = 8162 B / used = 863 B / count = 70 / avg = 12 B
 
-# strcache performance: lookups = 91 / hit rate = 24%
+# strcache performance: lookups = 92 / hit rate = 23%
 # hash-table stats:
-# Load=69/8192=1%, Rehash=0, Collisions=1/91=1%
-# Finished Make data base on Thu Sep 19 12:13:30 2024
+# Load=70/8192=1%, Rehash=0, Collisions=1/92=1%
+# Finished Make data base on Sun Sep 22 13:41:13 2024
 
  
