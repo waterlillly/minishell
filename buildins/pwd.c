@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:47:48 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/23 22:01:27 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/23 22:08:11 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,12 @@ int	join_oldpwd(t_pipex *p, char **temp, char *oldpwd)
 	x = 0;
 	y = get_int(temp);
 	z = ft_arrlen(temp) - 1;
-	if (p && temp[x] && y > 0)
-		return (going_back(oldpwd, p, y, temp));
-	while (p && temp[x])
+	ft_print_array(temp);
+	if (y > 0)
+		y *= 2;
+	while (p && temp[x] && oldpwd)
 	{
-		if (!temp[x + 1])
+		if (x == (z - y) && temp[x])
 		{
 			if (!is_access(oldpwd))
 			{
@@ -97,7 +98,12 @@ int	join_oldpwd(t_pipex *p, char **temp, char *oldpwd)
 		}
 		if (oldpwd[ft_strlen(oldpwd) - 1] != '/')
 			oldpwd = ft_strjoin_free_one(oldpwd, "/");
+			if (!oldpwd)
+				return (1);
+		}
 		oldpwd = ft_strjoin_free_both(oldpwd, temp[x]);
+		if (!oldpwd)
+			return (1);
 		x++;
 	}
 	return (1);

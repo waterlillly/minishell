@@ -76,6 +76,8 @@ DBUS_STARTER_ADDRESS = unix:path=/run/user/101355/bus,guid=2af818f0122bb2ed9b0a5
 CURDIR := /home/lbaumeis/CCore/projects/minishell
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# environment
+VSCODE_L10N_BUNDLE_LOCATION = 
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -235,7 +237,7 @@ XDG_MENU_PREFIX = gnome-
 # environment
 GDMSESSION = ubuntu
 # variable set hash-table stats:
-# Load=111/1024=11%, Rehash=0, Collisions=14/166=8%
+# Load=112/1024=11%, Rehash=0, Collisions=15/167=9%
 
 # Pattern-specific Variable Values
 
@@ -329,7 +331,7 @@ signals.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2024-09-19 13:54:37.490347729
+#  Last modified 2024-09-18 14:48:08.45070112
 #  File has been updated.
 #  Successfully updated.
 
@@ -380,6 +382,7 @@ re: fclean
 # Not a target:
 buildins/pwd.o:
 #  Implicit rule search has not been done.
+ 
 #  Modification time never checked.
 #  File has not been updated.
 
