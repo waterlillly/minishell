@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/20 18:31:27 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/23 21:50:02 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	set_export(t_pipex *p, char **token)
 	int		x;
 
 	x = 0;
-	if (!p || !token || !ft_strcmp_bool(token[0], "export") || !token[1])
+	if (!p || !token || !token[1])
 		return (1);
 	temp = strcpy_until(token[1]);
 	if (!temp)
@@ -61,7 +61,7 @@ int	set_export(t_pipex *p, char **token)
 		x = update_export(p, temp, rm_q(token[1]));
 	}
 	else
-		(x = add_to_export(p, rm_q(token[1])));
+		x = add_to_export(p, rm_q(token[1]));
 	return (free(temp), temp = NULL, x);
 }
 
@@ -74,8 +74,6 @@ int	update(t_pipex *p, char *set, char *tok)
 	x = 0;
 	if (!p || !set || !tok)
 		return (0);
-	if (!is_access(tok) && tok[ft_strlen(tok) - 1] != '.' && tok[ft_strlen(tok) - 2] != '.')
-		return (perror(tok), 1);
 	x = find_str_part(p->menv, set);
 	if (x < 0)
 		return (1);
@@ -93,9 +91,12 @@ int	update_both(t_pipex *p)
 	int		x;
 
 	x = 0;
-	x = update(p, "OLDPWD", get_env(p, "PWD"));
+	free(p->oldpwd);
+	p->oldpwd = NULL;
+	p->oldpwd = get_env(p, "PWD");
+	x = update(p, "OLDPWD", p->oldpwd);
 	if (x != 0)
 		return (x);
-	x = update(p, "PWD", getcwd(NULL, 0));
+	x = update(p, "PWD", p->pwd);
 	return (x);
 }

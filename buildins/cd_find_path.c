@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:26:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/22 17:14:28 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/23 21:50:10 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ int	go_back(t_pipex *p, int print)
 		reset_old_pwd(p, temp);
 		if (print == 1)
 			check_print(p->pwd);
-		x = chdir(temp);
+		x = chdir(p->pwd);
 		return (free(temp), temp = NULL, x);
 	}
-	else if (!is_access(temp))
+	else if (temp[ft_strlen(temp) - 1] != '.' && temp[ft_strlen(temp) - 2] != '.')
 	{
 		reset_old_pwd(p, temp);
 		if (print == 1)
@@ -91,7 +91,7 @@ int	go_back(t_pipex *p, int print)
 		chdir(temp);
 		return (free(temp), temp = NULL, 0);
 	}
-	return (free(temp), temp = NULL, 0);
+	return (chdir(temp), free(temp), temp = NULL, 0);
 }
 
 int	go_slash(t_pipex *p, char **token)

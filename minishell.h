@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/22 16:21:01 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/23 19:05:31 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,8 +237,8 @@ int		go_full_path(t_pipex *p, char **token);
 
 /*CD*/
 int		cd_home(t_pipex *p);
+int		go_back_minus(t_pipex *p, int print);
 int		fill_path(t_pipex *p, char **token);
-//void	pre_cd(t_pipex *p, char *copy_pwd, char *copy_oldpwd);
 int		cd(t_pipex *p, char **token);
 
 /*ECHO*/

@@ -47,7 +47,6 @@ cc -Wall -Wextra -Werror -c ft_strlen.c -o ft_strlen.o
 cc -Wall -Wextra -Werror -c ft_memset.c -o ft_memset.o
 cc -Wall -Wextra -Werror -c ft_bzero.c -o ft_bzero.o
 cc -Wall -Wextra -Werror -c ft_memcpy.c -o ft_memcpy.o
- 
 cc -Wall -Wextra -Werror -c ft_memmove.c -o ft_memmove.o
 cc -Wall -Wextra -Werror -c ft_strlcpy.c -o ft_strlcpy.o
 cc -Wall -Wextra -Werror -c ft_strlcat.c -o ft_strlcat.o
@@ -99,9 +98,6 @@ cc -Wall -Wextra -Werror -c ft_atoi_long.c -o ft_atoi_long.o
 cc -Wall -Wextra -Werror -c ft_itoa_long.c -o ft_itoa_long.o
 cc -Wall -Wextra -Werror -c ft_lstnew.c -o ft_lstnew.o
 cc -Wall -Wextra -Werror -c ft_lstadd_front.c -o ft_lstadd_front.o
- 
-make[1]: warning: -j16 forced in makefile: resetting jobserver mode.
-
 cc -Wall -Wextra -Werror -c ft_lstsize.c -o ft_lstsize.o
 cc -Wall -Wextra -Werror -c ft_lstlast.c -o ft_lstlast.o
 cc -Wall -Wextra -Werror -c ft_lstadd_back.c -o ft_lstadd_back.o
@@ -121,5 +117,8 @@ cc -Wall -Werror -Wextra -g -o minishell main.o more_cmds.o exit.o execute.o sta
 rm -f out
 rm -f hd
 rm -f buildins.h.gch
+ 
 make: Leaving directory '/home/lbaumeis/CCore/projects/minishell'
  
+make[1]: warning: -j16 forced in makefile: resetting jobserver mode.
+
