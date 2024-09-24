@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:47:48 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/23 22:16:10 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/24 19:06:15 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,22 @@ int	join_oldpwd(t_pipex *p, char **temp, char *oldpwd)
 		return (going_back(oldpwd, p, y, temp));
 	while (p && temp[x])
 	{
+		//printf("x: %d = %s\n", x, temp[x]);
 		if (!temp[x + 1])
 		{
-			if (!is_access(oldpwd))
+			//puts(oldpwd);
+			if (!is_access(oldpwd))//why not accessible???
 			{
+				//printf("no access: %s\n", oldpwd);
 				oldpwd = ft_strjoin_free_one(oldpwd, "/");
 				oldpwd = ft_strjoin_free_both(oldpwd, temp[x]);
 				oldpwd = ft_strjoin_free_one(oldpwd, "/..");
 				return (update(p, "PWD", oldpwd), update(p, "OLDPWD", p->pwd),
 					p->pwd = NULL, p->pwd = oldpwd, 1);
 			}
-			return (p->pwd = NULL, p->pwd = oldpwd, 0);
+			return (p->oldpwd = NULL, p->oldpwd = oldpwd, 0);
 		}
-		if (oldpwd[ft_strlen(oldpwd) - 1] != '/')
+		if (oldpwd && ft_strlen(oldpwd) > 0 && oldpwd[ft_strlen(oldpwd) - 1] != '/')
 			oldpwd = ft_strjoin_free_one(oldpwd, "/");
 		oldpwd = ft_strjoin_free_both(oldpwd, temp[x]);
 		x++;
@@ -115,10 +118,11 @@ int	go_up_oldpwd(t_pipex *p)
 	if (!p->pwd)
 	{
 		p->pwd = NULL;
-		p->pwd = get_env(p, "PWD");
+		get_env(p, "PWD");//p->pwd = getcwd(NULL, 0);//
 		if (!p->pwd)
 			return (1);
 	}
+	//puts(p->pwd);
 	if (ft_strcmp_bool(p->pwd, "/"))
 		return (0);
 	temp = ft_split(p->pwd, '/');

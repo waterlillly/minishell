@@ -17,10 +17,48 @@
 *input: ls | wc*
 	->fix pipes!
 
-**input: mkdir a; cd a; mkdir b; cd b; mkdir c; cd c; rm -r ../../../a;**
+*input: mkdir a; cd a; mkdir b; cd b; mkdir c; cd c; rm -r ../../../a;*
 	->cd .. should display "path/to/pwd/.."
 	->cd .. should display "path/to/pwd/../.."
 	->cd .. should display actual pwd again (if exists)
+
+	/home/lbaumeis/CCore/projects/minishell> mkdir a
+	/home/lbaumeis/CCore/projects/minishell> cd a
+	/home/lbaumeis/CCore/projects/minishell/a> mkdir b
+	/home/lbaumeis/CCore/projects/minishell/a> cd b
+	/home/lbaumeis/CCore/projects/minishell/a/b> mkdir c
+	/home/lbaumeis/CCore/projects/minishell/a/b> cd c
+	/home/lbaumeis/CCore/projects/minishell/a/b/c> rm -r ../../../a
+	/home/lbaumeis/CCore/projects/minishell/a/b/c> cd ..
+		cd: /home/lbaumeis/CCore/projects/minishell/a/b/c/..: No such file or directory
+	/home/lbaumeis/CCore/projects/minishell/a/b/c/..> echo $PWD $OLDPWD
+	/home/lbaumeis/CCore/projects/minishell/a/b/c/.. /home/lbaumeis/CCore/projects/minishell/a/b/c
+	/home/lbaumeis/CCore/projects/minishell/a/b/c/..> cd ..
+		cd: /home/lbaumeis/CCore/projects/minishell/a/b/c/../..: No such file or directory
+	/home/lbaumeis/CCore/projects/minishell/a/b/c/../..> echo $PWD $OLDPWD
+	/home/lbaumeis/CCore/projects/minishell/a/b/c/../.. /home/lbaumeis/CCore/projects/minishell/a/b/c/..
+	/home/lbaumeis/CCore/projects/minishell/a/b/c/../..> cd ..
+	/home/lbaumeis/CCore/projects/minishell> echo $PWD $OLDPWD
+	/home/lbaumeis/CCore/projects/minishell /home/lbaumeis/CCore/projects/minishell/a/b/c/../..
+	/home/lbaumeis/CCore/projects/minishell> cd -
+		cd: /home/lbaumeis/CCore/projects/minishell: No such file or directory
+	/home/lbaumeis/CCore/projects/minishell> cd ..
+	/home/lbaumeis/CCore/projects> echo $PWD $OLDPWD
+	/home/lbaumeis/CCore/projects /home/lbaumeis/CCore/projects/minishell
+	/home/lbaumeis/CCore/projects> cd ..
+->	/home/lbaumeis/CCore> cd p
+->		pipex/      pre_exec.c  
+->	/home/lbaumeis/CCore> ls
+->		buildins   lexparse  Makefile	  more_cmds.c  redir.c	  testing.txt
+->		execute.c  libft     minishell	  pipex        signals.c  TO_DO.md
+->		exit.c	   main.c    minishell.h  pre_exec.c   start.c
+	/home/lbaumeis/CCore> pwd
+	/home/lbaumeis/CCore
+	/home/lbaumeis/CCore> echo $PWD $OLDPWD
+	/home/lbaumeis/CCore /home/lbaumeis/CCore/projects
+->	/home/lbaumeis/CCore> cd projects
+	/home/lbaumeis/CCore/projects> cd minishell/
+	/home/lbaumeis/CCore/projects/minishell> 
 
 **input: echo ""$"" (same for ''$'')**
 	->should display a nl
@@ -34,7 +72,7 @@
 **input: expr $? + $?**
 	->expand values (exitcodes) before passing values to execve
 
-**input: echo $?**
+*input: echo $?*
 	->should print the right exitcode
 
 **input: exit 2 | exit 42**
@@ -82,7 +120,7 @@ input: 	/home/lbaumeis/CCore/projects/minishell> cd ..
 		/home/lbaumeis/CCore/projects> cd minishell
 		/home/lbaumeis/CCore/projects/minishell> 
 
-**input: cntl-C**
+*input: cntl-C*
 	->exit code: 130 and exits!
 	->cntl-D ->sets exit code to 130?
 
