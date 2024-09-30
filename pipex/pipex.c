@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/19 16:43:20 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/30 19:03:56 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 		return (1);
 	}
 	p->path = is_exec(p);
+	p->mode = INTER;
 	return (p->status = execve(p->path, pars->str, p->menv));
 }

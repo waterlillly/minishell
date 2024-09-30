@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/19 16:55:37 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/30 19:36:11 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //volatile sig_atomic_t	g_signal = 0;
-extern int	g_signal;
+//extern int	g_signal;
 
 void	free_parse(t_minishell_p *in)
 {
@@ -89,14 +89,16 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 	return ((int)p->status);
 }
 
-bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
+bool run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 {
 	int	c;
 
 	c = 0;
 	refresh_init(p, input, pars);
-	if (!*pars)
+	if (!*pars && input->exit == 0)
 		return (true);
+	else if (!*pars && input->exit == 1)
+		return (false);
 	if (!p || !input)
 		return (false);
 	if (check_exit(p, &c, pars) == false)

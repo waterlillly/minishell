@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/23 22:06:46 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/30 19:31:52 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # define MAX_FD 1024 + 1
 # define RET_VALUE(ret)	ret > 0 ? 1 : ret
 
+extern volatile sig_atomic_t g_signal;
+
 typedef enum e_token
 {
 	PIPE = 1,//
@@ -47,6 +49,15 @@ typedef enum e_token
 	SMALLER,
 	HEREDOC
 }	t_token;
+
+typedef enum e_mode
+{
+	INTER = 1,
+	NON_INTER,
+	CHILD,
+	HD,
+	DFLT
+}	t_mode;
 
 typedef struct s_raw_in
 {
@@ -62,6 +73,7 @@ typedef struct s_raw_in
 	int		n_red;
 	int		n_words;
 	int		sum;
+	int		exit;
 }	t_raw_in;
 
 typedef struct s_minishell_l
@@ -107,6 +119,7 @@ typedef struct s_pipex
 	char	*executable;
 	char	*part;
 	char	*cmd;
+	t_mode	mode;
 }			t_pipex;
 
 /*MAIN*/
