@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/19 16:43:20 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:05:12 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	do_heredoc(t_pipex *p, t_minishell_p *pars)
 
 	new = NULL;
 	x = -1;
-	if (!p || !pars || !pars->redirect || !pars->redirect->str || !pars->str)
+	if (!p || !pars || !pars->redirect || !pars->redirect->str || !pars->ps)
 		return (0);
 	if (check_s_q(pars->redirect->input) || check_d_q(pars->redirect->input))
 		return (ft_putstr_fd(rm_out_q(pars->redirect->str), 1), 0);
@@ -71,20 +71,20 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 	char	*temp;
 
 	temp = NULL;
-	if (!p || !pars || !pars->str)
+	if (!p || !pars || !pars->ps)
 		return (p->status = 1);
 	if (pars->redirect && pars->redirect->token == HEREDOC)
 	{
 		p->status = do_heredoc(p, pars);
 		return (1);
 	}
-	temp = ft_substr(pars->str[0], 1, ft_strlen(pars->str[0]) - 1);
+	temp = ft_substr(pars->ps[0], 1, ft_strlen(pars->ps[0]) - 1);
 	if (!temp)
 		return (1);
-	if (pars->str[0][0] == '$' && valid_env(p, temp))
-		p->cmd = xpand(p, pars->str, 0);
+	if (pars->ps[0][0] == '$' && valid_env(p, temp))
+		p->cmd = xpand(p, pars->ps, 0);
 	else
-		p->cmd = pars->str[0];
+		p->cmd = pars->ps[0];
 	free(temp);
 	temp = NULL;
 	if (is_buildin(p->cmd))
@@ -93,5 +93,5 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 		return (1);
 	}
 	p->path = is_exec(p);
-	return (p->status = execve(p->path, pars->str, p->menv));
+	return (p->status = execve(p->path, pars->ps, p->menv));
 }

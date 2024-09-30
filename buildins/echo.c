@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/19 16:38:58 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/30 13:28:47 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ bool	even_q(char *s)
 int	do_echo(t_pipex *p, char **token, int x)
 {
 	char	*str;
-	char	**s;
+	//char	**s;
 	
 	str = NULL;
-	s = NULL;
+	//s = NULL;
 	if (!token || !token[x]
 		|| (x == 1 && ft_strcmp_bool(token[0], "echo") && check_n(token[x])))
 		return (1);
@@ -89,19 +89,19 @@ int	do_echo(t_pipex *p, char **token, int x)
 		else
 			str = rm_q(token[x]);
 	}
-	else if (!s_out_q(token[x]))
-		s = echo_split(token[x], '$');
+	// else if (!s_out_q(token[x]))
+	// 	s = echo_split(token[x], '$');
 	if (!str)
 	{
-		if (s)
-			str = split_and_xpand(p, s);
-		else
-			str = xpand(p, token, x);
+		// if (s)
+		// 	str = split_and_xpand(p, s);
+		//else
+		str = xpand(p, token, x);
 		if (!str)
-			return (ft_free_double(s), 1);
+			return (1);//ft_free_double(s), 
 	}
 	ft_putstr_fd(str, 1);
-	return (ft_free_double(s), free(str), str = NULL, 0);
+	return (free(str), str = NULL, 0);//ft_free_double(s), 
 }
 
 bool	check_n(char *token)

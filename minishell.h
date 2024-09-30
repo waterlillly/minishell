@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/23 22:06:46 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/09/30 22:35:25 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_minishell_l
 typedef struct s_minishell_p
 {
 	char					**str;
+	char					**ps;
 	int						str_len;//
 	char					*infile;//
 	char					*outfile;//
@@ -141,6 +142,7 @@ int		execute(t_pipex *p, int c, t_minishell_p *pars);
 void	sig_int(int	num);
 void	sig_quit(int num);
 void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *input);
+void	print_ps(t_minishell_p *pars);
 
 /*REDIR*/
 void	check_filein(t_pipex *p, t_minishell_p *pars);
@@ -249,9 +251,20 @@ bool	check_n(char *token);
 int		echo(t_pipex *p, char **token);
 
 /*ECHO_SPLIT*/
-int		countstrs(char *s, char c);
-int		do_split(char *s, char c, int pos_a);
-char	**echo_split(char *s, int c);
+int		count_dlr_strs(char *s, char c);
+int		count_q_strs(char *str, int q);
+int		dlr_split(char *s, int d, int pa);
+int		q_split(char *s, int q, int pa);
+char	**xpd_1_split(char *str, int q);
+char	**xpd_2_split(char *str, int q);
+char	**xpd_2(char **xpd1);
+char	**arrjoin(char **old, char **new);
+char	**ft_arrdup(char **s);
+char	**xpd_1(t_minishell_p *pars, int i);
+void	xpd(t_pipex *p, t_minishell_p *pars);
+// int		countstrs(char *s, char c);
+// int		do_split(char *s, char c, int pos_a);
+// char	**echo_split(char *s, int c);
 
 /*EXPAND*/
 bool	only_dollars(char *tok);
