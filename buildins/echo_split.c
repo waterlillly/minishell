@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:54:22 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/01 16:59:49 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/01 17:43:43 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,9 +206,7 @@ char	**xpd_2(char **xpd1)
 				sp2++;
 			}
 			*tmp = ft_strdup(xpd1[x]);
-			//ft_free_double(sp2);
 			sp2 = ft_arrdup(tmp);
-			//ft_free_double(tmp);
 		}
 		x++;
 	}
@@ -233,9 +231,7 @@ char	**xpd_2(char **xpd1)
 				sp2++;
 			}
 			*tmp = ft_strdup(sp2[x]);
-			//ft_free_double(sp2);
 			sp2 = ft_arrdup(tmp);
-			//ft_free_double(tmp);
 		}
 		x++;
 	}
@@ -321,9 +317,7 @@ char	**xpd_1(t_minishell_p *pars, int i)
 				dq2++;
 			}
 			*tmp = ft_strdup(s_q[x]);
-			//ft_free_double(dq2);
 			dq2 = ft_arrdup(tmp);
-			//ft_free_double(tmp);
 		}
 		x++;
 	}

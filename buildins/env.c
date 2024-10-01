@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/01 16:58:47 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/01 17:43:15 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ int	get_menv(t_pipex *p, char **envp)
 	int	x;
 
 	x = 0;
-	//if (!envp)
-	//	return (backup(p));
 	p->menv = (char **)ft_calloc((ft_strlen_2d(envp) + 1), sizeof(char *));
 	if (!p->menv)
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/01 16:35:51 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/01 17:45:14 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,9 @@ bool	even_q(char *s)
 
 int	do_echo(char **token, int x)
 {
-	//char	*str;
-	
-	//str = NULL;
 	if (!token || !token[x]
 		|| (x == 1 && ft_strcmp_bool(token[0], "echo") && check_n(token[x])))
 		return (1);
-	// if (ft_strcmp_bool(token[1], "$?"))
-	// 	return (ft_putnbr_fd((int)p->status, 1), 0);
 	if ((!check_s_q(token[x]) && only_dollars(rm_q(token[x])))
 		|| only_dollars(token[x]))
 	{
@@ -88,15 +83,6 @@ int	do_echo(char **token, int x)
 		else
 			return (ft_putstr_fd(rm_q(token[x]), 1), 0);
 	}
-	// if (!str)
-	// {
-	// 	str = xpand(p, token, x);
-	// 	if (!str)
-	// 		return (1);
-	// }
-	//ft_putstr_fd(str, 1);
-	//if (str)
-	//	free(str);
 	return (ft_putstr_fd(token[x], 1), 0);
 }
 

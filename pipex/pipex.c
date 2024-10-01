@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/01 16:32:27 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/01 17:44:40 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ char	*is_exec(t_pipex *p)
 		if (!p->executable)
 			return (NULL);
 		p->part = ft_strjoin_free_one(p->executable, p->cmd);
-		// free(p->executable);
-		// p->executable = NULL;
 		if (!p->part)
 			return (NULL);
 		else if (access(p->part, X_OK) == 0)
@@ -78,15 +76,15 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 		p->status = do_heredoc(p, pars);
 		return (1);
 	}
-	temp = ft_substr(pars->ps[0], 1, ft_strlen(pars->ps[0]) - 1);
-	if (!temp)
-		return (1);
-	if (pars->ps[0][0] == '$' && valid_env(p, temp))
-		p->cmd = xpand(p, pars->ps, 0);
-	else
-		p->cmd = pars->ps[0];
-	free(temp);
-	temp = NULL;
+	// temp = ft_substr(pars->ps[0], 1, ft_strlen(pars->ps[0]) - 1);
+	// if (!temp)
+	// 	return (1);
+	// if (pars->ps[0][0] == '$' && valid_env(p, temp))
+	// 	p->cmd = xpand(p, pars->ps, 0);
+	// else
+	p->cmd = pars->ps[0];
+	//free(temp);
+	//temp = NULL;
 	if (is_buildin(p->cmd))
 	{
 		p->status = do_this(p, pars);
