@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/19 13:33:59 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:30:13 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	multi_q(char *token)
 	return (c);
 }
 
-char	*rm_q(char *token)//maybe needs to return ft_strdup(token) in line 66?
+char	*rm_q(char *token)
 {
 	char	*new;
 	int		q;
@@ -91,7 +91,9 @@ char	*xpand(t_pipex *p, char **token, int x)
 	temp2 = NULL;
 	temp = rm_out_q(token[x]);
 	temp1 = ft_substr(temp, 1, ft_strlen(temp) - 1);
-	if (!check_s_q(token[x]) && temp[0] == '$' && temp[1] != '$'
+	if (!check_s_q(token[x]) && ft_strcmp_bool(token[x], "$?"))
+		return (free(temp), free(temp1), temp = NULL, temp1 = NULL, ft_itoa_long(p->status));
+	else if (!check_s_q(token[x]) && temp[0] == '$' && temp[1] != '$'
 		&& temp[1] != '\0' && !valid_env(p, temp1))
 		return (free(temp), free(temp1), temp = NULL, temp1 = NULL, NULL);
 	else if (!check_s_q(token[x]) && valid_env(p, temp1))

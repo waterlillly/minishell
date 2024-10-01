@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:42:56 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/30 21:44:50 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/01 15:25:58 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,24 +92,12 @@ bool	valid_cmd(char **str, t_pipex *p)
 
 char	*loop_cmd_check(t_pipex *p, t_minishell_p *pars, int x)
 {
-	// char	**s;
 	char	*temp;
 
-	// s = NULL;
 	temp = NULL;
 	if (!s_out_q(pars->ps[x]) && !only_dollars(pars->ps[x])
 		&& !ft_strcmp_bool(pars->ps[x], "$?"))
-	{
-		// s = echo_split(rm_q(pars->ps[x]), '$');
-		// if (!s)
 		temp = xpand(p, pars->ps, x);
-		// else
-		// {
-		// 	temp = split_and_xpand(p, s);
-		// 	if (!temp)
-		// 		return (ft_free_double(s), NULL);
-		// }
-	}
 	else
 		temp = ft_strdup(pars->ps[x]);
 	return (temp);

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/30 22:35:25 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:31:57 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,9 +246,9 @@ int		cd(t_pipex *p, char **token);
 char	*split_and_xpand(t_pipex *p, char **s);
 int		dollar_count(char *s);
 bool	even_q(char *s);
-int		do_echo(t_pipex *p, char **token, int x);
+int		do_echo(char **token, int x);
 bool	check_n(char *token);
-int		echo(t_pipex *p, char **token);
+int		echo(char **token);
 
 /*ECHO_SPLIT*/
 int		count_dlr_strs(char *s, char c);

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/30 14:05:12 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:32:27 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	do_heredoc(t_pipex *p, t_minishell_p *pars)
 		return (1);
 	while (new[++x])
 	{
-		do_echo(p, new, x);
+		do_echo(new, x);
 		if (new[x + 1] != NULL)
 			ft_putstr_fd("\n", 1);
 	}

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:09:17 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/30 14:09:33 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:32:06 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	do_this(t_pipex *p, t_minishell_p *pars)
 	else if (ft_strcmp_bool(pars->ps[0], "cd"))
 		p->status = cd(p, pars->ps);
 	else if (ft_strcmp_bool(pars->ps[0], "echo"))
-		p->status = echo(p, pars->ps);
+		p->status = echo(pars->ps);
 	else if (ft_strcmp_bool(pars->ps[0], "pwd"))
 		ft_putendl_fd(p->pwd, 1);
 	return (p->status);

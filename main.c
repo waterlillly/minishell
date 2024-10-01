@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/30 14:08:48 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:38:18 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 				if (kill(p->pid[c], 0) == 0)
 				{
 					if (kill(p->pid[c], SIGCHLD) != 0)
-						return (perror("kill"), (int)p->status);
-					return (1);
+						return (perror("kill"), 1);
+					return (0);
 				}
 				return (0);
 			}
@@ -86,7 +86,7 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 			p->status = WEXITSTATUS(p->status);
 		i++;
 	}
-	return ((int)p->status);
+	return (0);
 }
 
 bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
