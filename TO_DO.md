@@ -146,3 +146,7 @@ input: 	/home/lbaumeis/CCore/projects/minishell> cd ..
 rewrite update_free_arr and learn loop_cmd_check
 
 **simplify (file xport.c) create_add_export -> too many temps**
+
+in export the name of the variable cannot contain qoutes, $ or start with a number
+
+several empty sq or dq width quotes crashes

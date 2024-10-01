@@ -6,7 +6,7 @@
 /*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:25:32 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/30 19:55:13 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/10/01 19:53:56 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ void	get_hd(t_raw_in *in)
 		return (exit_shell(NULL, NULL, in, "ALLOC FAILED"));
 	if (in->n_hd)
 	{
+		sig_init(NULL, 1);
 		while (in->n_chd < in->n_hd)
 		{
 			in->line = readline("> ");
-			if (!in->line)
+			if (g_signal != 0 || !in->line)
 			{
 				free_raw(in);
 				in->exit = 2;

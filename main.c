@@ -6,7 +6,7 @@
 /*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/30 19:36:11 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/10/01 20:07:17 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 		}
 		else
 		{
+			set_mode_s(p, 2);
 			p->pid[c] = fork();
 			if (p->pid[c] == -1)
 				return (perror("fork"), 1);
@@ -75,6 +76,9 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 				}
 				return (0);
 			}
+			remove_q(pars->str, pars->str_len);
+			if (!strcmp("./minishell", pars->str[0]))
+				set_mode_s(p, 4);
 		}
 		c++;
 		pars = pars->next;
@@ -94,6 +98,8 @@ bool run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	int	c;
 
 	c = 0;
+	g_signal = 0;
+	set_mode_s(p, 1);
 	refresh_init(p, input, pars);
 	if (!*pars && input->exit == 0)
 		return (true);
@@ -122,9 +128,8 @@ int	main(int ac, char **av, char **envp)
 		return (perror("invalid input"), 1);
 	ft_bzero(&p, sizeof(t_pipex));
 	ft_bzero(&input, sizeof(t_raw_in));
+	sig_init(&p, 0);
 	pars = NULL;
-	signal(SIGINT, &sig_int);
-	signal(SIGQUIT, &sig_quit);
 	if (first_init(&p, envp) != 0)
 	{
 		exit_shell(&p, pars, &input, NULL);

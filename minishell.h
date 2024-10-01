@@ -6,7 +6,7 @@
 /*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/30 19:31:52 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/10/01 19:58:36 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include <sys/types.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/ioctl.h>
 
 # define BUFF_SIZE 8
 # define MAX_FD 1024 + 1
@@ -53,10 +54,9 @@ typedef enum e_token
 typedef enum e_mode
 {
 	INTER = 1,
-	NON_INTER,
 	CHILD,
 	HD,
-	DFLT
+	LEVEL
 }	t_mode;
 
 typedef struct s_raw_in
@@ -152,7 +152,12 @@ int		execute(t_pipex *p, int c, t_minishell_p *pars);
 
 /*START*/
 void	sig_int(int	num);
+void	sig_int_hd(int num);
+void	sig_int_child(int num);
+void	sig_quit_child(int num);
 void	sig_quit(int num);
+void	sig_init(t_pipex *p, int hd);
+void	set_mode_s(t_pipex *p, int c);
 void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *input);
 
 /*REDIR*/
