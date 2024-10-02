@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:54:22 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/01 17:43:43 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/02 16:25:18 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int	q_split(char *s, int q, int pa)
 		{
 			while (s[pa] && s[pa] != q)
 				pa++;
+			pa++;
 		}
 	}
 	else
@@ -174,65 +175,44 @@ char	**xpd_2(char **xpd1)
 {
 	char	**sp1;
 	char	**sp2;
+	char	**sp3;
 	int		x;
-	char	**d1;
-	char	**d2;
-	char	**tmp;
 
 	if (!xpd1)
 		return (NULL);
 	sp1 = NULL;
 	sp2 = NULL;
-	d1 = NULL;
-	d2 = NULL;
+	sp3 = NULL;
 	x = 0;
 	while (xpd1[x])
 	{
-		if (s_out_q(xpd1[x]) == false)
-		{
+		if (!s_out_q(xpd1[x]))
 			sp1 = xpd_1_split(xpd1[x], ' ');
-			sp2 = arrjoin(sp2, sp1);
-		}
 		else
 		{
-			tmp = NULL;
-			tmp = ft_calloc((ft_arrlen(sp2) + 2), sizeof(char *));
-			if (!tmp)
+			sp1 = ft_calloc(2, sizeof(char *));
+			if (!sp1)
 				return (NULL);
-			while (ft_arrlen(sp2) > 0 && *sp2)
-			{
-				*tmp = ft_strdup(*sp2);
-				tmp++;
-				sp2++;
-			}
-			*tmp = ft_strdup(xpd1[x]);
-			sp2 = ft_arrdup(tmp);
+			*sp1 = ft_strdup(xpd1[x]);
 		}
+		sp2 = arrjoin(sp2, sp1);
 		x++;
 	}
 	x = 0;
 	while (sp2[x])
 	{
-		if (s_out_q(sp2[x]) == false)
-		{
-			d1 = xpd_2_split(sp2[x], '$');
-			d2 = arrjoin(d2, d1);
-			if (!sp2[x + 1])
-				return (d2);
-		}
+		if (!s_out_q(sp2[x]) && !d_out_q(sp2[x]))
+			sp1 = xpd_2_split(sp2[x], '$');
 		else
 		{
-			tmp = NULL;
-			tmp = ft_calloc((ft_arrlen(d2) + 2), sizeof(char *));
-			while (ft_arrlen(d2) > 0 && *d2)
-			{
-				*tmp = ft_strdup(*d2);
-				tmp++;
-				sp2++;
-			}
-			*tmp = ft_strdup(sp2[x]);
-			sp2 = ft_arrdup(tmp);
+			sp1 = ft_calloc(2, sizeof(char *));
+			if (!sp1)
+				return (NULL);
+			*sp1 = ft_strdup(sp2[x]);
 		}
+		sp3 = arrjoin(sp3, sp1);
+		if (!sp2[x + 1])
+			return (sp3);
 		x++;
 	}
 	return (sp2);
@@ -288,37 +268,36 @@ char	**xpd_1(t_minishell_p *pars, int i)
 	int		x;
 	char	**dq1;
 	char	**dq2;
-	char	**tmp;
 
 	if (!pars)
 		return (NULL);
 	dq1 = NULL;
 	dq2 = NULL;
 	s_q = NULL;
-	s_q = xpd_1_split(pars->str[i], '\'');
+	if (!d_out_q(pars->str[i]))
+		s_q = xpd_1_split(pars->str[i], '\'');
+	else
+	{
+		s_q = ft_calloc(2, sizeof(char *));
+		if (!s_q)
+			return (NULL);
+		*s_q = ft_strdup(pars->str[i]);
+	}
 	if (!s_q)
 		return (NULL);
 	x = 0;
 	while (s_q[x])
 	{
-		if (s_out_q(s_q[x]) == false)
-		{
+		if (!s_out_q(s_q[x]))
 			dq1 = xpd_1_split(s_q[x], '\"');
-			dq2 = arrjoin(dq2, dq1);
-		}
 		else
 		{
-			tmp = NULL;
-			tmp = ft_calloc((ft_arrlen(dq2) + 2), sizeof(char *));
-			while (ft_arrlen(dq2) > 0 && *dq2)
-			{
-				*tmp = ft_strdup(*dq2);
-				tmp++;
-				dq2++;
-			}
-			*tmp = ft_strdup(s_q[x]);
-			dq2 = ft_arrdup(tmp);
+			dq1 = ft_calloc(2, sizeof(char *));
+			if (!dq1)
+				return (NULL);
+			*dq1 = ft_strdup(s_q[x]);
 		}
+		dq2 = arrjoin(dq2, dq1);
 		x++;
 	}
 	return (dq2);
@@ -344,14 +323,11 @@ void	xpd(t_pipex *p, t_minishell_p *pars)
 		while (pars->str[i])
 		{
 			tmp = xpd_2(xpd_1(pars, i));
-			if (ft_arrlen(tmp) > 0)
+			j = 0;
+			while (tmp[j])
 			{
-				j = 0;
-				while (tmp[j])
-				{
-					pars->ps[i] = ft_strjoin_free_both(pars->ps[i], xpand(p, tmp, j));
-					j++;
-				}
+				pars->ps[i] = ft_strjoin_free_one(pars->ps[i], xpand(p, tmp, j));
+				j++;
 			}
 			ft_free_double(tmp);
 			i++;

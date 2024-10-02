@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/01 17:45:14 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/02 15:51:22 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,11 @@ int	dollar_count(char *s)
 	y = 0;
 	if (!s)
 		return (0);
-	while (s[x++])
+	while (s[x])
 	{
 		if (s[x] == '$')
 			y++;
+		x++;
 	}
 	return (y);
 }
@@ -75,7 +76,7 @@ int	do_echo(char **token, int x)
 	if (!token || !token[x]
 		|| (x == 1 && ft_strcmp_bool(token[0], "echo") && check_n(token[x])))
 		return (1);
-	if ((!check_s_q(token[x]) && only_dollars(rm_q(token[x])))
+	else if ((!check_s_q(token[x]) && only_dollars(rm_q(token[x])))
 		|| only_dollars(token[x]))
 	{
 		if (even_q(token[x]) && dollar_count(token[x]) == 1)
@@ -88,23 +89,32 @@ int	do_echo(char **token, int x)
 
 bool	check_n(char *token)
 {
-	int	x;
+	int		x;
+	bool	n;
 
 	x = 0;
+	n = true;
 	if (!token)
 		return (false);
-	while (token[x])
+	while (n)
 	{
-		if (x == 0 && token[x] && token[x] == '-')
+		if (token[x] && x == 0 && token[x] == '-')
 			x++;
-		else if (x >= 1 && token[x] && token[x] == 'n')
+		else if (token[x] && x >= 1 && token[x] == 'n')
 			x++;
-		else if (x >= 2 && token[x] == '\0')
-			return (true);
+		else if (x >= 2)
+		{
+			if (token[x] && token[x] == 'n')
+				x++;
+			if (!token[x])
+				break ;
+			else
+				n = false;
+		}
 		else
-			return (false);
+			n = false;
 	}
-	return (false);
+	return (n);
 }
 
 int	echo(char **token)

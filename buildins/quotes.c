@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:24:45 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/13 14:37:59 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/02 13:33:27 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ bool	s_out_q(char *tok)
 
 bool	d_out_q(char *tok)
 {
-	if (tok[0] == '\"' && tok[ft_strlen(tok)] == '\"')
+	if (tok[0] == '\"' && tok[ft_strlen(tok) - 1] == '\"')
 		return (true);
 	else
 		return (false);
