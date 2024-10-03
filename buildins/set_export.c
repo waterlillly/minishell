@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/03 15:01:52 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:39:16 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	update(t_pipex *p, char *set, char *tok)
 	temp = ft_strjoin(set, "=");
 	if (!temp)
 		return (1);
-	free(p->menv[x]);
+	//free(p->menv[x]);
 	p->menv[x] = NULL;
 	p->menv[x] = ft_strjoin_free_one(temp, tok);
 	if (!p->menv[x])
