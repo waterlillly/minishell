@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/19 16:38:58 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/02 15:51:22 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,11 @@ int	dollar_count(char *s)
 	y = 0;
 	if (!s)
 		return (0);
-	while (s[x++])
+	while (s[x])
 	{
 		if (s[x] == '$')
 			y++;
+		x++;
 	}
 	return (y);
 }
@@ -70,75 +71,66 @@ bool	even_q(char *s)
 	return (false);
 }
 
-int	do_echo(t_pipex *p, char **token, int x)
+int	do_echo(char **token, int x)
 {
-	char	*str;
-	char	**s;
-	
-	str = NULL;
-	s = NULL;
 	if (!token || !token[x]
 		|| (x == 1 && ft_strcmp_bool(token[0], "echo") && check_n(token[x])))
 		return (1);
-	if (ft_strcmp_bool(token[1], "$?"))
-		return (ft_putnbr_fd((int)p->status, 1), 0);
-	if ((!check_s_q(token[x]) && only_dollars(rm_q(token[x]))) || only_dollars(token[x]))
+	else if ((!check_s_q(token[x]) && only_dollars(rm_q(token[x])))
+		|| only_dollars(token[x]))
 	{
 		if (even_q(token[x]) && dollar_count(token[x]) == 1)
 			return (0);
 		else
-			str = rm_q(token[x]);
+			return (ft_putstr_fd(rm_q(token[x]), 1), 0);
 	}
-	else if (!s_out_q(token[x]))
-		s = echo_split(token[x], '$');
-	if (!str)
-	{
-		if (s)
-			str = split_and_xpand(p, s);
-		else
-			str = xpand(p, token, x);
-		if (!str)
-			return (ft_free_double(s), 1);
-	}
-	ft_putstr_fd(str, 1);
-	return (ft_free_double(s), free(str), str = NULL, 0);
+	return (ft_putstr_fd(token[x], 1), 0);
 }
 
 bool	check_n(char *token)
 {
-	int	x;
+	int		x;
+	bool	n;
 
 	x = 0;
+	n = true;
 	if (!token)
 		return (false);
-	while (token[x])
+	while (n)
 	{
-		if (x == 0 && token[x] && token[x] == '-')
+		if (token[x] && x == 0 && token[x] == '-')
 			x++;
-		else if (x >= 1 && token[x] && token[x] == 'n')
+		else if (token[x] && x >= 1 && token[x] == 'n')
 			x++;
-		else if (x >= 2 && token[x] == '\0')
-			return (true);
+		else if (x >= 2)
+		{
+			if (token[x] && token[x] == 'n')
+				x++;
+			if (!token[x])
+				break ;
+			else
+				n = false;
+		}
 		else
-			return (false);
+			n = false;
 	}
-	return (false);
+	return (n);
 }
 
-int	echo(t_pipex *p, char **token)
+int	echo(char **token)
 {
 	int	x;
 	int	y;
 
 	y = 0;
-	if (!p || !token)
+	if (!token || !token[0])
 		return (1);
 	if (!token[1])
 		return (ft_putstr_fd("\n", 1), 0);
 	x = 1;
 	while (token[x])
 	{
-		y = do_echo(p, token, x);
+		y = do_echo(token, x);
 		if (y != 1 && token[x + 1])
 			ft_putstr_fd(" ", 1);
 		x++;

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:09:17 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/23 12:50:20 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:32:06 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,23 @@ bool	is_buildin(char *s)
 
 int	do_this(t_pipex *p, t_minishell_p *pars)
 {
-	if (!p || !pars || !pars->str)
+	if (!p || !pars || !pars->ps)
 		return (1);
-	if (ft_strcmp_bool(pars->str[0], "unset"))
-		p->status = unset(p, pars->str);
-	else if (ft_strcmp_bool(pars->str[0], "env") && p->menv)
+	if (ft_strcmp_bool(pars->ps[0], "unset"))
+		p->status = unset(p, pars->ps);
+	else if (ft_strcmp_bool(pars->ps[0], "env") && p->menv)
 		ft_print_array(p->menv);
-	else if (ft_strcmp_bool(pars->str[0], "export")
-		&& pars->str[1] == NULL && p->xport)
+	else if (ft_strcmp_bool(pars->ps[0], "export")
+		&& pars->ps[1] == NULL && p->xport)
 		ft_print_array(p->xport);
-	else if (ft_strcmp_bool(pars->str[0], "export")
-		&& pars->str[1] != NULL && p->xport)
-		p->status = set_export(p, pars->str);
-	else if (ft_strcmp_bool(pars->str[0], "cd"))
-		p->status = cd(p, pars->str);
-	else if (ft_strcmp_bool(pars->str[0], "echo"))
-		p->status = echo(p, pars->str);
-	else if (ft_strcmp_bool(pars->str[0], "pwd"))
+	else if (ft_strcmp_bool(pars->ps[0], "export")
+		&& pars->ps[1] != NULL && p->xport)
+		p->status = set_export(p, pars->ps);
+	else if (ft_strcmp_bool(pars->ps[0], "cd"))
+		p->status = cd(p, pars->ps);
+	else if (ft_strcmp_bool(pars->ps[0], "echo"))
+		p->status = echo(pars->ps);
+	else if (ft_strcmp_bool(pars->ps[0], "pwd"))
 		ft_putendl_fd(p->pwd, 1);
 	return (p->status);
 }

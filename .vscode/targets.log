@@ -8,7 +8,7 @@ make: *** No rule to make target 'main.o', needed by 'minishell'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Sep 23 12:26:16 2024
+# Make data base, printed on Thu Oct  3 11:34:47 2024
 
 # Variables
 
@@ -55,9 +55,9 @@ OLDPWD = /home/lbaumeis/CCore/projects/minishell
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/lbaumeis/.config/Code/CachedData/b1c0a14de1414fcdaa400695b4db1c0799bc3124
+VSCODE_CODE_CACHE_PATH = /home/lbaumeis/.config/Code/CachedData/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session8
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session9
 # environment
 LANG = C
 # environment
@@ -67,17 +67,15 @@ XAUTHORITY = /home/lbaumeis/.Xauthority
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.90
+GNOME_TERMINAL_SERVICE = :1.91
 # makefile
 MAKEFLAGS = pqrR -j16 --jobserver-auth=3,4
 # environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/101355/bus,guid=2af818f0122bb2ed9b0a5e8666f141d3
+DBUS_STARTER_ADDRESS = unix:path=/run/user/101355/bus,guid=ccb6d16e7493911a7b38a11766fe6289
 # makefile
 CURDIR := /home/lbaumeis/CCore/projects/minishell
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
-# environment
-VSCODE_L10N_BUNDLE_LOCATION = 
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -97,15 +95,15 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 323183
+VSCODE_PID = 273318
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_101355_d9xq2A
+KRB5CCNAME = FILE:/tmp/krb5cc_101355_ErXjFi
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/c3r10p3.42vienna.com:@/tmp/.ICE-unix/322350,unix/c3r10p3.42vienna.com:/tmp/.ICE-unix/322350
+SESSION_MANAGER = local/c3r10p3.42vienna.com:@/tmp/.ICE-unix/272484,unix/c3r10p3.42vienna.com:/tmp/.ICE-unix/272484
 # automatic
 *F = $(notdir $*)
 # makefile (from 'Makefile', line 34)
@@ -113,11 +111,11 @@ NUMTH = $(shell nproc)
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101355/bus,guid=2af818f0122bb2ed9b0a5e8666f141d3
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101355/bus,guid=ccb6d16e7493911a7b38a11766fe6289
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
-VSCODE_NLS_CONFIG = {"userLocale":"en-us","osLocale":"en","resolvedLanguage":"en","defaultMessagesFile":"/usr/share/code/resources/app/out/nls.messages.json","locale":"en","availableLanguages":{}}
+VSCODE_NLS_CONFIG = {"userLocale":"en-us","osLocale":"en","resolvedLanguage":"en","defaultMessagesFile":"/usr/share/code/resources/app/out/nls.messages.json","locale":"en-us","availableLanguages":{}}
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
@@ -131,7 +129,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/88d05f0f_2524_4855_8d10_48f6e9ba55a8
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/056370e4_dfa9_4280_a35c_6ff2ed4c9e87
 # environment
 MAKELEVEL := 0
 # default
@@ -173,7 +171,7 @@ LOGNAME = lbaumeis
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 322350
+SYSTEMD_EXEC_PID = 272484
 # environment
 DISPLAY = :0
 # environment
@@ -207,7 +205,7 @@ QT_IM_MODULE = ibus
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/101355/vscode-5929a10d-1.92-main.sock
+VSCODE_IPC_HOOK = /run/user/101355/vscode-5929a10d-1.93-main.sock
 # environment
 TERM = xterm-256color
 # environment
@@ -237,7 +235,7 @@ XDG_MENU_PREFIX = gnome-
 # environment
 GDMSESSION = ubuntu
 # variable set hash-table stats:
-# Load=112/1024=11%, Rehash=0, Collisions=15/167=9%
+# Load=111/1024=11%, Rehash=0, Collisions=14/166=8%
 
 # Pattern-specific Variable Values
 
@@ -300,7 +298,6 @@ minishell: main.o more_cmds.o exit.o execute.o start.o signals.o pre_exec.o redi
 # Not a target:
 buildins/xport.o:
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -331,7 +328,7 @@ signals.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2024-09-18 14:48:08.45070112
+#  Last modified 2024-09-23 22:36:15.218199741
 #  File has been updated.
 #  Successfully updated.
 
@@ -361,6 +358,7 @@ clean:
 #  recipe to execute (from 'Makefile', line 47):
 	($(MAKE) -C libft clean)
 	rm -f $(OFILES)
+ 
 	rm -f out
 	rm -f hd
 	rm -f buildins.h.gch
@@ -382,7 +380,6 @@ re: fclean
 # Not a target:
 buildins/pwd.o:
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -561,7 +558,6 @@ buildins/echo.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
 
 # files hash-table stats:
 # Load=47/1024=5%, Rehash=0, Collisions=1/104=1%
@@ -577,6 +573,6 @@ buildins/echo.o:
 # strcache performance: lookups = 91 / hit rate = 24%
 # hash-table stats:
 # Load=69/8192=1%, Rehash=0, Collisions=1/91=1%
-# Finished Make data base on Mon Sep 23 12:26:16 2024
+# Finished Make data base on Thu Oct  3 11:34:47 2024
 
  

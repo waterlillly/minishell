@@ -54,7 +54,7 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 	{
 		if (check(p, pars) != 0)
 			return (0);
-		if (p->cmd_count == 1 && is_buildin(pars->str[0]) && !pars->redirect)
+		if (p->cmd_count == 1 && is_buildin(pars->ps[0]) && !pars->redirect)
 		{
 			p->status = do_this(p, pars);
 			return (0);
@@ -71,8 +71,8 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 				if (kill(p->pid[c], 0) == 0)
 				{
 					if (kill(p->pid[c], SIGCHLD) != 0)
-						return (perror("kill"), (int)p->status);
-					return (1);
+						return (perror("kill"), 1);
+					return (0);
 				}
 				return (0);
 			}
@@ -90,7 +90,7 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 			p->status = WEXITSTATUS(p->status);
 		i++;
 	}
-	return ((int)p->status);
+	return (0);
 }
 
 bool run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
@@ -109,7 +109,7 @@ bool run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 		return (false);
 	if (check_exit(p, &c, pars) == false)
 		return (false);
-	if ((*pars) && !ft_strcmp_bool((*pars)->str[0], "exit"))
+	if ((*pars) && !ft_strcmp_bool((*pars)->ps[0], "exit"))
 	{
 		if (do_stuff(p, c, *pars) != 0)
 			return (false);

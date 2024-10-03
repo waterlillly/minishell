@@ -25,8 +25,6 @@ char	*is_exec(t_pipex *p)
 		if (!p->executable)
 			return (NULL);
 		p->part = ft_strjoin_free_one(p->executable, p->cmd);
-		// free(p->executable);
-		// p->executable = NULL;
 		if (!p->part)
 			return (NULL);
 		else if (access(p->part, X_OK) == 0)
@@ -48,7 +46,7 @@ int	do_heredoc(t_pipex *p, t_minishell_p *pars)
 
 	new = NULL;
 	x = -1;
-	if (!p || !pars || !pars->redirect || !pars->redirect->str || !pars->str)
+	if (!p || !pars || !pars->redirect || !pars->redirect->str || !pars->ps)
 		return (0);
 	if (check_s_q(pars->redirect->input) || check_d_q(pars->redirect->input))
 		return (ft_putstr_fd(rm_out_q(pars->redirect->str), 1), 0);
@@ -57,7 +55,7 @@ int	do_heredoc(t_pipex *p, t_minishell_p *pars)
 		return (1);
 	while (new[++x])
 	{
-		do_echo(p, new, x);
+		do_echo(new, x);
 		if (new[x + 1] != NULL)
 			ft_putstr_fd("\n", 1);
 	}
@@ -71,22 +69,22 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 	char	*temp;
 
 	temp = NULL;
-	if (!p || !pars || !pars->str)
+	if (!p || !pars || !pars->ps)
 		return (p->status = 1);
 	if (pars->redirect && pars->redirect->token == HEREDOC)
 	{
 		p->status = do_heredoc(p, pars);
 		return (1);
 	}
-	temp = ft_substr(pars->str[0], 1, ft_strlen(pars->str[0]) - 1);
-	if (!temp)
-		return (1);
-	if (pars->str[0][0] == '$' && valid_env(p, temp))
-		p->cmd = xpand(p, pars->str, 0);
-	else
-		p->cmd = pars->str[0];
-	free(temp);
-	temp = NULL;
+	// temp = ft_substr(pars->ps[0], 1, ft_strlen(pars->ps[0]) - 1);
+	// if (!temp)
+	// 	return (1);
+	// if (pars->ps[0][0] == '$' && valid_env(p, temp))
+	// 	p->cmd = xpand(p, pars->ps, 0);
+	// else
+	p->cmd = pars->ps[0];
+	//free(temp);
+	//temp = NULL;
 	if (is_buildin(p->cmd))
 	{
 		p->status = do_this(p, pars);

@@ -88,6 +88,7 @@ typedef struct s_minishell_l
 typedef struct s_minishell_p
 {
 	char					**str;
+	char					**ps;
 	int						str_len;//
 	char					*infile;//
 	char					*outfile;//
@@ -140,11 +141,11 @@ bool	is_buildin(char *s);
 int		do_this(t_pipex *p, t_minishell_p *pars);
 
 /*PRE_EXEC*/
-int		check_access(t_pipex *p, char **cmd, t_minishell_p *pars);
+int		check_access(t_pipex *p, t_minishell_p *pars);
 int		check(t_pipex *p, t_minishell_p *pars);
 bool	valid_cmd(char **str, t_pipex *p);
-char	*loop_cmd_check(t_pipex *p, t_minishell_p *pars, int x);
-char	**check_cmd(t_pipex *p, t_minishell_p *pars);
+//char	*loop_cmd_check(t_pipex *p, t_minishell_p *pars, int x);
+char	**check_cmd(t_minishell_p *pars);
 
 /*EXECUTE*/
 int		redirect(t_pipex *p, int c, t_minishell_p *pars);
@@ -159,6 +160,7 @@ void	sig_quit(int num);
 void	sig_init(t_pipex *p, int hd);
 void	set_mode_s(t_pipex *p, int c);
 void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *input);
+void	print_ps(t_minishell_p *pars);
 
 /*REDIR*/
 void	check_filein(t_pipex *p, t_minishell_p *pars);
@@ -226,6 +228,7 @@ int		check_d_q(char *token);
 bool	check_s_q(char *token);
 bool	s_out_q(char *tok);
 bool	d_out_q(char *tok);
+bool	only_quotes(char *s);
 
 /*PWD*/
 void	reset_old_pwd(t_pipex *p, char *path);
@@ -262,14 +265,27 @@ int		cd(t_pipex *p, char **token);
 char	*split_and_xpand(t_pipex *p, char **s);
 int		dollar_count(char *s);
 bool	even_q(char *s);
-int		do_echo(t_pipex *p, char **token, int x);
+int		do_echo(char **token, int x);
 bool	check_n(char *token);
-int		echo(t_pipex *p, char **token);
+int		echo(char **token);
 
 /*ECHO_SPLIT*/
-int		countstrs(char *s, char c);
-int		do_split(char *s, char c, int pos_a);
-char	**echo_split(char *s, int c);
+int		count_dlr_strs(char *s, char c);
+int		count_q_strs(char *str, int q);
+int		dlr_split(char *s, int d, int pa);
+int		q_split(char *s, int q, int pa);
+char	**xpd_1_split(char *str, int q);
+char	**xpd_2_split(char *str, int q);
+char	**xpd_2(char **xpd1);
+char	**arrjoin(char **old, char **new);
+char	**ft_arrdup(char **s);
+char	**rewrite(char **s, int c);
+char	**reformat(char **s);
+char	**xpd_1(t_minishell_p *pars, int i);
+void	xpd(t_pipex *p, t_minishell_p *pars);
+// int		countstrs(char *s, char c);
+// int		do_split(char *s, char c, int pos_a);
+// char	**echo_split(char *s, int c);
 
 /*EXPAND*/
 bool	only_dollars(char *tok);
