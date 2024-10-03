@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:54:22 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/02 16:25:18 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/03 12:55:41 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,6 +262,58 @@ char	**ft_arrdup(char **s)
 	return (arr);
 }
 
+char	**rewrite(char **s, int c)
+{
+	int		i;
+	int		j;
+	char	**arr;
+	
+	i = 0;
+	j = 0;
+	arr = NULL;
+	arr = ft_calloc(c + 1, sizeof(char *));
+	if (!arr)
+		return (NULL);
+	while (s[i])
+	{
+		if (s[i] && s[i + 1] && s[i + 2] && ((ft_strcmp_bool(s[i], "\'") && ft_strcmp_bool(s[i + 2], "\'"))
+				|| (ft_strcmp_bool(s[i], "\"") && ft_strcmp_bool(s[i + 2], "\""))))
+		{
+			arr[j] = ft_strjoin(ft_strjoin(s[i], s[i + 1]), s[i + 2]);
+			j++;
+			i += 3;
+		}
+		else
+		{
+			arr[j] = ft_strdup(s[i]);
+			j++;
+			i++;
+		}
+	}
+	return (ft_free_double(s), arr);
+}
+
+char	**reformat(char **s)
+{
+	int		i;
+	int		c;
+
+	i = 0;
+	c = ft_arrlen(s);
+	while (s[i])
+	{
+		if (s[i] && s[i + 1] && s[i + 2] && ((ft_strcmp_bool(s[i], "\'") && ft_strcmp_bool(s[i + 2], "\'"))
+				|| (ft_strcmp_bool(s[i], "\"") && ft_strcmp_bool(s[i + 2], "\""))))
+		{
+			c -= 2;
+			i += 3;
+		}
+		else
+			i++;
+	}
+	return (rewrite(s, c));
+}
+
 char	**xpd_1(t_minishell_p *pars, int i)
 {
 	char	**s_q;
@@ -286,6 +338,7 @@ char	**xpd_1(t_minishell_p *pars, int i)
 	if (!s_q)
 		return (NULL);
 	x = 0;
+	s_q = reformat(s_q);
 	while (s_q[x])
 	{
 		if (!s_out_q(s_q[x]))
@@ -300,6 +353,7 @@ char	**xpd_1(t_minishell_p *pars, int i)
 		dq2 = arrjoin(dq2, dq1);
 		x++;
 	}
+	dq2 = reformat(dq2);
 	return (dq2);
 }
 

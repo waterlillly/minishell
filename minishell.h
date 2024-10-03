@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/02 16:19:51 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/03 12:37:37 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,6 +260,8 @@ char	**xpd_2_split(char *str, int q);
 char	**xpd_2(char **xpd1);
 char	**arrjoin(char **old, char **new);
 char	**ft_arrdup(char **s);
+char	**rewrite(char **s, int c);
+char	**reformat(char **s);
 char	**xpd_1(t_minishell_p *pars, int i);
 void	xpd(t_pipex *p, t_minishell_p *pars);
 // int		countstrs(char *s, char c);

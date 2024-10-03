@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/02 13:44:13 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/03 12:55:09 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	*xpand(t_pipex *p, char **token, int x)
 		temp2 = get_env(p, ft_substr(temp, 1, ft_strlen(temp) - 1));
 		return (temp2);
 	}
-	else if (s_out_q(token[x]))
+	else if (s_out_q(token[x]) || d_out_q(token[x]))
 		return (temp);
 	else
 		return (rm_q(temp));
