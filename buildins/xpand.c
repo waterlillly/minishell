@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/03 12:55:09 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/03 14:47:38 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*rm_q(char *token)
 	int		y;
 
 	new = NULL;
-	x = 1;
+	x = 0;
 	y = 0;
 	if (check_d_q(token) <= 0 && !check_s_q(token))
 		return (token);

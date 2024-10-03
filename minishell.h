@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/03 13:34:13 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:00:09 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ int		find_str_part(char **str, char *tok);
 char	*strcpy_until(char *v_part);
 int		ft_strcmp_until(const char *s1, const char *s2);
 char	**update_free_arr(char **old, char **new);
+int		ft_strsrc(char *s, int c);
 
 /*QUOTES*/
 char	*add_quotes(char *token);
