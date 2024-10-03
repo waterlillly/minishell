@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/23 21:50:02 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:01:52 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,12 @@ int	update_export(t_pipex *p, char *tok, char *token)
 	if (x == -1)
 		return (free(temp), temp = NULL, 1);
 	temp1 = ft_strjoin_free_both(ft_strdup("="),
-		add_quotes(token));
+		add_quotes(ft_substr(token, ft_strsrc(token, '=') + 1,
+		ft_strlen(token) - (ft_strsrc(token, '=') + 1))));
 	if (!temp1)
 		return (free(temp), temp = NULL, 1);
+	free(p->xport[x]);
+	p->xport[x] = NULL;
 	p->xport[x] = ft_strjoin_free_both(temp, temp1);
 	if (!p->xport[x])
 		return (1);
@@ -50,18 +53,21 @@ int	set_export(t_pipex *p, char **token)
 		return (1);
 	if (valid_env(p, temp))
 	{
-		if (ft_strchr(rm_q(token[1]), '='))
+		if (ft_strchr(token[1], '='))
 		{
-			if (find_str_part(p->menv, temp) < 0)
-				return (free(temp), temp = NULL, 1);
-			p->menv[find_str_part(p->menv, temp)] = rm_q(token[1]);
-			if (!p->menv[x])
+			x = find_str_part(p->menv, temp);
+			if (x < 0)
 				return (free(temp), temp = NULL, x);
+			free(p->menv[x]);
+			p->menv[x] = NULL;
+			p->menv[x] = ft_strdup(token[1]);
+			if (!p->menv[x])
+				return (free(temp), temp = NULL, 1);
 		}
-		x = update_export(p, temp, rm_q(token[1]));
+		x = update_export(p, temp, token[1]);
 	}
 	else
-		x = add_to_export(p, rm_q(token[1]));
+		x = add_to_export(p, token[1]);
 	return (free(temp), temp = NULL, x);
 }
 
@@ -80,6 +86,8 @@ int	update(t_pipex *p, char *set, char *tok)
 	temp = ft_strjoin(set, "=");
 	if (!temp)
 		return (1);
+	free(p->menv[x]);
+	p->menv[x] = NULL;
 	p->menv[x] = ft_strjoin_free_one(temp, tok);
 	if (!p->menv[x])
 		return (1);

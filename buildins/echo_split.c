@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:54:22 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/03 13:35:46 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/03 14:44:52 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,8 @@ char	**xpd_2(char **xpd1)
 	x = 0;
 	while (xpd1[x])
 	{
-		if (!s_out_q(xpd1[x]))
+		//printf("xpd1[%d]: %s\n", x, xpd1[x]);
+		if (!s_out_q(xpd1[x]) && !d_out_q(xpd1[x]) && !ft_strchr(xpd1[x], '='))
 			sp1 = xpd_1_split(xpd1[x], ' ');
 		else
 		{
@@ -201,6 +202,7 @@ char	**xpd_2(char **xpd1)
 	x = 0;
 	while (sp2[x])
 	{
+		//printf("sp2[%d]: %s\n", x, sp2[x]);
 		if (!s_out_q(sp2[x]) && !d_out_q(sp2[x]))
 			sp1 = xpd_2_split(sp2[x], '$');
 		else
@@ -276,8 +278,9 @@ char	**rewrite(char **s, int c)
 		return (NULL);
 	while (s[i])
 	{
-		if (s[i] && s[i + 1] && s[i + 2] && ((ft_strcmp_bool(s[i], "\'") && ft_strcmp_bool(s[i + 2], "\'"))
-				|| (ft_strcmp_bool(s[i], "\"") && ft_strcmp_bool(s[i + 2], "\""))))
+		if (s[i] && s[i + 1] && s[i + 2] && ((ft_strcmp_bool(s[i], "\'")
+			&& ft_strcmp_bool(s[i + 2], "\'"))
+			|| (ft_strcmp_bool(s[i], "\"") && ft_strcmp_bool(s[i + 2], "\""))))
 		{
 			arr[j] = ft_strjoin(ft_strjoin(s[i], s[i + 1]), s[i + 2]);
 			j++;
@@ -290,11 +293,6 @@ char	**rewrite(char **s, int c)
 			i++;
 		}
 	}
-	// puts("\n----->s:");
-	// ft_print_array(s);
-	// puts("\n\n----->arr:");
-	// ft_print_array(arr);
-	// puts("\n");
 	return (ft_free_double(s), arr);
 }
 
@@ -307,8 +305,9 @@ char	**reformat(char **s)
 	c = ft_arrlen(s);
 	while (s[i])
 	{
-		if (s[i] && s[i + 1] && s[i + 2] && ((ft_strcmp_bool(s[i], "\'") && ft_strcmp_bool(s[i + 2], "\'"))
-				|| (ft_strcmp_bool(s[i], "\"") && ft_strcmp_bool(s[i + 2], "\""))))
+		if (s[i] && s[i + 1] && s[i + 2] && ((ft_strcmp_bool(s[i], "\'")
+			&& ft_strcmp_bool(s[i + 2], "\'"))
+			|| (ft_strcmp_bool(s[i], "\"") && ft_strcmp_bool(s[i + 2], "\""))))
 		{
 			c -= 2;
 			i += 3;
@@ -331,7 +330,8 @@ char	**xpd_1(t_minishell_p *pars, int i)
 	dq1 = NULL;
 	dq2 = NULL;
 	s_q = NULL;
-	if ((!only_quotes(pars->str[i]) && !d_out_q(pars->str[i]))
+	if ((!only_quotes(pars->str[i]) && !d_out_q(pars->str[i])
+		&& !ft_strchr(pars->str[i], '='))
 		|| (only_quotes(pars->str[i]) && pars->str[i][0] != '\"'))
 		s_q = xpd_1_split(pars->str[i], '\'');
 	else
@@ -345,12 +345,10 @@ char	**xpd_1(t_minishell_p *pars, int i)
 		return (NULL);
 	x = 0;
 	s_q = reformat(s_q);
-	// puts("\n*********");
-	// ft_print_array(s_q);
-	// puts("*********\n");
 	while (s_q[x])
 	{
-		if (!s_out_q(s_q[x]))
+		//printf("s_q[%d]: %s\n", x, s_q[x]);
+		if (!s_out_q(s_q[x]) && !ft_strchr(s_q[x], '='))
 			dq1 = xpd_1_split(s_q[x], '\"');
 		else
 		{
@@ -363,17 +361,14 @@ char	**xpd_1(t_minishell_p *pars, int i)
 		x++;
 	}
 	dq2 = reformat(dq2);
-	// puts("\n~~~~~~~~~~");
-	// ft_print_array(dq2);
-	// puts("~~~~~~~~~~\n");
 	return (dq2);
 }
 
 void	xpd(t_pipex *p, t_minishell_p *pars)
 {
-	int				i;
-	int				j;
-	char			**tmp;
+	int		i;
+	int		j;
+	char	**tmp;
 	
 
 	if (!pars || !pars->str)
@@ -393,6 +388,7 @@ void	xpd(t_pipex *p, t_minishell_p *pars)
 			while (tmp[j])
 			{
 				pars->ps[i] = ft_strjoin_free_one(pars->ps[i], xpand(p, tmp, j));
+				//puts(pars->ps[i]);
 				j++;
 			}
 			ft_free_double(tmp);

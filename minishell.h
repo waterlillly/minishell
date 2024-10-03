@@ -220,6 +220,7 @@ int		find_str_part(char **str, char *tok);
 char	*strcpy_until(char *v_part);
 int		ft_strcmp_until(const char *s1, const char *s2);
 char	**update_free_arr(char **old, char **new);
+int		ft_strsrc(char *s, int c);
 
 /*QUOTES*/
 char	*add_quotes(char *token);

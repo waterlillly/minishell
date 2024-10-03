@@ -112,7 +112,7 @@ int	add_to_env(t_pipex *p, char *add)
 		return (1);
 	while (p->menv[x])
 	{
-		arr[x] = p->menv[x];
+		arr[x] = ft_strdup(p->menv[x]);
 		if (!arr[x])
 			return (ft_free_double(arr), 1);
 		x++;
@@ -139,7 +139,7 @@ int	add_to_export(t_pipex *p, char *token)
 		return (1);
 	while (p->xport[x])
 	{
-		arr[x] = p->xport[x];
+		arr[x] = ft_strdup(p->xport[x]);
 		if (!arr[x])
 			return (ft_free_double(arr), 1);
 		x++;
