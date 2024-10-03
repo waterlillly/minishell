@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/03 12:37:37 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/03 13:34:13 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,7 @@ int		check_d_q(char *token);
 bool	check_s_q(char *token);
 bool	s_out_q(char *tok);
 bool	d_out_q(char *tok);
+bool	only_quotes(char *s);
 
 /*PWD*/
 void	reset_old_pwd(t_pipex *p, char *path);

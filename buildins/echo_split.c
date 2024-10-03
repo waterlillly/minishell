@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:54:22 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/03 12:55:41 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/03 13:35:46 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,6 +290,11 @@ char	**rewrite(char **s, int c)
 			i++;
 		}
 	}
+	puts("\n----->s:");
+	ft_print_array(s);
+	puts("\n\n----->arr:");
+	ft_print_array(arr);
+	puts("\n");
 	return (ft_free_double(s), arr);
 }
 
@@ -326,7 +331,8 @@ char	**xpd_1(t_minishell_p *pars, int i)
 	dq1 = NULL;
 	dq2 = NULL;
 	s_q = NULL;
-	if (!d_out_q(pars->str[i]))
+	if ((!only_quotes(pars->str[i]) && !d_out_q(pars->str[i]))
+		|| (only_quotes(pars->str[i]) && pars->str[i][0] != '\"'))
 		s_q = xpd_1_split(pars->str[i], '\'');
 	else
 	{
@@ -339,6 +345,9 @@ char	**xpd_1(t_minishell_p *pars, int i)
 		return (NULL);
 	x = 0;
 	s_q = reformat(s_q);
+	// puts("\n*********");
+	// ft_print_array(s_q);
+	// puts("*********\n");
 	while (s_q[x])
 	{
 		if (!s_out_q(s_q[x]))
@@ -354,6 +363,9 @@ char	**xpd_1(t_minishell_p *pars, int i)
 		x++;
 	}
 	dq2 = reformat(dq2);
+	// puts("\n~~~~~~~~~~");
+	// ft_print_array(dq2);
+	// puts("~~~~~~~~~~\n");
 	return (dq2);
 }
 
