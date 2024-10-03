@@ -290,11 +290,11 @@ char	**rewrite(char **s, int c)
 			i++;
 		}
 	}
-	puts("\n----->s:");
-	ft_print_array(s);
-	puts("\n\n----->arr:");
-	ft_print_array(arr);
-	puts("\n");
+	// puts("\n----->s:");
+	// ft_print_array(s);
+	// puts("\n\n----->arr:");
+	// ft_print_array(arr);
+	// puts("\n");
 	return (ft_free_double(s), arr);
 }
 

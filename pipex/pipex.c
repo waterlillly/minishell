@@ -69,6 +69,7 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 	char	*temp;
 
 	temp = NULL;
+	(void)temp;
 	if (!p || !pars || !pars->ps)
 		return (p->status = 1);
 	if (pars->redirect && pars->redirect->token == HEREDOC)
