@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehras <mehras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:37:12 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/11 22:51:10 by mehras           ###   ########.fr       */
+/*   Updated: 2024/09/30 19:54:08 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ char	*ft_strnstr_q(const char *big, const char *little, size_t len)
 void	free_raw(t_raw_in *in)
 {
 	if (in && in->del_s)
-		ft_free_double(in->del_s);//ft_free_2d(in->del_s);
+		ft_free_2d(in->del_s);//ft_free_2d(in->del_s);
 	if (in && in->del_str)
-		ft_free_double(in->del_str);//ft_free_2d(in->del_str);
+		ft_free_2d(in->del_str);//ft_free_2d(in->del_str);
 	if (in && in->input)
 	{
 		free(in->input);

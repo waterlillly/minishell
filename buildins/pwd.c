@@ -79,6 +79,7 @@ int	join_oldpwd(t_pipex *p, char **temp, char *oldpwd)
 	x = 0;
 	y = get_int(temp);
 	z = ft_arrlen(temp) - 1;
+	(void)z;
 	if (p && temp[x] && y > 0)
 		return (going_back(oldpwd, p, y, temp));
 	while (p && temp[x])

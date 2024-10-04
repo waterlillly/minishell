@@ -146,3 +146,45 @@ input: 	/home/lbaumeis/CCore/projects/minishell> cd ..
 rewrite update_free_arr and learn loop_cmd_check
 
 **simplify (file xport.c) create_add_export -> too many temps**
+
+in export the name of the variable cannot contain qoutes, $ or start with a number
+
+several empty sq or dq width quotes crashes
+
+echo + " ": doesn't work
+{
+	input: echo hi" "hi
+	input: echo hi "" "" hi
+		->should be hi    hi but is hi   hi (1 space too little)
+	ínput: echo hi" $USER"hi
+	input: echo hi"$USER "hi
+	input: echo " $USER"
+	input: echo " hi"
+}
+echo + " ": works
+{
+	input: echo hi""hi
+	input: echo hi"  "hi
+	input: echo hi"$USER"hi
+}
+
+echo + dq/sq: doesn't work
+{
+	input: echo "hi"'hi""'"hi"
+		->should be hihi""hi
+	input: echo "hi"'hi ""'"hi"
+		->should be hihi ""hi
+	input: echo "''""''"'''""'"""'"
+		->should be ''''""'
+	input: echo ''"hi''"''
+		->should be hi''
+	input: echo "abc''"'""abc""''""'"'abc'"
+		->should be abc''""abc""""'abc'
+	input: echo "abc''"'"acb""''""'"'abc'"
+		->should be abc''"abc""""'abc'
+}
+echo + dq/sq: works
+{
+	input: echo ""'hi"'
+	input: echo '"hi''"'
+}

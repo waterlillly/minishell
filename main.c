@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/01 16:38:18 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/01 20:07:17 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //volatile sig_atomic_t	g_signal = 0;
-extern int	g_signal;
+//extern int	g_signal;
 
 void	free_parse(t_minishell_p *in)
 {
@@ -61,6 +61,7 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 		}
 		else
 		{
+			set_mode_s(p, 2);
 			p->pid[c] = fork();
 			if (p->pid[c] == -1)
 				return (perror("fork"), 1);
@@ -75,6 +76,9 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 				}
 				return (0);
 			}
+			remove_q(pars->str, pars->str_len);
+			if (!strcmp("./minishell", pars->str[0]))
+				set_mode_s(p, 4);
 		}
 		c++;
 		pars = pars->next;
@@ -89,14 +93,18 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 	return (0);
 }
 
-bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
+bool run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 {
 	int	c;
 
 	c = 0;
+	g_signal = 0;
+	set_mode_s(p, 1);
 	refresh_init(p, input, pars);
-	if (!*pars)
+	if (!*pars && input->exit == 0)
 		return (true);
+	else if (!*pars && input->exit == 1)
+		return (false);
 	if (!p || !input)
 		return (false);
 	if (check_exit(p, &c, pars) == false)
@@ -120,9 +128,8 @@ int	main(int ac, char **av, char **envp)
 		return (perror("invalid input"), 1);
 	ft_bzero(&p, sizeof(t_pipex));
 	ft_bzero(&input, sizeof(t_raw_in));
+	sig_init(&p, 0);
 	pars = NULL;
-	signal(SIGINT, &sig_int);
-	signal(SIGQUIT, &sig_quit);
 	if (first_init(&p, envp) != 0)
 	{
 		exit_shell(&p, pars, &input, NULL);

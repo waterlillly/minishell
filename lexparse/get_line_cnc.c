@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line_cnc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:25:32 by codespace         #+#    #+#             */
-/*   Updated: 2024/09/12 15:02:00 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/01 19:53:56 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,16 @@ void	get_hd(t_raw_in *in)
 		return (exit_shell(NULL, NULL, in, "ALLOC FAILED"));
 	if (in->n_hd)
 	{
+		sig_init(NULL, 1);
 		while (in->n_chd < in->n_hd)
 		{
 			in->line = readline("> ");
+			if (g_signal != 0 || !in->line)
+			{
+				free_raw(in);
+				in->exit = 2;
+				return ;
+			}
 			if (!ft_strcmp(in->del_s[in->n_chd], in->line))
 			{
 				in->n_chd++;
@@ -67,8 +74,10 @@ int	get_line_cnc(t_raw_in *in, t_pipex *p)
 	tmp = ft_strjoin_free_one(ft_strdup(p->pwd), "> ");
 	in->line = readline(tmp);
 	free(tmp);
-	if (!in->line || !ft_strlen(in->line) || is_bad(in->line))
-		return (free(in->line), 2);
+	if (!in->line)
+		return (in->exit = 1, 2);
+	if (!ft_strlen(in->line) || is_bad(in->line))
+		return (in->exit = 0, free(in->line), 2);
 	add_history(in->line);
 	set_op(in, in->line);
 	if (!check_syntax(in->line) || in->open_pipe)
@@ -81,5 +90,7 @@ int	get_line_cnc(t_raw_in *in, t_pipex *p)
 	in->line = NULL;
 	if (in->n_hd)
 		get_hd(in);
+	if (in->exit == 2)
+		return (2);
 	return (1);
 }

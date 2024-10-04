@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/03 15:00:09 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/01 19:58:36 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,13 @@
 # include <sys/types.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/ioctl.h>
 
 # define BUFF_SIZE 8
 # define MAX_FD 1024 + 1
 # define RET_VALUE(ret)	ret > 0 ? 1 : ret
+
+extern volatile sig_atomic_t g_signal;
 
 typedef enum e_token
 {
@@ -47,6 +50,14 @@ typedef enum e_token
 	SMALLER,
 	HEREDOC
 }	t_token;
+
+typedef enum e_mode
+{
+	INTER = 1,
+	CHILD,
+	HD,
+	LEVEL
+}	t_mode;
 
 typedef struct s_raw_in
 {
@@ -62,6 +73,7 @@ typedef struct s_raw_in
 	int		n_red;
 	int		n_words;
 	int		sum;
+	int		exit;
 }	t_raw_in;
 
 typedef struct s_minishell_l
@@ -108,6 +120,7 @@ typedef struct s_pipex
 	char	*executable;
 	char	*part;
 	char	*cmd;
+	t_mode	mode;
 }			t_pipex;
 
 /*MAIN*/
@@ -140,7 +153,12 @@ int		execute(t_pipex *p, int c, t_minishell_p *pars);
 
 /*START*/
 void	sig_int(int	num);
+void	sig_int_hd(int num);
+void	sig_int_child(int num);
+void	sig_quit_child(int num);
 void	sig_quit(int num);
+void	sig_init(t_pipex *p, int hd);
+void	set_mode_s(t_pipex *p, int c);
 void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *input);
 void	print_ps(t_minishell_p *pars);
 
