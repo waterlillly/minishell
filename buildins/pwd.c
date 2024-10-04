@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:47:48 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/03 15:55:33 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:28:55 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ int	get_int(char **temp)
 
 int	going_back(char *oldpwd, t_pipex *p, int y, char **temp)
 {
-	int	x;
-	int	z;
+	int		x;
+	int		z;
+	char	*err;
 
 	x = 0;
 	z = ft_arrlen(temp) - 1;
@@ -66,7 +67,8 @@ int	going_back(char *oldpwd, t_pipex *p, int y, char **temp)
 		x++;
 	}
 	oldpwd = ft_strjoin_free_one(oldpwd, "/..");
-	return (update(p, "PWD", oldpwd), update(p, "OLDPWD", p->pwd),
+	err = ft_strjoin("cd: ", oldpwd);
+	return (perror(err), free(err), err = NULL, free(p->oldpwd), p->oldpwd = NULL, p->oldpwd = ft_strdup(p->pwd),
 		free(p->pwd), p->pwd = NULL, p->pwd = oldpwd, 1);
 }
 
@@ -74,12 +76,9 @@ int	join_oldpwd(t_pipex *p, char **temp, char *oldpwd)
 {
 	int	x;
 	int	y;
-	int	z;
 
 	x = 0;
 	y = get_int(temp);
-	z = ft_arrlen(temp) - 1;
-	(void)z;
 	if (p && temp[x] && y > 0)
 		return (going_back(oldpwd, p, y, temp));
 	while (p && temp[x])
@@ -91,11 +90,11 @@ int	join_oldpwd(t_pipex *p, char **temp, char *oldpwd)
 				oldpwd = ft_strjoin_free_one(oldpwd, "/");
 				oldpwd = ft_strjoin_free_one(oldpwd, temp[x]);
 				oldpwd = ft_strjoin_free_one(oldpwd, "/..");
-				return (update(p, "OLDPWD", p->pwd), update(p, "PWD", oldpwd), free(p->pwd),
-					p->pwd = NULL, p->pwd = oldpwd, 1);
+				return (perror(oldpwd), free(p->oldpwd), p->oldpwd = NULL,
+					p->oldpwd = ft_strdup(p->pwd), free(p->pwd), p->pwd = NULL, p->pwd = oldpwd, 1);
 			}
 			return (free(p->oldpwd), p->oldpwd = NULL, p->oldpwd = oldpwd,
-				update(p, "PWD", oldpwd), update(p, "OLDPWD", p->oldpwd), 0);
+				update(p, "OLDPWD", p->oldpwd), 0);
 		}
 		if (oldpwd && ft_strlen(oldpwd) > 0 && oldpwd[ft_strlen(oldpwd) - 1] != '/')
 			oldpwd = ft_strjoin_free_one(oldpwd, "/");

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:26:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/24 18:59:19 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:18:56 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ int	add_to_path(t_pipex *p, char *t)
 		return (1);
 	if (new && is_access(new))
 	{
-		reset_old_pwd(p, new);
 		x = chdir(new);
+		if (x == 0)
+			reset_old_pwd(p, new);
 		return (free(new), new = NULL, x);
 	}
 	return (free(new), new = NULL, 1);
@@ -80,7 +81,6 @@ int	go_back(t_pipex *p, int print)
 		reset_old_pwd(p, temp);
 		if (print == 1)
 			check_print(p->pwd);
-		//x = chdir(temp);
 		x = chdir(p->pwd);
 		return (free(temp), temp = NULL, x);
 	}

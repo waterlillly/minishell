@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/03 15:54:53 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:27:13 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,10 @@ int	cd(t_pipex *p, char **token)
 			if (!p->pwd)
 				p->pwd = get_env(p, "HOME");
 		}
-		//return (update(p, "PWD", p->pwd), update(p, "OLDPWD", p->oldpwd));
 	}
 	if (p->status != 0)
 	{
-		err = ft_strjoin("cd: ", p->pwd);//err = ft_strjoin("cd: ", token[1]);
+		err = ft_strjoin("cd: ", get_env(p, "PWD"));//token[1]);//p->pwd);
 		return (perror(err), free(err), err = NULL, 0);
 	}
 	return (update(p, "OLDPWD", get_env(p, "PWD")), update(p, "PWD", p->pwd));
