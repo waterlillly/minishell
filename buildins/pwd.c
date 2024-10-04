@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:47:48 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/04 15:28:55 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:43:13 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ int	going_back(char *oldpwd, t_pipex *p, int y, char **temp)
 	}
 	oldpwd = ft_strjoin_free_one(oldpwd, "/..");
 	err = ft_strjoin("cd: ", oldpwd);
-	return (perror(err), free(err), err = NULL, free(p->oldpwd), p->oldpwd = NULL, p->oldpwd = ft_strdup(p->pwd),
+	return (perror(err), free(err), err = NULL, free(p->oldpwd),
+		p->oldpwd = NULL, p->oldpwd = ft_strdup(p->pwd),
 		free(p->pwd), p->pwd = NULL, p->pwd = oldpwd, 1);
 }
 

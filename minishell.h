@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/01 19:58:36 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/10/04 21:33:28 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ bool	check_s_q(char *token);
 bool	s_out_q(char *tok);
 bool	d_out_q(char *tok);
 bool	only_quotes(char *s);
+int		only_q(char *s, int q);
 
 /*PWD*/
 void	reset_old_pwd(t_pipex *p, char *path);
@@ -273,16 +274,20 @@ int		echo(char **token);
 /*ECHO_SPLIT*/
 int		count_dlr_strs(char *s, char c);
 int		count_q_strs(char *str, int q);
+int		count_space_strs(char *str, int q);
 int		dlr_split(char *s, int d, int pa);
+int		space_split(char *s, int d, int pa);
 int		q_split(char *s, int q, int pa);
 char	**xpd_1_split(char *str, int q);
 char	**xpd_2_split(char *str, int q);
+char	**xpd_3_split(char *str, int q);
 char	**xpd_2(char **xpd1);
 char	**arrjoin(char **old, char **new);
 char	**ft_arrdup(char **s);
 char	**rewrite(char **s, int c);
 char	**reformat(char **s);
 char	**xpd_1(t_minishell_p *pars, int i);
+char	**d_q_space(char **s);
 void	xpd(t_pipex *p, t_minishell_p *pars);
 // int		countstrs(char *s, char c);
 // int		do_split(char *s, char c, int pos_a);

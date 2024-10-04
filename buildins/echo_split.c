@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:54:22 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/03 14:44:52 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/04 23:21:19 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,19 +91,34 @@ int	dlr_split(char *s, int d, int pa)
 	return (pa);
 }
 
+int	space_split(char *s, int d, int pa)
+{
+	if (s[pa] && s[pa] == d)
+	{
+		pa++;
+		if (s[pa] && s[pa] == d)
+		{
+			while (s[pa] && s[pa] == d)
+				pa++;
+		}
+	}
+	else
+	{
+		while (s[pa] && s[pa] != d)
+			pa++;
+	}
+	return (pa);
+}
+
 int	q_split(char *s, int q, int pa)
 {
 	if (s[pa] && s[pa] == q)
 	{
 		pa++;
+		while (s[pa] && s[pa] != q)
+			pa++;
 		if (s[pa] && s[pa] == q)
 			pa++;
-		else	
-		{
-			while (s[pa] && s[pa] != q)
-				pa++;
-			pa++;
-		}
 	}
 	else
 	{
@@ -111,6 +126,34 @@ int	q_split(char *s, int q, int pa)
 			pa++;
 	}
 	return (pa);
+}
+
+int	count_space_strs(char *str, int q)
+{
+	int	c;
+	int	x;
+
+	c = 0;
+	x = 0;
+	while (str[x])
+	{
+		if (str[x] == q)
+		{
+			c++;
+			x++;
+			while (str[x] && str[x] == q)
+				x++;
+			if (str[x] && str[x] != q)
+				x++;
+		}
+		else
+		{
+			while (str[x] && str[x] != q)
+				x++;
+			c++;
+		}
+	}
+	return (c);
 }
 
 char	**xpd_1_split(char *str, int q)
@@ -171,6 +214,35 @@ char	**xpd_2_split(char *str, int q)
 	return (s);
 }
 
+char	**xpd_3_split(char *str, int q)
+{
+	int		pa;
+	int		pb;
+	int		x;
+	int		y;
+	char	**s;
+
+	x = 0;
+	pa = 0;
+	pb = 0;
+	if (!str)
+		return (NULL);
+	y = count_space_strs(str, q);
+	if (y < 1)
+		return (NULL);
+	s = ft_calloc(y + 1, sizeof(char *));
+	if (!s)
+		return (NULL);
+	while (x < y)
+	{
+		pa = space_split(str, q, pa);
+		s[x] = ft_substr(str, pb, pa - pb);
+		pb = pa;
+		x++;
+	}
+	return (s);
+}
+
 char	**xpd_2(char **xpd1)
 {
 	char	**sp1;
@@ -186,8 +258,8 @@ char	**xpd_2(char **xpd1)
 	x = 0;
 	while (xpd1[x])
 	{
-		//printf("xpd1[%d]: %s\n", x, xpd1[x]);
-		if (!s_out_q(xpd1[x]) && !d_out_q(xpd1[x]) && !ft_strchr(xpd1[x], '='))
+		printf("B[%d]: %s\n", x, xpd1[x]);
+		if (!s_out_q(xpd1[x]) && !ft_strchr(xpd1[x], '=') && !d_out_q(xpd1[x]))
 			sp1 = xpd_1_split(xpd1[x], ' ');
 		else
 		{
@@ -199,10 +271,11 @@ char	**xpd_2(char **xpd1)
 		sp2 = arrjoin(sp2, sp1);
 		x++;
 	}
+	puts("\n");
 	x = 0;
 	while (sp2[x])
 	{
-		//printf("sp2[%d]: %s\n", x, sp2[x]);
+		printf("C[%d]: %s\n", x, sp2[x]);
 		if (!s_out_q(sp2[x]) && !d_out_q(sp2[x]))
 			sp1 = xpd_2_split(sp2[x], '$');
 		else
@@ -214,7 +287,7 @@ char	**xpd_2(char **xpd1)
 		}
 		sp3 = arrjoin(sp3, sp1);
 		if (!sp2[x + 1])
-			return (sp3);
+			return (puts("\n"), sp3);
 		x++;
 	}
 	return (sp2);
@@ -269,30 +342,59 @@ char	**rewrite(char **s, int c)
 	int		i;
 	int		j;
 	char	**arr;
-	
+	int		x;
+	int		x1;
+
 	i = 0;
 	j = 0;
-	arr = NULL;
 	arr = ft_calloc(c + 1, sizeof(char *));
 	if (!arr)
 		return (NULL);
+	puts("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 	while (s[i])
 	{
-		if (s[i] && s[i + 1] && s[i + 2] && ((ft_strcmp_bool(s[i], "\'")
-			&& ft_strcmp_bool(s[i + 2], "\'"))
-			|| (ft_strcmp_bool(s[i], "\"") && ft_strcmp_bool(s[i + 2], "\""))))
+		printf("s[%d]: %s\n", i, s[i]);
+		arr[j] = ft_strdup(s[i]);
+		x = only_q(s[i], '\'');
+		x1 = only_q(s[i], '\"');
+		if (s[i] && (ft_strcmp_bool(s[i], "\'") || even_q(s[i])))//|| (x != -1 && x % 2 != 0)))
 		{
-			arr[j] = ft_strjoin(ft_strjoin(s[i], s[i + 1]), s[i + 2]);
-			j++;
-			i += 3;
-		}
-		else
-		{
-			arr[j] = ft_strdup(s[i]);
-			j++;
 			i++;
+			while (s[i] && !ft_strcmp_bool(s[i], "\'"))
+			{
+				printf("s[%d]: %s\n", i, s[i]);
+				arr[j] = ft_strjoin_free_one(arr[j], s[i]);
+				i++;
+			}
+			if (s[i] && (ft_strcmp_bool(s[i], "\'")))
+			{
+				printf("s[%d]: %s\n", i, s[i]);
+				arr[j] = ft_strjoin_free_one(arr[j], s[i]);
+				i++;
+			}
 		}
+		// else if (s[i] && (ft_strcmp_bool(s[i], "\"") || even_q(s[i])))//|| (x1 != -1 && x1 % 2 != 0)))
+		// {
+		// 	i++;
+		// 	while (s[i] && !ft_strcmp_bool(s[i], "\""))
+		// 	{
+		// 		printf("s[%d]: %s\n", i, s[i]);
+		// 		arr[j] = ft_strjoin_free_one(arr[j], s[i]);
+		// 		i++;
+		// 	}
+		// 	if (s[i] && (ft_strcmp_bool(s[i], "\"")))
+		// 	{
+		// 		printf("s[%d]: %s\n", i, s[i]);
+		// 		arr[j] = ft_strjoin_free_one(arr[j], s[i]);
+		// 		i++;
+		// 	}
+		// }
+		else
+			i++;
+		printf("arr[%d]: %s\n", j, arr[j]);
+		j++;
 	}
+	puts("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 	return (ft_free_double(s), arr);
 }
 
@@ -300,21 +402,53 @@ char	**reformat(char **s)
 {
 	int		i;
 	int		c;
+	int		x;
+	int		x1;
 
 	i = 0;
 	c = ft_arrlen(s);
+	//printf("c: %d\n", c);
 	while (s[i])
 	{
-		if (s[i] && s[i + 1] && s[i + 2] && ((ft_strcmp_bool(s[i], "\'")
-			&& ft_strcmp_bool(s[i + 2], "\'"))
-			|| (ft_strcmp_bool(s[i], "\"") && ft_strcmp_bool(s[i + 2], "\""))))
+		//printf("s[%d]: %s\n", i, s[i]);
+		x = only_q(s[i], '\'');
+		x1 = only_q(s[i], '\"');
+		if (s[i] && (ft_strcmp_bool(s[i], "\'") || even_q(s[i])))//(x != -1 && x % 2 != 0)))
 		{
-			c -= 2;
-			i += 3;
+			i++;
+			while (s[i] && !ft_strcmp_bool(s[i], "\'"))
+			{
+				c--;
+				//printf("s[%d]: %s\n", i, s[i]);
+				i++;
+			}
+			if (s[i] && ft_strcmp_bool(s[i], "\'"))
+			{
+				c--;
+				//printf("s[%d]: %s\n", i, s[i]);
+				i++;
+			}
 		}
+		// else if (s[i] && (ft_strcmp_bool(s[i], "\"") || even_q(s[i])))//|| (x1 != -1 && x1 % 2 != 0)))
+		// {
+		// 	i++;
+		// 	while (s[i] && !ft_strcmp_bool(s[i], "\""))
+		// 	{
+		// 		c--;
+		// 		//printf("s[%d]: %s\n", i, s[i]);
+		// 		i++;
+		// 	}
+		// 	if (s[i] && ft_strcmp_bool(s[i], "\""))
+		// 	{
+		// 		c--;
+		// 		//printf("s[%d]: %s\n", i, s[i]);
+		// 		i++;
+		// 	}
+		// }
 		else
 			i++;
 	}
+	//printf("-->c: %d\n", c);
 	return (rewrite(s, c));
 }
 
@@ -330,9 +464,9 @@ char	**xpd_1(t_minishell_p *pars, int i)
 	dq1 = NULL;
 	dq2 = NULL;
 	s_q = NULL;
-	if ((!only_quotes(pars->str[i]) && !d_out_q(pars->str[i])
-		&& !ft_strchr(pars->str[i], '='))
-		|| (only_quotes(pars->str[i]) && pars->str[i][0] != '\"'))
+	printf("original: %s\n", pars->str[i]);
+	if ((!only_quotes(pars->str[i]) && !ft_strchr(pars->str[i], '='))
+		|| (only_quotes(pars->str[i]) && pars->str[i][0] != '\"'))// && even_q(pars->str[i]))
 		s_q = xpd_1_split(pars->str[i], '\'');
 	else
 	{
@@ -347,8 +481,8 @@ char	**xpd_1(t_minishell_p *pars, int i)
 	s_q = reformat(s_q);
 	while (s_q[x])
 	{
-		//printf("s_q[%d]: %s\n", x, s_q[x]);
-		if (!s_out_q(s_q[x]) && !ft_strchr(s_q[x], '='))
+		printf("A[%d]: %s\n", x, s_q[x]);
+		if (!s_out_q(s_q[x]) && !ft_strchr(s_q[x], '='))// && even_q(s_q[x]))
 			dq1 = xpd_1_split(s_q[x], '\"');
 		else
 		{
@@ -360,16 +494,43 @@ char	**xpd_1(t_minishell_p *pars, int i)
 		dq2 = arrjoin(dq2, dq1);
 		x++;
 	}
+	puts("\n");
 	dq2 = reformat(dq2);
 	return (dq2);
+}
+
+char	**d_q_space(char **s)
+{
+	char	**arr;
+	char	**tmp;
+	int		i;
+	
+	i = 0;
+	arr = NULL;
+	while (s[i])
+	{
+		printf("D[%d]: %s\n", i, s[i]);
+		if (d_out_q(s[i]) && ft_strchr(s[i], '$') && ft_strchr(s[i], ' '))
+			tmp = xpd_3_split(rm_out_q(s[i]), ' ');
+		else
+		{
+			tmp = ft_calloc(2, sizeof(char *));
+			if (!tmp)
+				return (NULL);
+			*tmp = ft_strdup(s[i]);
+		}
+		arr = arrjoin(arr, tmp);
+		i++;
+	}
+	puts("\n");
+	return (arr);
 }
 
 void	xpd(t_pipex *p, t_minishell_p *pars)
 {
 	int		i;
 	int		j;
-	char	**tmp;
-	
+	char	**tmp;	
 
 	if (!pars || !pars->str)
 		return ;
@@ -383,12 +544,12 @@ void	xpd(t_pipex *p, t_minishell_p *pars)
 			return ;
 		while (pars->str[i])
 		{
-			tmp = xpd_2(xpd_1(pars, i));
+			tmp = reformat(d_q_space(xpd_2(xpd_1(pars, i))));
 			j = 0;
 			while (tmp[j])
 			{
 				pars->ps[i] = ft_strjoin_free_one(pars->ps[i], xpand(p, tmp, j));
-				//puts(pars->ps[i]);
+				printf("---FINAL[%d]---\ntmp: %s\nps: %s\n\n", j, tmp[j], pars->ps[i]);
 				j++;
 			}
 			ft_free_double(tmp);
@@ -399,129 +560,5 @@ void	xpd(t_pipex *p, t_minishell_p *pars)
 }
 
 /*
-
 echo "hi"''hello$HOME'""' $$$fuck'hello$hello$$$PWD$'""
-
-//SQ
-"hi"
-''
-hello$HOME
-'""'
- $$$fuck
-'hello$hello$$$PWD$'
-""
-
-//DQ
-"hi"
-''
-hello$HOME
-'""'--->add check if in single q: return
- $$$fuck
-'hello$hello$$$PWD$'
-""
-
-//SPC
-"hi"
-''
-hello$HOME
-'""'
-{ }
-$$$fuck
-'hello$hello$$$PWD$'
-""
-
-//DLR
-"hi"
-''
-hello
-$HOME
-'""'
-{ }
-$$
-$fuck
-'hello$hello$$$PWD$'--->add check if in single q: return
-""
-
-*/
-
-/*
-int	countstrs(char *s, char c)
-{
-	int	counter;
-	int	x;
-
-	counter = 0;
-	x = 0;
-	while (s[x])
-	{
-		if (s[x] == c)
-		{
-			x++;
-			if (s[x] == c || s[x] == '\0')
-			{
-				x++;
-				counter++;
-			}
-		}
-		else
-		{
-			while (s[x] && s[x] != c)
-				x++;
-			counter++;
-		}
-	}
-	return (counter);
-}
-
-int	do_split(char *s, char c, int pos_a)
-{
-	if (s[pos_a] && s[pos_a] == c)
-	{
-		pos_a++;
-		if (s[pos_a] && s[pos_a] == c)
-			pos_a++;
-		else
-		{
-			while (s[pos_a] && s[pos_a] != c)
-				pos_a++;
-		}
-	}
-	else
-	{
-		while (s[pos_a] && s[pos_a] != c)
-		pos_a++;
-	}
-	return (pos_a);
-}
-
-char	**echo_split(char *s, int c)
-{
-	int		pos_a;
-	int		pos_b;
-	int		x;
-	int		y;
-	char	**result;
-
-	pos_a = 0;
-	pos_b = 0;
-	x = 0;
-	if (!s)
-		return (NULL);
-	y = countstrs(s, c);
-	if (y < 1)
-		return (NULL);
-	result = ft_calloc(countstrs(s, c) + 1, sizeof(char *));
-	if (!result)
-		return (NULL);
-	while (x < countstrs(s, c))
-	{
-		pos_a = do_split(s, c, pos_a);
-		result[x] = ft_substr(s, pos_b, pos_a - pos_b);
-		if (!result[x])
-			return (ft_free_double(result), NULL);
-		pos_b = pos_a;
-		x++;
-	}
-	return (result);
-}
 */

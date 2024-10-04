@@ -137,7 +137,7 @@ input: 	/home/lbaumeis/CCore/projects/minishell> cd ..
 	->if (buildins) moved to run/parent process:
 		echo hi | echo hello displays both because forking only happens if its not a buildin then
 
-**rewrite expand& echo split part**
+*rewrite expand& echo split part*
 
 **sort exit messages**
 
@@ -151,40 +151,40 @@ in export the name of the variable cannot contain qoutes, $ or start with a numb
 
 several empty sq or dq width quotes crashes
 
-echo + " ": doesn't work
-{
-	input: echo hi" "hi
-	input: echo hi "" "" hi
-		->should be hi    hi but is hi   hi (1 space too little)
-	ínput: echo hi" $USER"hi
-	input: echo hi"$USER "hi
-	input: echo " $USER"
-	input: echo " hi"
-}
-echo + " ": works
+<!-- echo + " ": doesn't work -->
+<!-- input: echo hi" "hi
+input: echo hi "" "" hi
+	->should be hi    hi but is hi   hi (1 space too little) -->
+<!-- input: echo " hi" -->
+<!-- echo + " ": works
 {
 	input: echo hi""hi
 	input: echo hi"  "hi
 	input: echo hi"$USER"hi
-}
+} -->
 
-echo + dq/sq: doesn't work
-{
-	input: echo "hi"'hi""'"hi"
-		->should be hihi""hi
-	input: echo "hi"'hi ""'"hi"
-		->should be hihi ""hi
+<!-- echo + dq/sq: doesn't work -->
+<!-- input: echo hi" $USER"hi
+	->hi lbaumeishi -->
+<!-- input: echo hi"$USER "hi
+	->hilbaumeis hi -->
+<!-- input: echo " $USER"
+	-> lbaumeis -->
+<!-- input: echo "hi"'hi""'"hi"
+	->hihi""hi -->
+<!-- input: echo "hi"'hi ""'"hi"
+	->hihi ""hi -->
 	input: echo "''""''"'''""'"""'"
-		->should be ''''""'
+		->''''""'
 	input: echo ''"hi''"''
-		->should be hi''
+		->hi''
 	input: echo "abc''"'""abc""''""'"'abc'"
-		->should be abc''""abc""""'abc'
+		->abc''""abc""""'abc'
 	input: echo "abc''"'"acb""''""'"'abc'"
-		->should be abc''"abc""""'abc'
-}
-echo + dq/sq: works
+		->abc''"acb""""'abc'
+
+<!-- echo + dq/sq: works
 {
 	input: echo ""'hi"'
 	input: echo '"hi''"'
-}
+} -->
