@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/05 14:55:39 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/05 14:59:19 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 				return (0);
 			}
 			remove_q(pars->str, pars->str_len);
-			if (!strcmp("./minishell", pars->str[0]))
+			if (!ft_strcmp_bool("./minishell", pars->str[0]))
 				set_mode_s(p, 4);
 		}
 		c++;

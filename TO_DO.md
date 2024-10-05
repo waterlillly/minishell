@@ -151,6 +151,7 @@ in export the name of the variable cannot contain qoutes, $ or start with a numb
 
 several empty sq or dq width quotes crashes
 
+<!-- echo "hi"''hello$HOME'""' $$$fuck'hello$hello$$$PWD$'"" -->
 <!-- echo + " ": doesn't work -->
 <!-- input: echo hi" "hi
 input: echo hi "" "" hi
@@ -175,16 +176,20 @@ input: echo hi "" "" hi
 <!-- input: echo "hi"'hi ""'"hi"
 	->hihi ""hi -->
 	input: echo "''""''"'''""'"""'"
-		->''''""'
-	input: echo ''"hi''"''
-		->hi''
-	input: echo "abc''"'""abc""''""'"'abc'"
-		->abc''""abc""""'abc'
-	input: echo "abc''"'"acb""''""'"'abc'"
-		->abc''"acb""""'abc'
+		->''''""' (ours: ''''''""')
+	input: echo "'"'''""$""'''"'"
+		->'""$""' (ours: '''""$""'''")
+<!-- input: echo ''"hi''"''
+	->hi'' -->
+<!-- input: echo "abc''"'""abc""''""'"'abc'"
+	->abc''""abc""""'abc' -->
+<!-- input: echo "abc''"'"acb""''""'"'abc'"
+	->abc''"acb""""'abc' -->
 
 <!-- echo + dq/sq: works
 {
 	input: echo ""'hi"'
+		->hi"
 	input: echo '"hi''"'
+		->"hi"
 } -->
