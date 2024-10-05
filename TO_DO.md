@@ -193,3 +193,9 @@ input: echo hi "" "" hi
 	input: echo '"hi''"'
 		->"hi"
 } -->
+
+**input: export cmd=" -l"**
+	export cmd=" -l"
+	ls$cmd
+	->cmd not found (BUT: expanded correctly: pars->ps[0]: ls -l, but should be: pars->ps[0]: ls and pars->ps[1]: -l)
+

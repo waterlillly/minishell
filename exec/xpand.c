@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/05 14:48:04 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/05 20:07:25 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,10 @@ char	*xpand(t_pipex *p, char **token, int x)
 		return (free(temp), ft_itoa_long(p->status));
 	else if (only_dollars(token[x]) && ((dollar_count(token[x]) == 1 && even_q(token[x]))
 		|| (dollar_count(token[x]) == 1)))
-		return (NULL);
+		return ("");
 	else if (!check_s_q(token[x]) && temp[0] == '$' && temp[1] != '$'
 		&& temp[1] != '\0' && !valid_env(p, ft_substr(temp, 1, ft_strlen(temp) - 1)))
-		return (free(temp), NULL);
+		return (free(temp), "");
 	else if (!check_s_q(token[x]) && valid_env(p, ft_substr(temp, 1, ft_strlen(temp) - 1)))
 	{
 		temp2 = get_env(p, ft_substr(temp, 1, ft_strlen(temp) - 1));
@@ -103,5 +103,5 @@ char	*xpand(t_pipex *p, char **token, int x)
 	else if (s_out_q(token[x]) || d_out_q(token[x]))
 		return (temp);
 	else
-		return (rm_q(token[x]));//temp
+		return (rm_q(token[x]));
 }

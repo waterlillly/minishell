@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/02 15:51:22 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/05 20:07:02 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int	echo(char **token)
 	while (token[x])
 	{
 		y = do_echo(token, x);
-		if (y != 1 && token[x + 1])
+		if (y != 1 && ft_strlen(token[x]) > 0 && token[x + 1])
 			ft_putstr_fd(" ", 1);
 		x++;
 	}
