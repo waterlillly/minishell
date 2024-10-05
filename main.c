@@ -3,39 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/01 20:07:17 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/10/05 14:55:39 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//volatile sig_atomic_t	g_signal = 0;
-//extern int	g_signal;
-
-void	free_parse(t_minishell_p *in)
-{
-	t_minishell_l	*tmp_l;
-	t_minishell_p	*tmp_p;
-
-	in = ft_lstfirst_parse(in);
-	while (in)
-	{
-		tmp_p = in->next;
-		while (in->redirect)
-		{
-			tmp_l = in->redirect->next;
-			free(in->redirect);
-			in->redirect = tmp_l;
-		}
-		if (in->str)
-			free(in->str);
-		free(in);
-		in = tmp_p;
-	}
-}
 
 void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 {
@@ -72,7 +47,7 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 				{
 					if (kill(p->pid[c], SIGCHLD) != 0)
 						return (perror("kill"), 1);
-					return (0);
+					return (1);
 				}
 				return (0);
 			}

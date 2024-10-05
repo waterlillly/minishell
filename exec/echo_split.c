@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:54:22 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/04 23:21:19 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/05 14:47:34 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,7 +258,7 @@ char	**xpd_2(char **xpd1)
 	x = 0;
 	while (xpd1[x])
 	{
-		printf("B[%d]: %s\n", x, xpd1[x]);
+		//printf("B[%d]: %s\n", x, xpd1[x]);
 		if (!s_out_q(xpd1[x]) && !ft_strchr(xpd1[x], '=') && !d_out_q(xpd1[x]))
 			sp1 = xpd_1_split(xpd1[x], ' ');
 		else
@@ -271,11 +271,11 @@ char	**xpd_2(char **xpd1)
 		sp2 = arrjoin(sp2, sp1);
 		x++;
 	}
-	puts("\n");
+	//puts("\n");
 	x = 0;
 	while (sp2[x])
 	{
-		printf("C[%d]: %s\n", x, sp2[x]);
+		//printf("C[%d]: %s\n", x, sp2[x]);
 		if (!s_out_q(sp2[x]) && !d_out_q(sp2[x]))
 			sp1 = xpd_2_split(sp2[x], '$');
 		else
@@ -287,7 +287,7 @@ char	**xpd_2(char **xpd1)
 		}
 		sp3 = arrjoin(sp3, sp1);
 		if (!sp2[x + 1])
-			return (puts("\n"), sp3);
+			return (sp3);
 		x++;
 	}
 	return (sp2);
@@ -342,38 +342,34 @@ char	**rewrite(char **s, int c)
 	int		i;
 	int		j;
 	char	**arr;
-	int		x;
-	int		x1;
 
 	i = 0;
 	j = 0;
 	arr = ft_calloc(c + 1, sizeof(char *));
 	if (!arr)
 		return (NULL);
-	puts("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+	//puts("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 	while (s[i])
 	{
-		printf("s[%d]: %s\n", i, s[i]);
+		//printf("s[%d]: %s\n", i, s[i]);
 		arr[j] = ft_strdup(s[i]);
-		x = only_q(s[i], '\'');
-		x1 = only_q(s[i], '\"');
-		if (s[i] && (ft_strcmp_bool(s[i], "\'") || even_q(s[i])))//|| (x != -1 && x % 2 != 0)))
+		if (s[i] && (ft_strcmp_bool(s[i], "\'") || even_q(s[i])))
 		{
 			i++;
 			while (s[i] && !ft_strcmp_bool(s[i], "\'"))
 			{
-				printf("s[%d]: %s\n", i, s[i]);
+				//printf("s[%d]: %s\n", i, s[i]);
 				arr[j] = ft_strjoin_free_one(arr[j], s[i]);
 				i++;
 			}
 			if (s[i] && (ft_strcmp_bool(s[i], "\'")))
 			{
-				printf("s[%d]: %s\n", i, s[i]);
+				//printf("s[%d]: %s\n", i, s[i]);
 				arr[j] = ft_strjoin_free_one(arr[j], s[i]);
 				i++;
 			}
 		}
-		// else if (s[i] && (ft_strcmp_bool(s[i], "\"") || even_q(s[i])))//|| (x1 != -1 && x1 % 2 != 0)))
+		// else if (s[i] && (ft_strcmp_bool(s[i], "\"") || even_q(s[i])))
 		// {
 		// 	i++;
 		// 	while (s[i] && !ft_strcmp_bool(s[i], "\""))
@@ -391,10 +387,10 @@ char	**rewrite(char **s, int c)
 		// }
 		else
 			i++;
-		printf("arr[%d]: %s\n", j, arr[j]);
+		//printf("arr[%d]: %s\n", j, arr[j]);
 		j++;
 	}
-	puts("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+	//puts("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 	return (ft_free_double(s), arr);
 }
 
@@ -402,8 +398,6 @@ char	**reformat(char **s)
 {
 	int		i;
 	int		c;
-	int		x;
-	int		x1;
 
 	i = 0;
 	c = ft_arrlen(s);
@@ -411,9 +405,7 @@ char	**reformat(char **s)
 	while (s[i])
 	{
 		//printf("s[%d]: %s\n", i, s[i]);
-		x = only_q(s[i], '\'');
-		x1 = only_q(s[i], '\"');
-		if (s[i] && (ft_strcmp_bool(s[i], "\'") || even_q(s[i])))//(x != -1 && x % 2 != 0)))
+		if (s[i] && (ft_strcmp_bool(s[i], "\'") || even_q(s[i])))
 		{
 			i++;
 			while (s[i] && !ft_strcmp_bool(s[i], "\'"))
@@ -429,7 +421,7 @@ char	**reformat(char **s)
 				i++;
 			}
 		}
-		// else if (s[i] && (ft_strcmp_bool(s[i], "\"") || even_q(s[i])))//|| (x1 != -1 && x1 % 2 != 0)))
+		// else if (s[i] && (ft_strcmp_bool(s[i], "\"") || even_q(s[i])))
 		// {
 		// 	i++;
 		// 	while (s[i] && !ft_strcmp_bool(s[i], "\""))
@@ -464,7 +456,7 @@ char	**xpd_1(t_minishell_p *pars, int i)
 	dq1 = NULL;
 	dq2 = NULL;
 	s_q = NULL;
-	printf("original: %s\n", pars->str[i]);
+	//printf("original: %s\n", pars->str[i]);
 	if ((!only_quotes(pars->str[i]) && !ft_strchr(pars->str[i], '='))
 		|| (only_quotes(pars->str[i]) && pars->str[i][0] != '\"'))// && even_q(pars->str[i]))
 		s_q = xpd_1_split(pars->str[i], '\'');
@@ -481,7 +473,7 @@ char	**xpd_1(t_minishell_p *pars, int i)
 	s_q = reformat(s_q);
 	while (s_q[x])
 	{
-		printf("A[%d]: %s\n", x, s_q[x]);
+		//printf("A[%d]: %s\n", x, s_q[x]);
 		if (!s_out_q(s_q[x]) && !ft_strchr(s_q[x], '='))// && even_q(s_q[x]))
 			dq1 = xpd_1_split(s_q[x], '\"');
 		else
@@ -494,7 +486,7 @@ char	**xpd_1(t_minishell_p *pars, int i)
 		dq2 = arrjoin(dq2, dq1);
 		x++;
 	}
-	puts("\n");
+	//puts("\n");
 	dq2 = reformat(dq2);
 	return (dq2);
 }
@@ -509,7 +501,7 @@ char	**d_q_space(char **s)
 	arr = NULL;
 	while (s[i])
 	{
-		printf("D[%d]: %s\n", i, s[i]);
+		//printf("D[%d]: %s\n", i, s[i]);
 		if (d_out_q(s[i]) && ft_strchr(s[i], '$') && ft_strchr(s[i], ' '))
 			tmp = xpd_3_split(rm_out_q(s[i]), ' ');
 		else
@@ -522,7 +514,7 @@ char	**d_q_space(char **s)
 		arr = arrjoin(arr, tmp);
 		i++;
 	}
-	puts("\n");
+	//puts("\n");
 	return (arr);
 }
 
@@ -549,7 +541,7 @@ void	xpd(t_pipex *p, t_minishell_p *pars)
 			while (tmp[j])
 			{
 				pars->ps[i] = ft_strjoin_free_one(pars->ps[i], xpand(p, tmp, j));
-				printf("---FINAL[%d]---\ntmp: %s\nps: %s\n\n", j, tmp[j], pars->ps[i]);
+				//printf("---FINAL[%d]---\ntmp: %s\nps: %s\n\n", j, tmp[j], pars->ps[i]);
 				j++;
 			}
 			ft_free_double(tmp);

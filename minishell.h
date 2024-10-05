@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/04 21:33:28 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/05 14:21:50 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,34 +124,22 @@ typedef struct s_pipex
 }			t_pipex;
 
 /*MAIN*/
-void 	free_parse(t_minishell_p *in);
 void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 int		do_stuff(t_pipex *p, int c, t_minishell_p *pars);
 bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 
+/*FREE*/
+void	free_p_rest(t_pipex *p);
+void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input);
+void 	free_parse(t_minishell_p *in);
+void	err_free(t_pipex *p);
+
 /*EXIT*/
 void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str);
 int		error(char *str, int code);
-void	free_p_rest(t_pipex *p);
-void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input);
 bool	check_exit(t_pipex *p, int *c, t_minishell_p **pars);
 
-/*MORE_CMDS*/
-bool	is_buildin(char *s);
-int		do_this(t_pipex *p, t_minishell_p *pars);
-
-/*PRE_EXEC*/
-int		check_access(t_pipex *p, t_minishell_p *pars);
-int		check(t_pipex *p, t_minishell_p *pars);
-bool	valid_cmd(char **str, t_pipex *p);
-//char	*loop_cmd_check(t_pipex *p, t_minishell_p *pars, int x);
-char	**check_cmd(t_minishell_p *pars);
-
-/*EXECUTE*/
-int		redirect(t_pipex *p, int c, t_minishell_p *pars);
-int		execute(t_pipex *p, int c, t_minishell_p *pars);
-
-/*START*/
+/*SIGNALS*/
 void	sig_int(int	num);
 void	sig_int_hd(int num);
 void	sig_int_child(int num);
@@ -159,12 +147,9 @@ void	sig_quit_child(int num);
 void	sig_quit(int num);
 void	sig_init(t_pipex *p, int hd);
 void	set_mode_s(t_pipex *p, int c);
-void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *input);
-void	print_ps(t_minishell_p *pars);
 
-/*REDIR*/
-void	check_filein(t_pipex *p, t_minishell_p *pars);
-void	check_fileout(t_pipex *p, t_minishell_p *pars);
+/*START*/
+void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *input);
 
 /*____________________LEXPARSE____________________*/
 void	print_parsed(t_minishell_p *in);
@@ -195,24 +180,40 @@ int				is_oq(char	c, int *dq, int *sq);
 t_minishell_p	*ft_lstfirst_parse(t_minishell_p *lst);
 void			free_lex(t_minishell_l *in);
 
-/*____________________PIPEX____________________*/
+/*____________________EXEC____________________*/
 /*PIPEX*/
 char	*is_exec(t_pipex *p);
 int		do_heredoc(t_pipex *p, t_minishell_p *pars);
 int		exec_cmd(t_pipex *p, t_minishell_p *pars);
 
-/*ERROR*/
+/*CLOSE_PIPES*/
 void	closing(t_pipex *p);
 void	close_pipes(t_pipex *p);
 void	close_all(t_pipex *p);
-void	err_free(t_pipex *p);
 
 /*INIT*/
 void 	init_pipes(t_pipex *p);
 void	init_p(t_pipex *p, t_minishell_p *pars);
 int		first_init(t_pipex *p, char **envp);
 
-/*____________________BUILDINS____________________*/
+/*REDIR*/
+void	check_filein(t_pipex *p, t_minishell_p *pars);
+void	check_fileout(t_pipex *p, t_minishell_p *pars);
+
+/*MORE_CMDS*/
+bool	is_buildin(char *s);
+int		do_this(t_pipex *p, t_minishell_p *pars);
+
+/*PRE_EXEC*/
+int		check_access(t_pipex *p, t_minishell_p *pars);
+int		check(t_pipex *p, t_minishell_p *pars);
+bool	valid_cmd(char **str, t_pipex *p);
+char	**check_cmd(t_minishell_p *pars);
+
+/*EXECUTE*/
+int		redirect(t_pipex *p, int c, t_minishell_p *pars);
+int		execute(t_pipex *p, int c, t_minishell_p *pars);
+
 /*UTILS*/
 bool	is_access(char *dir);
 int		find_arg(char **s, char *a);
@@ -244,11 +245,6 @@ bool	valid_env(t_pipex *p, char *tok);
 char	*get_env(t_pipex *p, char *str);
 int		get_menv(t_pipex *p, char **envp);
 int		buildins_init(t_pipex *p, char **envp);
-
-/*BACKUP*/
-//int		backup_env(t_pipex *p, char *temp);
-//int		backup_xport(t_pipex *p, char *temp);
-//int		backup(t_pipex *p);
 
 /*CD_FIND_PATH*/
 int		add_to_path(t_pipex *p, char *t);
@@ -289,9 +285,6 @@ char	**reformat(char **s);
 char	**xpd_1(t_minishell_p *pars, int i);
 char	**d_q_space(char **s);
 void	xpd(t_pipex *p, t_minishell_p *pars);
-// int		countstrs(char *s, char c);
-// int		do_split(char *s, char c, int pos_a);
-// char	**echo_split(char *s, int c);
 
 /*EXPAND*/
 bool	only_dollars(char *tok);
