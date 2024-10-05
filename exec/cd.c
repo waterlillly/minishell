@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/05 20:19:31 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/05 20:32:28 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	cd(t_pipex *p, char **token)
 {
 	char	*err;
 	char	*idk;
-	char	**new;
 
 	err = NULL;
 	if (p && token && ft_strcmp_bool(token[0], "cd"))
@@ -88,19 +87,6 @@ int	cd(t_pipex *p, char **token)
 			return (0);
 		else if (token[1] != NULL)
 			p->status = fill_path(p, token);
-	}
-	if (!get_env(p, "PWD"))
-	{
-		if (!p->pwd)
-			p->pwd = get_env(p, "HOME");
-		new = ft_calloc(3, sizeof(char *));
-		if (!new)
-			return (1);
-		new[0] = "";
-		new[1] = ft_strjoin("PWD=", p->pwd);
-		set_export(p, new);
-		ft_free_double(new);
-		//update(p, "PWD", p->pwd);
 	}
 	if (p->status != 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:47:48 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/04 15:43:13 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/05 20:32:18 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,28 @@
 
 void	reset_old_pwd(t_pipex *p, char *path)
 {
+	char	**new;
+
+	new = NULL;
 	if (!p || !path)
 		return ;
-	free(p->oldpwd);
 	p->oldpwd = NULL;
+	if (!get_env(p, "PWD"))
+	{
+		if (!p->pwd)
+			p->pwd = get_env(p, "HOME");
+		new = ft_calloc(3, sizeof(char *));
+		if (!new)
+			return ;
+		new[0] = "";
+		new[1] = ft_strjoin("PWD=", p->pwd);
+		set_export(p, new);
+		ft_free_double(new);
+		update(p, "PWD", p->pwd);
+	}
 	p->oldpwd = get_env(p, "PWD");
 	if (!p->oldpwd)
 		return ;
-	free(p->pwd);
 	p->pwd = NULL;
 	p->pwd = ft_strdup(path);
 }

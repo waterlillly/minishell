@@ -175,10 +175,10 @@ input: echo hi "" "" hi
 	->hihi""hi -->
 <!-- input: echo "hi"'hi ""'"hi"
 	->hihi ""hi -->
-	input: echo "''""''"'''""'"""'"
-		->''''""' (ours: ''''''""')
-	input: echo "'"'''""$""'''"'"
-		->'""$""' (ours: '''""$""'''")
+**input: echo "''""''"'''""'"""'"**
+	->''''""' (ours: ''''''""')
+**input: echo "'"'''""$""'''"'"**
+	->'""$""' (ours: '''""$""'''")
 <!-- input: echo ''"hi''"''
 	->hi'' -->
 <!-- input: echo "abc''"'""abc""''""'"'abc'"
