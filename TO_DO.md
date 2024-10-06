@@ -199,3 +199,4 @@ input: echo hi "" "" hi
 	ls$cmd
 	->cmd not found (BUT: expanded correctly: pars->ps[0]: ls -l, but should be: pars->ps[0]: ls and pars->ps[1]: -l)
 
+*add check for unset vars*

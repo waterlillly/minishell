@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:47:48 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/05 20:32:18 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/06 15:53:13 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,20 @@
 
 void	reset_old_pwd(t_pipex *p, char *path)
 {
-	char	**new;
+	char	*new;
 
 	new = NULL;
 	if (!p || !path)
 		return ;
 	p->oldpwd = NULL;
-	if (!get_env(p, "PWD"))
-	{
-		if (!p->pwd)
-			p->pwd = get_env(p, "HOME");
-		new = ft_calloc(3, sizeof(char *));
-		if (!new)
-			return ;
-		new[0] = "";
-		new[1] = ft_strjoin("PWD=", p->pwd);
-		set_export(p, new);
-		ft_free_double(new);
-		update(p, "PWD", p->pwd);
-	}
 	p->oldpwd = get_env(p, "PWD");
 	if (!p->oldpwd)
-		return ;
+	{
+		if (p->pwd)
+			p->oldpwd = ft_strdup(p->pwd);
+		else
+			return ;
+	}
 	p->pwd = NULL;
 	p->pwd = ft_strdup(path);
 }
@@ -89,10 +81,12 @@ int	going_back(char *oldpwd, t_pipex *p, int y, char **temp)
 
 int	join_oldpwd(t_pipex *p, char **temp, char *oldpwd)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	char	*err;
 
 	x = 0;
+	err = NULL;
 	y = get_int(temp);
 	if (p && temp[x] && y > 0)
 		return (going_back(oldpwd, p, y, temp));
@@ -105,7 +99,8 @@ int	join_oldpwd(t_pipex *p, char **temp, char *oldpwd)
 				oldpwd = ft_strjoin_free_one(oldpwd, "/");
 				oldpwd = ft_strjoin_free_one(oldpwd, temp[x]);
 				oldpwd = ft_strjoin_free_one(oldpwd, "/..");
-				return (perror(oldpwd), free(p->oldpwd), p->oldpwd = NULL,
+				err = ft_strjoin("cd: ", oldpwd);
+				return (perror(err), free(err), free(p->oldpwd), p->oldpwd = NULL,
 					p->oldpwd = ft_strdup(p->pwd), free(p->pwd), p->pwd = NULL, p->pwd = oldpwd, 1);
 			}
 			return (free(p->oldpwd), p->oldpwd = NULL, p->oldpwd = oldpwd,

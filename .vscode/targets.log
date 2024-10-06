@@ -8,7 +8,7 @@ make: *** No rule to make target 'main.o', needed by 'minishell'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Oct  5 14:24:52 2024
+# Make data base, printed on Sun Oct  6 12:49:09 2024
 
 # Variables
 
@@ -57,7 +57,7 @@ OLDPWD = /home/lbaumeis/CCore/projects/minishell
 # environment
 VSCODE_CODE_CACHE_PATH = /home/lbaumeis/.config/Code/CachedData/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session11
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session12
 # environment
 LANG = C
 # environment
@@ -67,17 +67,15 @@ XAUTHORITY = /home/lbaumeis/.Xauthority
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.92
+GNOME_TERMINAL_SERVICE = :1.88
 # makefile
 MAKEFLAGS = pqrR -j16 --jobserver-auth=3,4
 # environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/101355/bus,guid=22f59668188484c7479d3c89670128c7
+DBUS_STARTER_ADDRESS = unix:path=/run/user/101355/bus,guid=5d5ef2cad53db69ce5929a1667026b0a
 # makefile
 CURDIR := /home/lbaumeis/CCore/projects/minishell
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
-# environment
-VSCODE_L10N_BUNDLE_LOCATION = 
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -97,15 +95,15 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 414488
+VSCODE_PID = 486935
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_101355_fwHJ05
+KRB5CCNAME = FILE:/tmp/krb5cc_101355_uyEGoG
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/c3r10p3.42vienna.com:@/tmp/.ICE-unix/413646,unix/c3r10p3.42vienna.com:/tmp/.ICE-unix/413646
+SESSION_MANAGER = local/c3r10p3.42vienna.com:@/tmp/.ICE-unix/486126,unix/c3r10p3.42vienna.com:/tmp/.ICE-unix/486126
 # automatic
 *F = $(notdir $*)
 # makefile (from 'Makefile', line 34)
@@ -113,7 +111,7 @@ NUMTH = $(shell nproc)
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101355/bus,guid=22f59668188484c7479d3c89670128c7
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101355/bus,guid=5d5ef2cad53db69ce5929a1667026b0a
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -131,7 +129,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/ea43614e_7865_46ab_ad38_fc051f39aad4
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/7f3b37b5_d687_4886_84c8_e7be44b22e46
 # environment
 MAKELEVEL := 0
 # default
@@ -173,7 +171,7 @@ LOGNAME = lbaumeis
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 413646
+SYSTEMD_EXEC_PID = 486126
 # environment
 DISPLAY = :0
 # environment
@@ -237,7 +235,7 @@ XDG_MENU_PREFIX = gnome-
 # environment
 GDMSESSION = ubuntu
 # variable set hash-table stats:
-# Load=112/1024=11%, Rehash=0, Collisions=15/169=9%
+# Load=111/1024=11%, Rehash=0, Collisions=14/168=8%
 
 # Pattern-specific Variable Values
 
@@ -245,9 +243,9 @@ GDMSESSION = ubuntu
 
 # Directories
 
-# . (device 2048, inode 4260053): 18 files, no impossibilities.
+# . (device 2048, inode 4260053): 17 files, no impossibilities.
 
-# 18 files, no impossibilities in 1 directories.
+# 17 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -306,11 +304,11 @@ lexparse/get_line_cnc.o:
 
 minishell: main.o exit.o start.o signals.o free.o exec/utils.o exec/cd.o exec/cd_find_path.o exec/pwd.o exec/env.o exec/echo.o exec/echo_split.o exec/quotes.o exec/sorting.o exec/xpand.o exec/xport.o exec/set_export.o exec/unset.o exec/pipex.o exec/close_pipes.o exec/init.o exec/more_cmds.o exec/pre_exec.o exec/redir.o exec/execute.o lexparse/minishell.o lexparse/remove_q.o lexparse/quote_count.o lexparse/open_quotes.o lexparse/split_shell.o lexparse/lexer.o lexparse/get_line_cnc.o lexparse/check_syntax.o lexparse/skip_q.o lexparse/parser.o lexparse/set.o lexparse/is_oq.o
 #  Implicit rule search has not been done.
- 
-#  Last modified 2024-10-05 13:58:12.044086223
+#  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 40):
 	($(MAKE) -C libft)
+ 
 	$(CC) $(CFLAGS) -o $@ $^ libft/libft.a -lreadline
 	rm -f out
 	rm -f hd
@@ -349,7 +347,7 @@ signals.o:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-05 14:24:40.853758723
+#  Last modified 2024-10-05 14:58:19.229689087
 #  File has been updated.
 #  Successfully updated.
 
@@ -578,9 +576,9 @@ free.o:
 # strcache buffers: 1 (0) / strings = 66 / storage = 795 B / avg = 12 B
 # current buf: size = 8162 B / used = 795 B / count = 66 / avg = 12 B
 
-# strcache performance: lookups = 89 / hit rate = 25%
+# strcache performance: lookups = 88 / hit rate = 25%
 # hash-table stats:
-# Load=66/8192=1%, Rehash=0, Collisions=1/89=1%
-# Finished Make data base on Sat Oct  5 14:24:52 2024
+# Load=66/8192=1%, Rehash=0, Collisions=1/88=1%
+# Finished Make data base on Sun Oct  6 12:49:09 2024
 
  

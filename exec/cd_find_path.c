@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 13:26:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/04 15:18:56 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/06 13:21:07 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ int	add_to_path(t_pipex *p, char *t)
 	x = 0;
 	if (!p || !t)
 		return (1);
-	temp = ft_strjoin(p->pwd, "/");
+	if (!ft_strcmp_bool(p->pwd, "/"))
+		temp = ft_strjoin(p->pwd, "/");
+	else
+		temp = ft_strdup(p->pwd);
 	if (!temp)
 		return (1);
 	if (t[ft_strlen(t) - 1] == '/')
@@ -97,12 +100,27 @@ int	go_back(t_pipex *p, int print)
 
 int	go_slash(t_pipex *p, char **token)
 {
+	int		x;
+
+	x = 0;
 	if (!p || !token || !token[1])
 		return (1);
-	if (ft_strcmp_bool(token[1], "/") && is_access(token[1]))
+	if (is_access(token[1]) && (ft_strcmp_bool(token[1], "/") || ft_strcmp_bool(token[1], "//")))
 	{
 		reset_old_pwd(p, token[1]);
 		return (chdir(token[1]));
+	}
+	else if (token[1][0] == '/' && token[1][1] != '\0')
+	{
+		while (token[1][x])
+		{
+			if (token[1][x] == '/')
+				x++;
+			else
+				return (1);
+		}
+		reset_old_pwd(p, "/");
+		return (chdir("/"));
 	}
 	return (1);
 }

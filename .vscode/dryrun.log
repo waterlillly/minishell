@@ -1,4 +1,4 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/lbaumeis/CCore/projects/minishell'
 cc -Wall -Werror -Wextra -g -c main.c -o main.o
 cc -Wall -Werror -Wextra -g -c exit.c -o exit.o
@@ -20,7 +20,6 @@ cc -Wall -Werror -Wextra -g -c exec/set_export.c -o exec/set_export.o
 cc -Wall -Werror -Wextra -g -c exec/unset.c -o exec/unset.o
 cc -Wall -Werror -Wextra -g -c exec/pipex.c -o exec/pipex.o
 cc -Wall -Werror -Wextra -g -c exec/close_pipes.c -o exec/close_pipes.o
- 
 cc -Wall -Werror -Wextra -g -c exec/init.c -o exec/init.o
 cc -Wall -Werror -Wextra -g -c exec/more_cmds.c -o exec/more_cmds.o
 cc -Wall -Werror -Wextra -g -c exec/pre_exec.c -o exec/pre_exec.o
@@ -30,19 +29,15 @@ cc -Wall -Werror -Wextra -g -c lexparse/minishell.c -o lexparse/minishell.o
 cc -Wall -Werror -Wextra -g -c lexparse/remove_q.c -o lexparse/remove_q.o
 cc -Wall -Werror -Wextra -g -c lexparse/quote_count.c -o lexparse/quote_count.o
 cc -Wall -Werror -Wextra -g -c lexparse/open_quotes.c -o lexparse/open_quotes.o
- 
 cc -Wall -Werror -Wextra -g -c lexparse/split_shell.c -o lexparse/split_shell.o
 cc -Wall -Werror -Wextra -g -c lexparse/lexer.c -o lexparse/lexer.o
 cc -Wall -Werror -Wextra -g -c lexparse/get_line_cnc.c -o lexparse/get_line_cnc.o
- 
 cc -Wall -Werror -Wextra -g -c lexparse/check_syntax.c -o lexparse/check_syntax.o
 cc -Wall -Werror -Wextra -g -c lexparse/skip_q.c -o lexparse/skip_q.o
 cc -Wall -Werror -Wextra -g -c lexparse/parser.c -o lexparse/parser.o
- 
 cc -Wall -Werror -Wextra -g -c lexparse/set.c -o lexparse/set.o
 cc -Wall -Werror -Wextra -g -c lexparse/is_oq.c -o lexparse/is_oq.o
 (make -C libft)
- 
 make[1]: Entering directory '/home/lbaumeis/CCore/projects/minishell/libft'
 cc -Wall -Wextra -Werror -c ft_isalpha.c -o ft_isalpha.o
 cc -Wall -Wextra -Werror -c ft_isdigit.c -o ft_isdigit.o

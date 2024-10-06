@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/05 17:52:56 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/06 15:42:22 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,5 +318,6 @@ void	resort_arr(char **arr);
 int		update_unset(t_pipex *p, char *tok);
 int		update_unset_exp(t_pipex *p, char *tok);
 int		unset(t_pipex *p, char **token);
+void	check_unset(t_pipex *p);
 
 #endif

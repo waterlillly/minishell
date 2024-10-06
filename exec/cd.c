@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/05 20:32:28 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/06 15:50:56 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,23 +76,23 @@ int	fill_path(t_pipex *p, char **token)
 int	cd(t_pipex *p, char **token)
 {
 	char	*err;
-	char	*idk;
 
 	err = NULL;
+	check_unset(p);
+	if (p && token && ft_strcmp_bool(token[0], "cd") && token[1] && token[2])
+		return (ft_putendl_fd("cd: too many arguments", 2), p->status = 1);
 	if (p && token && ft_strcmp_bool(token[0], "cd"))
 	{
-		if (token[1] == NULL)
+		if (!token[1])
 			p->status = cd_home(p);
-		else if (token[1][0] == '.' && token[1][1] == '\0')
+		else if (ft_strcmp_bool(token[1], "."))
 			return (0);
-		else if (token[1] != NULL)
+		else if (token[1])
 			p->status = fill_path(p, token);
 	}
 	if (p->status != 0)
 	{
-		idk = NULL;
-		idk = get_env(p, "PWD");
-		err = ft_strjoin_free_both(ft_strdup("cd: "), idk);
+		err = ft_strjoin("cd: ", token[1]);
 		return (perror(err), free(err), err = NULL, 0);
 	}
 	return (update(p, "OLDPWD", get_env(p, "PWD")), update(p, "PWD", p->pwd));
