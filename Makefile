@@ -6,7 +6,7 @@
 #    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 16:33:47 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/10/05 14:24:40 by lbaumeis         ###   ########.fr        #
+#    Updated: 2024/10/06 18:05:55 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ CFILES += exec/utils.c exec/cd.c exec/cd_find_path.c exec/pwd.c
 CFILES += exec/env.c exec/echo.c exec/echo_split.c exec/quotes.c exec/sorting.c
 CFILES += exec/xpand.c exec/xport.c exec/set_export.c exec/unset.c
 CFILES += exec/pipex.c exec/close_pipes.c exec/init.c exec/more_cmds.c
-CFILES += exec/pre_exec.c exec/redir.c exec/execute.c
+CFILES += exec/pre_exec.c exec/redir.c exec/execute.c exec/xpd_dollar.c
+CFILES += exec/xpd_quotes.c exec/xpd_space.c exec/xpd_utils.c exec/xpd.c
 
 CFILES += lexparse/minishell.c lexparse/remove_q.c lexparse/quote_count.c lexparse/open_quotes.c
 CFILES += lexparse/split_shell.c lexparse/lexer.c lexparse/get_line_cnc.c lexparse/check_syntax.c

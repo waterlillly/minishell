@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/06 15:42:22 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/06 18:04:55 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,23 +269,36 @@ bool	check_n(char *token);
 int		echo(char **token);
 
 /*ECHO_SPLIT*/
-int		count_dlr_strs(char *s, char c);
-int		count_q_strs(char *str, int q);
-int		count_space_strs(char *str, int q);
-int		dlr_split(char *s, int d, int pa);
-int		space_split(char *s, int d, int pa);
-int		q_split(char *s, int q, int pa);
-char	**xpd_1_split(char *str, int q);
-char	**xpd_2_split(char *str, int q);
-char	**xpd_3_split(char *str, int q);
-char	**xpd_2(char **xpd1);
-char	**arrjoin(char **old, char **new);
-char	**ft_arrdup(char **s);
 char	**rewrite(char **s, int c);
 char	**reformat(char **s);
-char	**xpd_1(t_minishell_p *pars, int i);
-char	**d_q_space(char **s);
 void	xpd(t_pipex *p, t_minishell_p *pars);
+
+/*XPD SPACE*/
+int		count_space_strs(char *str, int q);
+int		space_split(char *s, int d, int pa);
+char	**xpd_3_split(char *str, int q);
+char	**d_q_space(char **s);
+
+/*XPD DOLLAR*/
+int		count_dlr_strs(char *s, char c);
+int		dlr_split(char *s, int d, int pa);
+char	**xpd_2_split(char *str, int q);
+
+/*XPD QUOTES*/
+int		count_q_strs(char *str, int q);
+int		q_split(char *s, int q, int pa);
+char	**xpd_1_split(char *str, int q);
+
+/*XPD*/
+char	**xpd_dollar(char **s);
+char	**xpd_space(char **s);
+char	**xpd_single(char **s);
+char	**xpd_double(char **s);
+char	**xpd_start(t_minishell_p *pars, int i);
+
+/*XPD_UTILS*/
+char	**arrjoin(char **old, char **new);
+char	**ft_arrdup(char **s);
 
 /*EXPAND*/
 bool	only_dollars(char *tok);
