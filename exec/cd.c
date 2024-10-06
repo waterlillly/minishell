@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/06 15:50:56 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/06 15:58:04 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,16 @@ int	fill_path(t_pipex *p, char **token)
 
 int	cd(t_pipex *p, char **token)
 {
-	char	*err;
+	char		*err;
+	static int	c = 0;
 
 	err = NULL;
-	check_unset(p);
+	c++;
+	if (c == 2)
+	{
+		check_unset(p);
+		c = 0;
+	}
 	if (p && token && ft_strcmp_bool(token[0], "cd") && token[1] && token[2])
 		return (ft_putendl_fd("cd: too many arguments", 2), p->status = 1);
 	if (p && token && ft_strcmp_bool(token[0], "cd"))
