@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:54:22 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/06 18:27:57 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/06 19:07:42 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,9 @@ void	xpd(t_pipex *p, t_minishell_p *pars)
 			j = 0;
 			while (tmp[j])
 			{
-				printf("tmp[%d]: %s\n", j, tmp[j]);
+				//printf("tmp[%d]: %s\n", j, tmp[j]);
 				pars->ps[i] = ft_strjoin_free_one(pars->ps[i], xpand(p, tmp, j));
-				printf("ps[%d]: %s\n", i, pars->ps[i]);
+				//printf("ps[%d]: %s\n", i, pars->ps[i]);
 				j++;
 			}
 			ft_free_double(tmp);

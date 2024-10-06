@@ -186,12 +186,12 @@ echo "abc''"'"acb""''""'"'abc'"
 	->abc''"acb""""'abc'
 echo "abc''"'""abc""''""'"'abc'"
 	->abc''""abc""""'abc'
+echo hi "" "" hi
+	->hi    hi
 
 DOESNT WORK:
 echo "'"'''""$""'''"'"
 	->'""$""' (ours: '""$"")
-echo hi "" "" hi
-	->hi    hi
 
 
 **input: export cmd=" -l"**
