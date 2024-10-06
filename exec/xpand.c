@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/06 19:04:06 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/06 19:24:54 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*rm_out_q(char *tok)
 		|| (tok[0] == '\"' && tok[ft_strlen(tok) - 1] == '\"'))
 		return (ft_substr(tok, 1, ft_strlen(tok) - 2));
 	else
-		return (tok);
+		return (ft_strdup(tok));
 }
 
 int	multi_q(char *token)
@@ -80,28 +80,30 @@ char	*rm_q(char *token)
 char	*xpand(t_pipex *p, char **token, int x)
 {
 	char	*temp;
+	char	*temp1;
 	char	*temp2;
 
 	if (!p || !token || !token[x])
 		return (NULL);
 	temp = NULL;
+	temp1 = NULL;
 	temp2 = NULL;
 	temp = rm_out_q(token[x]);
+	temp1 = ft_substr(temp, 1, ft_strlen(temp) - 1);
 	if (!check_s_q(token[x]) && ft_strcmp_bool(token[x], "$?"))
-		return (free(temp), ft_itoa_long(p->status));
-	else if (only_dollars(token[x]) && ((dollar_count(token[x]) == 1 && even_q(token[x]))
-		|| (dollar_count(token[x]) == 1)))
-		return ("");
-	else if (!check_s_q(token[x]) && temp[0] == '$' && temp[1] != '$'
-		&& temp[1] != '\0' && !valid_env(p, ft_substr(temp, 1, ft_strlen(temp) - 1)))
-		return (free(temp), "");
-	else if (!check_s_q(token[x]) && valid_env(p, ft_substr(temp, 1, ft_strlen(temp) - 1)))
+		return (free(temp), free(temp1), ft_strdup(ft_itoa_long(p->status)));
+	else if ((only_dollars(token[x]) && ((dollar_count(token[x]) == 1
+		&& even_q(token[x])) || (dollar_count(token[x]) == 1)))
+		|| (!check_s_q(token[x]) && temp[0] == '$' && temp[1] != '$'
+		&& temp[1] != '\0' && !valid_env(p, temp1)))
+		return (free(temp), free(temp1), ft_strdup(""));
+	else if (!check_s_q(token[x]) && valid_env(p, temp1))
 	{
-		temp2 = get_env(p, ft_substr(temp, 1, ft_strlen(temp) - 1));
-		return (temp2);
+		temp2 = get_env(p, temp1);
+		return (free(temp), free(temp1), temp2);
 	}
 	else if (s_out_q(token[x]) || d_out_q(token[x]))
-		return (temp);
+		return (free(temp1), temp);
 	else
-		return (rm_q(token[x]));
+		return (free(temp), free(temp1), rm_q(token[x]));
 }

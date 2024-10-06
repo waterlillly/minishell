@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:41:15 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/06 18:38:48 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/06 19:31:25 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**xpd_dollar(char **s)
 			s1 = ft_calloc(2, sizeof(char *));
 			if (!s1)
 				return (NULL);
-			*s1 = ft_strdup(s[x]);
+			s1[0] = ft_strdup(s[x]);
 		}
 		s2 = arrjoin(s2, s1);
 		x++;
@@ -60,7 +60,7 @@ char	**xpd_space(char **s)
 			s1 = ft_calloc(2, sizeof(char *));
 			if (!s1)
 				return (NULL);
-			*s1 = ft_strdup(s[x]);
+			s1[0] = ft_strdup(s[x]);
 		}
 		s2 = arrjoin(s2, s1);
 		x++;
@@ -88,7 +88,7 @@ char	**xpd_single(char **s)
 			s1 = ft_calloc(2, sizeof(char *));
 			if (!s1)
 				return (NULL);
-			*s1 = ft_strdup(s[x]);
+			s1[0] = ft_strdup(s[x]);
 		}
 		s2 = arrjoin(s2, s1);
 		x++;
@@ -108,14 +108,14 @@ char	**xpd_double(char **s)
 	d2 = NULL;
 	while (s[x])
 	{
-		if (!s_out_q(s[x]) && !ft_strchr(s[x], '='))
+		if (!s_out_q(s[x]) && !ft_strchr(s[x], '='))// && s[x][0] != '\'')
 			d1 = xpd_1_split(s[x], '\"');
 		else
 		{
 			d1 = ft_calloc(2, sizeof(char *));
 			if (!d1)
 				return (NULL);
-			*d1 = ft_strdup(s[x]);
+			d1[0] = ft_strdup(s[x]);
 		}
 		d2 = arrjoin(d2, d1);
 		x++;
@@ -128,7 +128,7 @@ char	**xpd_start(t_minishell_p *pars, int i)
 {
 	char	**s;
 
-	if (!pars)
+	if (!pars || !pars->str)
 		return (NULL);
 	s = NULL;
 	if ((!only_quotes(pars->str[i]) && !ft_strchr(pars->str[i], '='))
@@ -139,7 +139,7 @@ char	**xpd_start(t_minishell_p *pars, int i)
 		s = ft_calloc(2, sizeof(char *));
 		if (!s)
 			return (NULL);
-		*s = ft_strdup(pars->str[i]);
+		s[0] = ft_strdup(pars->str[i]);
 	}
 	return (reformat(s));
 }
