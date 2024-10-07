@@ -188,3 +188,21 @@ echo + dq/sq: works
 	input: echo ""'hi"'
 	input: echo '"hi''"'
 }
+
+input: export var="'what'"
+	-> should be 'what'
+input: export var='"what"'
+	-> should be "what"
+input: export var="$USER"
+	-> should be mehras
+input: export var='ABC'
+	-> should be ABC
+input: export var='$USER'
+	-> should be $USER
+input: export var=' $USER'
+	-> should be  $USER (extra space)
+input: export var= $USER
+	-> should declare 2 vriables var="" and mehras (mehras should not have an equal sign nor dqs)
+input: export var1 var2
+	-> var2 is missing
+note: if a variable already is set before minishell starts trying to reset that var causes segfault
