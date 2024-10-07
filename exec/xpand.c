@@ -62,7 +62,7 @@ char	*rm_q(char *token)
 	x = 0;
 	y = 0;
 	if (check_d_q(token) <= 0 && !check_s_q(token))
-		return (token);
+		return (ft_strdup(token));
 	q = multi_q(token);
 	new = ft_calloc((ft_strlen(token) - q + 1), sizeof(char));
 	if (!new)
