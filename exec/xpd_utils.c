@@ -22,7 +22,7 @@ char	**arrjoin(char **old, char **new)
 	y = 0;
 	ret = ft_calloc((ft_arrlen(old) + ft_arrlen(new) + 1), sizeof(char *));
 	if (!ret)
-		return (ft_free_double(old), ft_free_double(new), NULL);
+		return (ft_free_2d(old), ft_free_2d(new), NULL);
 	while (ft_arrlen(old) > 0 && old[x])
 	{
 		ret[x] = ft_strdup(old[x]);
@@ -34,7 +34,7 @@ char	**arrjoin(char **old, char **new)
 		x++;
 		y++;
 	}
-	return (ft_free_double(old), ft_free_double(new), ret);
+	return (ft_free_2d(old), ft_free_2d(new), ret);
 }
 
 char	**ft_arrdup(char **s)

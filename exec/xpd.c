@@ -38,6 +38,7 @@ char	**xpd_dollar(char **s)
 		s2 = arrjoin(s2, s1);
 		x++;
 	}
+	ft_free_2d(s);
 	return (s2);
 }
 
@@ -65,6 +66,7 @@ char	**xpd_space(char **s)
 		s2 = arrjoin(s2, s1);
 		x++;
 	}
+	ft_free_2d(s);
 	return (s2);
 }
 
@@ -93,6 +95,7 @@ char	**xpd_single(char **s)
 		s2 = arrjoin(s2, s1);
 		x++;
 	}
+	ft_free_2d(s);
 	return (reformat(s2));
 }
 
@@ -120,6 +123,7 @@ char	**xpd_double(char **s)
 		d2 = arrjoin(d2, d1);
 		x++;
 	}
+	ft_free_2d(s);
 	return (reformat(d2));
 }
 

@@ -107,5 +107,6 @@ char	**d_q_space(char **s)
 		arr = arrjoin(arr, tmp);
 		i++;
 	}
+	ft_free_2d(s);
 	return (arr);
 }

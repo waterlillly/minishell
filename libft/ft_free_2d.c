@@ -17,7 +17,7 @@ void	ft_free_2d(char **in)
 	int i;
 
 	i = -1;
-	while (in[++i])
+	while (in && in[++i])
 		free(in[i]);
 	free(in);
 }

@@ -58,7 +58,7 @@ char	**rewrite(char **s, int c)
 			i++;
 		j++;
 	}
-	return (ft_free_double(s), arr);
+	return (ft_free_2d(s), arr);
 }
 
 char	**reformat(char **s)
@@ -133,7 +133,7 @@ void	xpd(t_pipex *p, t_minishell_p *pars)
 				//printf("ps[%d]: %s\n", i, pars->ps[i]);
 				j++;
 			}
-			ft_free_double(tmp);
+			free(tmp);
 			i++;
 		}
 		pars = pars->next;

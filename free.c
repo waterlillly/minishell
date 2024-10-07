@@ -26,7 +26,7 @@ void	free_p_rest(t_pipex *p)
 	}
 	if (p->oldpwd)
 	{
-		//free(p->oldpwd);
+		free(p->oldpwd);
 		p->oldpwd = NULL;
 	}
 	if (p->mpath)
@@ -74,6 +74,7 @@ void	free_parse(t_minishell_p *in)
 		}
 		if (in->str)
 			free(in->str);
+		ft_free_2d(in->ps);
 		free(in);
 		in = tmp_p;
 	}
