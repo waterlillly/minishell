@@ -97,7 +97,7 @@ int	get_menv(t_pipex *p, char **envp)
 		return (1);
 	while (envp[x])
 	{
-		p->menv[x] = envp[x];
+		p->menv[x] = ft_strdup(envp[x]);
 		if (!p->menv[x])
 			return (1);
 		x++;

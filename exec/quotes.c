@@ -31,6 +31,7 @@ char	*add_quotes(char *token)
 	while (token[x])
 		new[y++] = token[x++];
 	new[y] = '\"';
+	free(token);
 	return (new);
 }
 

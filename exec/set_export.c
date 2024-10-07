@@ -32,6 +32,8 @@ int	update_export(t_pipex *p, char *tok, char *token)
 		ft_strlen(token) - (ft_strsrc(token, '=') + 1))));
 	if (!temp1)
 		return (free(temp), temp = NULL, 1);
+	if (p->xport[x])
+		free(p->xport[x]);
 	p->xport[x] = NULL;
 	p->xport[x] = ft_strjoin_free_both(temp, temp1);
 	if (!p->xport[x])
@@ -84,11 +86,14 @@ int	update(t_pipex *p, char *set, char *tok)
 	temp = ft_strjoin(set, "=");
 	if (!temp)
 		return (1);
-	p->menv[x] = NULL;
+	if(p->menv && p->menv[x])
+		free(p->menv[x]);
+	//p->menv[x] = NULL;
 	p->menv[x] = ft_strjoin_free_one(temp, tok);
 	if (!p->menv[x])
 		return (1);
-	return (update_export(p, set, tok));
+	x = update_export(p, set, tok);
+	return (x);
 }
 
 int	update_both(t_pipex *p)
@@ -96,6 +101,8 @@ int	update_both(t_pipex *p)
 	int		x;
 
 	x = 0;
+	if(p->oldpwd)
+		free(p->oldpwd);
 	p->oldpwd = NULL;
 	p->oldpwd = get_env(p, "PWD");
 	x = update(p, "OLDPWD", p->oldpwd);

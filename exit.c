@@ -23,9 +23,9 @@ void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str)
 	if (p->paths)
 		ft_free_2d(p->paths);//ft_free_2d(p->paths);
 	if (p->xport)
-		ft_free_2d(p->xport);//ft_free_2d(p->xport);
+		ft_free_2d(p->xport);//ft_free_double(p->xport);
 	if (p->menv)
-		free(p->menv);
+		ft_free_2d(p->menv);
 	free_p_rest(p);
 	free_everything(p, pars, input);
 	if (str)

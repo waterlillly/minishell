@@ -76,6 +76,7 @@ int	fill_path(t_pipex *p, char **token)
 int	cd(t_pipex *p, char **token)
 {
 	char		*err;
+	char		*env;
 	static int	c = 0;
 
 	err = NULL;
@@ -101,5 +102,7 @@ int	cd(t_pipex *p, char **token)
 		err = ft_strjoin("cd: ", token[1]);
 		return (perror(err), free(err), err = NULL, 0);
 	}
-	return (update(p, "OLDPWD", get_env(p, "PWD")), update(p, "PWD", p->pwd));
+	env = get_env(p, "PWD");
+	update(p, "OLDPWD", env);
+	return (free(env), update(p, "PWD", p->pwd));
 }

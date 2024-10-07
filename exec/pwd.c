@@ -20,6 +20,8 @@ void	reset_old_pwd(t_pipex *p, char *path)
 	(void)new;
 	if (!p || !path)
 		return ;
+	if (p->oldpwd)
+		free(p->oldpwd);
 	p->oldpwd = NULL;
 	p->oldpwd = get_env(p, "PWD");
 	if (!p->oldpwd)
@@ -29,6 +31,8 @@ void	reset_old_pwd(t_pipex *p, char *path)
 		else
 			return ;
 	}
+	if (p->pwd)
+		free(p->pwd);
 	p->pwd = NULL;
 	p->pwd = ft_strdup(path);
 }
@@ -101,8 +105,8 @@ int	join_oldpwd(t_pipex *p, char **temp, char *oldpwd)
 				oldpwd = ft_strjoin_free_one(oldpwd, temp[x]);
 				oldpwd = ft_strjoin_free_one(oldpwd, "/..");
 				err = ft_strjoin("cd: ", oldpwd);
-				return (perror(err), free(err), free(p->oldpwd), p->oldpwd = NULL,
-					p->oldpwd = ft_strdup(p->pwd), free(p->pwd), p->pwd = NULL, p->pwd = oldpwd, 1);
+				return (perror(err), free(err), free(p->oldpwd),
+					p->oldpwd = ft_strdup(p->pwd), free(p->pwd), p->pwd = oldpwd, 1);
 			}
 			return (free(p->oldpwd), p->oldpwd = NULL, p->oldpwd = oldpwd,
 				update(p, "OLDPWD", p->oldpwd), 0);
@@ -119,6 +123,7 @@ int	go_up_oldpwd(t_pipex *p)
 {
 	char	**temp;
 	char	*oldpwd;
+	int		x;
 
 	temp = NULL;
 	oldpwd = NULL;
@@ -139,5 +144,6 @@ int	go_up_oldpwd(t_pipex *p)
 	oldpwd = ft_strdup("/");
 	if (!oldpwd)
 		return (1);
-	return (join_oldpwd(p, temp, oldpwd));
+	x = join_oldpwd(p, temp, oldpwd);
+	return (ft_free_2d(temp), x);
 }
