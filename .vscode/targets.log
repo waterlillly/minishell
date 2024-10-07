@@ -1,5 +1,5 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'main.o', needed by 'minishell'.  Stop.
+make: *** No rule to make target 'exec/xpd.o', needed by 'minishell'.  Stop.
 
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
@@ -8,7 +8,7 @@ make: *** No rule to make target 'main.o', needed by 'minishell'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Oct  3 11:34:47 2024
+# Make data base, printed on Sun Oct  6 18:06:05 2024
 
 # Variables
 
@@ -20,10 +20,10 @@ GDK_BACKEND = x11
 LC_ALL = C
 # environment
 SSH_AGENT_LAUNCHER = gnome-keyring
-# makefile (from 'Makefile', line 31)
+# makefile (from 'Makefile', line 32)
 OFILES = $(CFILES:.c=.o)
-# makefile (from 'Makefile', line 29)
-CFILES = main.c more_cmds.c exit.c execute.c start.c signals.c pre_exec.c redir.c buildins/utils.c buildins/cd.c buildins/cd_find_path.c buildins/pwd.c  buildins/env.c buildins/echo.c buildins/echo_split.c buildins/quotes.c buildins/sorting.c buildins/xpand.c buildins/xport.c buildins/set_export.c buildins/unset.c pipex/pipex.c pipex/error.c pipex/init.c lexparse/minishell.c lexparse/remove_q.c lexparse/quote_count.c lexparse/open_quotes.c lexparse/split_shell.c lexparse/lexer.c lexparse/get_line_cnc.c lexparse/check_syntax.c lexparse/skip_q.c lexparse/parser.c lexparse/set.c lexparse/is_oq.c
+# makefile (from 'Makefile', line 30)
+CFILES = main.c exit.c start.c signals.c free.c exec/utils.c exec/cd.c exec/cd_find_path.c exec/pwd.c exec/env.c exec/echo.c exec/echo_split.c exec/quotes.c exec/sorting.c exec/xpand.c exec/xport.c exec/set_export.c exec/unset.c exec/pipex.c exec/close_pipes.c exec/init.c exec/more_cmds.c exec/pre_exec.c exec/redir.c exec/execute.c exec/xpd_dollar.c exec/xpd_quotes.c exec/xpd_space.c exec/xpd_utils.c exec/xpd.c lexparse/minishell.c lexparse/remove_q.c lexparse/quote_count.c lexparse/open_quotes.c lexparse/split_shell.c lexparse/lexer.c lexparse/get_line_cnc.c lexparse/check_syntax.c lexparse/skip_q.c lexparse/parser.c lexparse/set.c lexparse/is_oq.c
 # environment
 VSCODE_CRASH_REPORTER_PROCESS_TYPE = extensionHost
 # environment
@@ -57,7 +57,7 @@ OLDPWD = /home/lbaumeis/CCore/projects/minishell
 # environment
 VSCODE_CODE_CACHE_PATH = /home/lbaumeis/.config/Code/CachedData/38c31bc77e0dd6ae88a4e9cc93428cc27a56ba40
 # environment
-XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session9
+XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session12
 # environment
 LANG = C
 # environment
@@ -67,15 +67,17 @@ XAUTHORITY = /home/lbaumeis/.Xauthority
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.91
+GNOME_TERMINAL_SERVICE = :1.88
 # makefile
 MAKEFLAGS = pqrR -j16 --jobserver-auth=3,4
 # environment
-DBUS_STARTER_ADDRESS = unix:path=/run/user/101355/bus,guid=ccb6d16e7493911a7b38a11766fe6289
+DBUS_STARTER_ADDRESS = unix:path=/run/user/101355/bus,guid=5d5ef2cad53db69ce5929a1667026b0a
 # makefile
 CURDIR := /home/lbaumeis/CCore/projects/minishell
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# environment
+VSCODE_L10N_BUNDLE_LOCATION = 
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -95,23 +97,23 @@ MAKEFILE_LIST := Makefile
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 273318
+VSCODE_PID = 486935
 # environment
-KRB5CCNAME = FILE:/tmp/krb5cc_101355_ErXjFi
+KRB5CCNAME = FILE:/tmp/krb5cc_101355_uyEGoG
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/c3r10p3.42vienna.com:@/tmp/.ICE-unix/272484,unix/c3r10p3.42vienna.com:/tmp/.ICE-unix/272484
+SESSION_MANAGER = local/c3r10p3.42vienna.com:@/tmp/.ICE-unix/486126,unix/c3r10p3.42vienna.com:/tmp/.ICE-unix/486126
 # automatic
 *F = $(notdir $*)
-# makefile (from 'Makefile', line 34)
+# makefile (from 'Makefile', line 35)
 NUMTH = $(shell nproc)
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
 # environment
-DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101355/bus,guid=ccb6d16e7493911a7b38a11766fe6289
+DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/101355/bus,guid=5d5ef2cad53db69ce5929a1667026b0a
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
@@ -129,7 +131,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/056370e4_dfa9_4280_a35c_6ff2ed4c9e87
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/7f3b37b5_d687_4886_84c8_e7be44b22e46
 # environment
 MAKELEVEL := 0
 # default
@@ -148,7 +150,7 @@ CARGO_HOME = /usr/share/rust/cargo
 DOCKER_HOST = unix:///run/user/101355/docker.sock
 # automatic
 ?F = $(notdir $?)
-# makefile (from 'Makefile', line 32)
+# makefile (from 'Makefile', line 33)
 NAME = minishell
 # environment
 GTK_IM_MODULE = ibus
@@ -171,7 +173,7 @@ LOGNAME = lbaumeis
 # makefile
 .DEFAULT_GOAL := all
 # environment
-SYSTEMD_EXEC_PID = 272484
+SYSTEMD_EXEC_PID = 486126
 # environment
 DISPLAY = :0
 # environment
@@ -235,7 +237,7 @@ XDG_MENU_PREFIX = gnome-
 # environment
 GDMSESSION = ubuntu
 # variable set hash-table stats:
-# Load=111/1024=11%, Rehash=0, Collisions=14/166=8%
+# Load=112/1024=11%, Rehash=0, Collisions=15/171=9%
 
 # Pattern-specific Variable Values
 
@@ -243,15 +245,21 @@ GDMSESSION = ubuntu
 
 # Directories
 
-# . (device 2048, inode 4260053): 21 files, no impossibilities.
+# . (device 2048, inode 4260053): 22 files, no impossibilities.
 
-# 21 files, no impossibilities in 1 directories.
+# 22 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
 # No implicit rules.
 
 # Files
+
+# Not a target:
+exec/xpd.o:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
 
 .c.o:
 #  Implicit rule search has not been done.
@@ -261,10 +269,19 @@ GDMSESSION = ubuntu
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Not a target:
-buildins/unset.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+exec/pwd.o:
+#  Implicit rule search has been done.
+ 
+#  Last modified 2024-10-06 18:06:00.473987351
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+exec/echo.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.473987351
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 lexparse/lexer.o:
@@ -273,10 +290,31 @@ lexparse/lexer.o:
 #  File has not been updated.
 
 # Not a target:
+exec/more_cmds.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.54998795
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
 lexparse/is_oq.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+
+# Not a target:
+exec/echo_split.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.473987351
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+exec/xpd_dollar.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.541987888
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 lexparse/get_line_cnc.o:
@@ -284,11 +322,11 @@ lexparse/get_line_cnc.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-minishell: main.o more_cmds.o exit.o execute.o start.o signals.o pre_exec.o redir.o buildins/utils.o buildins/cd.o buildins/cd_find_path.o buildins/pwd.o buildins/env.o buildins/echo.o buildins/echo_split.o buildins/quotes.o buildins/sorting.o buildins/xpand.o buildins/xport.o buildins/set_export.o buildins/unset.o pipex/pipex.o pipex/error.o pipex/init.o lexparse/minishell.o lexparse/remove_q.o lexparse/quote_count.o lexparse/open_quotes.o lexparse/split_shell.o lexparse/lexer.o lexparse/get_line_cnc.o lexparse/check_syntax.o lexparse/skip_q.o lexparse/parser.o lexparse/set.o lexparse/is_oq.o
+minishell: main.o exit.o start.o signals.o free.o exec/utils.o exec/cd.o exec/cd_find_path.o exec/pwd.o exec/env.o exec/echo.o exec/echo_split.o exec/quotes.o exec/sorting.o exec/xpand.o exec/xport.o exec/set_export.o exec/unset.o exec/pipex.o exec/close_pipes.o exec/init.o exec/more_cmds.o exec/pre_exec.o exec/redir.o exec/execute.o exec/xpd_dollar.o exec/xpd_quotes.o exec/xpd_space.o exec/xpd_utils.o exec/xpd.o lexparse/minishell.o lexparse/remove_q.o lexparse/quote_count.o lexparse/open_quotes.o lexparse/split_shell.o lexparse/lexer.o lexparse/get_line_cnc.o lexparse/check_syntax.o lexparse/skip_q.o lexparse/parser.o lexparse/set.o lexparse/is_oq.o
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 40):
+#  recipe to execute (from 'Makefile', line 41):
 	($(MAKE) -C libft)
 	$(CC) $(CFLAGS) -o $@ $^ libft/libft.a -lreadline
 	rm -f out
@@ -296,10 +334,11 @@ minishell: main.o more_cmds.o exit.o execute.o start.o signals.o pre_exec.o redi
 	rm -f buildins.h.gch
 
 # Not a target:
-buildins/xport.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+exec/unset.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.553987983
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 lexparse/parser.o:
@@ -314,81 +353,80 @@ lexparse/check_syntax.o:
 #  File has not been updated.
 
 # Not a target:
-pipex/init.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-signals.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-Makefile:
+exec/utils.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-09-23 22:36:15.218199741
+#  Last modified 2024-10-06 18:06:00.473987351
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
-pipex/error.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+signals.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.46998732
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:05:55.933951468
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 exit.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.46998732
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
-execute.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+exec/xpd_space.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.569988108
+#  File has been updated.
+#  Successfully updated.
 
 clean:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 47):
+#  recipe to execute (from 'Makefile', line 48):
 	($(MAKE) -C libft clean)
 	rm -f $(OFILES)
- 
 	rm -f out
 	rm -f hd
 	rm -f buildins.h.gch
 
 # Not a target:
-buildins/set_export.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+exec/env.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.473987351
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+exec/cd_find_path.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.473987351
+#  File has been updated.
+#  Successfully updated.
 
 re: fclean
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 61):
+#  recipe to execute (from 'Makefile', line 62):
 	$(MAKE) all
-
-# Not a target:
-buildins/pwd.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
 
 mval: re
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 64):
+#  recipe to execute (from 'Makefile', line 65):
 	($(MAKE) -C libft clean)
 	rm -f $(OFILES)
 	rm -f out
@@ -398,16 +436,25 @@ mval: re
 	valgrind -s --show-leak-kinds=all --track-fds=yes --leak-check=full --track-origins=yes --suppressions=.vgignore ./$(NAME)
 
 # Not a target:
-pipex/pipex.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+exec/execute.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.54598792
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
-redir.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+exec/quotes.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.473987351
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+exec/set_export.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.553987983
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 lexparse/split_shell.o:
@@ -416,19 +463,28 @@ lexparse/split_shell.o:
 #  File has not been updated.
 
 # Not a target:
-buildins/xpand.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+exec/pre_exec.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.54998795
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+exec/init.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.54598792
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+exec/xpd_utils.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.553987983
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 .DEFAULT:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-buildins/env.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -445,7 +501,7 @@ fclean: clean
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 54):
+#  recipe to execute (from 'Makefile', line 55):
 	($(MAKE) -C libft fclean)
 	rm -f $(NAME)
 	rm -f out
@@ -453,28 +509,11 @@ fclean: clean
 	rm -f buildins.h.gch
 
 # Not a target:
-buildins/cd.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
 start.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-buildins/cd_find_path.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-buildins/utils.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.46998732
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 lexparse/open_quotes.o:
@@ -489,40 +528,46 @@ lexparse/skip_q.o:
 #  File has not been updated.
 
 # Not a target:
-buildins/quotes.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+exec/xpd_quotes.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.553987983
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
-pre_exec.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+exec/redir.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.54598792
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 main.o:
 #  Implicit rule search has been done.
-#  File does not exist.
-#  File has not been updated.
+#  Last modified 2024-10-06 18:06:00.473987351
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
-more_cmds.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+exec/cd.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.477987383
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 lexparse/minishell.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
 # Not a target:
-buildins/sorting.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+exec/xport.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.481987415
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 lexparse/remove_q.o:
@@ -531,16 +576,31 @@ lexparse/remove_q.o:
 #  File has not been updated.
 
 # Not a target:
-buildins/echo_split.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+exec/sorting.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.46998732
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 lexparse/quote_count.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+
+# Not a target:
+exec/pipex.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.54998795
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+exec/close_pipes.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.54598792
+#  File has been updated.
+#  Successfully updated.
 
 .PHONY: all clean fclean re mval
 #  Implicit rule search has not been done.
@@ -554,25 +614,33 @@ lexparse/set.o:
 #  File has not been updated.
 
 # Not a target:
-buildins/echo.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+exec/xpand.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.473987351
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+free.o:
+#  Implicit rule search has been done.
+#  Last modified 2024-10-06 18:06:00.46998732
+#  File has been updated.
+#  Successfully updated.
 
 # files hash-table stats:
-# Load=47/1024=5%, Rehash=0, Collisions=1/104=1%
+# Load=53/1024=5%, Rehash=0, Collisions=2/116=2%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 69 / storage = 861 B / avg = 12 B
-# current buf: size = 8162 B / used = 861 B / count = 69 / avg = 12 B
+# strcache buffers: 1 (0) / strings = 71 / storage = 876 B / avg = 12 B
+# current buf: size = 8162 B / used = 876 B / count = 71 / avg = 12 B
 
-# strcache performance: lookups = 91 / hit rate = 24%
+# strcache performance: lookups = 98 / hit rate = 27%
 # hash-table stats:
-# Load=69/8192=1%, Rehash=0, Collisions=1/91=1%
-# Finished Make data base on Thu Oct  3 11:34:47 2024
+# Load=71/8192=1%, Rehash=0, Collisions=1/98=1%
+# Finished Make data base on Sun Oct  6 18:06:05 2024
 
  

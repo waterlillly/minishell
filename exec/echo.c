@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/02 15:51:22 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/06 19:04:50 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,14 @@ int	do_echo(char **token, int x)
 	if (!token || !token[x]
 		|| (x == 1 && ft_strcmp_bool(token[0], "echo") && check_n(token[x])))
 		return (1);
-	else if ((!check_s_q(token[x]) && only_dollars(rm_q(token[x])))
-		|| only_dollars(token[x]))
-	{
-		if (even_q(token[x]) && dollar_count(token[x]) == 1)
-			return (0);
-		else
-			return (ft_putstr_fd(rm_q(token[x]), 1), 0);
-	}
+	// else if ((!check_s_q(token[x]) && only_dollars(rm_q(token[x])))
+	// 	|| only_dollars(token[x]))
+	// {
+	// 	if (even_q(token[x]) && dollar_count(token[x]) == 1)
+	// 		return (0);
+	// 	else
+	// 		return (ft_putstr_fd(rm_q(token[x]), 1), 0);
+	// }
 	return (ft_putstr_fd(token[x], 1), 0);
 }
 
@@ -131,7 +131,7 @@ int	echo(char **token)
 	while (token[x])
 	{
 		y = do_echo(token, x);
-		if (y != 1 && token[x + 1])
+		if (y != 1 && token[x] && token[x + 1])
 			ft_putstr_fd(" ", 1);
 		x++;
 	}

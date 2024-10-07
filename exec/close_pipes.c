@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:04:36 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/13 14:36:36 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/05 14:15:59 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,4 @@ void	close_all(t_pipex *p)
 		close(p->fileout);
 	if (p && p->pip)
 		close_pipes(p);
-}
-
-void	err_free(t_pipex *p)
-{
-	close_all(p);
-	if (p->pid)
-	{
-		free(p->pid);
-		p->pid = NULL;
-	}
-	if (p->here)
-	{
-		free(p->here);
-		p->here = NULL;
-	}
 }

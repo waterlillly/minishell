@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/03 15:01:52 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/06 14:43:50 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	update_export(t_pipex *p, char *tok, char *token)
 		ft_strlen(token) - (ft_strsrc(token, '=') + 1))));
 	if (!temp1)
 		return (free(temp), temp = NULL, 1);
-	free(p->xport[x]);
 	p->xport[x] = NULL;
 	p->xport[x] = ft_strjoin_free_both(temp, temp1);
 	if (!p->xport[x])
@@ -58,7 +57,6 @@ int	set_export(t_pipex *p, char **token)
 			x = find_str_part(p->menv, temp);
 			if (x < 0)
 				return (free(temp), temp = NULL, x);
-			free(p->menv[x]);
 			p->menv[x] = NULL;
 			p->menv[x] = ft_strdup(token[1]);
 			if (!p->menv[x])
@@ -86,7 +84,6 @@ int	update(t_pipex *p, char *set, char *tok)
 	temp = ft_strjoin(set, "=");
 	if (!temp)
 		return (1);
-	free(p->menv[x]);
 	p->menv[x] = NULL;
 	p->menv[x] = ft_strjoin_free_one(temp, tok);
 	if (!p->menv[x])
@@ -99,7 +96,6 @@ int	update_both(t_pipex *p)
 	int		x;
 
 	x = 0;
-	free(p->oldpwd);
 	p->oldpwd = NULL;
 	p->oldpwd = get_env(p, "PWD");
 	x = update(p, "OLDPWD", p->oldpwd);

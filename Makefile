@@ -6,7 +6,7 @@
 #    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 16:33:47 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/09/18 14:48:08 by lbaumeis         ###   ########.fr        #
+#    Updated: 2024/10/06 18:05:55 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,14 @@ CFLAGS = -Wall -Werror -Wextra -g
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
 
-CFILES += main.c more_cmds.c exit.c execute.c start.c signals.c pre_exec.c redir.c
+CFILES += main.c exit.c start.c signals.c free.c
 
-CFILES += buildins/utils.c buildins/cd.c buildins/cd_find_path.c buildins/pwd.c #buildins/backup.c
-CFILES += buildins/env.c buildins/echo.c buildins/echo_split.c buildins/quotes.c buildins/sorting.c
-CFILES += buildins/xpand.c buildins/xport.c buildins/set_export.c buildins/unset.c
-
-CFILES += pipex/pipex.c pipex/error.c pipex/init.c
+CFILES += exec/utils.c exec/cd.c exec/cd_find_path.c exec/pwd.c
+CFILES += exec/env.c exec/echo.c exec/echo_split.c exec/quotes.c exec/sorting.c
+CFILES += exec/xpand.c exec/xport.c exec/set_export.c exec/unset.c
+CFILES += exec/pipex.c exec/close_pipes.c exec/init.c exec/more_cmds.c
+CFILES += exec/pre_exec.c exec/redir.c exec/execute.c exec/xpd_dollar.c
+CFILES += exec/xpd_quotes.c exec/xpd_space.c exec/xpd_utils.c exec/xpd.c
 
 CFILES += lexparse/minishell.c lexparse/remove_q.c lexparse/quote_count.c lexparse/open_quotes.c
 CFILES += lexparse/split_shell.c lexparse/lexer.c lexparse/get_line_cnc.c lexparse/check_syntax.c

@@ -98,7 +98,7 @@ bash: exit: abc: numeric argument required
 (real) echo $?
 24
 
-**input: unset PWD; cd ..; cd /minishell**
+*input: unset PWD; cd ..; cd /minishell*
 	->should work& also update env and export as soon as there is a valid pwd/oldpwd again
 
 *input: start minishell without env; show env+export* (handled for now with check in main)
@@ -137,11 +137,11 @@ input: 	/home/lbaumeis/CCore/projects/minishell> cd ..
 	->if (buildins) moved to run/parent process:
 		echo hi | echo hello displays both because forking only happens if its not a buildin then
 
-**rewrite expand& echo split part**
+*rewrite expand& echo split part*
 
 **sort exit messages**
 
-**add i (=index) to pipex struct instead of using c to iterate through the cmds/processes**
+**(maybe) add i (=index) to pipex struct instead of using c to iterate through the cmds/processes?**
 
 rewrite update_free_arr and learn loop_cmd_check
 
@@ -151,43 +151,56 @@ in export the name of the variable cannot contain qoutes, $ or start with a numb
 
 several empty sq or dq width quotes crashes
 
-echo + " ": doesn't work
-{
-	input: echo hi" "hi
-	input: echo hi "" "" hi
-		->should be hi    hi but is hi   hi (1 space too little)
-	ínput: echo hi" $USER"hi
-	input: echo hi"$USER "hi
-	input: echo " $USER"
-	input: echo " hi"
-}
-echo + " ": works
-{
-	input: echo hi""hi
-	input: echo hi"  "hi
-	input: echo hi"$USER"hi
-}
+WORKS:
+echo "hi"''hello$HOME'""' $$$fuck'hello$hello$$$PWD$'""
+	->hihello/home/lbaumeis"" 524212hello$hello$$$PWD$
+echo hi" "hi
+	->hi hi
+echo " hi"
+	-> hi
+echo hi""hi
+	->hihi
+echo hi"  "hi
+	->hi  hi
+echo hi"$USER"hi
+	->hilbaumeishi
+echo hi" $USER"hi
+	->hi lbaumeishi
+echo hi"$USER "hi
+	->hilbaumeis hi
+echo " $USER"
+	-> lbaumeis
+echo "hi"'hi""'"hi"
+	->hihi""hi
+echo "hi"'hi ""'"hi"
+	->hihi ""hi
+echo ''"hi''"''
+	->hi''
+echo ""'hi"'
+	->hi"
+echo '"hi''"'
+	->"hi"
+echo "''""''"'''""'"""'"
+	->''''""'
+echo "abc''"'"acb""''""'"'abc'"
+	->abc''"acb""""'abc'
+echo "abc''"'""abc""''""'"'abc'"
+	->abc''""abc""""'abc'
+echo hi "" "" hi
+	->hi    hi
 
-echo + dq/sq: doesn't work
-{
-	input: echo "hi"'hi""'"hi"
-		->should be hihi""hi
-	input: echo "hi"'hi ""'"hi"
-		->should be hihi ""hi
-	input: echo "''""''"'''""'"""'"
-		->should be ''''""'
-	input: echo ''"hi''"''
-		->should be hi''
-	input: echo "abc''"'""abc""''""'"'abc'"
-		->should be abc''""abc""""'abc'
-	input: echo "abc''"'"acb""''""'"'abc'"
-		->should be abc''"abc""""'abc'
-}
-echo + dq/sq: works
-{
-	input: echo ""'hi"'
-	input: echo '"hi''"'
-}
+DOESNT WORK:
+echo "'"'''""$""'''"'"
+	->'""$""' (ours: '""$"")
+
+
+**input: export cmd=" -l"**
+	export cmd=" -l"
+	ls$cmd
+	->cmd not found (BUT: expanded correctly: pars->ps[0]: ls -l, but should be: pars->ps[0]: ls and pars->ps[1]: -l)
+
+
+*add check for unset vars*
 
 input: export var="'what'"
 	-> should be 'what'

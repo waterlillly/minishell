@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/01 19:58:36 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/10/06 18:04:55 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,34 +124,22 @@ typedef struct s_pipex
 }			t_pipex;
 
 /*MAIN*/
-void 	free_parse(t_minishell_p *in);
 void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 int		do_stuff(t_pipex *p, int c, t_minishell_p *pars);
 bool	run(t_pipex *p, t_raw_in *input, t_minishell_p **pars);
 
+/*FREE*/
+void	free_p_rest(t_pipex *p);
+void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input);
+void 	free_parse(t_minishell_p *in);
+void	err_free(t_pipex *p);
+
 /*EXIT*/
 void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str);
 int		error(char *str, int code);
-void	free_p_rest(t_pipex *p);
-void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input);
 bool	check_exit(t_pipex *p, int *c, t_minishell_p **pars);
 
-/*MORE_CMDS*/
-bool	is_buildin(char *s);
-int		do_this(t_pipex *p, t_minishell_p *pars);
-
-/*PRE_EXEC*/
-int		check_access(t_pipex *p, t_minishell_p *pars);
-int		check(t_pipex *p, t_minishell_p *pars);
-bool	valid_cmd(char **str, t_pipex *p);
-//char	*loop_cmd_check(t_pipex *p, t_minishell_p *pars, int x);
-char	**check_cmd(t_minishell_p *pars);
-
-/*EXECUTE*/
-int		redirect(t_pipex *p, int c, t_minishell_p *pars);
-int		execute(t_pipex *p, int c, t_minishell_p *pars);
-
-/*START*/
+/*SIGNALS*/
 void	sig_int(int	num);
 void	sig_int_hd(int num);
 void	sig_int_child(int num);
@@ -159,12 +147,9 @@ void	sig_quit_child(int num);
 void	sig_quit(int num);
 void	sig_init(t_pipex *p, int hd);
 void	set_mode_s(t_pipex *p, int c);
-void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *input);
-void	print_ps(t_minishell_p *pars);
 
-/*REDIR*/
-void	check_filein(t_pipex *p, t_minishell_p *pars);
-void	check_fileout(t_pipex *p, t_minishell_p *pars);
+/*START*/
+void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *input);
 
 /*____________________LEXPARSE____________________*/
 void	print_parsed(t_minishell_p *in);
@@ -195,24 +180,40 @@ int				is_oq(char	c, int *dq, int *sq);
 t_minishell_p	*ft_lstfirst_parse(t_minishell_p *lst);
 void			free_lex(t_minishell_l *in);
 
-/*____________________PIPEX____________________*/
+/*____________________EXEC____________________*/
 /*PIPEX*/
 char	*is_exec(t_pipex *p);
 int		do_heredoc(t_pipex *p, t_minishell_p *pars);
 int		exec_cmd(t_pipex *p, t_minishell_p *pars);
 
-/*ERROR*/
+/*CLOSE_PIPES*/
 void	closing(t_pipex *p);
 void	close_pipes(t_pipex *p);
 void	close_all(t_pipex *p);
-void	err_free(t_pipex *p);
 
 /*INIT*/
 void 	init_pipes(t_pipex *p);
 void	init_p(t_pipex *p, t_minishell_p *pars);
 int		first_init(t_pipex *p, char **envp);
 
-/*____________________BUILDINS____________________*/
+/*REDIR*/
+void	check_filein(t_pipex *p, t_minishell_p *pars);
+void	check_fileout(t_pipex *p, t_minishell_p *pars);
+
+/*MORE_CMDS*/
+bool	is_buildin(char *s);
+int		do_this(t_pipex *p, t_minishell_p *pars);
+
+/*PRE_EXEC*/
+int		check_access(t_pipex *p, t_minishell_p *pars);
+int		check(t_pipex *p, t_minishell_p *pars);
+bool	valid_cmd(char **str, t_pipex *p);
+char	**check_cmd(t_minishell_p *pars);
+
+/*EXECUTE*/
+int		redirect(t_pipex *p, int c, t_minishell_p *pars);
+int		execute(t_pipex *p, int c, t_minishell_p *pars);
+
 /*UTILS*/
 bool	is_access(char *dir);
 int		find_arg(char **s, char *a);
@@ -230,6 +231,8 @@ bool	check_s_q(char *token);
 bool	s_out_q(char *tok);
 bool	d_out_q(char *tok);
 bool	only_quotes(char *s);
+int		only_q(char *s, int q);
+int		count_q(char *s, int q);
 
 /*PWD*/
 void	reset_old_pwd(t_pipex *p, char *path);
@@ -243,11 +246,6 @@ bool	valid_env(t_pipex *p, char *tok);
 char	*get_env(t_pipex *p, char *str);
 int		get_menv(t_pipex *p, char **envp);
 int		buildins_init(t_pipex *p, char **envp);
-
-/*BACKUP*/
-//int		backup_env(t_pipex *p, char *temp);
-//int		backup_xport(t_pipex *p, char *temp);
-//int		backup(t_pipex *p);
 
 /*CD_FIND_PATH*/
 int		add_to_path(t_pipex *p, char *t);
@@ -271,22 +269,36 @@ bool	check_n(char *token);
 int		echo(char **token);
 
 /*ECHO_SPLIT*/
-int		count_dlr_strs(char *s, char c);
-int		count_q_strs(char *str, int q);
-int		dlr_split(char *s, int d, int pa);
-int		q_split(char *s, int q, int pa);
-char	**xpd_1_split(char *str, int q);
-char	**xpd_2_split(char *str, int q);
-char	**xpd_2(char **xpd1);
-char	**arrjoin(char **old, char **new);
-char	**ft_arrdup(char **s);
 char	**rewrite(char **s, int c);
 char	**reformat(char **s);
-char	**xpd_1(t_minishell_p *pars, int i);
 void	xpd(t_pipex *p, t_minishell_p *pars);
-// int		countstrs(char *s, char c);
-// int		do_split(char *s, char c, int pos_a);
-// char	**echo_split(char *s, int c);
+
+/*XPD SPACE*/
+int		count_space_strs(char *str, int q);
+int		space_split(char *s, int d, int pa);
+char	**xpd_3_split(char *str, int q);
+char	**d_q_space(char **s);
+
+/*XPD DOLLAR*/
+int		count_dlr_strs(char *s, char c);
+int		dlr_split(char *s, int d, int pa);
+char	**xpd_2_split(char *str, int q);
+
+/*XPD QUOTES*/
+int		count_q_strs(char *str, int q);
+int		q_split(char *s, int q, int pa);
+char	**xpd_1_split(char *str, int q);
+
+/*XPD*/
+char	**xpd_dollar(char **s);
+char	**xpd_space(char **s);
+char	**xpd_single(char **s);
+char	**xpd_double(char **s);
+char	**xpd_start(t_minishell_p *pars, int i);
+
+/*XPD_UTILS*/
+char	**arrjoin(char **old, char **new);
+char	**ft_arrdup(char **s);
 
 /*EXPAND*/
 bool	only_dollars(char *tok);
@@ -319,5 +331,6 @@ void	resort_arr(char **arr);
 int		update_unset(t_pipex *p, char *tok);
 int		update_unset_exp(t_pipex *p, char *tok);
 int		unset(t_pipex *p, char **token);
+void	check_unset(t_pipex *p);
 
 #endif

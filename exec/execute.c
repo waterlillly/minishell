@@ -6,11 +6,11 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 16:27:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/19 15:18:27 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/05 14:26:25 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	redirect(t_pipex *p, int c, t_minishell_p *pars)
 {

@@ -6,11 +6,11 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:42:56 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/01 17:43:05 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/05 14:27:25 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	check_access(t_pipex *p, t_minishell_p *pars)
 {

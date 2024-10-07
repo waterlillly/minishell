@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/24 19:00:39 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/06 15:58:04 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,21 @@ int	go_back_minus(t_pipex *p, int print)
 
 int	fill_path(t_pipex *p, char **token)
 {
+	int	x;
+
+	x = 0;
 	if (!p || !token || !token[1])
 		return (1);
 	if (ft_strcmp_bool(token[1], "-"))
 		return (go_back_minus(p, 1));
 	else if (ft_strcmp_bool(token[1], ".."))
 	{
-		go_up_oldpwd(p);
+		x = go_up_oldpwd(p);
 		if (ft_strcmp_bool(p->pwd, "/"))
 			return (update(p, "OLDPWD", "/"));
-		return (go_back(p, 0));
+		if (x == 0)
+			return (go_back(p, 0));
+		return (0);
 	}
 	else if (token[1][0] == '/' && token[1][1] != '\0'
 		&& token[1][1] != '/')
@@ -70,33 +75,30 @@ int	fill_path(t_pipex *p, char **token)
 
 int	cd(t_pipex *p, char **token)
 {
-	char	*err;
+	char		*err;
+	static int	c = 0;
 
 	err = NULL;
+	c++;
+	if (c == 2)
+	{
+		check_unset(p);
+		c = 0;
+	}
+	if (p && token && ft_strcmp_bool(token[0], "cd") && token[1] && token[2])
+		return (ft_putendl_fd("cd: too many arguments", 2), p->status = 1);
 	if (p && token && ft_strcmp_bool(token[0], "cd"))
 	{
-		if (token[1] == NULL)
+		if (!token[1])
 			p->status = cd_home(p);
-		else if (token[1][0] == '.' && token[1][1] == '\0')
+		else if (ft_strcmp_bool(token[1], "."))
 			return (0);
-		else if (token[1] != NULL)
+		else if (token[1])
 			p->status = fill_path(p, token);
-	}
-	if (!get_env(p, "OLDPWD") || !get_env(p, "PWD"))
-	{
-		if (p->pwd && !is_access(get_env(p, "OLDPWD")))
-		{
-			free(p->pwd);
-			p->pwd = NULL;
-			p->pwd = get_env(p, "PWD");
-			if (!p->pwd)
-				p->pwd = get_env(p, "HOME");
-		}
-		//return (update(p, "PWD", p->pwd), update(p, "OLDPWD", p->oldpwd));
 	}
 	if (p->status != 0)
 	{
-		err = ft_strjoin("cd: ", p->pwd);//err = ft_strjoin("cd: ", token[1]);
+		err = ft_strjoin("cd: ", token[1]);
 		return (perror(err), free(err), err = NULL, 0);
 	}
 	return (update(p, "OLDPWD", get_env(p, "PWD")), update(p, "PWD", p->pwd));

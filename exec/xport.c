@@ -117,7 +117,7 @@ int	add_to_env(t_pipex *p, char *add)
 			return (ft_free_double(arr), 1);
 		x++;
 	}
-	arr[x] = add;
+	arr[x] = ft_strdup(add);
 	if (!arr[x])
 		return (ft_free_double(arr), 1);
 	p->menv = update_free_arr(p->menv, arr);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/30 19:03:56 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/10/05 14:14:03 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	do_heredoc(t_pipex *p, t_minishell_p *pars)
 
 	new = NULL;
 	x = -1;
-	if (!p || !pars || !pars->redirect || !pars->redirect->str || !pars->ps)
+	if (!p || !pars || !pars->redirect || !pars->redirect->str)
 		return (0);
 	if (check_s_q(pars->redirect->input) || check_d_q(pars->redirect->input))
 		return (ft_putstr_fd(rm_out_q(pars->redirect->str), 1), 0);
@@ -66,10 +66,6 @@ int	do_heredoc(t_pipex *p, t_minishell_p *pars)
 
 int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 {
-	char	*temp;
-
-	temp = NULL;
-	(void)temp;
 	if (!p || !pars || !pars->ps)
 		return (p->status = 1);
 	if (pars->redirect && pars->redirect->token == HEREDOC)
@@ -77,15 +73,7 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 		p->status = do_heredoc(p, pars);
 		return (1);
 	}
-	// temp = ft_substr(pars->ps[0], 1, ft_strlen(pars->ps[0]) - 1);
-	// if (!temp)
-	// 	return (1);
-	// if (pars->ps[0][0] == '$' && valid_env(p, temp))
-	// 	p->cmd = xpand(p, pars->ps, 0);
-	// else
 	p->cmd = pars->ps[0];
-	//free(temp);
-	//temp = NULL;
 	if (is_buildin(p->cmd))
 	{
 		p->status = do_this(p, pars);

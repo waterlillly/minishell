@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:24:45 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/03 13:33:33 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/05 17:52:35 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,4 +135,34 @@ bool	only_quotes(char *s)
 			return (false);
 	}
 	return (true);
+}
+
+int	only_q(char *s, int q)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] && s[i] == q)
+	{
+		i++;
+		if (s[i] == '\0')
+			return (i);	
+	}
+	return (-1);
+}
+
+int	count_q(char *s, int q)
+{
+	int	i;
+	int	c;
+
+	i = 0;
+	c = 0;
+	while (s[i])
+	{
+		if (s[i] == q)
+			c++;
+		i++;
+	}
+	return (c);
 }

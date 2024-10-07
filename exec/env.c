@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/01 17:43:15 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/06 13:55:07 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ void	copy_arr_env(t_pipex *p, char **arr)
 		return ;
 	while (p->menv[x])
 	{
+		temp = NULL;
 		temp = strcpy_until(p->menv[x]);
 		if (!temp)
 			return (ft_free_double(arr));
-		arr[x] = temp;
+		arr[x] = ft_strdup(temp);
+		free(temp);
 		if (!arr[x])
 			return (ft_free_double(arr));
 		x++;
@@ -63,9 +65,11 @@ char	*get_env(t_pipex *p, char *str)
 	int		len;
 	char	*res;
 
-	x = -1;
+	x = 0;
 	len = 0;
-	while (p && str && p->menv && p->menv[++x])
+	if (!p || !str || !p->menv)
+		return (NULL);
+	while (p->menv[x])
 	{
 		if (ft_strlen(str) > 0 && ft_strlen(p->menv[x]) > 0
 			&& ft_strnstr(p->menv[x], str, ft_strlen(str)) == &(p->menv[x][0]))
@@ -78,6 +82,7 @@ char	*get_env(t_pipex *p, char *str)
 				return (NULL);
 			return (res);
 		}
+		x++;
 	}
 	return ("\n");
 }
@@ -87,7 +92,7 @@ int	get_menv(t_pipex *p, char **envp)
 	int	x;
 
 	x = 0;
-	p->menv = (char **)ft_calloc((ft_strlen_2d(envp) + 1), sizeof(char *));
+	p->menv = (char **)ft_calloc((ft_arrlen(envp) + 1), sizeof(char *));
 	if (!p->menv)
 		return (1);
 	while (envp[x])

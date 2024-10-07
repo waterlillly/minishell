@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 18:54:32 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/18 16:30:37 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/06 15:53:06 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	update_unset(t_pipex *p, char *tok)
 		if (ft_strnstr_bool(p->menv[x], tok, 0, ft_strlen(tok)))
 			x++;
 		else
-			arr[y++] = p->menv[x++];
+			arr[y++] = ft_strdup(p->menv[x++]);
 	}
 	p->menv = update_free_arr(p->menv, arr);
 	if (!p->menv)
@@ -58,7 +58,7 @@ int	update_unset_exp(t_pipex *p, char *tok)
 		if (ft_strnstr_bool(p->xport[x], tok, 11, ft_strlen(tok)))
 			x++;
 		else
-			arr[y++] = p->xport[x++];
+			arr[y++] = ft_strdup(p->xport[x++]);
 	}
 	p->xport = update_free_arr(p->xport, arr);
 	if (!p->xport)
@@ -93,4 +93,21 @@ int	unset(t_pipex *p, char **token)
 		x++;
 	}
 	return (0);
+}
+
+void	check_unset(t_pipex *p)
+{
+	if (!p)
+		return ;
+	//puts("checking...");
+	if (p->menv && p->xport && !valid_env(p, "PWD"))
+	{
+		if (p->pwd)
+			add_to_export(p, ft_strjoin("PWD=", p->pwd));
+	}
+	if (p->menv && p->xport && !valid_env(p, "OLDPWD"))
+	{
+		if (p->oldpwd)
+			add_to_export(p, ft_strjoin("OLDPWD=", p->oldpwd));
+	}
 }

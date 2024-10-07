@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:47:48 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/09/24 19:06:15 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/06 15:53:13 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,20 @@
 
 void	reset_old_pwd(t_pipex *p, char *path)
 {
+	char	*new;
+
+	new = NULL;
 	if (!p || !path)
 		return ;
-	free(p->oldpwd);
 	p->oldpwd = NULL;
 	p->oldpwd = get_env(p, "PWD");
 	if (!p->oldpwd)
-		return ;
-	free(p->pwd);
+	{
+		if (p->pwd)
+			p->oldpwd = ft_strdup(p->pwd);
+		else
+			return ;
+	}
 	p->pwd = NULL;
 	p->pwd = ft_strdup(path);
 }
@@ -44,8 +50,9 @@ int	get_int(char **temp)
 
 int	going_back(char *oldpwd, t_pipex *p, int y, char **temp)
 {
-	int	x;
-	int	z;
+	int		x;
+	int		z;
+	char	*err;
 
 	x = 0;
 	z = ft_arrlen(temp) - 1;
@@ -53,55 +60,55 @@ int	going_back(char *oldpwd, t_pipex *p, int y, char **temp)
 	{
 		if (oldpwd[ft_strlen(oldpwd) - 1] != '/')
 			oldpwd = ft_strjoin_free_one(oldpwd, "/");
-		oldpwd = ft_strjoin_free_both(oldpwd, temp[x]);
+		oldpwd = ft_strjoin_free_one(oldpwd, temp[x]);
 		x++;
 	}
 	if (x == (z - (y * 2)) && is_access(oldpwd))
-		return (p->oldpwd = NULL, p->oldpwd = oldpwd, 0);
+		return (free(p->oldpwd), p->oldpwd = NULL, p->oldpwd = oldpwd, 0);
 	while (temp[x])
 	{
 		if (oldpwd[ft_strlen(oldpwd) - 1] != '/')
 			oldpwd = ft_strjoin_free_one(oldpwd, "/");
-		oldpwd = ft_strjoin_free_both(oldpwd, temp[x]);
+		oldpwd = ft_strjoin_free_one(oldpwd, temp[x]);
 		x++;
 	}
 	oldpwd = ft_strjoin_free_one(oldpwd, "/..");
-	return (update(p, "PWD", oldpwd), update(p, "OLDPWD", p->pwd),
-		p->pwd = NULL, p->pwd = oldpwd, 1);
+	err = ft_strjoin("cd: ", oldpwd);
+	return (perror(err), free(err), err = NULL, free(p->oldpwd),
+		p->oldpwd = NULL, p->oldpwd = ft_strdup(p->pwd),
+		free(p->pwd), p->pwd = NULL, p->pwd = oldpwd, 1);
 }
 
 int	join_oldpwd(t_pipex *p, char **temp, char *oldpwd)
 {
-	int	x;
-	int	y;
-	int	z;
+	int		x;
+	int		y;
+	char	*err;
 
 	x = 0;
+	err = NULL;
 	y = get_int(temp);
-	z = ft_arrlen(temp) - 1;
-	(void)z;
 	if (p && temp[x] && y > 0)
 		return (going_back(oldpwd, p, y, temp));
 	while (p && temp[x])
 	{
-		//printf("x: %d = %s\n", x, temp[x]);
 		if (!temp[x + 1])
 		{
-			//puts(oldpwd);
-			if (!is_access(oldpwd))//why not accessible???
+			if (!is_access(oldpwd))
 			{
-				//printf("no access: %s\n", oldpwd);
 				oldpwd = ft_strjoin_free_one(oldpwd, "/");
-				oldpwd = ft_strjoin_free_both(oldpwd, temp[x]);
+				oldpwd = ft_strjoin_free_one(oldpwd, temp[x]);
 				oldpwd = ft_strjoin_free_one(oldpwd, "/..");
-				return (update(p, "PWD", oldpwd), update(p, "OLDPWD", p->pwd),
-					p->pwd = NULL, p->pwd = oldpwd, 1);
+				err = ft_strjoin("cd: ", oldpwd);
+				return (perror(err), free(err), free(p->oldpwd), p->oldpwd = NULL,
+					p->oldpwd = ft_strdup(p->pwd), free(p->pwd), p->pwd = NULL, p->pwd = oldpwd, 1);
 			}
-			return (p->oldpwd = NULL, p->oldpwd = oldpwd, 0);
+			return (free(p->oldpwd), p->oldpwd = NULL, p->oldpwd = oldpwd,
+				update(p, "OLDPWD", p->oldpwd), 0);
 		}
 		if (oldpwd && ft_strlen(oldpwd) > 0 && oldpwd[ft_strlen(oldpwd) - 1] != '/')
 			oldpwd = ft_strjoin_free_one(oldpwd, "/");
-		oldpwd = ft_strjoin_free_both(oldpwd, temp[x]);
+		oldpwd = ft_strjoin_free_one(oldpwd, temp[x]);
 		x++;
 	}
 	return (1);
@@ -119,17 +126,16 @@ int	go_up_oldpwd(t_pipex *p)
 	if (!p->pwd)
 	{
 		p->pwd = NULL;
-		get_env(p, "PWD");//p->pwd = getcwd(NULL, 0);//
+		get_env(p, "PWD");
 		if (!p->pwd)
 			return (1);
 	}
-	//puts(p->pwd);
 	if (ft_strcmp_bool(p->pwd, "/"))
 		return (0);
 	temp = ft_split(p->pwd, '/');
 	if (!temp)
 		return (1);
-	oldpwd = ft_strdup("");
+	oldpwd = ft_strdup("/");
 	if (!oldpwd)
 		return (1);
 	return (join_oldpwd(p, temp, oldpwd));
