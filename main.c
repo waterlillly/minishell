@@ -36,12 +36,15 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 		}
 		else
 		{
-			set_mode_s(p, 2);
+			set_mode_s(p, CHILD);
 			p->pid[c] = fork();
 			if (p->pid[c] == -1)
 				return (perror("fork"), 1);
 			if (p->pid[c] == 0)
 			{
+				remove_q(pars->str, pars->str_len);
+				if (ft_strcmp_bool("./minishell", pars->str[0]))
+					set_mode_s(p, INTER);
 				execute(p, c, pars);
 				if (kill(p->pid[c], 0) == 0)
 				{
@@ -52,8 +55,8 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 				return (0);
 			}
 			remove_q(pars->str, pars->str_len);
-			if (!ft_strcmp_bool("./minishell", pars->str[0]))
-				set_mode_s(p, 4);
+			if (ft_strcmp_bool("./minishell", pars->str[0]))
+				set_mode_s(p, LEVEL);
 		}
 		c++;
 		pars = pars->next;

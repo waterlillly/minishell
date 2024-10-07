@@ -17,6 +17,7 @@ void	reset_old_pwd(t_pipex *p, char *path)
 	char	*new;
 
 	new = NULL;
+	(void)new;
 	if (!p || !path)
 		return ;
 	p->oldpwd = NULL;
