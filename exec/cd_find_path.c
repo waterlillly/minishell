@@ -30,7 +30,7 @@ int	add_to_path(t_pipex *p, char *t)
 	if (!temp)
 		return (1);
 	if (t[ft_strlen(t) - 1] == '/')
-		new = ft_strjoin_free_one(temp, ft_substr(t, 0, ft_strlen(t) - 1));
+		new = ft_strjoin_free_both(temp, ft_substr(t, 0, ft_strlen(t) - 1));
 	else
 		new = ft_strjoin_free_one(temp, t);
 	if (!new)
