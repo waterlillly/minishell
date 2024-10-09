@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/09 13:33:30 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/09 13:40:49 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	init_pipes(t_pipex *p)
 		if (!p->pip[i])
 			return ;
 		if (pipe(p->pip[i]) == -1)
-			return (perror("pipe"));
+			return (perror("pipe"), close_all(p));
 		i++;
 	}
 }
