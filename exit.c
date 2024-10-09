@@ -38,8 +38,6 @@ int	error(char *str, int code)
 	return (code);
 }
 
-
-
 bool	check_exit(t_pipex *p, int *c, t_minishell_p **pars)
 {
 	char	*str;

@@ -129,7 +129,7 @@ void	xpd(t_pipex *p, t_minishell_p *pars)
 			while (tmp[j])
 			{
 				//printf("tmp[%d]: %s\n", j, tmp[j]);
-				pars->ps[i] = ft_strjoin_free_one(pars->ps[i], xpand(p, tmp, j));
+				pars->ps[i] = ft_strjoin_free_both(pars->ps[i], xpand(p, tmp, j));
 				free(tmp[j]);
 				//printf("ps[%d]: %s\n", i, pars->ps[i]);
 				j++;
