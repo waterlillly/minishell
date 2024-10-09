@@ -82,6 +82,7 @@ char	**xpd_3_split(char *str, int q)
 		pb = pa;
 		x++;
 	}
+	free(str);
 	return (s);
 }
 
