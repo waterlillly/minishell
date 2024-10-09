@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:21:59 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/05 14:07:22 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/09 13:24:27 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ bool	check_exit(t_pipex *p, int *c, t_minishell_p **pars)
 		{
 			if ((*pars)->ps[1] && ft_strcmp_bool(ft_itoa_long(ft_atoi_long((*pars)->ps[1])), (*pars)->ps[1]) && !(*pars)->ps[2])
 			{
-				(p->status = ft_atoi_long((*pars)->ps[1]), ft_putendl_fd("exit", 2));
+				p->status = ft_atoi_long((*pars)->ps[1]);
 				if (*c == x && !(*pars)->next)
-					return (false);
+					return (ft_putendl_fd("exit", 2), false);
 				else if (*c > x && !(*pars)->next)
 					return (true);
 			}
@@ -64,7 +64,7 @@ bool	check_exit(t_pipex *p, int *c, t_minishell_p **pars)
 				str = ft_strjoin_free_one(ft_strjoin_free_both(ft_strjoin((*pars)->ps[0], ": "),
 					ft_strjoin((*pars)->ps[1], ": ")), "numeric argument required\n");
 				p->status = 2;
-				(ft_putendl_fd("exit", 2), ft_putstr_fd(str, 2), free(str), str = NULL);
+				(ft_putstr_fd(str, 2), free(str), str = NULL);
 				if (!(*pars)->next)
 					return (true);
 			}
@@ -72,7 +72,7 @@ bool	check_exit(t_pipex *p, int *c, t_minishell_p **pars)
 			{
 				str = ft_strjoin_free_one(ft_strjoin((*pars)->ps[0], ": "), "too many arguments\n");
 				p->status = 1;
-				(ft_putendl_fd("exit", 2), ft_putstr_fd(str, 2), free(str), str = NULL);
+				(ft_putstr_fd(str, 2), free(str), str = NULL);
 				if (!(*pars)->next)
 					return (true);
 			}

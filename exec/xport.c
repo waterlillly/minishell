@@ -88,7 +88,6 @@ char	*create_add_export(char *token)
 		temp = ft_strjoin_free_one(strcpy_until(token), "=");
 		temp4 = ft_substr(token, x + 1, ft_strlen(token) - (x + 1));
 		temp2 = add_quotes(temp4);
-		(free(temp4), temp4 = NULL);
 		temp3 = ft_strjoin_free_both(temp, temp2);
 		if (!temp3)
 			return (NULL);

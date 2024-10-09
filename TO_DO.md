@@ -189,9 +189,11 @@ echo "abc''"'""abc""''""'"'abc'"
 echo hi "" "" hi
 	->hi    hi
 
-DOESNT WORK:
+**DOESNT WORK:**
 echo "'"'''""$""'''"'"
 	->'""$""' (ours: '""$"")
+echo $PWD"''"$
+	->/home/lbaumeis/CCore/projects/minishell''$ (ours: /home/lbaumeis/CCore/projects/minishell)
 
 
 **input: export cmd=" -l"**
