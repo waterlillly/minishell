@@ -34,11 +34,11 @@ void	free_p_rest(t_pipex *p)
 		free(p->mpath);
 		p->mpath = NULL;
 	}
-	if (p->cmd)
-	{
-		free(p->cmd);
-		p->cmd = NULL;
-	}
+	// if (p->cmd)
+	// {
+	// 	free(p->cmd);
+	// 	p->cmd = NULL;
+	// }
 }
 
 void	free_everything(t_pipex *p, t_minishell_p *pars, t_raw_in *input)
