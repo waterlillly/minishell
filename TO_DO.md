@@ -221,3 +221,14 @@ input: export var= $USER
 input: export var1 var2
 	-> var2 is missing
 note: if a variable already is set before minishell starts trying to reset that var causes segfault
+
+
+doesn't expand:
+/bin/echo ''$?''"42"
+/bin/echo "'$USER'"
+/bin/echo '"'$USER'"'
+/bin/echo "''$USER''"
+/bin/echo "$?"
+/bin/echo "'$?'"
+/bin/echo '$USER' "$USER" "text  ' text"
+

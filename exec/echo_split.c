@@ -23,7 +23,7 @@ char	**rewrite(char **s, int c)
 	arr = ft_calloc(c + 1, sizeof(char *));
 	if (!arr)
 		return (NULL);
-	while (s[i])
+	while (s && s[i])
 	{
 		arr[j] = ft_strdup(s[i]);
 		if (s[i] && count_q(s[i], '\'') % 2 != 0 && s[i][0] == '\'')
@@ -68,7 +68,7 @@ char	**reformat(char **s)
 
 	i = 0;
 	c = ft_arrlen(s);
-	while (s[i])
+	while (s && s[i])
 	{
 		if (s[i] && count_q(s[i], '\'') % 2 != 0 && s[i][0] == '\'')
 		{
@@ -126,7 +126,7 @@ void	xpd(t_pipex *p, t_minishell_p *pars)
 		{
 			tmp = d_q_space(xpd_dollar(xpd_space(xpd_single(xpd_double(xpd_start(pars, i))))));
 			j = 0;
-			while (tmp[j])
+			while (tmp && tmp[j])
 			{
 				//printf("tmp[%d]: %s\n", j, tmp[j]);
 				pars->ps[i] = ft_strjoin_free_both(pars->ps[i], xpand(p, tmp, j));

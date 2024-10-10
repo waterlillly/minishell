@@ -94,7 +94,7 @@ char	**d_q_space(char **s)
 	
 	i = 0;
 	arr = NULL;
-	while (s[i])
+	while (s && s[i])
 	{
 		if (d_out_q(s[i]) && ft_strchr(s[i], '$') && ft_strchr(s[i], ' '))
 			tmp = xpd_3_split(rm_out_q(s[i]), ' ');
