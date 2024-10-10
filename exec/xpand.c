@@ -82,6 +82,7 @@ char	*xpand(t_pipex *p, char **token, int x)
 	char	*temp;
 	char	*temp1;
 	char	*temp2;
+	char	*tmp_num;
 
 	if (!p || !token || !token[x])
 		return (NULL);
@@ -91,7 +92,8 @@ char	*xpand(t_pipex *p, char **token, int x)
 	temp = rm_out_q(token[x]);
 	temp1 = ft_substr(temp, 1, ft_strlen(temp) - 1);
 	if (!check_s_q(token[x]) && ft_strcmp_bool(token[x], "$?"))
-		return (free(temp), free(temp1), ft_strdup(ft_itoa_long(p->status)));
+		return (free(temp), free(temp1), tmp_num = ft_itoa_long(p->status),
+		temp = ft_strdup(tmp_num), free(tmp_num), temp);
 	else if ((only_dollars(token[x]) && ((dollar_count(token[x]) == 1
 		&& even_q(token[x])) || (dollar_count(token[x]) == 1)))
 		|| (!check_s_q(token[x]) && temp[0] == '$' && temp[1] != '$'

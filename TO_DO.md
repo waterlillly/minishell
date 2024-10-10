@@ -231,4 +231,5 @@ doesn't expand:
 /bin/echo "$?"
 /bin/echo "'$?'"
 /bin/echo '$USER' "$USER" "text  ' text"
+/bin/echo $USER =intergalaktikus miaf szomez
 
