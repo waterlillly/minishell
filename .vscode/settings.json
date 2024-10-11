@@ -1,0 +1,8 @@
+{
+	"makefile.extensionOutputFolder": "./.vscode",
+	"files.associations": {
+		"dirent.h": "c",
+		"libft.h": "c",
+		"ioctl.h": "c"
+	}
+}

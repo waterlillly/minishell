@@ -6,7 +6,7 @@
 #    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 18:13:23 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/09/18 14:48:23 by lbaumeis         ###   ########.fr        #
+#    Updated: 2024/10/11 17:48:27 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = libft.a
 
-NUMTH = $(shell nproc)
-MAKEFLAGS += --jobs=$(NUMTH)
+#NUMTH = $(shell nproc)
+#MAKEFLAGS += --jobs=$(NUMTH)
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@

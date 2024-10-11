@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/06 13:55:07 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/11 19:16:25 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ char	*get_env(t_pipex *p, char *str)
 			if (len <= 0)
 				break ;
 			res = ft_substr(p->menv[x], ft_strlen(str) + 1, (size_t)len + 1);
-			if (!res)
-				return (NULL);
 			return (res);
 		}
 		x++;

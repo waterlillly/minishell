@@ -6,13 +6,13 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:50:42 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/05 14:27:30 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/11 20:14:07 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	check_filein(t_pipex *p, t_minishell_p *pars)
+bool	check_filein(t_pipex *p, t_minishell_p *pars)
 {
 	int				f;
 	t_minishell_l	*redir;
@@ -27,7 +27,7 @@ void	check_filein(t_pipex *p, t_minishell_p *pars)
 			{
 				f = open(redir->input, O_RDONLY, 0644);
 				if (f == -1 || access(redir->input, R_OK) == -1)
-					return (perror(redir->input));
+					return (perror(redir->input), p->status = 1 ,false);
 			}
 			if (f != -1)
 			{
@@ -38,9 +38,10 @@ void	check_filein(t_pipex *p, t_minishell_p *pars)
 			redir = redir->next;
 		}
 	}
+	return true;
 }
 
-void	check_fileout(t_pipex *p, t_minishell_p *pars)
+bool	check_fileout(t_pipex *p, t_minishell_p *pars)
 {
 	int				f;
 	t_minishell_l	*redir;
@@ -55,13 +56,13 @@ void	check_fileout(t_pipex *p, t_minishell_p *pars)
 			{
 				f = open(redir->input, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 				if (f == -1 || access(redir->input, W_OK) == -1)
-					return (perror("file"));
+					return (perror(redir->input), p->status = 1, false);
 			}
 			else if (redir->token == BIGGERBIGGER)
 			{
 				f = open(redir->input, O_RDWR | O_CREAT | O_APPEND, 0644);
 				if (f == -1 || access(redir->input, W_OK) == -1)
-					return (perror("file"));
+					return (perror(redir->input), p->status = 1 ,false);
 			}
 			if (f != -1)
 			{
@@ -73,4 +74,5 @@ void	check_fileout(t_pipex *p, t_minishell_p *pars)
 			redir = redir->next;
 		}
 	}
+	return true;
 }

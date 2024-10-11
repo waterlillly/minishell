@@ -6,36 +6,36 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 12:47:48 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/06 15:53:13 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/11 19:37:38 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	reset_old_pwd(t_pipex *p, char *path)
-{
-	char	*new;
+// void	reset_old_pwd(t_pipex *p, char *path)
+// {
+// 	char	*new;
 
-	new = NULL;
-	(void)new;
-	if (!p || !path)
-		return ;
-	if (p->oldpwd)
-		free(p->oldpwd);
-	p->oldpwd = NULL;
-	p->oldpwd = get_env(p, "PWD");
-	if (!p->oldpwd)
-	{
-		if (p->pwd)
-			p->oldpwd = ft_strdup(p->pwd);
-		else
-			return ;
-	}
-	if (p->pwd)
-		free(p->pwd);
-	p->pwd = NULL;
-	p->pwd = ft_strdup(path);
-}
+// 	new = NULL;
+// 	(void)new;
+// 	if (!p || !path)
+// 		return ;
+// 	if (p->oldpwd)
+// 		free(p->oldpwd);
+// 	p->oldpwd = NULL;
+// 	p->oldpwd = get_env(p, "PWD");
+// 	if (!p->oldpwd)
+// 	{
+// 		if (p->pwd)
+// 			p->oldpwd = ft_strdup(p->pwd);
+// 		else
+// 			return ;
+// 	}
+// 	if (p->pwd)
+// 		free(p->pwd);
+// 	p->pwd = NULL;
+// 	p->pwd = ft_strdup(path);
+// }
 
 int	get_int(char **temp)
 {

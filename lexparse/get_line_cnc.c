@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_line_cnc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 19:25:32 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/01 19:53:56 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/10/11 20:09:39 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,17 @@ int	get_line_cnc(t_raw_in *in, t_pipex *p)
 	char	*tmp;
 
 	tmp = ft_strjoin_free_one(ft_strdup(p->pwd), "> ");
-	in->line = readline(tmp);
+	// in->line = readline(tmp);
+
+	if (isatty(fileno(stdin)))
+		in->line = readline(tmp);
+	else
+	{
+		char *line;
+		line = get_next_line(fileno(stdin));
+		in->line = ft_strtrim(line, "\n");
+		free(line);
+	}
 	free(tmp);
 	if (!in->line)
 		return (in->exit = 1, 2);

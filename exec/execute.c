@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 16:27:28 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/05 14:26:25 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/11 20:18:49 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,12 @@ int	redirect(t_pipex *p, int c, t_minishell_p *pars)
 {
 	if (!p || !pars)
 		return (1);
-	check_filein(p, pars);
+	if(!check_filein(p, pars)) {
+		return 1;
+	}
+	if(!check_fileout(p, pars)) {
+		return 1;
+	}
 	if (p && pars  && p->filein != -1)
 	{
 		if (dup2(p->filein, STDIN_FILENO) == -1)
@@ -29,7 +34,6 @@ int	redirect(t_pipex *p, int c, t_minishell_p *pars)
 		if (dup2(p->pip[c - 1][0], STDIN_FILENO) == -1)
 			return (perror("dup2 c - 1 redir input"), 1);
 	}
-	check_fileout(p, pars);
 	if (p && pars && p->fileout != -1)
 	{
 		if (dup2(p->fileout, STDOUT_FILENO) == -1)
@@ -62,8 +66,9 @@ int	execute(t_pipex *p, int c, t_minishell_p *pars)
 {
 	if (!p)
 		return (1);
-	if (c != -1 && redirect(p, c, pars) != 0)
+	if (c != -1 && redirect(p, c, pars) != 0) {
 		return (close_all(p), 1);
+	}
 	closing(p);
 	return (exec_cmd(p, pars));
 }

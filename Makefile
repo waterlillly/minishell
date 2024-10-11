@@ -6,7 +6,7 @@
 #    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 16:33:47 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/10/06 18:05:55 by lbaumeis         ###   ########.fr        #
+#    Updated: 2024/10/11 17:48:06 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,8 @@ CFILES += lexparse/skip_q.c lexparse/parser.c lexparse/set.c lexparse/is_oq.c
 OFILES = $(CFILES:.c=.o)
 NAME = minishell
 
-NUMTH = $(shell nproc)
-MAKEFLAGS += --jobs=$(NUMTH)
+#NUMTH = $(shell nproc)
+#MAKEFLAGS += --jobs=$(NUMTH)
 
 all: $(NAME)
 

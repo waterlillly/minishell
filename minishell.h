@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/06 18:04:55 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/11 20:31:11 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ typedef struct s_pipex
 	char	*pwd;
 	pid_t	*pid;
 	int		**pip;
-	long	status;
+	int		status;
 	int		copy_stdin;
 	int		copy_stdout;
 	int		filein;
@@ -197,8 +197,8 @@ void	init_p(t_pipex *p, t_minishell_p *pars);
 int		first_init(t_pipex *p, char **envp);
 
 /*REDIR*/
-void	check_filein(t_pipex *p, t_minishell_p *pars);
-void	check_fileout(t_pipex *p, t_minishell_p *pars);
+bool	check_filein(t_pipex *p, t_minishell_p *pars);
+bool	check_fileout(t_pipex *p, t_minishell_p *pars);
 
 /*MORE_CMDS*/
 bool	is_buildin(char *s);

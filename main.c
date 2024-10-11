@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/06 15:50:09 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/11 20:31:50 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,14 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 				if (ft_strcmp_bool("./minishell", pars->str[0]))
 					set_mode_s(p, INTER);
 				execute(p, c, pars);
-				if (kill(p->pid[c], 0) == 0)
-				{
-					if (kill(p->pid[c], SIGCHLD) != 0)
-						return (perror("kill"), 1);
-					return (1);
-				}
+				exit(p->status);
+				// if (kill(p->pid[c], 0) == 0)
+				// {
+				// 	if (kill(p->pid[c], SIGCHLD) != 0)
+				// 		return (perror("kill"), 1);
+				// 	return (1);
+				// }
+				// printf("%lu", p->status);
 				return (0);
 			}
 			remove_q(pars->str, pars->str_len);
@@ -62,7 +64,7 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 		pars = pars->next;
 	}
 	close_all(p);
-	while (i < p->cmd_count && p->cmd_count > 0 && waitpid(p->pid[i], NULL, 0) != -1)
+	while (i < p->cmd_count && p->cmd_count > 0 && waitpid(p->pid[i], &p->status, 0) != -1)
 	{
 		if (WIFEXITED(p->status))
 			p->status = WEXITSTATUS(p->status);
