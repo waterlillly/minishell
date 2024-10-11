@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/11 20:31:50 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/11 22:48:45 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 	i = 0;
 	while (p && pars && c < p->cmd_count && p->cmd_count > 0)
 	{
-		if (check(p, pars) != 0)
-			return (0);
+		// if (check(p, pars) != 0)
+		// 	return (0);
 		if (p->cmd_count == 1 && is_buildin(pars->ps[0]) && !pars->redirect)
 		{
 			p->status = do_this(p, pars);
@@ -43,8 +43,8 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 			if (p->pid[c] == 0)
 			{
 				remove_q(pars->str, pars->str_len);
-				if (ft_strcmp_bool("./minishell", pars->str[0]))
-					set_mode_s(p, INTER);
+				// if (ft_strcmp_bool("./minishell", pars->str[0])) //SHIT
+				// 	set_mode_s(p, INTER);
 				execute(p, c, pars);
 				exit(p->status);
 				// if (kill(p->pid[c], 0) == 0)

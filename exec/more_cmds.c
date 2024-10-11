@@ -39,7 +39,9 @@ int	do_this(t_pipex *p, t_minishell_p *pars)
 		p->status = cd(p, pars->ps);
 	else if (ft_strcmp_bool(pars->ps[0], "echo"))
 		p->status = echo(pars->ps);
-	else if (ft_strcmp_bool(pars->ps[0], "pwd"))
+	else if (ft_strcmp_bool(pars->ps[0], "pwd")) {
 		ft_putendl_fd(p->pwd, 1);
+		p->status = 0;
+	}
 	return (p->status);
 }

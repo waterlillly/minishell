@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 18:54:32 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/06 15:53:06 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/11 23:16:15 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,26 +71,30 @@ int	unset(t_pipex *p, char **token)
 	int		x;
 	size_t	len;
 
-	x = 0;
 	if (!p || !p->menv || !token)
 		return (0);
-	if (!token[1] || token[1][0] == '$')
-		return (perror("not a valid identifier"), 0);
-	if (ft_strchr(token[1], '=') != NULL || ft_strcmp_bool(token[1], "_"))
-		return (0);
-	len = ft_strlen(token[1]);
-	while (p->menv[x])
-	{
-		if (ft_strnstr_bool(p->menv[x], token[1], 0, len))
-			return (update_unset(p, token[1]));
-		x++;
-	}
-	x = 0;
-	while (p->xport[x])
-	{
-		if (ft_strnstr_bool(p->xport[x], token[1], 11, len))
-			return (update_unset_exp(p, token[1]));
-		x++;
+	for(int i = 0; token[i]; ++i) {		
+		x = 0;
+		if (ft_strcmp_bool(token[i], "_"))
+			continue;
+		len = ft_strlen(token[i]);
+		while (p->menv[x])
+		{
+			if (ft_strnstr_bool(p->menv[x], token[i], 0, len)) {
+				update_unset(p, token[i]);
+				break ;
+			}
+			x++;
+		}
+		x = 0;
+		while (p->xport[x])
+		{
+			if (ft_strnstr_bool(p->xport[x], token[i], 11, len)) {
+				update_unset_exp(p, token[i]);
+				break;
+			}
+			x++;
+		}
 	}
 	return (0);
 }

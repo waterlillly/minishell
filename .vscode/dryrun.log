@@ -1,5 +1,128 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/lbaumeis/CCore/projects/minishell'
-make: Nothing to be done for 'all'.
+cc -Wall -Werror -Wextra -g -c main.c -o main.o
+cc -Wall -Werror -Wextra -g -c exit.c -o exit.o
+cc -Wall -Werror -Wextra -g -c start.c -o start.o
+cc -Wall -Werror -Wextra -g -c signals.c -o signals.o
+cc -Wall -Werror -Wextra -g -c free.c -o free.o
+cc -Wall -Werror -Wextra -g -c exec/utils.c -o exec/utils.o
+cc -Wall -Werror -Wextra -g -c exec/cd.c -o exec/cd.o
+cc -Wall -Werror -Wextra -g -c exec/cd_find_path.c -o exec/cd_find_path.o
+cc -Wall -Werror -Wextra -g -c exec/pwd.c -o exec/pwd.o
+cc -Wall -Werror -Wextra -g -c exec/env.c -o exec/env.o
+cc -Wall -Werror -Wextra -g -c exec/echo.c -o exec/echo.o
+cc -Wall -Werror -Wextra -g -c exec/echo_split.c -o exec/echo_split.o
+cc -Wall -Werror -Wextra -g -c exec/quotes.c -o exec/quotes.o
+cc -Wall -Werror -Wextra -g -c exec/sorting.c -o exec/sorting.o
+cc -Wall -Werror -Wextra -g -c exec/xpand.c -o exec/xpand.o
+cc -Wall -Werror -Wextra -g -c exec/xport.c -o exec/xport.o
+cc -Wall -Werror -Wextra -g -c exec/set_export.c -o exec/set_export.o
+cc -Wall -Werror -Wextra -g -c exec/unset.c -o exec/unset.o
+cc -Wall -Werror -Wextra -g -c exec/pipex.c -o exec/pipex.o
+cc -Wall -Werror -Wextra -g -c exec/close_pipes.c -o exec/close_pipes.o
+cc -Wall -Werror -Wextra -g -c exec/init.c -o exec/init.o
+cc -Wall -Werror -Wextra -g -c exec/more_cmds.c -o exec/more_cmds.o
+cc -Wall -Werror -Wextra -g -c exec/pre_exec.c -o exec/pre_exec.o
+cc -Wall -Werror -Wextra -g -c exec/redir.c -o exec/redir.o
+cc -Wall -Werror -Wextra -g -c exec/execute.c -o exec/execute.o
+cc -Wall -Werror -Wextra -g -c exec/xpd_dollar.c -o exec/xpd_dollar.o
+cc -Wall -Werror -Wextra -g -c exec/xpd_quotes.c -o exec/xpd_quotes.o
+cc -Wall -Werror -Wextra -g -c exec/xpd_space.c -o exec/xpd_space.o
+cc -Wall -Werror -Wextra -g -c exec/xpd_utils.c -o exec/xpd_utils.o
+cc -Wall -Werror -Wextra -g -c exec/xpd.c -o exec/xpd.o
+cc -Wall -Werror -Wextra -g -c lexparse/minishell.c -o lexparse/minishell.o
+cc -Wall -Werror -Wextra -g -c lexparse/remove_q.c -o lexparse/remove_q.o
+cc -Wall -Werror -Wextra -g -c lexparse/quote_count.c -o lexparse/quote_count.o
+cc -Wall -Werror -Wextra -g -c lexparse/open_quotes.c -o lexparse/open_quotes.o
+cc -Wall -Werror -Wextra -g -c lexparse/split_shell.c -o lexparse/split_shell.o
+cc -Wall -Werror -Wextra -g -c lexparse/lexer.c -o lexparse/lexer.o
+cc -Wall -Werror -Wextra -g -c lexparse/get_line_cnc.c -o lexparse/get_line_cnc.o
+cc -Wall -Werror -Wextra -g -c lexparse/check_syntax.c -o lexparse/check_syntax.o
+cc -Wall -Werror -Wextra -g -c lexparse/skip_q.c -o lexparse/skip_q.o
+cc -Wall -Werror -Wextra -g -c lexparse/parser.c -o lexparse/parser.o
+cc -Wall -Werror -Wextra -g -c lexparse/set.c -o lexparse/set.o
+cc -Wall -Werror -Wextra -g -c lexparse/is_oq.c -o lexparse/is_oq.o
+(make -C libft)
+ 
+make[1]: Entering directory '/home/lbaumeis/CCore/projects/minishell/libft'
+cc -Wall -Wextra -Werror -c ft_isalpha.c -o ft_isalpha.o
+cc -Wall -Wextra -Werror -c ft_isdigit.c -o ft_isdigit.o
+cc -Wall -Wextra -Werror -c ft_isalnum.c -o ft_isalnum.o
+cc -Wall -Wextra -Werror -c ft_isascii.c -o ft_isascii.o
+cc -Wall -Wextra -Werror -c ft_isprint.c -o ft_isprint.o
+cc -Wall -Wextra -Werror -c ft_strlen.c -o ft_strlen.o
+cc -Wall -Wextra -Werror -c ft_memset.c -o ft_memset.o
+cc -Wall -Wextra -Werror -c ft_bzero.c -o ft_bzero.o
+cc -Wall -Wextra -Werror -c ft_memcpy.c -o ft_memcpy.o
+cc -Wall -Wextra -Werror -c ft_memmove.c -o ft_memmove.o
+cc -Wall -Wextra -Werror -c ft_strlcpy.c -o ft_strlcpy.o
+cc -Wall -Wextra -Werror -c ft_strlcat.c -o ft_strlcat.o
+cc -Wall -Wextra -Werror -c ft_toupper.c -o ft_toupper.o
+cc -Wall -Wextra -Werror -c ft_tolower.c -o ft_tolower.o
+cc -Wall -Wextra -Werror -c ft_strchr.c -o ft_strchr.o
+cc -Wall -Wextra -Werror -c ft_strrchr.c -o ft_strrchr.o
+cc -Wall -Wextra -Werror -c ft_strncmp.c -o ft_strncmp.o
+cc -Wall -Wextra -Werror -c ft_memchr.c -o ft_memchr.o
+cc -Wall -Wextra -Werror -c ft_memcmp.c -o ft_memcmp.o
+cc -Wall -Wextra -Werror -c ft_strnstr.c -o ft_strnstr.o
+cc -Wall -Wextra -Werror -c ft_atoi.c -o ft_atoi.o
+cc -Wall -Wextra -Werror -c ft_calloc.c -o ft_calloc.o
+cc -Wall -Wextra -Werror -c ft_strdup.c -o ft_strdup.o
+cc -Wall -Wextra -Werror -c ft_substr.c -o ft_substr.o
+cc -Wall -Wextra -Werror -c ft_strjoin.c -o ft_strjoin.o
+cc -Wall -Wextra -Werror -c ft_strtrim.c -o ft_strtrim.o
+cc -Wall -Wextra -Werror -c ft_striteri.c -o ft_striteri.o
+cc -Wall -Wextra -Werror -c ft_putchar_fd.c -o ft_putchar_fd.o
+cc -Wall -Wextra -Werror -c ft_putstr_fd.c -o ft_putstr_fd.o
+cc -Wall -Wextra -Werror -c ft_putendl_fd.c -o ft_putendl_fd.o
+cc -Wall -Wextra -Werror -c ft_putnbr_fd.c -o ft_putnbr_fd.o
+cc -Wall -Wextra -Werror -c ft_split.c -o ft_split.o
+cc -Wall -Wextra -Werror -c ft_itoa.c -o ft_itoa.o
+cc -Wall -Wextra -Werror -c ft_strmapi.c -o ft_strmapi.o
+cc -Wall -Wextra -Werror -c ft_printf.c -o ft_printf.o
+cc -Wall -Wextra -Werror -c ft_printchar.c -o ft_printchar.o
+cc -Wall -Wextra -Werror -c ft_printstr.c -o ft_printstr.o
+cc -Wall -Wextra -Werror -c ft_printnbr.c -o ft_printnbr.o
+cc -Wall -Wextra -Werror -c ft_printptr.c -o ft_printptr.o
+cc -Wall -Wextra -Werror -c ft_decideformat.c -o ft_decideformat.o
+cc -Wall -Wextra -Werror -c ft_strcmp.c -o ft_strcmp.o
+cc -Wall -Wextra -Werror -c ft_white.c -o ft_white.o
+cc -Wall -Wextra -Werror -c ft_atof.c -o ft_atof.o
+cc -Wall -Wextra -Werror -c ft_str_upper.c -o ft_str_upper.o
+cc -Wall -Wextra -Werror -c ft_isalpha_extend.c -o ft_isalpha_extend.o
+cc -Wall -Wextra -Werror -c ft_isprint_extend.c -o ft_isprint_extend.o
+cc -Wall -Wextra -Werror -c ft_isascii_extend.c -o ft_isascii_extend.o
+cc -Wall -Wextra -Werror -c get_next_line.c -o get_next_line.o
+cc -Wall -Wextra -Werror -c ft_strjoin_free_both.c -o ft_strjoin_free_both.o
+cc -Wall -Wextra -Werror -c ft_strjoin_free_one.c -o ft_strjoin_free_one.o
+cc -Wall -Wextra -Werror -c ft_str_lower.c -o ft_str_lower.o
+cc -Wall -Wextra -Werror -c ft_arrlen.c -o ft_arrlen.o
+cc -Wall -Wextra -Werror -c ft_free_double.c -o ft_free_double.o
+cc -Wall -Wextra -Werror -c ft_print_array.c -o ft_print_array.o
+cc -Wall -Wextra -Werror -c ft_strcmp_bool.c -o ft_strcmp_bool.o
+cc -Wall -Wextra -Werror -c ft_strnstr_bool.c -o ft_strnstr_bool.o
+cc -Wall -Wextra -Werror -c ft_atoi_long.c -o ft_atoi_long.o
+cc -Wall -Wextra -Werror -c ft_itoa_long.c -o ft_itoa_long.o
+cc -Wall -Wextra -Werror -c ft_lstnew.c -o ft_lstnew.o
+cc -Wall -Wextra -Werror -c ft_lstadd_front.c -o ft_lstadd_front.o
+cc -Wall -Wextra -Werror -c ft_lstsize.c -o ft_lstsize.o
+cc -Wall -Wextra -Werror -c ft_lstlast.c -o ft_lstlast.o
+cc -Wall -Wextra -Werror -c ft_lstadd_back.c -o ft_lstadd_back.o
+cc -Wall -Wextra -Werror -c ft_lstdelone.c -o ft_lstdelone.o
+cc -Wall -Wextra -Werror -c ft_lstclear.c -o ft_lstclear.o
+cc -Wall -Wextra -Werror -c ft_lstiter.c -o ft_lstiter.o
+cc -Wall -Wextra -Werror -c ft_lstmap.c -o ft_lstmap.o
+cc -Wall -Wextra -Werror -c ft_strcat.c -o ft_strcat.o
+cc -Wall -Wextra -Werror -c ft_strlen_2d.c -o ft_strlen_2d.o
+cc -Wall -Wextra -Werror -c ft_realloc_2d.c -o ft_realloc_2d.o
+cc -Wall -Wextra -Werror -c ft_free_2d.c -o ft_free_2d.o
+cc -Wall -Wextra -Werror -c ft_strncpy.c -o ft_strncpy.o
+ar rc libft.a ft_isalpha.o ft_isdigit.o ft_isalnum.o ft_isascii.o ft_isprint.o ft_strlen.o ft_memset.o ft_bzero.o ft_memcpy.o ft_memmove.o ft_strlcpy.o ft_strlcat.o ft_toupper.o ft_tolower.o ft_strchr.o ft_strrchr.o ft_strncmp.o ft_memchr.o ft_memcmp.o ft_strnstr.o ft_atoi.o ft_calloc.o ft_strdup.o ft_substr.o ft_strjoin.o ft_strtrim.o ft_striteri.o ft_putchar_fd.o ft_putstr_fd.o ft_putendl_fd.o ft_putnbr_fd.o ft_split.o ft_itoa.o ft_strmapi.o ft_printf.o ft_printchar.o ft_printstr.o ft_printnbr.o ft_printptr.o ft_decideformat.o ft_strcmp.o ft_white.o ft_atof.o ft_str_upper.o ft_isalpha_extend.o ft_isprint_extend.o ft_isascii_extend.o get_next_line.o ft_strjoin_free_both.o ft_strjoin_free_one.o ft_str_lower.o ft_arrlen.o ft_free_double.o ft_print_array.o ft_strcmp_bool.o ft_strnstr_bool.o ft_atoi_long.o ft_itoa_long.o ft_lstnew.o ft_lstadd_front.o ft_lstsize.o ft_lstlast.o ft_lstadd_back.o ft_lstdelone.o ft_lstclear.o ft_lstiter.o ft_lstmap.o ft_strcat.o ft_strlen_2d.o ft_realloc_2d.o ft_free_2d.o ft_strncpy.o 
+ranlib libft.a
+make[1]: Leaving directory '/home/lbaumeis/CCore/projects/minishell/libft'
+cc -Wall -Werror -Wextra -g -o minishell main.o exit.o start.o signals.o free.o exec/utils.o exec/cd.o exec/cd_find_path.o exec/pwd.o exec/env.o exec/echo.o exec/echo_split.o exec/quotes.o exec/sorting.o exec/xpand.o exec/xport.o exec/set_export.o exec/unset.o exec/pipex.o exec/close_pipes.o exec/init.o exec/more_cmds.o exec/pre_exec.o exec/redir.o exec/execute.o exec/xpd_dollar.o exec/xpd_quotes.o exec/xpd_space.o exec/xpd_utils.o exec/xpd.o lexparse/minishell.o lexparse/remove_q.o lexparse/quote_count.o lexparse/open_quotes.o lexparse/split_shell.o lexparse/lexer.o lexparse/get_line_cnc.o lexparse/check_syntax.o lexparse/skip_q.o lexparse/parser.o lexparse/set.o lexparse/is_oq.o libft/libft.a -lreadline
+rm -f out
+rm -f hd
+rm -f buildins.h.gch
 make: Leaving directory '/home/lbaumeis/CCore/projects/minishell'
  

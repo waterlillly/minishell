@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Oct 11 17:48:34 2024
+# Make data base, printed on Fri Oct 11 21:40:59 2024
 
 # Variables
 
@@ -74,8 +74,6 @@ DBUS_STARTER_ADDRESS = unix:path=/run/user/101355/bus,guid=1d22a98b9d3639db6b439
 CURDIR := /home/lbaumeis/CCore/projects/minishell
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
-# environment
-VSCODE_L10N_BUNDLE_LOCATION = 
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -139,6 +137,7 @@ MAKEFILES :=
 # environment
 LANGUAGE = en
 # automatic
+ 
 ^F = $(notdir $^)
 # environment
 CARGO_HOME = /sgoinfre/lbaumeis/.cargo
@@ -231,7 +230,7 @@ XDG_MENU_PREFIX = gnome-
 # environment
 GDMSESSION = ubuntu
 # variable set hash-table stats:
-# Load=110/1024=11%, Rehash=0, Collisions=13/163=8%
+# Load=109/1024=11%, Rehash=0, Collisions=12/162=7%
 
 # Pattern-specific Variable Values
 
@@ -239,9 +238,9 @@ GDMSESSION = ubuntu
 
 # Directories
 
-# . (device 2048, inode 8409344): 32 files, no impossibilities.
+# . (device 2048, inode 8409344): 29 files, no impossibilities.
 
-# 32 files, no impossibilities in 1 directories.
+# 29 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -252,7 +251,7 @@ GDMSESSION = ubuntu
 # Not a target:
 exec/xpd.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.760696608
+#  Last modified 2024-10-11 21:36:55.825198197
 #  File has been updated.
 #  Successfully updated.
 
@@ -266,63 +265,62 @@ exec/xpd.o:
 # Not a target:
 exec/pwd.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.692696317
+#  Last modified 2024-10-11 21:36:55.005190037
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/echo.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.6886963
+#  Last modified 2024-10-11 21:36:55.085190833
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 lexparse/lexer.o:
 #  Implicit rule search has been done.
- 
-#  Last modified 2024-10-11 17:44:36.824696881
+#  Last modified 2024-10-11 21:36:56.057200505
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/more_cmds.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:46:57.529303907
+#  Last modified 2024-10-11 21:36:55.517195132
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 lexparse/is_oq.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.804696796
+#  Last modified 2024-10-11 21:36:56.281202733
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/echo_split.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.6886963
+#  Last modified 2024-10-11 21:36:55.129191271
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/xpd_dollar.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.75669659
+#  Last modified 2024-10-11 21:36:55.669196644
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 lexparse/get_line_cnc.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.808696813
+#  Last modified 2024-10-11 21:36:56.093200863
 #  File has been updated.
 #  Successfully updated.
 
 minishell: main.o exit.o start.o signals.o free.o exec/utils.o exec/cd.o exec/cd_find_path.o exec/pwd.o exec/env.o exec/echo.o exec/echo_split.o exec/quotes.o exec/sorting.o exec/xpand.o exec/xport.o exec/set_export.o exec/unset.o exec/pipex.o exec/close_pipes.o exec/init.o exec/more_cmds.o exec/pre_exec.o exec/redir.o exec/execute.o exec/xpd_dollar.o exec/xpd_quotes.o exec/xpd_space.o exec/xpd_utils.o exec/xpd.o lexparse/minishell.o lexparse/remove_q.o lexparse/quote_count.o lexparse/open_quotes.o lexparse/split_shell.o lexparse/lexer.o lexparse/get_line_cnc.o lexparse/check_syntax.o lexparse/skip_q.o lexparse/parser.o lexparse/set.o lexparse/is_oq.o
 #  Implicit rule search has not been done.
-#  Last modified 2024-10-11 17:46:57.837305248
+#  Last modified 2024-10-11 21:36:58.409223884
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 41):
@@ -335,35 +333,35 @@ minishell: main.o exit.o start.o signals.o free.o exec/utils.o exec/cd.o exec/cd
 # Not a target:
 exec/unset.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.760696608
+#  Last modified 2024-10-11 21:36:55.36119358
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 lexparse/parser.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.824696881
+#  Last modified 2024-10-11 21:36:56.209202017
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 lexparse/check_syntax.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.812696829
+#  Last modified 2024-10-11 21:36:56.133201261
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/utils.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.6886963
+#  Last modified 2024-10-11 21:36:54.909189081
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 signals.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.6886963
+#  Last modified 2024-10-11 21:36:54.829188285
 #  File has been updated.
 #  Successfully updated.
 
@@ -377,14 +375,14 @@ Makefile:
 # Not a target:
 exit.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.6886963
+#  Last modified 2024-10-11 21:36:54.753187528
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/xpd_space.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.760696608
+#  Last modified 2024-10-11 21:36:55.74919744
 #  File has been updated.
 #  Successfully updated.
 
@@ -403,14 +401,14 @@ clean:
 # Not a target:
 exec/env.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.6886963
+#  Last modified 2024-10-11 21:36:55.045190436
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/cd_find_path.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.6886963
+#  Last modified 2024-10-11 21:36:54.965189639
 #  File has been updated.
 #  Successfully updated.
 
@@ -439,49 +437,50 @@ mval: re
 # Not a target:
 exec/execute.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.75669659
+#  Last modified 2024-10-11 21:36:55.629196247
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/quotes.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.6886963
+#  Last modified 2024-10-11 21:36:55.165191629
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/set_export.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.760696608
+#  Last modified 2024-10-11 21:36:55.325193222
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 lexparse/split_shell.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.824696881
+#  Last modified 2024-10-11 21:36:56.017200108
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/pre_exec.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.760696608
+#  Last modified 2024-10-11 21:36:55.55719553
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/init.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.760696608
+#  Last modified 2024-10-11 21:36:55.477194734
 #  File has been updated.
+ 
 #  Successfully updated.
 
 # Not a target:
 exec/xpd_utils.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.75669659
+#  Last modified 2024-10-11 21:36:55.785197799
 #  File has been updated.
 #  Successfully updated.
 
@@ -514,99 +513,98 @@ fclean: clean
 # Not a target:
 start.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.684696283
+#  Last modified 2024-10-11 21:36:54.793187926
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 lexparse/open_quotes.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.820696864
+#  Last modified 2024-10-11 21:36:55.977199709
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 lexparse/skip_q.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.820696864
+#  Last modified 2024-10-11 21:36:56.169201619
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/xpd_quotes.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.760696608
+#  Last modified 2024-10-11 21:36:55.709197043
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/redir.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.75669659
+#  Last modified 2024-10-11 21:36:55.593195888
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 main.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.692696317
+#  Last modified 2024-10-11 21:36:54.713187129
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/cd.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.6886963
+#  Last modified 2024-10-11 21:36:54.945189439
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 lexparse/minishell.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.764696625
- 
+#  Last modified 2024-10-11 21:36:55.865198595
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/xport.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.692696317
+#  Last modified 2024-10-11 21:36:55.285192823
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 lexparse/remove_q.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.760696608
+#  Last modified 2024-10-11 21:36:55.905198993
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/sorting.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.6886963
+#  Last modified 2024-10-11 21:36:55.205192027
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 lexparse/quote_count.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.812696829
+#  Last modified 2024-10-11 21:36:55.941199351
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/pipex.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.760696608
+#  Last modified 2024-10-11 21:36:55.397193938
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/close_pipes.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.75669659
+#  Last modified 2024-10-11 21:36:55.437194336
 #  File has been updated.
 #  Successfully updated.
 
@@ -618,21 +616,21 @@ exec/close_pipes.o:
 # Not a target:
 lexparse/set.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.820696864
+#  Last modified 2024-10-11 21:36:56.245202375
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 exec/xpand.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.6886963
+#  Last modified 2024-10-11 21:36:55.245192426
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 free.o:
 #  Implicit rule search has been done.
-#  Last modified 2024-10-11 17:44:36.6886963
+#  Last modified 2024-10-11 21:36:54.869188683
 #  File has been updated.
 #  Successfully updated.
 
@@ -644,12 +642,12 @@ free.o:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 80 / storage = 1007 B / avg = 12 B
-# current buf: size = 8162 B / used = 1007 B / count = 80 / avg = 12 B
+# strcache buffers: 1 (0) / strings = 77 / storage = 931 B / avg = 12 B
+# current buf: size = 8162 B / used = 931 B / count = 77 / avg = 12 B
 
-# strcache performance: lookups = 108 / hit rate = 25%
+# strcache performance: lookups = 105 / hit rate = 26%
 # hash-table stats:
-# Load=80/8192=1%, Rehash=0, Collisions=1/108=1%
-# Finished Make data base on Fri Oct 11 17:48:34 2024
+# Load=77/8192=1%, Rehash=0, Collisions=1/105=1%
+# Finished Make data base on Fri Oct 11 21:40:59 2024
 
  

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:21:59 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/11 20:39:58 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/11 23:37:55 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ bool	check_exit(t_pipex *p, int *c, t_minishell_p **pars)
 			return (ft_putendl_fd("exit", 2), false);
 		while ((*pars) && (*pars)->ps && ft_strcmp_bool((*pars)->ps[0], "exit"))
 		{
-			if ((*pars)->ps[1] && ft_strcmp_bool(ft_itoa_long(ft_atoi_long((*pars)->ps[1])), (*pars)->ps[1]) && !(*pars)->ps[2])
+			if ((*pars)->ps[1] && ft_strcmp_bool(ft_itoa_long(ft_atoi_long((*pars)->ps[1])), (*pars)->ps[1]) && !(*pars)->ps[2]) //leak
 			{
 				p->status = ft_atoi_long((*pars)->ps[1]);
 				if (*c == x && !(*pars)->next)

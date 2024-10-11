@@ -6,17 +6,37 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/11 18:28:21 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/11 23:32:33 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static bool checkPermissions(t_pipex* p) {
+	DIR* dir = opendir(p->cmd);
+	if(dir) {
+		ft_putstr_fd(p->cmd, 2), ft_putendl_fd(": Is a directory", 2), p->status = 126;
+		return true;
+	}
+	else if(access(p->cmd, F_OK)) {
+		ft_putstr_fd(p->cmd, 2), ft_putendl_fd(": No such file or directory", 2), p->status = 127;
+		return true;
+	} else if(access(p->cmd, R_OK)) {
+		ft_putstr_fd(p->cmd, 2), ft_putendl_fd(": Permission denied", 2), p->status = 126;
+		return true;
+	}
+	return false;
+}
 
 char	*is_exec(t_pipex *p)
 {
 	int	i;
 
 	i = 0;
+	if(ft_strchr(p->cmd, '/')) {
+		if(checkPermissions(p))
+			return (NULL);
+	}
 	if (access(p->cmd, X_OK) == 0)
 		return (p->cmd);
 	while (p->paths[i])
@@ -36,6 +56,8 @@ char	*is_exec(t_pipex *p)
 			i++;
 		}
 	}
+	ft_putstr_fd(p->cmd, 2), ft_putendl_fd(": command not found", 2);
+	p->status = 127;
 	return (NULL);
 }
 
@@ -80,6 +102,9 @@ int	exec_cmd(t_pipex *p, t_minishell_p *pars)
 		return (1);
 	}
 	p->path = is_exec(p);
+	if(!p->path) {
+		return(p->status);
+	}
 	p->mode = INTER;
 	return (p->status = execve(p->path, pars->ps, p->menv));
 }

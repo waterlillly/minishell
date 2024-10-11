@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/11 18:00:17 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/11 22:01:22 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,6 @@ int	do_echo(char **token, int x)
 	if (!token || !token[x]
 		|| (x == 1 && ft_strcmp_bool(token[0], "echo") && check_n(token[x])))
 		return (1);
-	// else if ((!check_s_q(token[x]) && only_dollars(rm_q(token[x])))
-	// 	|| only_dollars(token[x]))
-	// {
-	// 	if (even_q(token[x]) && dollar_count(token[x]) == 1)
-	// 		return (0);
-	// 	else
-	// 		return (ft_putstr_fd(rm_q(token[x]), 1), 0);
-	// }
 	return (ft_putstr_fd(token[x], 1), 0);
 }
 

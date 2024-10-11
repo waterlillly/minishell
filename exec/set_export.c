@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/06 14:43:50 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/11 22:22:35 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,25 +49,27 @@ int	set_export(t_pipex *p, char **token)
 	x = 0;
 	if (!p || !token || !token[1])
 		return (1);
-	temp = strcpy_until(token[1]);
-	if (!temp)
-		return (1);
-	if (valid_env(p, temp))
-	{
-		if (ft_strchr(token[1], '='))
+	for(int i = 1; token[i]; ++i) {
+		temp = strcpy_until(token[i]);
+		if (!temp)
+			return (1);
+		if (valid_env(p, temp))
 		{
-			x = find_str_part(p->menv, temp);
-			if (x < 0)
-				return (free(temp), temp = NULL, x);
-			p->menv[x] = NULL;
-			p->menv[x] = ft_strdup(token[1]);
-			if (!p->menv[x])
-				return (free(temp), temp = NULL, 1);
+			if (ft_strchr(token[i], '='))
+			{
+				x = find_str_part(p->menv, temp);
+				if (x < 0)
+					return (free(temp), temp = NULL, x);
+				p->menv[x] = NULL;
+				p->menv[x] = ft_strdup(token[i]);
+				if (!p->menv[x])
+					return (free(temp), temp = NULL, 1);
+			}
+			x = update_export(p, temp, token[i]);
 		}
-		x = update_export(p, temp, token[1]);
+		else
+			x = add_to_export(p, token[i]);
 	}
-	else
-		x = add_to_export(p, token[1]);
 	return (free(temp), temp = NULL, x);
 }
 
