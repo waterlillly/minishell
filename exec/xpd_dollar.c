@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:48:26 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/06 19:28:52 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/12 00:53:20 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	count_dlr_strs(char *s, char c)
 			x++;
 			if (s[x] == c || s[x] == '\0')
 			{
-				x++;
+				if (s[x])
+					x++;
 				counter++;
 			}
 		}

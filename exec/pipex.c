@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/11 23:32:33 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/12 17:59:09 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char	*is_exec(t_pipex *p)
 	int	i;
 
 	i = 0;
+	if (!p || !p->cmd)
+		return (NULL);
 	if(ft_strchr(p->cmd, '/')) {
 		if(checkPermissions(p))
 			return (NULL);
@@ -77,7 +79,7 @@ int	do_heredoc(t_pipex *p, t_minishell_p *pars)
 		return (1);
 	while (new[++x])
 	{
-		do_echo(new, x);
+		do_echo(new, x, 0);
 		if (new[x + 1] != NULL)
 			ft_putstr_fd("\n", 1);
 	}

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:41:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/06 18:06:46 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/12 18:23:14 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,6 @@ char	**d_q_space(char **s)
 		arr = arrjoin(arr, tmp);
 		i++;
 	}
-	ft_free_2d(s);
+	ft_free_double(s);
 	return (arr);
 }

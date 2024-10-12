@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/11 20:31:11 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/12 19:34:40 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,13 +264,16 @@ int		cd(t_pipex *p, char **token);
 char	*split_and_xpand(t_pipex *p, char **s);
 int		dollar_count(char *s);
 bool	even_q(char *s);
-int		do_echo(char **token, int x);
+int		do_echo(char **token, int x, int start);
 bool	check_n(char *token);
 int		echo(char **token);
 
 /*ECHO_SPLIT*/
 char	**rewrite(char **s, int c);
 char	**reformat(char **s);
+bool	is_quote(int q);
+int		xpd_count(char *s);
+char	**xpd_split(char *s);
 void	xpd(t_pipex *p, t_minishell_p *pars);
 
 /*XPD SPACE*/
@@ -294,6 +297,7 @@ char	**xpd_dollar(char **s);
 char	**xpd_space(char **s);
 char	**xpd_single(char **s);
 char	**xpd_double(char **s);
+char	**xpd_slash(char **s);
 char	**xpd_start(t_minishell_p *pars, int i);
 
 /*XPD_UTILS*/
