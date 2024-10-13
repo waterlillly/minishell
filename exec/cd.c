@@ -6,21 +6,24 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/11 19:58:13 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:13:43 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void ft_chdir(char* target_dir, t_pipex* p) {
-	char* current_pwd = getcwd(NULL, 0);
+static void ft_chdir(char *target_dir, t_pipex *p)
+{
+	char	*current_pwd;
 
-	if(chdir(target_dir)) {
+	current_pwd = getcwd(NULL, 0);
+	if (chdir(target_dir))
+	{
 		free(current_pwd);
 		ft_putstr_fd("cd: ", 2);
 		perror(target_dir);
 		p->status = 1;
-		return;
+		return ;
 	}
 	update(p, "OLDPWD", current_pwd);
 	free(p->oldpwd);
@@ -30,20 +33,21 @@ static void ft_chdir(char* target_dir, t_pipex* p) {
 	p->pwd = get_env(p, "PWD");
 }
 
-int	cd(t_pipex *p, char **token) {
-	if(!p || !token) {
-		return 1;
-	}
-	if(ft_arrlen(token) > 2) {
+int	cd(t_pipex *p, char **token)
+{
+	char	*home;
+	
+	if (!p || !token)
+		return (1);
+	if (ft_arrlen(token) > 2)
 		return (ft_putendl_fd("cd: too many arguments", 2), p->status = 1);
-	}
-	if(!token[1]) {
-		char* home = get_env(p, "HOME"); //TODO: RETURN NULL FOR GETENV
-		if(home && *home == '\n') {
-			return(ft_putendl_fd("cd: HOME not set", 2), p->status = 1);
-		}
-		return(ft_chdir(home, p), free(home), p->status);
+	if (!token[1])
+	{
+		home = get_env(p, "HOME");//TODO: RETURN NULL FOR GETENV
+		if(home && *home == '\n')
+			return (ft_putendl_fd("cd: HOME not set", 2), p->status = 1);
+		return (ft_chdir(home, p), free(home), p->status);
 	}
 	ft_chdir(token[1], p);
-	return p->status;
+	return (p->status);
 }

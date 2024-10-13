@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:41:15 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/12 20:00:45 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:30:04 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char	**xpd_dollar(char **s)
 			if (!s1)
 				return (NULL);
 			s1[0] = ft_strdup(s[x]);
+			if (!s1[0])
+				return (ft_free_double(s2), ft_free_double(s), NULL);
 		}
 		s2 = arrjoin(s2, s1);
 		x++;
@@ -62,6 +64,8 @@ char	**xpd_space(char **s)
 			if (!s1)
 				return (NULL);
 			s1[0] = ft_strdup(s[x]);
+			if (!s1[0])
+				return (ft_free_double(s2), ft_free_double(s), NULL);
 		}
 		s2 = arrjoin(s2, s1);
 		x++;
@@ -91,6 +95,8 @@ char	**xpd_single(char **s)
 			if (!s1)
 				return (NULL);
 			s1[0] = ft_strdup(s[x]);
+			if (!s1[0])
+				return (ft_free_double(s2), ft_free_double(s), NULL);
 		}
 		s2 = arrjoin(s2, s1);
 		x++;
@@ -119,6 +125,8 @@ char	**xpd_double(char **s)
 			if (!d1)
 				return (NULL);
 			d1[0] = ft_strdup(s[x]);
+			if (!d1[0])
+				return (ft_free_double(d2), ft_free_double(s), NULL);
 		}
 		d2 = arrjoin(d2, d1);
 		x++;
@@ -148,11 +156,13 @@ char	**xpd_slash(char **s)
 			if (!s1)
 				return (NULL);
 			s1[0] = ft_strdup(s[x]);
+			if (!s1[0])
+				return (ft_free_double(s2), ft_free_double(s), NULL);
 		}
 		s2 = arrjoin(s2, s1);
 		x++;
 	}
-	ft_free_2d(s);
+	ft_free_double(s);
 	return (s2);
 }
 
@@ -173,6 +183,8 @@ char	**xpd_start(t_minishell_p *pars, int i)
 		if (!s)
 			return (NULL);
 		s[0] = ft_strdup(pars->str[i]);
+		if (!s[0])
+			return (ft_free_double(s), NULL);
 	}
 	return (reformat(s));
 }

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:09:17 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/11 18:00:20 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 16:42:54 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ bool	is_buildin(char *s)
 	if ((ft_strcmp_bool(s, "unset")) || (ft_strcmp_bool(s, "env"))
 		|| (ft_strcmp_bool(s, "export")) || (ft_strcmp_bool(s, "cd"))
 		|| (ft_strcmp_bool(s, "echo")) || (ft_strcmp_bool(s, "pwd")))
+		// || (ft_strcmp_bool(s, "exit")))
 		return (true);
 	return (false);
 }
@@ -39,9 +40,12 @@ int	do_this(t_pipex *p, t_minishell_p *pars)
 		p->status = cd(p, pars->ps);
 	else if (ft_strcmp_bool(pars->ps[0], "echo"))
 		p->status = echo(pars->ps);
-	else if (ft_strcmp_bool(pars->ps[0], "pwd")) {
+	else if (ft_strcmp_bool(pars->ps[0], "pwd"))
+	{
 		ft_putendl_fd(p->pwd, 1);
 		p->status = 0;
 	}
+	// else if (ft_strcmp_bool(pars->ps[0], "exit"))
+	// 	return (0);
 	return (p->status);
 }

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 14:07:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/05 20:37:39 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 21:30:20 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void	free_p_rest(t_pipex *p)
 		free(p->oldpwd);
 		p->oldpwd = NULL;
 	}
-	if (p->mpath)
-	{
-		free(p->mpath);
-		p->mpath = NULL;
-	}
+	// if (p->mpath)
+	// {
+	// 	free(p->mpath);
+	// 	p->mpath = NULL;
+	// }
 	// if (p->cmd)
 	// {
 	// 	free(p->cmd);

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 14:42:56 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/11 20:52:41 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:17:43 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_access(t_pipex *p, t_minishell_p *pars)
 {
 	if (valid_cmd(pars->ps, p))
 		return (0);
-	ft_putstr_fd(": ", 2); //TODO remove for submit
+	//ft_putstr_fd(": ", 2); //TODO remove for submit
 	ft_putstr_fd(pars->ps[0], 2);
 	return (ft_putendl_fd(": command not found", 2), 127);
 }

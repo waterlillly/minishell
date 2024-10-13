@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:48:26 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/12 00:53:20 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:24:49 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ char	**xpd_2_split(char *str, int q)
 	{
 		pa = dlr_split(str, q, pa);
 		s[x] = ft_substr(str, pb, pa - pb);
+		if (!s[x])
+			return (ft_free_double(s), NULL);
 		pb = pa;
 		x++;
 	}

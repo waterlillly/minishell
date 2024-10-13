@@ -63,7 +63,7 @@ int	combine_export(t_pipex *p)
 		if (!p->xport[y])
 			return (ft_free_double(arr), 1);
 	}
-	return (ft_free_2d(arr), 0);
+	return (ft_free_double(arr), 0);
 }
 
 char	*create_add_export(char *token)

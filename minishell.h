@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/12 19:34:40 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 21:30:15 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ typedef struct s_minishell_p
 typedef struct s_pipex
 {
 	char	**menv;
-	char	*mpath;
+	//char	*mpath;
 	char	**xport;
 	char	*home;
 	char	*oldpwd;
@@ -120,6 +120,8 @@ typedef struct s_pipex
 	char	*executable;
 	char	*part;
 	char	*cmd;
+	bool	exit;
+	int		exit_count;
 	t_mode	mode;
 }			t_pipex;
 
@@ -137,7 +139,7 @@ void	err_free(t_pipex *p);
 /*EXIT*/
 void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str);
 int		error(char *str, int code);
-bool	check_exit(t_pipex *p, int *c, t_minishell_p **pars);
+char	*check_exit(t_pipex *p, t_minishell_p *pars);
 
 /*SIGNALS*/
 void	sig_int(int	num);

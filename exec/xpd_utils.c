@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:42:11 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/12 17:42:51 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:27:03 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,15 @@ char	**arrjoin(char **old, char **new)
 	while (ft_arrlen(old) > 0 && old[x])
 	{
 		ret[x] = ft_strdup(old[x]);
+		if (!ret[x])
+			return (ft_free_double(ret), NULL);
 		x++;
 	}
 	while (ft_arrlen(new) > 0 && new[y])
 	{
 		ret[x] = ft_strdup(new[y]);
+		if (!ret[x])
+			return (ft_free_double(ret), NULL);
 		x++;
 		y++;
 	}
@@ -51,6 +55,8 @@ char	**ft_arrdup(char **s)
 	while (s[x])
 	{
 		arr[x] = ft_strdup(s[x]);
+		if (!arr[x])
+			return (ft_free_double(arr), NULL);
 		x++;
 	}
 	return (arr);

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:50:42 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/11 20:14:07 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:20:07 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	check_filein(t_pipex *p, t_minishell_p *pars)
 			redir = redir->next;
 		}
 	}
-	return true;
+	return (true);
 }
 
 bool	check_fileout(t_pipex *p, t_minishell_p *pars)
@@ -74,5 +74,5 @@ bool	check_fileout(t_pipex *p, t_minishell_p *pars)
 			redir = redir->next;
 		}
 	}
-	return true;
+	return (true);
 }

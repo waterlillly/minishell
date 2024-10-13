@@ -141,8 +141,6 @@ input: 	/home/lbaumeis/CCore/projects/minishell> cd ..
 
 **sort exit messages**
 
-**(maybe) add i (=index) to pipex struct instead of using c to iterate through the cmds/processes?**
-
 rewrite update_free_arr and learn loop_cmd_check
 
 **simplify (file xport.c) create_add_export -> too many temps**
@@ -188,12 +186,12 @@ echo "abc''"'""abc""''""'"'abc'"
 	->abc''""abc""""'abc'
 echo hi "" "" hi
 	->hi    hi
+echo "'"'''""$""'''"'"
+	->'""$""'
+echo $PWD"''"$
+	->/home/lbaumeis/CCore/projects/minishell''$
 
 **DOESNT WORK:**
-echo "'"'''""$""'''"'"
-	->'""$""' (ours: '""$"")
-echo $PWD"''"$
-	->/home/lbaumeis/CCore/projects/minishell''$ (ours: /home/lbaumeis/CCore/projects/minishell)
 
 
 **input: export cmd=" -l"**
@@ -232,4 +230,10 @@ doesn't expand:
 /bin/echo "'$?'"
 /bin/echo '$USER' "$USER" "text  ' text"
 /bin/echo $USER =intergalaktikus miaf szomez
+
+**execute heredoc(s) even though syntax error occured**
+
+**dup2 filein: Bad fd**
+	cat <minishell.h|ls
+	->dup2 filein: Bad file descriptor (still executes ls though)
 

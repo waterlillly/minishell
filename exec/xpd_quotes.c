@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:44:11 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/06 18:08:20 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:25:21 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	q_split(char *s, int q, int pa)
 		pa++;
 		while (s[pa] && s[pa] != q)
 			pa++;
-		if (s[pa] && s[pa] == q)///
+		if (s[pa] && s[pa] == q)
 			pa++;
 	}
 	else
@@ -83,6 +83,8 @@ char	**xpd_1_split(char *str, int q)
 	{
 		pa = q_split(str, q, pa);
 		s[x] = ft_substr(str, pb, pa - pb);
+		if (!s[x])
+			return (ft_free_double(s), NULL);
 		pb = pa;
 		x++;
 	}

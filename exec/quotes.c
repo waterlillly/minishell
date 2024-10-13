@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:24:45 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/05 17:52:35 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:19:40 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ bool	only_quotes(char *s)
 	int	i;
 
 	i = 0;
+	if (!s)
+		return (false);
 	while (s[i])
 	{
 		if (s[i] == '\'' || s[i] == '\"')

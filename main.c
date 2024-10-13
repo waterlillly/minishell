@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/11 22:48:45 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 21:06:15 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,25 @@ void	refresh_init(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 
 int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 {
-	int	i;
+	int			i;
+	char		*s;
 
 	i = 0;
+	s = NULL;
 	while (p && pars && c < p->cmd_count && p->cmd_count > 0)
 	{
-		// if (check(p, pars) != 0)
-		// 	return (0);
-		if (p->cmd_count == 1 && is_buildin(pars->ps[0]) && !pars->redirect)
+		if (ft_strcmp_bool(pars->ps[0], "exit"))
+		{
+			s = check_exit(p, pars);
+			if (p->exit == true)
+				ft_putendl_fd("exit", 2);
+			if (s)
+				ft_putendl_fd(s, 2);
+			free(s);
+			if (p->exit == true)
+				return (1);
+		}
+		else if (p->cmd_count == 1 && is_buildin(pars->ps[0]) && !pars->redirect)
 		{
 			p->status = do_this(p, pars);
 			return (0);
@@ -42,19 +53,11 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 				return (perror("fork"), 1);
 			if (p->pid[c] == 0)
 			{
-				remove_q(pars->str, pars->str_len);
+				// remove_q(pars->str, pars->str_len);
 				// if (ft_strcmp_bool("./minishell", pars->str[0])) //SHIT
 				// 	set_mode_s(p, INTER);
 				execute(p, c, pars);
 				exit(p->status);
-				// if (kill(p->pid[c], 0) == 0)
-				// {
-				// 	if (kill(p->pid[c], SIGCHLD) != 0)
-				// 		return (perror("kill"), 1);
-				// 	return (1);
-				// }
-				// printf("%lu", p->status);
-				return (0);
 			}
 			remove_q(pars->str, pars->str_len);
 			if (ft_strcmp_bool("./minishell", pars->str[0]))
@@ -87,14 +90,13 @@ bool run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 		return (false);
 	if (!p || !input)
 		return (false);
-	if (check_exit(p, &c, pars) == false)
+	// if (check_exit(p, &c, pars) == false)
+	// 	return (false);
+	// if ((*pars))// && !ft_strcmp_bool((*pars)->ps[0], "exit"))
+	// {
+	if (do_stuff(p, c, *pars) != 0)// || p->exit == true)
 		return (false);
-	if ((*pars) && !ft_strcmp_bool((*pars)->ps[0], "exit"))
-	{
-		if (do_stuff(p, c, *pars) != 0)
-			return (false);
-		free_everything(p, *pars, input);
-	}
+	free_everything(p, *pars, input);
 	return (true);
 }
 

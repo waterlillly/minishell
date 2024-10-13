@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:41:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/12 18:23:14 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:26:15 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ char	**xpd_3_split(char *str, int q)
 	{
 		pa = space_split(str, q, pa);
 		s[x] = ft_substr(str, pb, pa - pb);
+		if (!s[x])
+			return (ft_free_double(s), NULL);
 		pb = pa;
 		x++;
 	}
@@ -104,6 +106,8 @@ char	**d_q_space(char **s)
 			if (!tmp)
 				return (NULL);
 			*tmp = ft_strdup(s[i]);
+			if (!*tmp)
+				return (ft_free_double(arr), NULL);
 		}
 		arr = arrjoin(arr, tmp);
 		i++;

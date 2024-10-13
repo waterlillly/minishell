@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/09 13:40:49 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 21:44:06 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 	t_minishell_p	*tmp;
 
 	tmp = pars;
+	p->exit = false;
+	p->exit_count = 0;
 	p->cmd_count = 0;
 	while (tmp)
 	{
@@ -60,6 +62,9 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 	p->pid = (pid_t *)ft_calloc(p->cmd_count, sizeof(pid_t));
 	if (!p->pid)
 		return ;
+	p->paths = ft_split(get_env(p, "PATH"), ':');
+	if (!p->paths)
+		return (p->status = 1, err_free(p));
 	init_pipes(p);
 }
 
@@ -72,8 +77,5 @@ int	first_init(t_pipex *p, char **envp)
 	x = buildins_init(p, envp);
 	if (x != 0)
 		return (p->status = x, x);
-	p->paths = ft_split(p->mpath, ':');
-	if (!p->paths)
-		return (p->status = 1, err_free(p), 1);
 	return (0);
 }

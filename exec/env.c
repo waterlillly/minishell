@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/12 18:26:59 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 21:29:48 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,11 @@ int	buildins_init(t_pipex *p, char **envp)
 	p->oldpwd = get_env(p, "OLDPWD");
 	if (!p->oldpwd)
 		return (1);
-	p->home = get_env(p, "HOME");
-	if (!p->home)
-		return (1);
-	p->mpath = get_env(p, "PATH");
-	if (!p->mpath)
-		return (1);
+	// p->home = get_env(p, "HOME");
+	// if (!p->home)
+	// 	return (1);
+	// p->mpath = get_env(p, "PATH");
+	// if (!p->mpath)
+	// 	return (1);
 	return (combine_export(p));
 }

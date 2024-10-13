@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 18:54:32 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/11 23:16:15 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 15:22:17 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ void	check_unset(t_pipex *p)
 {
 	if (!p)
 		return ;
-	//puts("checking...");
 	if (p->menv && p->xport && !valid_env(p, "PWD"))
 	{
 		if (p->pwd)

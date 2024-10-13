@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:23:45 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/11 18:43:15 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 14:47:11 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *
 	init_raw(input);
 	stat = get_line_cnc(input, p);
 	if (!stat) {
-		error("syntax error", 1);
+		ft_putendl_fd("syntax error near unexpected token", 2);
+		//error("syntax error", 1);
 		p->status = 2;
 	}
 	if (stat == 1)

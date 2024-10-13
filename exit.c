@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:21:59 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/11 23:37:55 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/13 21:15:31 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,49 +38,42 @@ int	error(char *str, int code)
 	return (code);
 }
 
-bool	check_exit(t_pipex *p, int *c, t_minishell_p **pars)
+char	*check_exit(t_pipex *p, t_minishell_p *pars)
 {
-	char	*str;
-	int		x;
+	char		*str;
 
 	str = NULL;
-	x = *c;
-	if ((*pars) && (*pars)->ps && ft_strcmp_bool((*pars)->ps[0], "exit"))
+	if (pars->ps && !ft_strcmp_bool(pars->ps[0], "exit"))
+		return (p->exit = false, NULL);
+	if (pars->ps && ft_strcmp_bool(pars->ps[0], "exit"))
 	{
-		if (!(*pars)->ps[1] && !(*pars)->next)
-			return (ft_putendl_fd("exit", 2), false);
-		while ((*pars) && (*pars)->ps && ft_strcmp_bool((*pars)->ps[0], "exit"))
+		p->exit_count++;
+		if (!pars->ps[1] && !pars->next)
+			return (p->exit = true, NULL);
+		else if (pars->ps[1] && ft_strcmp_bool(ft_itoa_long(ft_atoi_long(pars->ps[1])), pars->ps[1]) && !pars->ps[2]) //leak
 		{
-			if ((*pars)->ps[1] && ft_strcmp_bool(ft_itoa_long(ft_atoi_long((*pars)->ps[1])), (*pars)->ps[1]) && !(*pars)->ps[2]) //leak
-			{
-				p->status = ft_atoi_long((*pars)->ps[1]);
-				if (*c == x && !(*pars)->next)
-					return (ft_putendl_fd("exit", 2), false);
-				else if (*c > x && !(*pars)->next)
-					return (true);
-			}
-			else if ((*pars)->ps[1])
-			{
-				ft_putstr_fd(": exit: ", 2); //TODO print exit
-				ft_putstr_fd((*pars)->ps[1], 2);
-				ft_putstr_fd(": numeric argument required\n", 2);							
-				p->status = 2;
-				if (!(*pars)->next)
-					return (false);
-			}
-			else if ((*pars)->ps[1] && (*pars)->ps[2])
-			{
-				ft_putendl_fd("exit", 2);
-				ft_putendl_fd(": exit: too many arguments", 2);
-				p->status = 1;
-				if (!(*pars)->next)
-					return (true);
-			}
-			(*c)++;
-			(*pars) = (*pars)->next;
+			p->status = ft_atoi_long(pars->ps[1]);
+			if (!pars->next && p->exit_count == 1)
+				return (p->exit = true, NULL);
+			else
+				return (p->exit = false, NULL);
 		}
-		if (*c > x && (*pars)->ps && !ft_strcmp_bool((*pars)->ps[0], "exit"))
-			return (true);
+		else if (pars->ps[1] && ft_isalpha(pars->ps[1][0]))
+		{
+			str = ft_strjoin("exit: ", ft_strjoin(pars->ps[1], ": numeric argument required"));
+			p->status = 2;
+			if (!pars->next && p->exit_count == 1)
+				return (p->exit = true, str);
+			return (p->exit = false, str);
+		}
+		else if (pars->ps[1] && pars->ps[2])
+		{
+			str = ft_strdup("exit: too many arguments");
+			p->status = 1;
+			return (p->exit = false, str);
+		}
+		else
+			return (p->exit = false, NULL);
 	}
-	return (true);
+	return (p->exit = false, NULL);
 }
