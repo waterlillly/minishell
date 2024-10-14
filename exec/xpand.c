@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/13 15:23:13 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/14 20:13:16 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,15 @@ char	*xpand(t_pipex *p, char **token, int x)
 {
 	char	*temp;
 	char	*temp1;
+	char	*temp2;
 
 	if (!p || !token || !token[x])
 		return (NULL);
 	temp = NULL;
 	temp1 = NULL;
+	//printf("token[x]: %s\nrm_out_q(token[x]): %s\n", token[x], rm_out_q(token[x]));
 	temp1 = ft_substr(rm_out_q(token[x]), 1, ft_strlen(rm_out_q(token[x])) - 1);
+	temp2 = rm_out_q(rm_out_q(token[x]));
 	if (!s_out_q(token[x]) && ft_strcmp_bool(token[x], "$?"))
 		return (temp = ft_itoa_long(p->status), free(temp1), temp);
 	else if (!s_out_q(token[x]) && rm_out_q(token[x])[0] == '$'
@@ -93,6 +96,17 @@ char	*xpand(t_pipex *p, char **token, int x)
 		return (free(temp1), ft_strdup(""));
 	else if (!s_out_q(token[x]) && valid_env(p, temp1))
 		return (temp = get_env(p, temp1), free(temp1), temp);
+	else if (d_out_q(token[x]) && s_out_q(rm_out_q(token[x]))
+		&& valid_env(p, ft_substr(temp2, 1, ft_strlen(temp2) - 1)))
+	{
+		free(temp1);
+		temp1 = NULL;
+		temp1 = get_env(p, temp2);
+		free(temp2);
+		temp2 = NULL;
+		temp2 = ft_strjoin("\'", ft_strjoin_free_one(temp1, "\'"));
+		return (temp2);
+	}
 	else if (s_out_q(token[x]) || d_out_q(token[x]))
 		return (free(temp1), temp = rm_out_q(token[x]));
 	else

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/13 21:29:48 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:33:38 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ char	*get_env(t_pipex *p, char *str)
 {
 	int		x;
 	int		len;
+	char	*tmp;
 	char	*res;
 
 	x = 0;
@@ -71,15 +72,18 @@ char	*get_env(t_pipex *p, char *str)
 		return (NULL);
 	while (p->menv[x])
 	{
-		if (ft_strlen(str) > 0 && ft_strlen(p->menv[x]) > 0
-			&& ft_strnstr(p->menv[x], str, ft_strlen(str)) == &(p->menv[x][0]))
+		tmp = NULL;
+		tmp = ft_substr(p->menv[x], 0, ft_strlen(str));
+		if (tmp && ft_strlen(str) > 0 && ft_strlen(p->menv[x]) > 0
+			&& ft_strcmp_bool(tmp, str) && p->menv[x][ft_strlen(tmp)] == '=')
 		{
 			len = ft_strlen(p->menv[x]) - ft_strlen(str);
 			if (len <= 0)
 				break ;
 			res = ft_substr(p->menv[x], ft_strlen(str) + 1, (size_t)len + 1);
-			return (res);
+			return (free(tmp), res);
 		}
+		free(tmp);
 		x++;
 	}
 	return ("\n");

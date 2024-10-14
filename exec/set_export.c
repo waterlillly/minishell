@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/13 15:21:03 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:48:07 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,44 @@ int	update_export(t_pipex *p, char *tok, char *token)
 	return (0);
 }
 
+static bool	check_edge_case(char **token)
+{
+	int	i;
+	
+	i = 0;
+	if (ft_strcmp_bool(token[0], "export") && token[1])
+	{
+		while (token[1][i] && token[1][i] == '=')
+			i++;
+		if (token[1][i] && ft_isalpha(token[1][i]))
+			return (true);
+		return (false);
+	}
+	return (false);
+}
+
 int	set_export(t_pipex *p, char **token)
 {
 	char	*temp;
+	char	*s;
 	int		x;
+	int		i;
 
 	x = 0;
+	i = 1;
+	s = NULL;
 	if (!p || !token || !token[1])
 		return (1);
-	for(int i = 1; token[i]; ++i) {
+	if (ft_strcmp_bool(token[0], "export") && (ft_strcmp_bool(token[1], "=")))
+		return (ft_putendl_fd("export: `=': not a valid identifier", 2), p->status = 1);
+	else if (!check_edge_case(token))
+	{
+		s = ft_strjoin(ft_strjoin("export: ", token[1]), ": not a valid identifier");
+		ft_putendl_fd(s, 2);
+		return (p->status = 1);
+	}
+	while (token[i])
+	{
 		temp = strcpy_until(token[i]);
 		if (!temp)
 			return (1);
@@ -69,6 +98,7 @@ int	set_export(t_pipex *p, char **token)
 		}
 		else
 			x = add_to_export(p, token[i]);
+		i++;
 	}
 	return (free(temp), temp = NULL, x);
 }

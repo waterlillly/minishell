@@ -43,7 +43,6 @@ cc -Wall -Werror -Wextra -g -c lexparse/parser.c -o lexparse/parser.o
 cc -Wall -Werror -Wextra -g -c lexparse/set.c -o lexparse/set.o
 cc -Wall -Werror -Wextra -g -c lexparse/is_oq.c -o lexparse/is_oq.o
 (make -C libft)
- 
 make[1]: Entering directory '/home/lbaumeis/CCore/projects/minishell/libft'
 cc -Wall -Wextra -Werror -c ft_isalpha.c -o ft_isalpha.o
 cc -Wall -Wextra -Werror -c ft_isdigit.c -o ft_isdigit.o
@@ -68,7 +67,6 @@ cc -Wall -Wextra -Werror -c ft_strnstr.c -o ft_strnstr.o
 cc -Wall -Wextra -Werror -c ft_atoi.c -o ft_atoi.o
 cc -Wall -Wextra -Werror -c ft_calloc.c -o ft_calloc.o
 cc -Wall -Wextra -Werror -c ft_strdup.c -o ft_strdup.o
- 
 cc -Wall -Wextra -Werror -c ft_substr.c -o ft_substr.o
 cc -Wall -Wextra -Werror -c ft_strjoin.c -o ft_strjoin.o
 cc -Wall -Wextra -Werror -c ft_strtrim.c -o ft_strtrim.o

@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:54:22 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/13 14:28:33 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:15:19 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ int	xpd_count(char *s)
 	{
 		if (s[i] && !is_quote(s[i]))
 		{
-			i++;
 			while (s[i] && !is_quote(s[i]))
 				i++;
 		}
@@ -172,6 +171,7 @@ int	xpd_count(char *s)
 			i++;
 			while (s[i] && s[i] != q)
 				i++;
+			i++;
 		}
 		c++;
 	}
@@ -190,12 +190,12 @@ char	**xpd_split(char *s)
 
 	ps = NULL;
 	y = 0;
+	if (!s)
+		return (NULL);
 	ps = ft_calloc(xpd_count(s) + 1, sizeof(char *));
 	if (!ps)
 		return (NULL);
 	i = 0;
-	if (!s)
-		return (NULL);
 	while (s[i])
 	{
 		temp = NULL;
@@ -203,14 +203,11 @@ char	**xpd_split(char *s)
 		{
 			x = i;
 			c = 0;
-			//i++;
 			while (s[i] && !is_quote(s[i]))
 			{
 				c++;
 				i++;
 			}
-			if (is_quote(s[i]))
-				i++;
 		}
 		else
 		{
@@ -277,7 +274,7 @@ void	xpd(t_pipex *p, t_minishell_p *pars)
 			return ;
 		while (pars->str[i])
 		{
-			tmp = d_q_space(xpd_dollar(xpd_slash(xpd_split(pars->str[i]))));//xpd_space(
+			tmp = d_q_space(xpd_dollar(xpd_split(pars->str[i])));
 			j = 0;
 			while (tmp && tmp[j])
 			{

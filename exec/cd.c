@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/13 15:13:43 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/14 18:15:41 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ int	cd(t_pipex *p, char **token)
 		if(home && *home == '\n')
 			return (ft_putendl_fd("cd: HOME not set", 2), p->status = 1);
 		return (ft_chdir(home, p), free(home), p->status);
+	}
+	if (ft_strcmp_bool(token[0], "cd") && ft_strcmp_bool(token[1], "-"))
+	{
+		ft_chdir(get_env(p, "OLDPWD"), p);
+		return (p->status);
 	}
 	ft_chdir(token[1], p);
 	return (p->status);

@@ -184,6 +184,8 @@ echo "abc''"'"acb""''""'"'abc'"
 	->abc''"acb""""'abc'
 echo "abc''"'""abc""''""'"'abc'"
 	->abc''""abc""""'abc'
+echo '"$USER"'
+	 ->"$USER"
 echo hi "" "" hi
 	->hi    hi
 echo "'"'''""$""'''"'"
