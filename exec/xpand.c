@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/14 20:13:16 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/14 20:42:04 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	*xpand(t_pipex *p, char **token, int x)
 		temp1 = get_env(p, temp2);
 		free(temp2);
 		temp2 = NULL;
-		temp2 = ft_strjoin("\'", ft_strjoin_free_one(temp1, "\'"));
+		temp2 = ft_strjoin("\'", ft_strjoin(temp1, "\'"));
 		return (temp2);
 	}
 	else if (s_out_q(token[x]) || d_out_q(token[x]))
