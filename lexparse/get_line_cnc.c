@@ -72,8 +72,6 @@ int	get_line_cnc(t_raw_in *in, t_pipex *p)
 	char	*tmp;
 
 	tmp = ft_strjoin_free_one(ft_strdup(p->pwd), "> ");
-	// in->line = readline(tmp);
-
 	if (isatty(fileno(stdin)))
 		in->line = readline(tmp);
 	else
