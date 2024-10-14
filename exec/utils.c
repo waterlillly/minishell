@@ -104,20 +104,20 @@ char	**update_free_arr(char **old, char **new)
 	ret = NULL;
 	if (!old || !new)
 		return (NULL);
-	ft_free_double(old);
+	ft_free_2d(old);
 	ret = ft_calloc((ft_arrlen(new) + 1), sizeof(char *));
 	if (!ret)
-		return (ft_free_double(new), NULL);
+		return (ft_free_2d(new), NULL);
 	while (new[x])
 	{
 		ret[x] = ft_strdup(new[x]);
 		if (!ret[x])
-			return (ft_free_double(new), ft_free_double(ret), NULL);
+			return (ft_free_2d(new), ft_free_2d(ret), NULL);
 		x++;
 	}
 	ret[x] = NULL;
 	if (new)
-		ft_free_double(new);
+		ft_free_2d(new);
 	return (ret);
 }
 

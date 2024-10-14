@@ -25,11 +25,11 @@ void	copy_arr_env(t_pipex *p, char **arr)
 		temp = NULL;
 		temp = strcpy_until(p->menv[x]);
 		if (!temp)
-			return (ft_free_double(arr));
+			return (ft_free_2d(arr));
 		arr[x] = ft_strdup(temp);
 		free(temp);
 		if (!arr[x])
-			return (ft_free_double(arr));
+			return (ft_free_2d(arr));
 		x++;
 	}
 }

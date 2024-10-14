@@ -181,7 +181,7 @@ int	xpd_count(char *s)
 char	**xpd_split(char *s)
 {
 	char	**ps;
-	char	*temp;
+	//char	*temp;
 	int		q;
 	int		i;
 	int		x;
@@ -198,7 +198,7 @@ char	**xpd_split(char *s)
 	i = 0;
 	while (s[i])
 	{
-		temp = NULL;
+		//temp = NULL;
 		if (s[i] && !is_quote(s[i]))
 		{
 			x = i;
@@ -227,7 +227,7 @@ char	**xpd_split(char *s)
 		//i++;
 		ps[y] = ft_substr(s, x, c);
 		if (!ps[y])
-			return (ft_free_double(ps), NULL);
+			return (ft_free_2d(ps), NULL);
 		y++;
 	}
 	return (ps);

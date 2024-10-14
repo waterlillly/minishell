@@ -84,7 +84,7 @@ char	**xpd_1_split(char *str, int q)
 		pa = q_split(str, q, pa);
 		s[x] = ft_substr(str, pb, pa - pb);
 		if (!s[x])
-			return (ft_free_double(s), NULL);
+			return (ft_free_2d(s), NULL);
 		pb = pa;
 		x++;
 	}

@@ -80,7 +80,7 @@ char	**xpd_3_split(char *str, int q)
 		pa = space_split(str, q, pa);
 		s[x] = ft_substr(str, pb, pa - pb);
 		if (!s[x])
-			return (ft_free_double(s), NULL);
+			return (ft_free_2d(s), NULL);
 		pb = pa;
 		x++;
 	}
@@ -107,11 +107,11 @@ char	**d_q_space(char **s)
 				return (NULL);
 			*tmp = ft_strdup(s[i]);
 			if (!*tmp)
-				return (ft_free_double(arr), NULL);
+				return (ft_free_2d(arr), NULL);
 		}
 		arr = arrjoin(arr, tmp);
 		i++;
 	}
-	ft_free_double(s);
+	ft_free_2d(s);
 	return (arr);
 }

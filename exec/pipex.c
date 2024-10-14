@@ -106,7 +106,7 @@ int	do_heredoc(t_pipex *p, t_minishell_p *pars)
 			ft_putstr_fd("\n", 1);
 	}
 	ft_putchar_fd('\n', 1);
-	ft_free_double(new);
+	ft_free_2d(new);
 	return (0);
 }
 

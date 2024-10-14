@@ -40,6 +40,7 @@ void	init_pipes(t_pipex *p)
 void	init_p(t_pipex *p, t_minishell_p *pars)
 {
 	t_minishell_p	*tmp;
+	char			*tmp_env;
 
 	tmp = pars;
 	p->exit = false;
@@ -62,7 +63,9 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 	p->pid = (pid_t *)ft_calloc(p->cmd_count, sizeof(pid_t));
 	if (!p->pid)
 		return ;
-	p->paths = ft_split(get_env(p, "PATH"), ':');
+	tmp_env = get_env(p, "PATH");
+	p->paths = ft_split(tmp_env, ':');
+	free(tmp_env);
 	if (!p->paths)
 		return (p->status = 1, err_free(p));
 	init_pipes(p);
