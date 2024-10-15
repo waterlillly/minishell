@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/13 21:06:15 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:29:23 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 				// if (ft_strcmp_bool("./minishell", pars->str[0])) //SHIT
 				// 	set_mode_s(p, INTER);
 				execute(p, c, pars);
-				exit(p->status);
+				return (0);//exit(p->status);
 			}
 			remove_q(pars->str, pars->str_len);
 			if (ft_strcmp_bool("./minishell", pars->str[0]))
