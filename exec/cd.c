@@ -28,9 +28,12 @@ static void ft_chdir(char *target_dir, t_pipex *p)
 	update(p, "OLDPWD", current_pwd);
 	free(p->oldpwd);
 	p->oldpwd = get_env(p, "OLDPWD");
-	update(p, "PWD", getcwd(NULL, 0));
+	free(current_pwd);
+	current_pwd = getcwd(NULL, 0);
+	update(p, "PWD", current_pwd);
 	free(p->pwd);
 	p->pwd = get_env(p, "PWD");
+	free(current_pwd);
 }
 
 int	cd(t_pipex *p, char **token)

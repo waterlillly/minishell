@@ -64,6 +64,8 @@ void	init_p(t_pipex *p, t_minishell_p *pars)
 	if (!p->pid)
 		return ;
 	tmp_env = get_env(p, "PATH");
+	if (p->paths)
+		ft_free_2d(p->paths);
 	p->paths = ft_split(tmp_env, ':');
 	free(tmp_env);
 	if (!p->paths)

@@ -89,7 +89,7 @@ int	set_export(t_pipex *p, char **token)
 				x = find_str_part(p->menv, temp);
 				if (x < 0)
 					return (free(temp), temp = NULL, x);
-				p->menv[x] = NULL;
+				free(p->menv[x]);
 				p->menv[x] = ft_strdup(token[i]);
 				if (!p->menv[x])
 					return (free(temp), temp = NULL, 1);
