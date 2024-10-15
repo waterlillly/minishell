@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:58 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/15 16:24:54 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:03:56 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ int	first_init(t_pipex *p, char **envp)
 	p->status = 0;
 	x = buildins_init(p, envp);
 	if (x != 0)
-		return (p->status = x, x);
+		return (p->status = x);
 	return (0);
 }

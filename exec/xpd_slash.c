@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xpd_slash.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:06:35 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/15 15:06:49 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:43:12 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	**xpd_slash_split(char *str, int q)
 		pa = slash_split(str, q, pa);
 		s[x] = ft_substr(str, pb, pa - pb);
 		if (!s[x])
-			return (ft_free_double(s), NULL);
+			return (ft_free_2d(s), NULL);
 		pb = pa;
 		x++;
 	}

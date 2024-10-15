@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/14 18:15:41 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 20:57:59 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ static void ft_chdir(char *target_dir, t_pipex *p)
 		p->status = 1;
 		return ;
 	}
-	update(p, "OLDPWD", current_pwd);
+	p->status = update(p, "OLDPWD", current_pwd);
 	free(p->oldpwd);
 	p->oldpwd = get_env(p, "OLDPWD");
 	free(current_pwd);
 	current_pwd = getcwd(NULL, 0);
-	update(p, "PWD", current_pwd);
+	p->status = update(p, "PWD", current_pwd);
 	free(p->pwd);
 	p->pwd = get_env(p, "PWD");
 	free(current_pwd);

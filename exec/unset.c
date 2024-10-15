@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 18:54:32 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/13 15:22:17 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:37:38 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,17 @@ int	update_unset_exp(t_pipex *p, char *tok)
 int	unset(t_pipex *p, char **token)
 {
 	int		x;
+	int		i;
 	size_t	len;
 
 	if (!p || !p->menv || !token)
 		return (0);
-	for(int i = 0; token[i]; ++i) {		
+	i = 0;
+	while (token[i])
+	{		
 		x = 0;
 		if (ft_strcmp_bool(token[i], "_"))
-			continue;
+			continue ;
 		len = ft_strlen(token[i]);
 		while (p->menv[x])
 		{
@@ -95,6 +98,7 @@ int	unset(t_pipex *p, char **token)
 			}
 			x++;
 		}
+		i++;
 	}
 	return (0);
 }

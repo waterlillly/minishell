@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/15 16:01:50 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:31:21 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ int	set_export(t_pipex *p, char **token)
 				x = find_str_part(p->menv, temp);
 				if (x < 0)
 					return (free(temp), temp = NULL, x);
-				//free(p->menv[x]);
+				if (p->menv[x])
+					free(p->menv[x]);
 				p->menv[x] = NULL;
 				p->menv[x] = ft_strdup(token[i]);
 				if (!p->menv[x])
@@ -119,7 +120,7 @@ int	update(t_pipex *p, char *set, char *tok)
 	temp = ft_strjoin(set, "=");
 	if (!temp)
 		return (1);
-	if(p->menv && p->menv[x])
+	if(p->menv[x])
 		free(p->menv[x]);
 	p->menv[x] = NULL;
 	p->menv[x] = ft_strjoin_free_one(temp, tok);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+         #
+#    By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 16:33:47 by lbaumeis          #+#    #+#              #
-#    Updated: 2024/10/15 15:07:24 by lbaumeis         ###   ########.fr        #
+#    Updated: 2024/10/15 21:57:39 by lbaumeis         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS = -Wall -Werror -Wextra -g
 
 CFILES += main.c exit.c start.c signals.c free.c
 
-CFILES += exec/utils.c exec/cd.c exec/cd_find_path.c exec/pwd.c
+CFILES += exec/utils.c exec/cd.c
 CFILES += exec/env.c exec/echo.c exec/echo_split.c exec/quotes.c exec/sorting.c
 CFILES += exec/xpand.c exec/xport.c exec/set_export.c exec/unset.c
 CFILES += exec/pipex.c exec/close_pipes.c exec/init.c exec/more_cmds.c
@@ -40,23 +40,14 @@ all: $(NAME)
 $(NAME): $(OFILES)
 	($(MAKE) -C libft)
 	$(CC) $(CFLAGS) -o $@ $^ libft/libft.a -lreadline
-	rm -f out
-	rm -f hd
-	rm -f buildins.h.gch
 
 clean:
 	($(MAKE) -C libft clean)
 	rm -f $(OFILES)
-	rm -f out
-	rm -f hd
-	rm -f buildins.h.gch
 
 fclean: clean
 	($(MAKE) -C libft fclean)
 	rm -f $(NAME)
-	rm -f out
-	rm -f hd
-	rm -f buildins.h.gch
 
 re: fclean
 	$(MAKE) all
@@ -64,9 +55,6 @@ re: fclean
 mval: re
 	($(MAKE) -C libft clean)
 	rm -f $(OFILES)
-	rm -f out
-	rm -f hd
-	rm -f buildins.h.gch
 	rm -f vgcore.*
 	valgrind -s --show-leak-kinds=all --track-fds=yes --leak-check=full --track-origins=yes --suppressions=.vgignore ./$(NAME)
 

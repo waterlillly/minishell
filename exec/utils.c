@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 13:48:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/03 14:59:51 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:39:46 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ char	**update_free_arr(char **old, char **new)
 			return (ft_free_2d(new), ft_free_2d(ret), NULL);
 		x++;
 	}
-	ret[x] = NULL;
 	if (new)
 		ft_free_2d(new);
 	return (ret);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:21:59 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/14 18:08:03 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:49:49 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	exit_shell(t_pipex *p, t_minishell_p *pars, t_raw_in *input, char *str)
 		p->pip = 0;
 	}
 	if (p->paths)
-		ft_free_2d(p->paths);//ft_free_2d(p->paths);
+		ft_free_2d(p->paths);
 	if (p->xport)
-		ft_free_2d(p->xport);//ft_free_double(p->xport);
+		ft_free_2d(p->xport);
 	if (p->menv)
 		ft_free_2d(p->menv);
 	free_p_rest(p);
@@ -51,8 +51,9 @@ static char	*trim_exit(char *s)
 		flag = false;
 		if (x == 0 && (s[x] == '-' || s[x] == '+'))
 		{
+			if (s[x] == '-')
+				flag = true;
 			x++;
-			flag = true;
 		}
 		while (s[x] && s[x] == '0')
 			x++;
@@ -80,7 +81,7 @@ char	*check_exit(t_pipex *p, t_minishell_p *pars)
 			return (p->exit = true, NULL);
 		else if (pars->ps[1] && !pars->ps[2] && (ft_isdigit(pars->ps[1][0])
 			|| ((pars->ps[1][0] == '+' || pars->ps[1][0] == '-')
-			&& pars->ps[1][1] != '-' && pars->ps[1][1] != '+')))
+			&& ft_isdigit(pars->ps[1][1]))))
 		{
 			tmp = trim_exit(pars->ps[1]);
 			p->status = ft_atoi_long(tmp);
