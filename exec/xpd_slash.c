@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   xpd_space.c                                        :+:      :+:    :+:   */
+/*   xpd_slash.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 17:41:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/15 13:47:38 by lbaumeis         ###   ########.fr       */
+/*   Created: 2024/10/15 15:06:35 by lbaumeis          #+#    #+#             */
+/*   Updated: 2024/10/15 15:06:49 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	count_space_strs(char *str, int q)
+int	count_slash_strs(char *str, int q)
 {
 	int	c;
 	int	x;
@@ -25,9 +25,7 @@ int	count_space_strs(char *str, int q)
 		{
 			c++;
 			x++;
-			while (str[x] && str[x] == q)
-				x++;
-			if (str[x] && str[x] != q)
+			while (str[x] && str[x] != q)
 				x++;
 		}
 		else
@@ -40,23 +38,23 @@ int	count_space_strs(char *str, int q)
 	return (c);
 }
 
-int	space_split(char *s, int d, int pa)
+int	slash_split(char *s, int q, int pa)
 {
-	if (s[pa] && s[pa] == d)
+	if (s[pa] && s[pa] == q)
 	{
 		pa++;
-		while (s[pa] && s[pa] == d)
+		while (s[pa] && s[pa] != q)
 			pa++;
 	}
 	else
 	{
-		while (s[pa] && s[pa] != d)
+		while (s[pa] && s[pa] != q)
 			pa++;
 	}
 	return (pa);
 }
 
-char	**xpd_3_split(char *str, int q)
+char	**xpd_slash_split(char *str, int q)
 {
 	int		pa;
 	int		pb;
@@ -69,7 +67,7 @@ char	**xpd_3_split(char *str, int q)
 	pb = 0;
 	if (!str)
 		return (NULL);
-	y = count_space_strs(str, q);
+	y = count_slash_strs(str, q);
 	if (y < 1)
 		return (NULL);
 	s = ft_calloc(y + 1, sizeof(char *));
@@ -77,41 +75,12 @@ char	**xpd_3_split(char *str, int q)
 		return (NULL);
 	while (x < y)
 	{
-		pa = space_split(str, q, pa);
+		pa = slash_split(str, q, pa);
 		s[x] = ft_substr(str, pb, pa - pb);
 		if (!s[x])
 			return (ft_free_double(s), NULL);
 		pb = pa;
 		x++;
 	}
-	free(str);
 	return (s);
-}
-
-char	**d_q_space(char **s)
-{
-	char	**arr;
-	char	**tmp;
-	int		i;
-	
-	i = 0;
-	arr = NULL;
-	while (s && s[i])
-	{
-		if (d_out_q(s[i]) && ft_strchr(s[i], '$') && ft_strchr(s[i], ' '))// && only_space_dollar(s[i]))
-			tmp = xpd_3_split(rm_out_q(s[i]), ' ');
-		else
-		{
-			tmp = ft_calloc(2, sizeof(char *));
-			if (!tmp)
-				return (NULL);
-			*tmp = ft_strdup(s[i]);
-			if (!*tmp)
-				return (ft_free_double(arr), NULL);
-		}
-		arr = arrjoin(arr, tmp);
-		i++;
-	}
-	ft_free_double(s);
-	return (arr);
 }

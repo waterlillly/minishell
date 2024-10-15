@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/13 21:30:15 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:07:06 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,6 +293,11 @@ char	**xpd_2_split(char *str, int q);
 int		count_q_strs(char *str, int q);
 int		q_split(char *s, int q, int pa);
 char	**xpd_1_split(char *str, int q);
+
+/*XPD SLASH*/
+int		count_slash_strs(char *str, int q);
+int		slash_split(char *s, int q, int pa);
+char	**xpd_slash_split(char *str, int q);
 
 /*XPD*/
 char	**xpd_dollar(char **s);

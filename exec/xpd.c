@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:41:15 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/13 15:30:04 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:04:52 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ char	**xpd_slash(char **s)
 	while (s[x])
 	{
 		if (!s_out_q(s[x]) && !ft_strchr(s[x], '=') && !d_out_q(s[x]))
-			s1 = xpd_1_split(s[x], '/');
+			s1 = xpd_slash_split(s[x], '/');
 		else
 		{
 			s1 = ft_calloc(2, sizeof(char *));
