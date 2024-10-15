@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:54:22 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/14 19:15:19 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:05:50 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,6 @@ char	**xpd_split(char *s)
 				i++;
 			c++;
 		}
-		//i++;
 		ps[y] = ft_substr(s, x, c);
 		if (!ps[y])
 			return (ft_free_2d(ps), NULL);
@@ -256,6 +255,30 @@ char	**xpd_split(char *s)
 // 	return (s);
 // }
 
+static bool	only_space_dollar(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	if (s && d_out_q(s))
+	{
+		while (s[i])
+		{
+			if (i == 0 && s[i] == '\"')
+				i++;
+			else if (i == ft_strlen(s) - 1 && ft_strlen(s) > 2 && s[i] == '\"')
+				return (true);
+			else if (s[i] == ' ')
+				i++;
+			else if (s[i] == '$')
+				i++;
+			else
+				return (false);				
+		}
+	}
+	return (false);
+}
+
 void	xpd(t_pipex *p, t_minishell_p *pars)
 {
 	int		i;
@@ -274,17 +297,22 @@ void	xpd(t_pipex *p, t_minishell_p *pars)
 			return ;
 		while (pars->str[i])
 		{
-			tmp = d_q_space(xpd_dollar(xpd_split(pars->str[i])));
-			j = 0;
-			while (tmp && tmp[j])
+			if (only_space_dollar(pars->str[i]))
+				pars->ps[i] = rm_out_q(pars->str[i]);
+			else
 			{
-				//printf("\ntmp[%d]: %s\n", j, tmp[j]);
-				pars->ps[i] = ft_strjoin_free_both(pars->ps[i], xpand(p, tmp, j));
-				free(tmp[j]);
-				//printf("ps[%d]: %s\n\n", i, pars->ps[i]);
-				j++;
+				tmp = xpd_slash(xpd_dollar(d_q_space(xpd_split(pars->str[i]))));
+				j = 0;
+				while (tmp && tmp[j])
+				{
+					//printf("\ntmp[%d]: %s\n", j, tmp[j]);
+					pars->ps[i] = ft_strjoin_free_both(pars->ps[i], xpand(p, tmp, j));
+					free(tmp[j]);
+					//printf("ps[%d]: %s\n\n", i, pars->ps[i]);
+					j++;
+				}
+				free(tmp);
 			}
-			free(tmp);
 			i++;
 		}
 		pars = pars->next;

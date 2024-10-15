@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xpand.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/14 20:42:04 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:34:02 by mgardesh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char	*xpand(t_pipex *p, char **token, int x)
 	{
 		free(temp1);
 		temp1 = NULL;
-		temp1 = get_env(p, temp2);
+		temp1 = get_env(p, ft_substr(temp2, 1, ft_strlen(temp2) - 1));
 		free(temp2);
 		temp2 = NULL;
 		temp2 = ft_strjoin("\'", ft_strjoin(temp1, "\'"));

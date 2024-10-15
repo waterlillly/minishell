@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 15:23:45 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/13 14:47:11 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:31:26 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *
 		if (!*lex)
 			return (exit_shell(NULL, NULL, NULL, "FAILED"));
 		*pars = parser(*lex, input);
-		// print_parsed(*pars);
+		//print_parsed(*pars);
 		if (!*pars)
 			return (exit_shell(NULL, NULL, NULL, "FAILED"));
 		xpd(p, *pars);
 		init_p(p, *pars);
 	}
 }
-
