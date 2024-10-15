@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 06:41:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/14 15:27:55 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:13:31 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*is_exec(t_pipex *p)
 		}
 	}
 	if (ft_strcmp_bool(p->cmd, "."))
-		return (ft_putendl_fd(".: filename argument required", 2), p->status = 2, NULL);
+		return (ft_putendl_fd(".: filename argument required", 2), p->status = 127, NULL);
 	(ft_putstr_fd(p->cmd, 2), ft_putendl_fd(": command not found", 2));
 	p->status = 127;
 	return (NULL);

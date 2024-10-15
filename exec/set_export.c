@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:59:53 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/14 19:48:07 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:01:50 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ int	set_export(t_pipex *p, char **token)
 				x = find_str_part(p->menv, temp);
 				if (x < 0)
 					return (free(temp), temp = NULL, x);
-				free(p->menv[x]);
+				//free(p->menv[x]);
+				p->menv[x] = NULL;
 				p->menv[x] = ft_strdup(token[i]);
 				if (!p->menv[x])
 					return (free(temp), temp = NULL, 1);

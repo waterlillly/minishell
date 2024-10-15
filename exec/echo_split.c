@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:54:22 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/15 15:05:50 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:57:39 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,6 @@ int	xpd_count(char *s)
 char	**xpd_split(char *s)
 {
 	char	**ps;
-	//char	*temp;
 	int		q;
 	int		i;
 	int		x;
@@ -198,7 +197,6 @@ char	**xpd_split(char *s)
 	i = 0;
 	while (s[i])
 	{
-		//temp = NULL;
 		if (s[i] && !is_quote(s[i]))
 		{
 			x = i;
