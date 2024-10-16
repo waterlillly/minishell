@@ -48,7 +48,7 @@ void	set_hd(t_raw_in *in, char *line)
 		{
 			while (*(line + j) && is_sep(" \t", *(line + j)))
 				j++;
-			while (*(line + j + i) && (is_oq(*(line + i + j), &q[0], &q[1]) || !is_sep(" \t", *(line + j + i))))
+			while (*(line + j + i) && (is_oq(*(line + i + j), &q[0], &q[1]) || !is_sep(" \t<>|", *(line + j + i))))
 				i++;
 			in->del_s[++k] = ft_substr(line, j, i);
 			line = line + i + j - 1;

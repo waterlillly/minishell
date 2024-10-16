@@ -27,7 +27,6 @@ void	get_hd(t_raw_in *in)
 			in->line = readline("> ");
 			if (g_signal != 0 || !in->line)
 			{
-				free_raw(in);
 				in->exit = 2;
 				return ;
 			}

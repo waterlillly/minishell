@@ -21,7 +21,7 @@ void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *
 	if (!stat) {
 		ft_putendl_fd("syntax error near unexpected token", 2);
 		input->exit = 0;
-		p->status = 127;
+		p->status = 2;
 	}
 	if (stat == 1)
 	{
