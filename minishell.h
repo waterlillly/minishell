@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/15 21:54:20 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:56:52 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,7 +299,7 @@ bool	only_dollars(char *tok);
 char	*rm_out_q(char *tok);
 int		multi_q(char *token);
 char	*rm_q(char *token);
-char	*xpand(t_pipex *p, char **token, int x);
+char	*xpand(t_pipex *p, char **token, int x, int lead);
 
 /*XPORT*/
 char	*exp_whole(t_pipex *p, char **arr, int y);

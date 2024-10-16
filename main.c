@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/15 21:56:50 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:28:36 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 			if (p->pid[c] == 0)
 			{
 				remove_q(pars->str, pars->str_len);
-				if (ft_strcmp_bool("./minishell", pars->str[0])) //SHIT
+				if (ft_strcmp_bool("./minishell", pars->str[0]))
 					set_mode_s(p, INTER);
 				execute(p, c, pars);
 				exit(p->status);

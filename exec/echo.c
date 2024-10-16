@@ -6,36 +6,36 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 18:48:06 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/12 18:45:45 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:04:35 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*split_and_xpand(t_pipex *p, char **s)
-{
-	char	*temp;
-	char	*str;
-	int		y;
+// char	*split_and_xpand(t_pipex *p, char **s)
+// {
+// 	char	*temp;
+// 	char	*str;
+// 	int		y;
 
-	y = 0;
-	str = NULL;
-	temp = NULL;
-	if (!s || !p)
-		return (NULL);
-	while (s[y])
-	{
-		temp = xpand(p, s, y);
-		if (temp)
-		{
-			str = ft_strjoin_free_both(str, temp);
-			if (!str)
-				return (NULL);
-		}
-		y++;
-	}
-	return (str);
-}
+// 	y = 0;
+// 	str = NULL;
+// 	temp = NULL;
+// 	if (!s || !p)
+// 		return (NULL);
+// 	while (s[y])
+// 	{
+// 		temp = xpand(p, s, y);
+// 		if (temp)
+// 		{
+// 			str = ft_strjoin_free_both(str, temp);
+// 			if (!str)
+// 				return (NULL);
+// 		}
+// 		y++;
+// 	}
+// 	return (str);
+// }
 
 int	dollar_count(char *s)
 {

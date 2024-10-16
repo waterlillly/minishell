@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:54:22 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/15 15:57:39 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:55:33 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,11 +277,45 @@ static bool	only_space_dollar(char *s)
 	return (false);
 }
 
+// static char	**realloc_empty(char **s)
+// {
+// 	int		i;
+// 	int		c;
+// 	char	**new;
+
+// 	i = 0;
+// 	c = 0;
+// 	if (!s)
+// 		return (NULL);
+// 	while (s[i])
+// 	{
+// 		if (ft_strlen(s[i]) > 0)
+// 			c++;
+// 		i++;
+// 	}
+// 	new = ft_calloc(c + 1, sizeof(char *));
+// 	if (!new)
+// 		return (NULL);
+// 	i = 0;
+// 	c = 0;
+// 	while (s[i])
+// 	{
+// 		if (ft_strlen(s[i]) > 0)
+// 		{
+// 			new[c] = ft_strdup(s[i]);
+// 			c++;
+// 		}
+// 		i++;
+// 	}
+// 	return (ft_free_2d(s), new);
+// }
+
 void	xpd(t_pipex *p, t_minishell_p *pars)
 {
 	int		i;
 	int		j;
-	char	**tmp;	
+	char	**tmp;
+	char	*xpd;
 
 	if (!pars || !pars->str)
 		return ;
@@ -304,7 +338,12 @@ void	xpd(t_pipex *p, t_minishell_p *pars)
 				while (tmp && tmp[j])
 				{
 					//printf("\ntmp[%d]: %s\n", j, tmp[j]);
-					pars->ps[i] = ft_strjoin_free_both(pars->ps[i], xpand(p, tmp, j));
+					xpd = NULL;
+					if (i > 0 && pars->ps[i - 1] && ft_strcmp_bool(pars->ps[i - 1], "echo"))
+						xpd = xpand(p, tmp, j, 1);
+					else
+						xpd = xpand(p, tmp, j, 0);
+					pars->ps[i] = ft_strjoin_free_both(pars->ps[i], xpd);
 					free(tmp[j]);
 					//printf("ps[%d]: %s\n\n", i, pars->ps[i]);
 					j++;
@@ -313,6 +352,7 @@ void	xpd(t_pipex *p, t_minishell_p *pars)
 			}
 			i++;
 		}
+		//pars->ps = realloc_empty(pars->ps);
 		pars = pars->next;
 	}
 }

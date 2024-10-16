@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xpand.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/15 21:41:18 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/16 21:14:11 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,98 @@ char	*rm_q(char *token)
 	return (new);
 }
 
-char	*xpand(t_pipex *p, char **token, int x)
+/*
+	only space -> return (" ");
+	check if space at front and back & save somehow
+	-> then strtrim space off
+	go though leftover + count spaces (do not count the one right before a diff character)
+	calloc for strlen(trimmed) + 3 - counted spaces
+*/
+
+static bool	only_space(char *s)
+{
+	int	i;
+	
+	if (!s)
+		return (false);
+	i = 0;
+	while (s[i] && s[i] == ' ')
+		i++;
+	if (s[i] == '\0')
+		return (true);
+	return (false);
+}
+
+static char	*trim_space(char *s)
+{
+	int		i;
+	int		x;
+	char	*trim;
+	char	*new;
+
+	if (!s)
+		return (NULL);
+	else if (only_space(s))
+	{
+		new = ft_strdup(" ");	
+		return (new);
+	}
+	trim = ft_strtrim(s, " ");
+	if (!trim)
+		return (NULL);
+	i = 0;
+	x = 0;
+	while (trim && trim[i])
+	{
+		while (trim[i] && trim[i] != ' ')
+		{
+			x++;
+			i++;
+		}
+		if (trim[i] && trim[i] == ' ')
+		{
+			x++;
+			while (trim[i] && trim[i] == ' ')
+				i++;
+		}
+	}
+	if (s[0] == ' ')
+		x++;
+	if (s[ft_strlen(s) - 1] == ' ')
+		x++;
+	new = ft_calloc(x + 1, sizeof(char));
+	if (!new)
+		return (NULL);
+	i = 0;
+	x = 0;
+	if (s[i] == ' ')
+	{
+		new[x] = ' ';
+		x++;
+	}
+	while (trim[i])
+	{
+		while (trim[i] && trim[i] != ' ')
+		{
+			new[x] = trim[i];
+			i++;
+			x++;
+		}
+		if (trim[i] == ' ')
+		{
+			new[x] = ' ';
+			i++;
+			x++;
+			while (trim[i] && trim[i] == ' ')
+				i++;
+		}
+	}
+	if (s[ft_strlen(s) - 1] == ' ')
+		new[x] = ' ';
+	return (new);
+}
+
+char	*xpand(t_pipex *p, char **token, int x, int lead)
 {
 	char	*temp;
 	char	*temp1;
@@ -97,7 +188,26 @@ char	*xpand(t_pipex *p, char **token, int x)
 		&& !valid_env(p, temp1)) || (ft_strcmp_bool(token[x], "$") && token[x + 1]
 		&& is_quote(token[x + 1][0])))
 		return (free(temp1), free(temp2), free(rm_qout), free(temp2_sub), ft_strdup(""));
-	else if (!s_out_q(token[x]) && valid_env(p, temp1))
+	else if (!s_out_q(token[x]) && valid_env(p, temp1) && lead == 1)
+	{
+		temp = get_env(p, temp1);
+		(free(temp1), temp1 = NULL, free(temp2), free(rm_qout), free(temp2_sub));
+		temp1 = trim_space(temp);
+		//free(temp);
+		if (((token[x]
+			&& (x > 0 && (!token[x - 1]
+			|| (token[x - 1]
+			&& ft_strcmp_bool(token[x - 1], "echo")))))
+			&& temp1 && temp1[0] == ' ')
+			&& (!token[x + 1] && temp1[ft_strlen(temp1) - 1] == ' '))
+			return (temp = ft_substr(temp1, 1, ft_strlen(temp1) - 2));
+		else if ((token[x] && (!token[x - 1] || ft_strcmp_bool(token[x - 1], "echo"))) && temp1 && temp1[0] == ' ')
+			return (temp = ft_substr(temp1, 1, ft_strlen(temp1) - 1));
+		else if (token[x] && (!token[x - 1] || ft_strcmp_bool(token[x - 1], "echo")) && temp1 && temp1[ft_strlen(temp1) - 1] == ' ')
+			return (temp = ft_substr(temp1, 0, ft_strlen(temp1) - 2));
+		return (temp1);
+	}
+	else if (!s_out_q(token[x]) && valid_env(p, temp1) && lead == 0)
 		return (temp = get_env(p, temp1), free(temp1), free(temp2), free(rm_qout), free(temp2_sub), temp);
 	else if (d_out_q(token[x]) && s_out_q(rm_qout)
 		&& valid_env(p, temp2_sub))
