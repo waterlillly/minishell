@@ -84,7 +84,7 @@ bool run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	g_signal = 0;
 	set_mode_s(p, 1);
 	refresh_init(p, input, pars);
-	if (!*pars && input->exit == 0)
+	if ((!*pars || !(*pars)->ps || !*(*pars)->ps || !**(*pars)->ps) && input->exit == 0)
 		return (true);
 	else if (!*pars && input->exit == 1)
 		return (false);

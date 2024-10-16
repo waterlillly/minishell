@@ -20,8 +20,8 @@ void	get_input(t_pipex *p, t_minishell_l **lex, t_minishell_p **pars, t_raw_in *
 	stat = get_line_cnc(input, p);
 	if (!stat) {
 		ft_putendl_fd("syntax error near unexpected token", 2);
-		//error("syntax error", 1);
-		p->status = 2;
+		input->exit = 0;
+		p->status = 127;
 	}
 	if (stat == 1)
 	{

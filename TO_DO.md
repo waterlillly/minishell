@@ -239,3 +239,4 @@ doesn't expand:
 	cat <minishell.h|ls
 	->dup2 filein: Bad file descriptor (still executes ls though)
 
+expansion without the dollar sign!!!! (echo " PWD")
