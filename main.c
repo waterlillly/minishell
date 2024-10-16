@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/15 15:29:23 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:56:50 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 				return (perror("fork"), 1);
 			if (p->pid[c] == 0)
 			{
-				// remove_q(pars->str, pars->str_len);
-				// if (ft_strcmp_bool("./minishell", pars->str[0])) //SHIT
-				// 	set_mode_s(p, INTER);
+				remove_q(pars->str, pars->str_len);
+				if (ft_strcmp_bool("./minishell", pars->str[0])) //SHIT
+					set_mode_s(p, INTER);
 				execute(p, c, pars);
-				return (0);//exit(p->status);
+				exit(p->status);
 			}
 			remove_q(pars->str, pars->str_len);
 			if (ft_strcmp_bool("./minishell", pars->str[0]))
@@ -108,6 +108,8 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac < 1 || !av)
 		return (perror("invalid input"), 1);
+	if (!envp)
+		return (perror("no env"), 1);
 	ft_bzero(&p, sizeof(t_pipex));
 	ft_bzero(&input, sizeof(t_raw_in));
 	sig_init(&p, 0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:54:57 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/14 14:33:38 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:02:07 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	get_menv(t_pipex *p, char **envp)
 	{
 		p->menv[x] = ft_strdup(envp[x]);
 		if (!p->menv[x])
-			return (1);
+			return (ft_free_2d(p->menv), 1);
 		x++;
 	}
 	return (0);

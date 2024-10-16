@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/15 15:07:06 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:54:20 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ extern volatile sig_atomic_t g_signal;
 
 typedef enum e_token
 {
-	PIPE = 1,//
+	PIPE = 1,
 	BIGGER,
 	BIGGERBIGGER,
 	SMALLER,
@@ -89,7 +89,7 @@ typedef struct s_minishell_p
 {
 	char					**str;
 	char					**ps;
-	int						str_len;//
+	int						str_len;
 	char					*infile;//
 	char					*outfile;//
 	bool					std_out;//
@@ -101,7 +101,6 @@ typedef struct s_minishell_p
 typedef struct s_pipex
 {
 	char	**menv;
-	//char	*mpath;
 	char	**xport;
 	char	*home;
 	char	*oldpwd;
@@ -236,12 +235,6 @@ bool	only_quotes(char *s);
 int		only_q(char *s, int q);
 int		count_q(char *s, int q);
 
-/*PWD*/
-void	reset_old_pwd(t_pipex *p, char *path);
-int		get_int(char **temp);
-int		join_oldpwd(t_pipex *p, char **temp, char *oldpwd);
-int		go_up_oldpwd(t_pipex *p);
-
 /*ENV*/
 void	copy_arr_env(t_pipex *p, char **arr);
 bool	valid_env(t_pipex *p, char *tok);
@@ -249,17 +242,7 @@ char	*get_env(t_pipex *p, char *str);
 int		get_menv(t_pipex *p, char **envp);
 int		buildins_init(t_pipex *p, char **envp);
 
-/*CD_FIND_PATH*/
-int		add_to_path(t_pipex *p, char *t);
-int		go_back(t_pipex *p, int print);
-void	check_print(char *s);
-int		go_slash(t_pipex *p, char **token);
-int		go_full_path(t_pipex *p, char **token);
-
 /*CD*/
-int		cd_home(t_pipex *p);
-int		go_back_minus(t_pipex *p, int print);
-int		fill_path(t_pipex *p, char **token);
 int		cd(t_pipex *p, char **token);
 
 /*ECHO*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xpand.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgardesh <mgardesh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/15 15:34:02 by mgardesh         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:41:18 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,10 @@ char	*xpand(t_pipex *p, char **token, int x)
 	temp2_sub = ft_substr(temp2, 1, ft_strlen(temp2) - 1);
 	if (!s_out_q(token[x]) && ft_strcmp_bool(token[x], "$?"))
 		return (free(temp1), free(temp2), free(rm_qout), free(temp2_sub), ft_itoa_long(p->status));
-	else if (!s_out_q(token[x]) && rm_qout[0] == '$'
+	else if ((!s_out_q(token[x]) && rm_qout[0] == '$'
 		&& rm_qout[1] != '\0' && rm_qout[1] != '$'
-		&& !valid_env(p, temp1))
+		&& !valid_env(p, temp1)) || (ft_strcmp_bool(token[x], "$") && token[x + 1]
+		&& is_quote(token[x + 1][0])))
 		return (free(temp1), free(temp2), free(rm_qout), free(temp2_sub), ft_strdup(""));
 	else if (!s_out_q(token[x]) && valid_env(p, temp1))
 		return (temp = get_env(p, temp1), free(temp1), free(temp2), free(rm_qout), free(temp2_sub), temp);
