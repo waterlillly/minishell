@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/16 21:14:11 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/16 22:15:59 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,25 +188,26 @@ char	*xpand(t_pipex *p, char **token, int x, int lead)
 		&& !valid_env(p, temp1)) || (ft_strcmp_bool(token[x], "$") && token[x + 1]
 		&& is_quote(token[x + 1][0])))
 		return (free(temp1), free(temp2), free(rm_qout), free(temp2_sub), ft_strdup(""));
-	else if (!s_out_q(token[x]) && valid_env(p, temp1) && lead == 1)
-	{
-		temp = get_env(p, temp1);
-		(free(temp1), temp1 = NULL, free(temp2), free(rm_qout), free(temp2_sub));
-		temp1 = trim_space(temp);
-		//free(temp);
-		if (((token[x]
-			&& (x > 0 && (!token[x - 1]
-			|| (token[x - 1]
-			&& ft_strcmp_bool(token[x - 1], "echo")))))
-			&& temp1 && temp1[0] == ' ')
-			&& (!token[x + 1] && temp1[ft_strlen(temp1) - 1] == ' '))
-			return (temp = ft_substr(temp1, 1, ft_strlen(temp1) - 2));
-		else if ((token[x] && (!token[x - 1] || ft_strcmp_bool(token[x - 1], "echo"))) && temp1 && temp1[0] == ' ')
-			return (temp = ft_substr(temp1, 1, ft_strlen(temp1) - 1));
-		else if (token[x] && (!token[x - 1] || ft_strcmp_bool(token[x - 1], "echo")) && temp1 && temp1[ft_strlen(temp1) - 1] == ' ')
-			return (temp = ft_substr(temp1, 0, ft_strlen(temp1) - 2));
-		return (temp1);
-	}
+	// else if (!s_out_q(token[x]) && valid_env(p, temp1) && lead == 1)
+	// {
+	// 	temp = get_env(p, temp1);
+	// 	(free(temp1), temp1 = NULL, free(temp2), free(rm_qout), free(temp2_sub));
+	// 	temp1 = trim_space(temp);
+	// 	//free(temp);
+	// 	if (token[x] && (token[x - 1] && ft_strcmp_bool(token[x - 1], "echo"))
+	// 		&& (!token[x + 1] && temp1[ft_strlen(temp1) - 1] == ' '))
+	// 		return (temp = ft_substr(temp1, 1, ft_strlen(temp1) - 2));
+		
+	// 	else if (token[x] && (token[x - 1] && ft_strcmp_bool(token[x - 1], "echo"))
+	// 		&& temp1 && temp1[0] == ' ')
+	// 		return (temp = ft_substr(temp1, 1, ft_strlen(temp1) - 1));
+		
+	// 	else if ((token[x] && (token[x - 1] && ft_strcmp_bool(token[x - 1], "echo"))
+	// 		&& temp1 && temp1[ft_strlen(temp1) - 1] == ' '))
+	// 		return (temp = ft_substr(temp1, 0, ft_strlen(temp1) - 2));
+		
+	// 	return (temp1);
+	// }
 	else if (!s_out_q(token[x]) && valid_env(p, temp1) && lead == 0)
 		return (temp = get_env(p, temp1), free(temp1), free(temp2), free(rm_qout), free(temp2_sub), temp);
 	else if (d_out_q(token[x]) && s_out_q(rm_qout)
