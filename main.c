@@ -86,7 +86,7 @@ bool run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	refresh_init(p, input, pars);
 	if ((!*pars || !(*pars)->ps || !*(*pars)->ps || !**(*pars)->ps) && 
 		(!*pars || !(*pars)->redirect) && input->exit == 0)
-		return (free_everything(p, *pars, input), true);
+		return (free_everything(NULL, *pars, input), true);
 	
 	else if (!*pars && input->exit == 1)
 		return (false);
