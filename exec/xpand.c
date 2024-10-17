@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 12:40:29 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/16 22:15:59 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:34:05 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,33 +181,32 @@ char	*xpand(t_pipex *p, char **token, int x, int lead)
 	temp1 = ft_substr(rm_qout, 1, ft_strlen(rm_qout) - 1);
 	temp2 = rm_out_q(rm_qout);
 	temp2_sub = ft_substr(temp2, 1, ft_strlen(temp2) - 1);
-	if (!s_out_q(token[x]) && ft_strcmp_bool(token[x], "$?"))
+	if (!s_out_q(token[x]) && (ft_strcmp_bool(token[x], "$?") || ft_strcmp_bool(rm_qout, "$?")))
 		return (free(temp1), free(temp2), free(rm_qout), free(temp2_sub), ft_itoa_long(p->status));
 	else if ((!s_out_q(token[x]) && rm_qout[0] == '$'
 		&& rm_qout[1] != '\0' && rm_qout[1] != '$'
 		&& !valid_env(p, temp1)) || (ft_strcmp_bool(token[x], "$") && token[x + 1]
 		&& is_quote(token[x + 1][0])))
 		return (free(temp1), free(temp2), free(rm_qout), free(temp2_sub), ft_strdup(""));
-	// else if (!s_out_q(token[x]) && valid_env(p, temp1) && lead == 1)
-	// {
-	// 	temp = get_env(p, temp1);
-	// 	(free(temp1), temp1 = NULL, free(temp2), free(rm_qout), free(temp2_sub));
-	// 	temp1 = trim_space(temp);
-	// 	//free(temp);
-	// 	if (token[x] && (token[x - 1] && ft_strcmp_bool(token[x - 1], "echo"))
-	// 		&& (!token[x + 1] && temp1[ft_strlen(temp1) - 1] == ' '))
-	// 		return (temp = ft_substr(temp1, 1, ft_strlen(temp1) - 2));
-		
-	// 	else if (token[x] && (token[x - 1] && ft_strcmp_bool(token[x - 1], "echo"))
-	// 		&& temp1 && temp1[0] == ' ')
-	// 		return (temp = ft_substr(temp1, 1, ft_strlen(temp1) - 1));
-		
-	// 	else if ((token[x] && (token[x - 1] && ft_strcmp_bool(token[x - 1], "echo"))
-	// 		&& temp1 && temp1[ft_strlen(temp1) - 1] == ' '))
-	// 		return (temp = ft_substr(temp1, 0, ft_strlen(temp1) - 2));
-		
-	// 	return (temp1);
-	// }
+	else if (!s_out_q(token[x]) && valid_env(p, temp1) && lead == 1)
+	{
+		temp = get_env(p, temp1);
+		(free(temp1), temp1 = NULL, free(temp2), free(rm_qout), free(temp2_sub));
+		if (!temp)
+			return (NULL);
+		temp1 = trim_space(temp);
+		free(temp);
+		temp = NULL;
+		if (!temp1)
+			return (NULL);
+		if (temp1 && (x == 0 || !token[x - 1]) && temp1[0] == ' ' && !token[x + 1] && temp1[ft_strlen(temp1) - 1] == ' ')
+			return (temp = ft_substr(temp1, 1, ft_strlen(temp1) - 2));
+		else if (temp1 && !token[x - 1] && temp1[0] == ' ')
+			return (temp = ft_substr(temp1, 1, ft_strlen(temp1) - 1));
+		else if (temp1 && !token[x + 1] && temp1[ft_strlen(temp1) - 1] == ' ')
+			return (temp = ft_substr(temp1, 0, ft_strlen(temp1) - 1));
+		return (temp1);
+	}
 	else if (!s_out_q(token[x]) && valid_env(p, temp1) && lead == 0)
 		return (temp = get_env(p, temp1), free(temp1), free(temp2), free(rm_qout), free(temp2_sub), temp);
 	else if (d_out_q(token[x]) && s_out_q(rm_qout)

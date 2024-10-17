@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:54:22 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/16 16:55:33 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/17 20:25:25 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ char	**rewrite(char **s, int c)
 	int		j;
 	char	**arr;
 
-	i = 0;
-	j = 0;
+	(i = 0, j = 0);
 	arr = ft_calloc(c + 1, sizeof(char *));
 	if (!arr)
 		return (NULL);
@@ -30,29 +29,17 @@ char	**rewrite(char **s, int c)
 		{
 			i++;
 			while (s[i] && count_q(s[i], '\'') % 2 == 0)
-			{
-				arr[j] = ft_strjoin_free_one(arr[j], s[i]);
-				i++;
-			}
+				(arr[j] = ft_strjoin_free_one(arr[j], s[i]), i++);
 			if (s[i] && count_q(s[i], '\'') % 2 != 0)
-			{
-				arr[j] = ft_strjoin_free_one(arr[j], s[i]);
-				i++;
-			}
+				(arr[j] = ft_strjoin_free_one(arr[j], s[i]), i++);
 		}
 		else if (s[i] && count_q(s[i], '\"') % 2 != 0 && s[i][0] == '\"')
 		{
 			i++;
 			while (s[i] && count_q(s[i], '\"') % 2 == 0)
-			{
-				arr[j] = ft_strjoin_free_one(arr[j], s[i]);
-				i++;
-			}
+				(arr[j] = ft_strjoin_free_one(arr[j], s[i]), i++);
 			if (s[i] && count_q(s[i], '\"') % 2 != 0)
-			{
-				arr[j] = ft_strjoin_free_one(arr[j], s[i]);
-				i++;
-			}
+				(arr[j] = ft_strjoin_free_one(arr[j], s[i]), i++);
 		}
 		else
 			i++;
@@ -66,80 +53,30 @@ char	**reformat(char **s)
 	int	i;
 	int	c;
 
-	i = 0;
-	c = ft_arrlen(s);
+	(i = 0, c = ft_arrlen(s));
 	while (s && s[i])
 	{
 		if (s[i] && count_q(s[i], '\'') % 2 != 0 && s[i][0] == '\'')
 		{
 			i++;
-			//c--;
 			while (s[i] && count_q(s[i], '\'') % 2 == 0)
-			{
-				c--;
-				i++;
-			}
+				(c--, i++);
 			if (s[i] && count_q(s[i], '\'') % 2 != 0)
-			{
-				c--;
-				i++;
-			}
+				(c--, i++);
 		}
 		else if (s[i] && count_q(s[i], '\"') % 2 != 0 && s[i][0] == '\"')
 		{
 			i++;
-			//c--;
 			while (s[i] && count_q(s[i], '\"') % 2 == 0)
-			{
-				c--;
-				i++;
-			}
+				(c--, i++);
 			if (s[i] && count_q(s[i], '\"') % 2 != 0)
-			{
-				c--;
-				i++;
-			}
+				(c--, i++);
 		}
 		else
 			i++;
 	}
 	return (rewrite(s, c));
 }
-
-// void	xpd(t_pipex *p, t_minishell_p *pars)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	**tmp;	
-
-// 	if (!pars || !pars->str)
-// 		return ;
-// 	while (pars)
-// 	{
-// 		i = 0;
-// 		tmp = NULL;
-// 		pars->ps = NULL;
-// 		pars->ps = ft_calloc(ft_arrlen(pars->str) + 1, sizeof(char *));
-// 		if (!pars->ps)
-// 			return ;
-// 		while (pars->str[i])
-// 		{
-// 			tmp = d_q_space(xpd_dollar(xpd_space(xpd_single(xpd_double(xpd_start(pars, i))))));
-// 			j = 0;
-// 			while (tmp && tmp[j])
-// 			{
-// 				//printf("tmp[%d]: %s\n", j, tmp[j]);
-// 				pars->ps[i] = ft_strjoin_free_both(pars->ps[i], xpand(p, tmp, j));
-// 				free(tmp[j]);
-// 				//printf("ps[%d]: %s\n", i, pars->ps[i]);
-// 				j++;
-// 			}
-// 			free(tmp);
-// 			i++;
-// 		}
-// 		pars = pars->next;
-// 	}
-// }
 
 bool	is_quote(int q)
 {
@@ -154,8 +91,7 @@ int	xpd_count(char *s)
 	int		i;
 	int		c;
 
-	i = 0;
-	c = 0;
+	(i = 0, c = 0);
 	if (!s)
 		return (0);
 	while (s[i])
@@ -167,8 +103,7 @@ int	xpd_count(char *s)
 		}
 		else
 		{
-			q = s[i];
-			i++;
+			(q = s[i], i++);
 			while (s[i] && s[i] != q)
 				i++;
 			i++;
@@ -187,8 +122,7 @@ char	**xpd_split(char *s)
 	int		c;
 	int		y;
 
-	ps = NULL;
-	y = 0;
+	(ps = NULL, y = 0);
 	if (!s)
 		return (NULL);
 	ps = ft_calloc(xpd_count(s) + 1, sizeof(char *));
@@ -199,25 +133,15 @@ char	**xpd_split(char *s)
 	{
 		if (s[i] && !is_quote(s[i]))
 		{
-			x = i;
-			c = 0;
+			(x = i, c = 0);
 			while (s[i] && !is_quote(s[i]))
-			{
-				c++;
-				i++;
-			}
+				(c++, i++);
 		}
 		else
 		{
-			q = s[i];
-			x = i;
-			c = 1;
-			i++;
+			(q = s[i], x = i, c = 1, i++);
 			while (s[i] && s[i] != q)
-			{
-				c++;
-				i++;
-			}
+				(c++, i++);
 			if (s[i] == q)
 				i++;
 			c++;
@@ -230,30 +154,8 @@ char	**xpd_split(char *s)
 	return (ps);
 }
 
-// char	**xpd_quotes(t_minishell_p *pars, int i)
-// {
-// 	char	**s;
-// 	int		x;
 
-// 	if (!pars || !pars->str)
-// 		return (NULL);
-// 	s = NULL;
-// 	x = 0;
-// 	while (pars->str[i][x] && pars->str[i][x] != '\'' && pars->str[i][x] != '\"')
-// 		x++;
-// 	if (pars->str[i][x])
-// 		s = xpd_1_split(pars->str[i], pars->str[i][x]);
-// 	else
-// 	{
-// 		s = ft_calloc(2, sizeof(char *));
-// 		if (!s)
-// 			return (NULL);
-// 		s[0] = ft_strdup(pars->str[i]);
-// 	}
-// 	return (s);
-// }
-
-static bool	only_space_dollar(char *s)
+bool	only_space_dollar(char *s)
 {
 	size_t	i;
 
@@ -277,37 +179,42 @@ static bool	only_space_dollar(char *s)
 	return (false);
 }
 
-// static char	**realloc_empty(char **s)
+// char	**xpd_s_in_d(char **s)
 // {
 // 	int		i;
-// 	int		c;
-// 	char	**new;
+// 	int		j;
+// 	int		x;
+// 	char	**t;
+// 	char	*ts;
 
 // 	i = 0;
-// 	c = 0;
-// 	if (!s)
-// 		return (NULL);
 // 	while (s[i])
 // 	{
-// 		if (ft_strlen(s[i]) > 0)
-// 			c++;
-// 		i++;
-// 	}
-// 	new = ft_calloc(c + 1, sizeof(char *));
-// 	if (!new)
-// 		return (NULL);
-// 	i = 0;
-// 	c = 0;
-// 	while (s[i])
-// 	{
-// 		if (ft_strlen(s[i]) > 0)
+// 		if (d_out_q(s[i]))
 // 		{
-// 			new[c] = ft_strdup(s[i]);
-// 			c++;
+// 			j = 0;
+// 			t = NULL;
+// 			ts = NULL;
+// 			t = xpd_3_split(rm_out_q(s[i]), ' ');
+// 			while (t[j])
+// 			{
+// 				if (s_out_q(t[j]) && ft_strchr(t[j], '$'))
+// 				{
+// 					while (*t[j] && *t[j] != '$')
+// 						t[j]++;
+// 					if (*t[j])
+// 					{
+// 						x = *t[j];
+// 						while (*t[j] && *t[j] != ' ')
+// 							t[j]++;
+// 						if (*t[j])
+// 							ts = ft_substr(t[j], x + 1, *t[j] - x);
+// 					}
+// 					if (ts)
+// 				}
+// 			}
 // 		}
-// 		i++;
 // 	}
-// 	return (ft_free_2d(s), new);
 // }
 
 void	xpd(t_pipex *p, t_minishell_p *pars)
@@ -316,14 +223,12 @@ void	xpd(t_pipex *p, t_minishell_p *pars)
 	int		j;
 	char	**tmp;
 	char	*xpd;
-
+	
 	if (!pars || !pars->str)
 		return ;
 	while (pars)
 	{
-		i = 0;
-		tmp = NULL;
-		pars->ps = NULL;
+		(i = 0, tmp = NULL, pars->ps = NULL);
 		pars->ps = ft_calloc(ft_arrlen(pars->str) + 1, sizeof(char *));
 		if (!pars->ps)
 			return ;
@@ -333,13 +238,25 @@ void	xpd(t_pipex *p, t_minishell_p *pars)
 				pars->ps[i] = rm_out_q(pars->str[i]);
 			else
 			{
-				tmp = xpd_slash(xpd_dollar(d_q_space(xpd_split(pars->str[i]))));
+				tmp = xpd_split(pars->str[i]);
+				//(puts("\n***1***"), ft_print_array(tmp), puts("*******\n"));
+				// tmp = xpd_s_in_d(tmp);
+				// (puts("\n***2***"), ft_print_array(tmp), puts("*******\n"));
+				tmp = d_q_space(tmp);
+				//(puts("\n***3***"), ft_print_array(tmp), puts("*******\n"));
+				tmp = xpd_dollar(tmp);
+				//(puts("\n***4***"), ft_print_array(tmp), puts("*******\n"));
+				tmp = xpd_slash(tmp);
+				//(puts("\n***5***"), ft_print_array(tmp), puts("*******\n"));
+				tmp = xpd_ec(tmp, p);
+				//(puts("\n***6***"), ft_print_array(tmp), puts("*******\n"));
 				j = 0;
 				while (tmp && tmp[j])
 				{
 					//printf("\ntmp[%d]: %s\n", j, tmp[j]);
 					xpd = NULL;
-					if (i > 0 && pars->ps[i - 1] && ft_strcmp_bool(pars->ps[i - 1], "echo"))
+					if (i > 0 && pars->ps[i - 1] && (ft_strcmp_bool(pars->ps[i - 1], "echo")
+						|| ft_strcmp_bool(pars->ps[i - 1], "/bin/echo")))
 						xpd = xpand(p, tmp, j, 1);
 					else
 						xpd = xpand(p, tmp, j, 0);
@@ -352,7 +269,6 @@ void	xpd(t_pipex *p, t_minishell_p *pars)
 			}
 			i++;
 		}
-		//pars->ps = realloc_empty(pars->ps);
 		pars = pars->next;
 	}
 }

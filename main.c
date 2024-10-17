@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:21 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/16 15:28:36 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:26:19 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 	{
 		if (ft_strcmp_bool(pars->ps[0], "exit"))
 		{
+
 			s = check_exit(p, pars);
 			if (p->exit == true)
 				ft_putendl_fd("exit", 2);
@@ -42,17 +43,20 @@ int	do_stuff(t_pipex *p, int c, t_minishell_p *pars)
 		}
 		else if (p->cmd_count == 1 && is_buildin(pars->ps[0]) && !pars->redirect)
 		{
+
 			p->status = do_this(p, pars);
 			return (0);
 		}
 		else
 		{
+
 			set_mode_s(p, CHILD);
 			p->pid[c] = fork();
 			if (p->pid[c] == -1)
 				return (perror("fork"), 1);
 			if (p->pid[c] == 0)
 			{
+	
 				remove_q(pars->str, pars->str_len);
 				if (ft_strcmp_bool("./minishell", pars->str[0]))
 					set_mode_s(p, INTER);
@@ -84,10 +88,9 @@ bool run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	g_signal = 0;
 	set_mode_s(p, 1);
 	refresh_init(p, input, pars);
-	if ((!*pars || !(*pars)->ps || !*(*pars)->ps || !**(*pars)->ps) && 
+	if ((!*pars || !(*pars)->ps) &&// || !*(*pars)->ps || !**(*pars)->ps) 
 		(!*pars || !(*pars)->redirect) && input->exit == 0)
 		return (free_everything(NULL, *pars, input), true);
-	
 	else if (!*pars && input->exit == 1)
 		return (false);
 	if (!p || !input)
@@ -96,7 +99,7 @@ bool run(t_pipex *p, t_raw_in *input, t_minishell_p **pars)
 	// 	return (false);
 	// if ((*pars))// && !ft_strcmp_bool((*pars)->ps[0], "exit"))
 	// {
-	if (do_stuff(p, c, *pars) != 0)// || p->exit == true)
+	if (do_stuff(p, c, *pars) != 0)
 		return (false);
 	free_everything(p, *pars, input);
 	return (true);

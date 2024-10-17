@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 17:41:15 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/15 15:04:52 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/17 20:06:44 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	**xpd_single(char **s)
 	s2 = NULL;
 	while (s[x])
 	{
-		if ((!only_quotes(s[x]) && !ft_strchr(s[x], '=') && !d_out_q(s[x]))
+		if ((!only_quotes(s[x]) && !ft_strchr(s[x], '='))// && !d_out_q(s[x]))
 		|| (only_quotes(s[x]) && (s[x][0] != '\"')))
 			s1 = xpd_1_split(s[x], '\'');
 		else
@@ -102,7 +102,7 @@ char	**xpd_single(char **s)
 		x++;
 	}
 	ft_free_2d(s);
-	return (reformat(s2));
+	return (s2);
 }
 
 /*DOUBLE QUOTES*/
@@ -117,7 +117,7 @@ char	**xpd_double(char **s)
 	d2 = NULL;
 	while (s[x])
 	{
-		if (!s_out_q(s[x]) && !ft_strchr(s[x], '=') && !s_out_q(s[x]))// && s[x][0] != '\'')
+		if (!s_out_q(s[x]) && !ft_strchr(s[x], '='))// && s[x][0] != '\'')
 			d1 = xpd_1_split(s[x], '\"');
 		else
 		{

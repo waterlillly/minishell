@@ -6,7 +6,7 @@
 /*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:39:43 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/16 16:56:52 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/17 19:53:48 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,7 @@ char	**reformat(char **s);
 bool	is_quote(int q);
 int		xpd_count(char *s);
 char	**xpd_split(char *s);
+bool	only_space_dollar(char *s);
 void	xpd(t_pipex *p, t_minishell_p *pars);
 
 /*XPD SPACE*/
@@ -281,6 +282,11 @@ char	**xpd_1_split(char *str, int q);
 int		count_slash_strs(char *str, int q);
 int		slash_split(char *s, int q, int pa);
 char	**xpd_slash_split(char *str, int q);
+
+/*XPD EXIT CODE*/
+char	**xpd_ec_split(char *str);
+char	**xpand_exit(char **s, t_pipex *p);
+char	**xpd_ec(char **s, t_pipex *p);
 
 /*XPD*/
 char	**xpd_dollar(char **s);

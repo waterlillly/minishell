@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lbaumeis <lbaumeis@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: lbaumeis <lbaumeis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 11:38:34 by lbaumeis          #+#    #+#             */
-/*   Updated: 2024/10/15 20:57:59 by lbaumeis         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:30:58 by lbaumeis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	cd(t_pipex *p, char **token)
 	if (ft_strcmp_bool(token[0], "cd") && ft_strcmp_bool(token[1], "-"))
 	{
 		ft_chdir(get_env(p, "OLDPWD"), p);
+		ft_putendl_fd(get_env(p, "PWD"), 1);
 		return (p->status);
 	}
 	ft_chdir(token[1], p);
